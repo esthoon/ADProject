@@ -184,7 +184,6 @@
       <LastGenOutput>LogicUniversityModel.cs</LastGenOutput>
     </Content>
     <Content Include="Protected\Dashboard.aspx" />
-    <Content Include="Protected\PlacePurchaseOrder.aspx" />
     <Content Include="Protected\PlacePurchaseOrderForm.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -309,13 +308,6 @@
     </Compile>
     <Compile Include="Protected\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Protected\PlacePurchaseOrder.aspx.cs">
-      <DependentUpon>PlacePurchaseOrder.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Protected\PlacePurchaseOrder.aspx.designer.cs">
-      <DependentUpon>PlacePurchaseOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="Protected\PlacePurchaseOrderForm.aspx.cs">
       <DependentUpon>PlacePurchaseOrderForm.aspx</DependentUpon>

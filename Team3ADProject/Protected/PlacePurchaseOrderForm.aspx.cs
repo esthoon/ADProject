@@ -10,10 +10,21 @@ namespace Team3ADProject.Protected
 {
     public partial class PlacePurchaseOrderForm : System.Web.UI.Page
     {
+        string itemid;
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {   //Get the item code
+            if (Request.QueryString["itemid"] != null)
+            {
+                itemid = Request.QueryString["itemid"];
+            }
+            else
+            {
+                itemid = "E032";
+            }
+
             if (!IsPostBack)
             {
+                
                 //Binding the supplier to a dropdownlist to the item selected
                 DropDownListSupplier.DataSource = Code.BusinessLogic.GetSupplier("F031");
                 DropDownListSupplier.DataTextField = "supplier_id";
@@ -22,7 +33,7 @@ namespace Team3ADProject.Protected
                 unitCost.Text = DropDownListSupplier.SelectedItem.Value.ToString();
 
                 //Getting an object of the item selected and passed it to the web
-                inventory itemSelected = Code.BusinessLogic.GetInventory("F031");
+                inventory itemSelected = Code.BusinessLogic.GetInventory(itemid);
                 itemNumber.Text = itemSelected.item_number;
                 itemDescription.Text = itemSelected.description;
                 itemCurrentStock.Text = itemSelected.current_quantity.ToString();
@@ -49,6 +60,19 @@ namespace Team3ADProject.Protected
         {
             unitCost.Text = DropDownListSupplier.SelectedItem.Value.ToString();
             totalCost.Text = (Convert.ToDouble(quantity.Text) * Convert.ToDouble(unitCost.Text)).ToString("C");
+        }
+
+        protected void Submit_Click(object sender, EventArgs e)
+        {
+            
+
+
+            Session["staging"] = "";
+        }
+
+        protected void Cancel_Click(object sender, EventArgs e)
+        {
+            // Redirect to homepage
         }
     }
 }

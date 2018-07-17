@@ -33,15 +33,15 @@
 	Unit Cost :
 	$<asp:Label ID="unitCost" runat="server"></asp:Label>
 	<br />
-	Quantity to reorder :
-	<asp:TextBox ID="quantity" runat="server"></asp:TextBox>
+	Quantity :
+	<asp:TextBox ID="quantity" runat="server" OnTextChanged="DropDownListSupplier_SelectedIndexChanged"></asp:TextBox>
 	<br />
 	Total Cost :
 	<asp:Label ID="totalCost" runat="server"></asp:Label>
 	<br />
 	Remarks :<asp:TextBox ID="remarks" runat="server" Height="144px" TextMode="MultiLine" Width="910px"></asp:TextBox>
 	<br />
-	<asp:Button ID="Submit" runat="server" Text="submit" /><asp:Button ID="Cancel" runat="server" Text="cancel" />
+	<asp:Button ID="Submit" runat="server" Text="submit" OnClick="Submit_Click" /><asp:Button ID="Cancel" runat="server" Text="cancel" OnClick="Cancel_Click" />
         </div>
     </form>
 </body>

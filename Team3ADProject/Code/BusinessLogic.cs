@@ -16,7 +16,7 @@ namespace Team3ADProject.Code
         public static List<supplier_itemdetail> GetSupplier(string id)
         {
             LogicUniversityEntities model = new LogicUniversityEntities();
-            return model.supplier_itemdetail.Where(i => i.item_number == id).ToList<supplier_itemdetail>();
+            return model.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
         }
     }
 }
