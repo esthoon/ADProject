@@ -184,6 +184,8 @@
       <LastGenOutput>LogicUniversityModel.cs</LastGenOutput>
     </Content>
     <Content Include="Protected\Dashboard.aspx" />
+    <Content Include="Protected\ClerkInventory.aspx" />
+    <Content Include="Protected\WebForm2.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvasjs.min.js" />
@@ -246,6 +248,7 @@
     <Compile Include="Model\budget.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\cInventory.cs" />
     <Compile Include="Model\collection.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -308,6 +311,20 @@
     <Compile Include="Protected\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Protected\ClerkInventory.aspx.cs">
+      <DependentUpon>ClerkInventory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\ClerkInventory.aspx.designer.cs">
+      <DependentUpon>ClerkInventory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\WebForm2.aspx.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\WebForm2.aspx.designer.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
@@ -348,7 +365,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50772</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
