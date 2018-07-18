@@ -12,6 +12,8 @@ namespace Team3ADProject.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class LogicUniversityEntities : DbContext
     {
@@ -40,5 +42,19 @@ namespace Team3ADProject.Model
         public virtual DbSet<requisition_order_detail> requisition_order_detail { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<supplier_itemdetail> supplier_itemdetail { get; set; }
+    
+        public virtual ObjectResult<getPurchaseQuantityByItemCategory_Result> getPurchaseQuantityByItemCategory(Nullable<int> monthsBack)
+        {
+            var monthsBackParameter = monthsBack.HasValue ?
+                new ObjectParameter("MonthsBack", monthsBack) :
+                new ObjectParameter("MonthsBack", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPurchaseQuantityByItemCategory_Result>("getPurchaseQuantityByItemCategory", monthsBackParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionQuantityByDepartment_Result> getRequisitionQuantityByDepartment()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionQuantityByDepartment_Result>("getRequisitionQuantityByDepartment");
+        }
     }
 }

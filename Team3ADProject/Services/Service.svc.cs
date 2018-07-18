@@ -45,5 +45,75 @@ namespace Team3ADProject.Services
             return wcf_departments;
         }
 
+        public List<WCF_Item> GetInventory()
+        {
+
+            var context = new LogicUniversityEntities();
+            var query = from x in context.inventories select x;
+            List<inventory> inventories = query.ToList();
+            List <WCF_Item> wcf_items = new List<WCF_Item>();
+
+            foreach (inventory i in inventories)
+            {
+                wcf_items.Add(new WCF_Item(i.item_number, i.description, i.category, i.unit_of_measurement, i.item_status));
+            }
+
+            return wcf_items;
+        }
+
+        public List<WCF_PurchaseOrder> GetPurchaseOrders()
+        {
+            var context = new LogicUniversityEntities();
+            var query = from p in context.purchase_order
+                        join d in context.purchase_order_detail on p.purchase_order_number equals d.purchase_order_number
+                        join i in context.inventories on d.item_number equals i.item_number
+                        select new { p, d, i };
+
+            var purchaseOrders  = query.ToList();
+            List<WCF_PurchaseOrder> wcf_purchaseOrders = new List<WCF_PurchaseOrder>();
+
+            foreach (var i in purchaseOrders)
+            {
+                wcf_purchaseOrders.Add(new WCF_PurchaseOrder(i.p.purchase_order_number, i.i.item_number, i.i.category, i.d.item_purchase_order_quantity, i.d.item_accept_quantity, i.i.item_status));
+            }
+
+            return wcf_purchaseOrders;
+        }
+
+        public List<WCF_PurchaseQuantityByItemQuantity> getPurchaseQuantityByItemCategoryWithMonthsBack(string monthsParam)
+        {
+            List<WCF_PurchaseQuantityByItemQuantity> wcfList = new List<WCF_PurchaseQuantityByItemQuantity>();
+
+            int monthsBack = int.Parse(monthsParam);
+            var context = new LogicUniversityEntities();
+            var result = context.getPurchaseQuantityByItemCategory(monthsBack);
+
+            foreach(var i in result.ToList())
+            {
+                wcfList.Add(new WCF_PurchaseQuantityByItemQuantity(i.Category.Trim(), i.PurchaseQuantity));
+            }
+
+            return wcfList;
+        }
+
+        public List<WCF_PurchaseQuantityByItemQuantity> getPurchaseQuantityByItemCategory()
+        {
+            return getPurchaseQuantityByItemCategoryWithMonthsBack("0");
+        }
+
+        public List<WCF_RequestQuantityByDepartment> getRequisitionQuantityByDepartment()
+        {
+            List<WCF_RequestQuantityByDepartment> wcfList = new List<WCF_RequestQuantityByDepartment>();
+
+            var context = new LogicUniversityEntities();
+            var result = context.getRequisitionQuantityByDepartment();
+
+            foreach (var i in result.ToList())
+            {
+                wcfList.Add(new WCF_RequestQuantityByDepartment(i.department_id.Trim(), i.item_request_quantity));
+            }
+
+            return wcfList;
+        }
     }
 }
