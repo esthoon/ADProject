@@ -58,7 +58,7 @@
                 <asp:BoundField DataField="Inventory.item_status" HeaderText="Status" />
                 <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button1" runat="server" CommandName="" Text="PO" />
+                            <asp:Button ID="Button1" runat="server" CommandName="" Text="PO" OnClick="PO_Click"/>
                             <asp:HiddenField ID="HiddenFieldID" runat="server" Value='<%# Eval("Inventory.item_number") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>

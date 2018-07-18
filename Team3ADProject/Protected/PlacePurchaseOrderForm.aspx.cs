@@ -28,7 +28,7 @@ namespace Team3ADProject.Protected
             {
                 
                 //Binding the supplier to a dropdownlist to the item selected
-                DropDownListSupplier.DataSource = Code.BusinessLogic.GetSupplier("F031");
+                DropDownListSupplier.DataSource = Code.BusinessLogic.GetSupplier(itemid);
                 DropDownListSupplier.DataTextField = "supplier_id";
                 DropDownListSupplier.DataValueField = "unit_price";
                 DropDownListSupplier.DataBind();
@@ -88,12 +88,12 @@ namespace Team3ADProject.Protected
 
             Session["staging"] = stagingitem;
 
-            //Redirect to homepage
+            Response.Redirect("ClerkInventory.aspx");
         }
 
         protected void Cancel_Click(object sender, EventArgs e)
         {
-            // Redirect to homepage
+            Response.Redirect("ClerkInventory.aspx");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Team3ADProject.Protected
                 gvInventoryList.DataBind();
                 List<string> categories = new List<string>();
                 categories.Add("All Categories");
-                foreach(string a in BusinessLogic.GetCategories())
+                foreach (string a in BusinessLogic.GetCategories())
                 {
                     categories.Add(a);
                 }
@@ -32,7 +32,7 @@ namespace Team3ADProject.Protected
         protected List<cInventory> getCInventoryList(List<inventory> list)
         {
             List<cInventory> returnlist = new List<cInventory>();
-            foreach(inventory a in list)
+            foreach (inventory a in list)
             {
                 returnlist.Add(new cInventory(a));
             }
@@ -66,6 +66,13 @@ namespace Team3ADProject.Protected
         protected void gvInventoryList_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void PO_Click(object sender, EventArgs e)
+        {
+            Button lb = (Button)sender;
+            HiddenField hd = (HiddenField)lb.FindControl("HiddenFieldID");
+            Response.Redirect("PlacePurchaseOrderForm.aspx?itemid=" + hd.Value);
         }
     }
 }
