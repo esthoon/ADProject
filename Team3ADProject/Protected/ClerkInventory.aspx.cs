@@ -17,8 +17,14 @@ namespace Team3ADProject.Protected
             {
                 gvInventoryList.DataSource = getCInventoryList(BusinessLogic.GetActiveInventories());
                 gvInventoryList.DataBind();
-                ddlSuppliers.DataSource = BusinessLogic.GetCategories();
-                ddlSuppliers.DataBind();
+                List<string> categories = new List<string>();
+                categories.Add("All Categories");
+                foreach(string a in BusinessLogic.GetCategories())
+                {
+                    categories.Add(a);
+                }
+                ddlCategory.DataSource = categories;
+                ddlCategory.DataBind();
             }
 
         }
@@ -40,8 +46,21 @@ namespace Team3ADProject.Protected
 
         protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
-            gvInventoryList.DataSource = getCInventoryList(BusinessLogic.GetAllInventories());
-            gvInventoryList.DataBind();
+            if (CheckBox1.Checked)
+            {
+                gvInventoryList.DataSource = getCInventoryList(BusinessLogic.GetAllInventories());
+                gvInventoryList.DataBind();
+            }
+            else
+            {
+                gvInventoryList.DataSource = getCInventoryList(BusinessLogic.GetActiveInventories());
+                gvInventoryList.DataBind();
+            }
+        }
+
+        protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
         protected void gvInventoryList_SelectedIndexChanged(object sender, EventArgs e)
