@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LogicUniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LogicUniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="adjustment">
           <Key>
             <PropertyRef Name="adjustment_id" />
@@ -145,6 +145,7 @@
           <Property Name="employee_id" Type="int" Nullable="false" />
           <Property Name="requisition_status" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="requisition_date" Type="date" Nullable="false" />
+          <Property Name="head_comment" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="requisition_order_detail">
           <Key>
@@ -552,8 +553,7 @@
             <End Role="supplier_itemdetail" EntitySet="supplier_itemdetail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LogicUniversityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -725,6 +725,7 @@
           <NavigationProperty Name="employee" Relationship="Self.FK_requisition_order_employee" FromRole="requisition_order" ToRole="employee" />
           <NavigationProperty Name="requisition_disbursement_detail" Relationship="Self.FK_requisition_disbursement_detail_requisition_disbursement_detail" FromRole="requisition_order" ToRole="requisition_disbursement_detail" />
           <NavigationProperty Name="requisition_order_detail" Relationship="Self.FK_requisition_order_detail_requisition_order" FromRole="requisition_order" ToRole="requisition_order_detail" />
+          <Property Name="head_comment" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="requisition_order_detail">
           <Key>
@@ -1254,6 +1255,7 @@
           <EntitySetMapping Name="requisition_order">
             <EntityTypeMapping TypeName="LogicUniversityModel.requisition_order">
               <MappingFragment StoreEntitySet="requisition_order">
+                <ScalarProperty Name="head_comment" ColumnName="head_comment" />
                 <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="requisition_status" ColumnName="requisition_status" />

@@ -17,6 +17,9 @@
     <%-- Custom Javascript here --%>
     <script src=<%=ResolveUrl("~/Scripts/canvasjs.min.js")%>></script>
     <script src=<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>></script>
+    
+
+ 
 
 </head>
 <body>

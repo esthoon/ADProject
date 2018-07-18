@@ -25,6 +25,7 @@ namespace Team3ADProject.Model
         public int employee_id { get; set; }
         public string requisition_status { get; set; }
         public System.DateTime requisition_date { get; set; }
+        public string head_comment { get; set; }
     
         public virtual employee employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
