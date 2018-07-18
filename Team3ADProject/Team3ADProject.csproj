@@ -269,6 +269,13 @@
     <Content Include="Services\Service.svc" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Bundle.config" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -381,7 +388,7 @@
     </Compile>
     <Compile Include="Protected\PurchaseOrderApproval.aspx.designer.cs">
       <DependentUpon>PurchaseOrderApproval.aspx</DependentUpon>
-      </Compile>
+    </Compile>
     <Compile Include="Protected\PlacePurchaseOrderForm.aspx.cs">
       <DependentUpon>PlacePurchaseOrderForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
