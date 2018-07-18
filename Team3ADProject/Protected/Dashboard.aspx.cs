@@ -13,18 +13,6 @@ namespace Team3ADProject.Protected
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                // Populate the requisition order table
-                if (RecentROGridView != null)
-                {
-                    List<requisition_order> RequisitionOrders = BusinessLogic.GetRecentRequisitionOrders(5);
-                    RecentROGridView.DataSource = RequisitionOrders;
-                    RecentROGridView.DataBind();
-                }
-
-
-            }
         }
     }
 }
