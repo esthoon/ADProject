@@ -454,6 +454,10 @@
           <Parameter Name="departmentname" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spViewCollectionList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getPurchaseQuantityByItemCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MonthsBack" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getRequisitionQuantityByDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="LogicUniversityModelStoreContainer">
           <EntitySet Name="adjustment" EntityType="Self.adjustment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="budget" EntityType="Self.budget" Schema="dbo" store:Type="Tables" />
@@ -1126,7 +1130,11 @@
           </FunctionImport>
           <FunctionImport Name="spAcknowledgeDistributionList" ReturnType="Collection(LogicUniversityModel.spAcknowledgeDistributionList_Result)">
             <Parameter Name="disbursementlistid" Mode="In" Type="Int32" />
+          </FunctionImport>      
+          <FunctionImport Name="getPurchaseQuantityByItemCategory" ReturnType="Collection(LogicUniversityModel.getPurchaseQuantityByItemCategory_Result)" >
+          <Parameter Name="MonthsBack" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="getRequisitionQuantityByDepartment" ReturnType="Collection(LogicUniversityModel.getRequisitionQuantityByDepartment_Result)" />
         </EntityContainer>
         <ComplexType Name="spViewCollectionList_Result">
           <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
@@ -1141,6 +1149,14 @@
           <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
           <Property Type="Int32" Name="item_requisition_quantity" Nullable="false" />
           <Property Type="Int32" Name="item_distributed_quantity" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="getPurchaseQuantityByItemCategory_Result">
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="PurchaseQuantity" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getRequisitionQuantityByDepartment_Result">
+          <Property Type="String" Name="department_id" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="item_request_quantity" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1349,13 +1365,29 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spGetDepartmentPin" FunctionName="LogicUniversityModel.Store.spGetDepartmentPin" />
-          <FunctionImportMapping FunctionImportName="spAcknowledgeDistributionList" FunctionName="LogicUniversityModel.Store.spAcknowledgeDistributionList">
+  <FunctionImportMapping FunctionImportName="spAcknowledgeDistributionList" FunctionName="LogicUniversityModel.Store.spAcknowledgeDistributionList">
+    <ResultMapping>
+      <ComplexTypeMapping TypeName="LogicUniversityModel.spAcknowledgeDistributionList_Result">
+        <ScalarProperty Name="item_number" ColumnName="item_number" />
+        <ScalarProperty Name="description" ColumnName="description" />
+        <ScalarProperty Name="item_requisition_quantity" ColumnName="item_requisition_quantity" />
+        <ScalarProperty Name="item_distributed_quantity" ColumnName="item_distributed_quantity" />
+      </ComplexTypeMapping>
+    </ResultMapping>
+  </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getPurchaseQuantityByItemCategory" FunctionName="LogicUniversityModel.Store.getPurchaseQuantityByItemCategory">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="LogicUniversityModel.spAcknowledgeDistributionList_Result">
-                <ScalarProperty Name="item_number" ColumnName="item_number" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="item_requisition_quantity" ColumnName="item_requisition_quantity" />
-                <ScalarProperty Name="item_distributed_quantity" ColumnName="item_distributed_quantity" />
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getPurchaseQuantityByItemCategory_Result">
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PurchaseQuantity" ColumnName="PurchaseQuantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getRequisitionQuantityByDepartment" FunctionName="LogicUniversityModel.Store.getRequisitionQuantityByDepartment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getRequisitionQuantityByDepartment_Result">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="item_request_quantity" ColumnName="item_request_quantity" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
