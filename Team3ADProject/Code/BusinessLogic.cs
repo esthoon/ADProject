@@ -67,5 +67,11 @@ namespace Team3ADProject.Code
             }
             return qty;
         }
+
+        public static List<inventory> GetInventoriesByCategory(string category)
+        {
+            LogicUniversityEntities ctx = new LogicUniversityEntities();
+            return ctx.inventories.Where(x => x.category.Trim().ToLower() == category.Trim().ToLower()).ToList();
+        }
     }
 }

@@ -7,7 +7,7 @@
         <table>
             <tr>
                 <td style="height: 27px">
-                    <asp:DropDownList ID="ddlSuppliers" runat="server" Width="208px">
+                    <asp:DropDownList ID="ddlCategory" runat="server" Width="208px" OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged">
                     </asp:DropDownList>
                     &emsp;
                 </td>
@@ -27,7 +27,7 @@
                 <td></td>
                 <td>
                     <br />
-                    <asp:CheckBox ID="CheckBox1" runat="server" Text="Include obsolete items" OnCheckedChanged="CheckBox1_CheckedChanged" />
+                    <asp:CheckBox ID="CheckBox1" runat="server" Text="Include obsolete items" OnCheckedChanged="CheckBox1_CheckedChanged" autopostback="true"/>
                 </td>
                 <td>
                     <asp:RadioButtonList ID="RadioButtonList1" runat="server" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
@@ -58,13 +58,13 @@
                 <asp:BoundField DataField="Inventory.item_status" HeaderText="Status" />
                 <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button1" runat="server" CommandName="" Text="Add to Cart" />
+                            <asp:Button ID="Button1" runat="server" CommandName="" Text="PO" />
                             <asp:HiddenField ID="HiddenFieldID" runat="server" Value='<%# Eval("Inventory.item_number") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="View Details"/>
+                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="ADJ"/>
                         <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("Inventory.item_number") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
