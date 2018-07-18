@@ -14,6 +14,9 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 
+    <%-- Master CSS File --%>
+    <link rel="stylesheet" href="Content/Master.css" />
+
     <%-- Custom Javascript here --%>
     <script src=<%=ResolveUrl("~/Scripts/canvasjs.min.js")%>></script>
     <script src=<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>></script>
@@ -44,19 +47,26 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Logic University</a>
+                    <a class="navbar-brand" href="<%=ResolveUrl("~/Protected/Dashboard")%>">Logic University</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href=<%=ResolveUrl("~/Protected/Dashboard")%>>Dashboard</a></li>
+                        <li><a href="<%=ResolveUrl("~/Protected/Dashboard")%>">Dashboard</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">View<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/ClerkInventory")%>">Inventory List</a></li>
+                                <li><a href="#">Purchase Order Staging</a></li>
+                                <li><a href="#">Purchase Order List</a></li>
+                                <li><a href="#">Weekly Collection List</a></li>
+                                <li><a href="#">Distribution List</a></li>
+                                <li><a href="#">Delivery Schedule</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">PO Approval</a></li>
+                                <li><a href="#">Approve / Reject Item Adjustment</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">View Reports</a></li>
+
                             </ul>
                         </li>
                     </ul>
@@ -69,7 +79,7 @@
                                 <li><a href="#">Another action</a></li>
                                 <li><a href="#">Something else here</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                                <li><a href="<%=ResolveUrl("~")%>"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -83,7 +93,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Logic University</p>
             </footer>
         </div>
 
