@@ -41,7 +41,7 @@ namespace Team3ADProject.Protected
             string adjcomment= (row.FindControl("TextBox1") as TextBox).Text;
 
             BusinessLogic.Updateadj(adjid,adjcomment);
-            BusinessLogic.sendMail();
+          //  BusinessLogic.sendMail();
             GridView1.EditIndex = -1;
             BindGrid();
 

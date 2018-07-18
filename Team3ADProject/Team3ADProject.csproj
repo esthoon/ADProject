@@ -227,6 +227,10 @@
     <Content Include="Protected\AdjustmentApproval.aspx" />
     <Content Include="Protected\Dashboard.aspx" />
     <Content Include="Protected\PurchaseOrderApproval.aspx" />
+    <Content Include="Protected\PlacePurchaseOrderForm.aspx" />
+    <Content Include="Protected\StagingOfPurchaseOrder.aspx" />
+    <Content Include="Protected\ClerkInventory.aspx" />
+    <Content Include="Protected\WebForm2.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvasjs.min.js" />
@@ -269,6 +273,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Code\BusinessLogic.cs" />
+    <Compile Include="Code\StagingItem.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -292,6 +297,7 @@
     <Compile Include="Model\budget.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\cInventory.cs" />
     <Compile Include="Model\collection.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -367,6 +373,34 @@
     </Compile>
     <Compile Include="Protected\PurchaseOrderApproval.aspx.designer.cs">
       <DependentUpon>PurchaseOrderApproval.aspx</DependentUpon>
+      </Compile>
+    <Compile Include="Protected\PlacePurchaseOrderForm.aspx.cs">
+      <DependentUpon>PlacePurchaseOrderForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\PlacePurchaseOrderForm.aspx.designer.cs">
+      <DependentUpon>PlacePurchaseOrderForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\StagingOfPurchaseOrder.aspx.cs">
+      <DependentUpon>StagingOfPurchaseOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\StagingOfPurchaseOrder.aspx.designer.cs">
+      <DependentUpon>StagingOfPurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\ClerkInventory.aspx.cs">
+      <DependentUpon>ClerkInventory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\ClerkInventory.aspx.designer.cs">
+      <DependentUpon>ClerkInventory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\WebForm2.aspx.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\WebForm2.aspx.designer.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\Service.svc.cs">
@@ -408,7 +442,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50772</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

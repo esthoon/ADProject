@@ -5,12 +5,9 @@ using System.Net.Mail;
 using System.Web;
 using Team3ADProject.Model;
 
-
 namespace Team3ADProject.Code
 {
-
-
-
+    
     public class BusinessLogic
     {
     static LogicUniversityEntities ctx= new LogicUniversityEntities();
@@ -55,25 +52,83 @@ namespace Team3ADProject.Code
 
         }
 
-        public static void sendMail()
+       
+
+        public static inventory GetInventory(string id)
         {
-            MailMessage mail = new MailMessage();
-            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            LogicUniversityEntities model = new LogicUniversityEntities();
+            return model.inventories.Where(i => i.item_number == id).ToList<inventory>()[0];
+        }
+        public static List<supplier_itemdetail> GetSupplier(string id)
+        {
+            LogicUniversityEntities model = new LogicUniversityEntities();
+            return model.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
+        }
 
-            mail.From = new MailAddress("adteam3@gmail.com");
-            mail.To.Add("adteam3@gmail.com");
-            mail.Subject = "Test Mail";
-            mail.Body = "Hello. this is a testing email";
+        public static List<inventory> GetActiveInventories()
+        {
+            LogicUniversityEntities ctx = new LogicUniversityEntities();
+            return ctx.inventories.Where(x => x.item_status.ToLower() == "active").ToList();
+        }
 
-            SmtpServer.Port = 587;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("adteam3@gmail.com", "testing!23");
-            SmtpServer.EnableSsl = true;
+        public static List<inventory> GetAllInventories()
+        {
+            LogicUniversityEntities ctx = new LogicUniversityEntities();
+            return ctx.inventories.ToList();
+        }
 
-            SmtpServer.Send(mail);
+        public static List<supplier> GetActiveSuppliers()
+        {
+            using(LogicUniversityEntities ctx=new LogicUniversityEntities())
+            {
+                return ctx.suppliers.Distinct().Where(s => s.supplier_status.ToLower() == "active").ToList();
+            }
+        }
+
+        public static List<string> GetCategories()
+        {
+            using (LogicUniversityEntities ctx = new LogicUniversityEntities())
+            {
+                return ctx.inventories.OrderBy(x=>x.category).Select(x=> x.category).Distinct().ToList();
+            }
+        }
+
+        public static int ReturnPendingPOqtyByStatus(inventory item, string status)
+        {
+            LogicUniversityEntities ctx = new LogicUniversityEntities();
+            var q = ctx.purchase_order_detail.Where(x => x.item_purchase_order_status.ToLower().Trim() == "pending" 
+            && x.purchase_order.purchase_order_status.ToLower().Trim() == status);
+            int qty = 0;
+            foreach(var a in q)
+            {
+                if (a.item_number.ToLower().Trim().Equals(item.item_number.ToLower().Trim()))
+                {
+                    qty += a.item_purchase_order_quantity;
+                }
+            }
+            return qty;
             
         }
 
+        public static int ReturnPendingAdjustmentQty(inventory item)
+        {
+            LogicUniversityEntities ctx = new LogicUniversityEntities();
+            var q = ctx.adjustments.Where(x=>x.adjustment_status.ToLower().Trim() == "pending");
+            int qty = 0;
+            foreach(var a in q)
+            {
+                if (a.item_number.ToLower().Trim().Equals(item.item_number.ToLower().Trim()))
+                {
+                    qty += a.adjustment_quantity;
+                }
+            }
+            return qty;
+        }
 
-       
+        public static List<inventory> GetInventoriesByCategory(string category)
+        {
+            LogicUniversityEntities ctx = new LogicUniversityEntities();
+            return ctx.inventories.Where(x => x.category.Trim().ToLower() == category.Trim().ToLower()).ToList();
+        }
     }
 }
