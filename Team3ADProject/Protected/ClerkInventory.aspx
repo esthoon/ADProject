@@ -6,20 +6,20 @@
     <div>
         <table>
             <tr>
-                <td>
+                <td style="height: 27px">
                     <asp:DropDownList ID="ddlSuppliers" runat="server" Width="208px">
                     </asp:DropDownList>
                     &emsp;
                 </td>
-                <td>
+                <td style="height: 27px">
                     <asp:TextBox ID="TextBox1" runat="server" Width="352px"></asp:TextBox>
                     &emsp;
                 </td>
-                <td>
+                <td style="height: 27px">
                     <asp:Button ID="Button1" runat="server" Text="Search" />
                     &emsp;
                 </td>
-                <td>
+                <td style="height: 27px">
                     <asp:Button ID="Button2" runat="server" Text="View PO Staging" />
                 </td>
             </tr>
@@ -27,10 +27,13 @@
                 <td></td>
                 <td>
                     <br />
-                    <asp:CheckBox ID="CheckBox1" runat="server" Text="Include obsolete items" />
+                    <asp:CheckBox ID="CheckBox1" runat="server" Text="Include obsolete items" OnCheckedChanged="CheckBox1_CheckedChanged" />
                 </td>
                 <td>
-                    <asp:RadioButtonList ID="RadioButtonList1" runat="server"></asp:RadioButtonList>
+                    <asp:RadioButtonList ID="RadioButtonList1" runat="server" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged">
+                        <asp:ListItem Selected="True" Value="1">All</asp:ListItem>
+                        <asp:ListItem Value="2">Low in stock</asp:ListItem>
+                    </asp:RadioButtonList>
                 </td>
             </tr>
         </table>

@@ -37,5 +37,11 @@ namespace Team3ADProject.Protected
         {
 
         }
+
+        protected void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            gvInventoryList.DataSource = getCInventoryList(BusinessLogic.GetAllInventories());
+            gvInventoryList.DataBind();
+        }
     }
 }
