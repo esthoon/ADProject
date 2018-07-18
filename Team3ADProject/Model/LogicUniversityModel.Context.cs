@@ -12,6 +12,8 @@ namespace Team3ADProject.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class LogicUniversityEntities : DbContext
     {
@@ -40,5 +42,28 @@ namespace Team3ADProject.Model
         public virtual DbSet<requisition_order_detail> requisition_order_detail { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<supplier_itemdetail> supplier_itemdetail { get; set; }
+    
+        public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetDepartmentPin(string departmentname)
+        {
+            var departmentnameParameter = departmentname != null ?
+                new ObjectParameter("departmentname", departmentname) :
+                new ObjectParameter("departmentname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetDepartmentPin", departmentnameParameter);
+        }
+    
+        public virtual ObjectResult<spAcknowledgeDistributionList_Result> spAcknowledgeDistributionList(Nullable<int> disbursementlistid)
+        {
+            var disbursementlistidParameter = disbursementlistid.HasValue ?
+                new ObjectParameter("disbursementlistid", disbursementlistid) :
+                new ObjectParameter("disbursementlistid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spAcknowledgeDistributionList_Result>("spAcknowledgeDistributionList", disbursementlistidParameter);
+        }
     }
 }
