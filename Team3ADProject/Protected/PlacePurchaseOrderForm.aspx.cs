@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Team3ADProject.Code;
 using Team3ADProject.Model;
 
 namespace Team3ADProject.Protected
@@ -11,6 +12,7 @@ namespace Team3ADProject.Protected
     public partial class PlacePurchaseOrderForm : System.Web.UI.Page
     {
         string itemid;
+        List<StagingItem> stagingitem;
         protected void Page_Load(object sender, EventArgs e)
         {   //Get the item code
             if (Request.QueryString["itemid"] != null)
@@ -64,10 +66,29 @@ namespace Team3ADProject.Protected
 
         protected void Submit_Click(object sender, EventArgs e)
         {
-            
+            if(Session["staging"] != null)
+            {
+                stagingitem = (List<StagingItem>)Session["staging"];
+            }
+            else
+            {
+                stagingitem = new List<StagingItem>();
+            }
 
+            StagingItem newItem = new StagingItem();
 
-            Session["staging"] = "";
+            newItem.item_id = itemDescription.Text;
+            newItem.date_required = Calendar1.SelectedDate.ToString("dd/MM/yyyy");
+            newItem.quantity = quantity.Text;
+            newItem.buyer = createByWho.Text;
+            newItem.unit_price = Convert.ToDouble(unitCost.Text);
+            newItem.supplier = DropDownListSupplier.SelectedItem.Text;
+
+            stagingitem.Add(newItem);
+
+            Session["staging"] = stagingitem;
+
+            //Redirect to homepage
         }
 
         protected void Cancel_Click(object sender, EventArgs e)
