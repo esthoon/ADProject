@@ -10,93 +10,129 @@ namespace Team3ADProject.Code
     
     public class BusinessLogic
     {
-    static LogicUniversityEntities ctx= new LogicUniversityEntities();
+        static LogicUniversityEntities context = new LogicUniversityEntities();
+
+        public static List<spGetCollectionList_Result> GetCollectionList()
+        {
+            List<spGetCollectionList_Result> list = new List<spGetCollectionList_Result>();
+            return list = context.spGetCollectionList().ToList();
+        }
+
+        public static void DeductFromInventory(List<CollectionListItem> list)
+        {
+            foreach (var item in list)
+            {
+                inventory i = context.inventories.Where(x => x.item_number == item.itemNum).First();
+                i.current_quantity -= item.qtyPrepared;
+                context.SaveChanges();
+            }
+        }
+
+        public static List<spGetUndisbursedROList_Result> GetUndisbursedROList()
+        {
+            List<spGetUndisbursedROList_Result> list = new List<spGetUndisbursedROList_Result>();
+            return list = context.spGetUndisbursedROList().ToList();
+        }
+
+        public static requisition_order_detail GetRODetailByROIdAndItemNum(string roId, string itemNum)
+        {
+            requisition_order_detail rod = new requisition_order_detail();
+            return rod = context.requisition_order_detail.Where(x => (x.requisition_id == roId) && (x.item_number == itemNum)).FirstOrDefault();
+        }
 
 
+        public static void UpdateRODetails(requisition_order_detail rod)
+        {
+            requisition_order_detail rodUpdate = context.requisition_order_detail.Where(x => (x.requisition_id == rod.requisition_id) && (x.item_number == rod.item_number)).First();
+            rodUpdate.item_distributed_quantity = rod.item_distributed_quantity;
+            rodUpdate.item_pending_quantity = rod.item_pending_quantity;
+            context.SaveChanges();
+        }
+
+        public static List<spGetDepartmentList_Result> GetDepartmentList()
+        {
+            List<spGetDepartmentList_Result> list = new List<spGetDepartmentList_Result>();
+            return list = context.spGetDepartmentList().ToList();
+        }
+
+        public static List<spGetRODetailsByROId_Result> GetRODetailsByROId(string roId)
+        {
+            List<spGetRODetailsByROId_Result> list = new List<spGetRODetailsByROId_Result>();
+            return list = context.spGetRODetailsByROId(roId).ToList();
+        }
+
+        public static List<spViewCollectionList_Result> ViewCollectionList()
+        {
+            List<spViewCollectionList_Result> list = new List<spViewCollectionList_Result>();
+            return list = context.spViewCollectionList().ToList();
+        }
+
+        public static int GetDepartmentPin(string departmentname)
+        {
+            return (int)context.spGetDepartmentPin(departmentname).ToList().Single();
+        }
+
+        public static List<spAcknowledgeDistributionList_Result> ViewAcknowledgementList(int disbursement_list_id)
+        {
+            List<spAcknowledgeDistributionList_Result> list = new List<spAcknowledgeDistributionList_Result>();
+            return list = context.spAcknowledgeDistributionList(disbursement_list_id).ToList();
+        }
         //List all adjustment form
         public static List<adjustment> GetAdjustment()
         {
-
-            return ctx.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250).ToList();
-            
-
+            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250).ToList();
         }
-
+        //Update adjustment form
         public static void Updateadj(int id, string comment)
         {
-            adjustment adj = ctx.adjustments.Where(x => x.adjustment_id == id).First<adjustment>();
+            adjustment adj = context.adjustments.Where(x => x.adjustment_id == id).First<adjustment>();
             adj.adjustment_status = "Approved";
             adj.manager_remark = comment;
-            ctx.SaveChanges();
-
+            context.SaveChanges();
         }
-
         public static void rejectAdj(int id, string comment)
         {
-            adjustment adj = ctx.adjustments.Where(x => x.adjustment_id == id).First<adjustment>();
+            adjustment adj = context.adjustments.Where(x => x.adjustment_id == id).First<adjustment>();
             adj.adjustment_status = "Rejected";
             adj.manager_remark = comment;
-            ctx.SaveChanges();
-
+            context.SaveChanges();
         }
-
         public static List<adjustment> Search(DateTime date)
         {
-            return ctx.adjustments.Where(x => x.adjustment_date == date).ToList<adjustment>();
-        }
-
-        
+            return context.adjustments.Where(x => x.adjustment_date == date).ToList<adjustment>();
+        }       
+        //List purchase order
         public static List<purchase_order> GetPurchaseOrders()
         {
-            return ctx.purchase_order.OrderBy(x=>x.suppler_id).Where(x => x.purchase_order_status == "awaiting approval").ToList();
-
+            return context.purchase_order.OrderBy(x=>x.suppler_id).Where(x => x.purchase_order_status == "awaiting approval").ToList();
         }
-
-       
-
         public static inventory GetInventory(string id)
         {
-            LogicUniversityEntities model = new LogicUniversityEntities();
-            return model.inventories.Where(i => i.item_number == id).ToList<inventory>()[0];
+            return context.inventories.Where(i => i.item_number == id).ToList<inventory>()[0];
         }
         public static List<supplier_itemdetail> GetSupplier(string id)
         {
-            LogicUniversityEntities model = new LogicUniversityEntities();
-            return model.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
+            return context.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
         }
-
         public static List<inventory> GetActiveInventories()
         {
-            LogicUniversityEntities ctx = new LogicUniversityEntities();
-            return ctx.inventories.Where(x => x.item_status.ToLower() == "active").ToList();
+            return context.inventories.Where(x => x.item_status.ToLower() == "active").ToList();
         }
-
         public static List<inventory> GetAllInventories()
         {
-            LogicUniversityEntities ctx = new LogicUniversityEntities();
-            return ctx.inventories.ToList();
+            return context.inventories.ToList();
         }
-
         public static List<supplier> GetActiveSuppliers()
         {
-            using(LogicUniversityEntities ctx=new LogicUniversityEntities())
-            {
-                return ctx.suppliers.Distinct().Where(s => s.supplier_status.ToLower() == "active").ToList();
-            }
+            return context.suppliers.Distinct().Where(s => s.supplier_status.ToLower() == "active").ToList();
         }
-
         public static List<string> GetCategories()
         {
-            using (LogicUniversityEntities ctx = new LogicUniversityEntities())
-            {
-                return ctx.inventories.OrderBy(x=>x.category).Select(x=> x.category).Distinct().ToList();
-            }
+            return context.inventories.OrderBy(x=>x.category).Select(x=> x.category).Distinct().ToList();
         }
-
         public static int ReturnPendingPOqtyByStatus(inventory item, string status)
         {
-            LogicUniversityEntities ctx = new LogicUniversityEntities();
-            var q = ctx.purchase_order_detail.Where(x => x.item_purchase_order_status.ToLower().Trim() == "pending" 
+            var q = context.purchase_order_detail.Where(x => x.item_purchase_order_status.ToLower().Trim() == "pending" 
             && x.purchase_order.purchase_order_status.ToLower().Trim() == status);
             int qty = 0;
             foreach(var a in q)
@@ -106,14 +142,11 @@ namespace Team3ADProject.Code
                     qty += a.item_purchase_order_quantity;
                 }
             }
-            return qty;
-            
+            return qty; 
         }
-
         public static int ReturnPendingAdjustmentQty(inventory item)
         {
-            LogicUniversityEntities ctx = new LogicUniversityEntities();
-            var q = ctx.adjustments.Where(x=>x.adjustment_status.ToLower().Trim() == "pending");
+            var q = context.adjustments.Where(x=>x.adjustment_status.ToLower().Trim() == "pending");
             int qty = 0;
             foreach(var a in q)
             {
@@ -124,11 +157,10 @@ namespace Team3ADProject.Code
             }
             return qty;
         }
-
         public static List<inventory> GetInventoriesByCategory(string category)
         {
-            LogicUniversityEntities ctx = new LogicUniversityEntities();
-            return ctx.inventories.Where(x => x.category.Trim().ToLower() == category.Trim().ToLower()).ToList();
+            return context.inventories.Where(x => x.category.Trim().ToLower() == category.Trim().ToLower()).ToList();
         }
+
     }
 }

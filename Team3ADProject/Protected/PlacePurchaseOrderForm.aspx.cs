@@ -19,10 +19,6 @@ namespace Team3ADProject.Protected
             {
                 itemid = Request.QueryString["itemid"];
             }
-            else
-            {
-                itemid = "E032";
-            }
 
             if (!IsPostBack)
             {

@@ -43,6 +43,53 @@ namespace Team3ADProject.Model
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<supplier_itemdetail> supplier_itemdetail { get; set; }
     
+        public virtual ObjectResult<spGetCollectionList_Result> spGetCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetCollectionList_Result>("spGetCollectionList");
+        }
+    
+        public virtual ObjectResult<spGetUndisbursedROList_Result> spGetUndisbursedROList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUndisbursedROList_Result>("spGetUndisbursedROList");
+        }
+    
+        public virtual ObjectResult<spGetDepartmentList_Result> spGetDepartmentList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetDepartmentList_Result>("spGetDepartmentList");
+        }
+
+        public virtual ObjectResult<spGetRODetailsByROId_Result> spGetRODetailsByROId(string roId)
+        {
+            var roIdParameter = roId != null ?
+                new ObjectParameter("roId", roId) :
+                new ObjectParameter("roId", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetRODetailsByROId_Result>("spGetRODetailsByROId", roIdParameter);
+        }
+
+        public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetDepartmentPin(string departmentname)
+        {
+            var departmentnameParameter = departmentname != null ?
+                new ObjectParameter("departmentname", departmentname) :
+                new ObjectParameter("departmentname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetDepartmentPin", departmentnameParameter);
+        }
+
+        public virtual ObjectResult<spAcknowledgeDistributionList_Result> spAcknowledgeDistributionList(Nullable<int> disbursementlistid)
+        {
+            var disbursementlistidParameter = disbursementlistid.HasValue ?
+                new ObjectParameter("disbursementlistid", disbursementlistid) :
+                new ObjectParameter("disbursementlistid", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spAcknowledgeDistributionList_Result>("spAcknowledgeDistributionList", disbursementlistidParameter);
+        }
+
         public virtual ObjectResult<getPurchaseQuantityByItemCategory_Result> getPurchaseQuantityByItemCategory(Nullable<int> monthsBack)
         {
             var monthsBackParameter = monthsBack.HasValue ?
@@ -55,6 +102,7 @@ namespace Team3ADProject.Model
         public virtual ObjectResult<getRequisitionQuantityByDepartment_Result> getRequisitionQuantityByDepartment()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionQuantityByDepartment_Result>("getRequisitionQuantityByDepartment");
+
         }
     
         public virtual ObjectResult<getRecentRequisitionOrders_Result> getRecentRequisitionOrders()
