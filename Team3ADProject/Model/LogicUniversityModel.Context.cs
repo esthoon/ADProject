@@ -12,6 +12,8 @@ namespace Team3ADProject.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class LogicUniversityEntities : DbContext
     {
@@ -33,12 +35,53 @@ namespace Team3ADProject.Model
         public virtual DbSet<department_rep> department_rep { get; set; }
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<inventory> inventories { get; set; }
-        public virtual DbSet<purchase_order> purchase_order { get; set; }
-        public virtual DbSet<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual DbSet<requisition_disbursement_detail> requisition_disbursement_detail { get; set; }
         public virtual DbSet<requisition_order> requisition_order { get; set; }
         public virtual DbSet<requisition_order_detail> requisition_order_detail { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<supplier_itemdetail> supplier_itemdetail { get; set; }
+        public virtual DbSet<purchase_order> purchase_order { get; set; }
+        public virtual DbSet<purchase_order_detail> purchase_order_detail { get; set; }
+    
+        public virtual ObjectResult<getRequsitionDetail_Result> getRequsitionDetail(string var)
+        {
+            var varParameter = var != null ?
+                new ObjectParameter("var", var) :
+                new ObjectParameter("var", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequsitionDetail_Result>("getRequsitionDetail", varParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionDetail_Result> getRequisitionDetail(string var)
+        {
+            var varParameter = var != null ?
+                new ObjectParameter("var", var) :
+                new ObjectParameter("var", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionDetail_Result>("getRequisitionDetail", varParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionOrderDetailsforEdit_Result> getRequisitionOrderDetailsforEdit(string var)
+        {
+            var varParameter = var != null ?
+                new ObjectParameter("var", var) :
+                new ObjectParameter("var", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionOrderDetailsforEdit_Result>("getRequisitionOrderDetailsforEdit", varParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionOrderDetails_Result> getRequisitionOrderDetails(string var)
+        {
+            var varParameter = var != null ?
+                new ObjectParameter("var", var) :
+                new ObjectParameter("var", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionOrderDetails_Result>("getRequisitionOrderDetails", varParameter);
+        }
+    
+        public virtual ObjectResult<GetRequisitionStatus_Result> GetRequisitionStatus()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetRequisitionStatus_Result>("GetRequisitionStatus");
+        }
     }
 }
