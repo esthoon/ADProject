@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 
+
 <html lang="en">
 <head runat="server">
     <meta charset="utf-8" />
@@ -14,9 +15,15 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 
+    <%-- Master CSS File --%>
+    <link rel="stylesheet" href="Content/Master.css" />
+    <link rel="stylesheet" href="Content/utilities.css" />
+
     <%-- Custom Javascript here --%>
-    <script src=<%=ResolveUrl("~/Scripts/canvasjs.min.js")%>></script>
-    <script src=<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>></script>
+    <script src="<%=ResolveUrl("~/Scripts/jquery.canvasjs.min.js")%>"></script>
+    <script src="<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>"></script>
+    
+ 
 
 </head>
 <body>
@@ -41,35 +48,47 @@
             </Scripts>
         </asp:ScriptManager>
 
+
+
+
+
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Logic University</a>
+                    <a class="navbar-brand" href="<%=ResolveUrl("~/Protected/Dashboard")%>">Logic University</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href=<%=ResolveUrl("~/Protected/Dashboard")%>>Dashboard</a></li>
+                        <li><a href="<%=ResolveUrl("~/Protected/Dashboard")%>">Dashboard</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">View<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/ClerkInventory")%>">Inventory List</a></li>
+                                <li><a href="#">Purchase Order Staging</a></li>
+                                <li><a href="#">Purchase Order List</a></li>
+                                <li><a href="#">Weekly Collection List</a></li>
+                                <li><a href="#">Distribution List</a></li>
+                                <li><a href="#">Delivery Schedule</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">PO Approval</a></li>
+                                <li><a href="#">Approve / Reject Item Adjustment</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">View Reports</a></li>
+
                             </ul>
                         </li>
+                        <li><a href="<%=ResolveUrl("~/Services/service.svc")%>">Services</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, User! <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, <%=HttpContext.Current.User.Identity.Name%>! <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Action</a></li>
                                 <li><a href="#">Another action</a></li>
                                 <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Logout")%>">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -83,7 +102,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Logic University</p>
             </footer>
         </div>
 

@@ -148,7 +148,49 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Master.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -164,26 +206,29 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Model\LogicUniversityModel.edmx">
+    <Content Include="MasterPage.Master" />
+    <EntityDeploy Include="Model\LogicUniversityEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LogicUniversityModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>LogicUniversityEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Model\LogicUniversityModel.edmx.diagram">
-      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
+    <Content Include="Model\LogicUniversityEntities.edmx.diagram">
+      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
     </Content>
     <Content Include="MasterPage.Master" />
     <None Include="Properties\PublishProfiles\LUNUS.pubxml" />
+    <Content Include="Guest.Master" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Model\LogicUniversityModel.Context.tt">
+    <Content Include="Model\LogicUniversityEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LogicUniversityModel.Context.cs</LastGenOutput>
-      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
+      <LastGenOutput>LogicUniversityEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\LogicUniversityModel.tt">
+    <Content Include="Model\LogicUniversityEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
-      <LastGenOutput>LogicUniversityModel.cs</LastGenOutput>
+      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
+      <LastGenOutput>LogicUniversityEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Protected\CollectionList.aspx" />
     <Content Include="Protected\Dashboard.aspx" />
     <Content Include="Protected\EditRequest.aspx" />
     <Content Include="Protected\EmployeeViewHistory.aspx" />
@@ -191,14 +236,27 @@
     <Content Include="Protected\NewRequest.aspx" />
     <Content Include="Protected\RequestCart.aspx" />
     <Content Include="Protected\RequestConfirm.aspx" />
+    <Content Include="Protected\DisbursementSorting.aspx" />
+    <Content Include="Protected\AcknowledgeDistributionList.aspx" />
+    <Content Include="Protected\ViewCollectionInformation.aspx" />
+    <Content Include="Protected\AdjustmentApproval.aspx" />
+    <Content Include="Protected\PurchaseOrderApproval.aspx" />
+    <Content Include="Protected\PlacePurchaseOrderForm.aspx" />
+    <Content Include="Protected\StagingOfPurchaseOrder.aspx" />
+    <Content Include="Protected\ClerkInventory.aspx" />
+    <Content Include="Protected\WebForm2.aspx" />
+    <Content Include="Protected\Report.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\Custom\Charts.js" />
+    <Content Include="Scripts\jquery-1.12.1.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -223,14 +281,23 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Services\Service.svc" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
     <Content Include="Bundle.config" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Code\BusinessLogic.cs" />
     <Compile Include="Code\cart.cs" />
+    <Compile Include="Code\CollectionListItem.cs" />
+    <Compile Include="Code\Constants.cs" />
+    <Compile Include="Code\StagingItem.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -241,6 +308,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Guest.Master.cs">
+      <DependentUpon>Guest.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Guest.Master.designer.cs">
+      <DependentUpon>Guest.Master</DependentUpon>
+    </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -248,34 +322,8 @@
     <Compile Include="MasterPage.Master.designer.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
     </Compile>
-    <Compile Include="Model\adjustment.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\budget.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\collection.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\collection_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\department.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\department_rep.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\employee.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Model\cInventory.cs" />
     <Compile Include="Model\getRequisitionDetail_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\getRequisitionOrderDetailsforEdit_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\getRequisitionOrderDetails_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetRequisitionStatus_Result.cs">
@@ -284,46 +332,43 @@
     <Compile Include="Model\getRequsitionDetail_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\inventory.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\LogicUniversityModel.Context.cs">
+    <Compile Include="Model\LogicUniversityEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityModel.Context.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogicUniversityModel.cs">
+    <Compile Include="Model\LogicUniversityEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogicUniversityModel.Designer.cs">
+    <Compile Include="Model\LogicUniversityEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\purchase_order.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\purchase_order_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\requisition_disbursement_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\requisition_order.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\requisition_order_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\supplier.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\supplier_itemdetail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protected\CollectionList.aspx.cs">
+      <DependentUpon>CollectionList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\CollectionList.aspx.designer.cs">
+      <DependentUpon>CollectionList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\AcknowledgeDistributionList.aspx.cs">
+      <DependentUpon>AcknowledgeDistributionList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\AcknowledgeDistributionList.aspx.designer.cs">
+      <DependentUpon>AcknowledgeDistributionList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\AdjustmentApproval.aspx.cs">
+      <DependentUpon>AdjustmentApproval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\AdjustmentApproval.aspx.designer.cs">
+      <DependentUpon>AdjustmentApproval.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -373,6 +418,62 @@
     <Compile Include="Protected\RequestConfirm.aspx.designer.cs">
       <DependentUpon>RequestConfirm.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Protected\DisbursementSorting.aspx.cs">
+      <DependentUpon>DisbursementSorting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\DisbursementSorting.aspx.designer.cs">
+      <DependentUpon>DisbursementSorting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\ViewCollectionInformation.aspx.cs">
+      <DependentUpon>ViewCollectionInformation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\ViewCollectionInformation.aspx.designer.cs">
+      <DependentUpon>ViewCollectionInformation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\PurchaseOrderApproval.aspx.cs">
+      <DependentUpon>PurchaseOrderApproval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\PurchaseOrderApproval.aspx.designer.cs">
+      <DependentUpon>PurchaseOrderApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\PlacePurchaseOrderForm.aspx.cs">
+      <DependentUpon>PlacePurchaseOrderForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\PlacePurchaseOrderForm.aspx.designer.cs">
+      <DependentUpon>PlacePurchaseOrderForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\StagingOfPurchaseOrder.aspx.cs">
+      <DependentUpon>StagingOfPurchaseOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\StagingOfPurchaseOrder.aspx.designer.cs">
+      <DependentUpon>StagingOfPurchaseOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\ClerkInventory.aspx.cs">
+      <DependentUpon>ClerkInventory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\ClerkInventory.aspx.designer.cs">
+      <DependentUpon>ClerkInventory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\WebForm2.aspx.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\WebForm2.aspx.designer.cs">
+      <DependentUpon>WebForm2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\Service.svc.cs">
       <DependentUpon>Service.svc</DependentUpon>
@@ -392,12 +493,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -413,7 +508,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50772</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
