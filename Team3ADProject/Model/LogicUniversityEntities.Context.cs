@@ -57,14 +57,52 @@ namespace Team3ADProject.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetDepartmentList_Result>("spGetDepartmentList");
         }
-    
+
         public virtual ObjectResult<spGetRODetailsByROId_Result> spGetRODetailsByROId(string roId)
         {
             var roIdParameter = roId != null ?
                 new ObjectParameter("roId", roId) :
                 new ObjectParameter("roId", typeof(string));
-    
+
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetRODetailsByROId_Result>("spGetRODetailsByROId", roIdParameter);
+        }
+
+        public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetDepartmentPin(string departmentname)
+        {
+            var departmentnameParameter = departmentname != null ?
+                new ObjectParameter("departmentname", departmentname) :
+                new ObjectParameter("departmentname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetDepartmentPin", departmentnameParameter);
+        }
+
+        public virtual ObjectResult<spAcknowledgeDistributionList_Result> spAcknowledgeDistributionList(Nullable<int> disbursementlistid)
+        {
+            var disbursementlistidParameter = disbursementlistid.HasValue ?
+                new ObjectParameter("disbursementlistid", disbursementlistid) :
+                new ObjectParameter("disbursementlistid", typeof(int));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spAcknowledgeDistributionList_Result>("spAcknowledgeDistributionList", disbursementlistidParameter);
+        }
+
+        public virtual ObjectResult<getPurchaseQuantityByItemCategory_Result> getPurchaseQuantityByItemCategory(Nullable<int> monthsBack)
+        {
+            var monthsBackParameter = monthsBack.HasValue ?
+                new ObjectParameter("MonthsBack", monthsBack) :
+                new ObjectParameter("MonthsBack", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPurchaseQuantityByItemCategory_Result>("getPurchaseQuantityByItemCategory", monthsBackParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionQuantityByDepartment_Result> getRequisitionQuantityByDepartment()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionQuantityByDepartment_Result>("getRequisitionQuantityByDepartment");
+
         }
     }
 }
