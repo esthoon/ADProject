@@ -110,9 +110,18 @@ namespace Team3ADProject.Code
         {
             return context.inventories.Where(i => i.item_number == id).ToList<inventory>()[0];
         }
-        public static List<supplier_itemdetail> GetSupplier(string id)
+
+        public static System.Collections.IEnumerable GetSupplier(string id)
+       //     public static List<(string supplier_name, double unit_price)> GetSupplier(string id)
         {
-            return context.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
+            var nestedQuery = from s in context.suppliers
+                              from sid in s.supplier_itemdetail
+                              from i in context.inventories
+                              where (sid.item_number == id && i.item_number ==id)
+                              orderby (sid.priority)
+                              select new { s.supplier_name, sid.unit_price , i.description};
+            return nestedQuery.ToList();                
+            //return context.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
         }
         public static List<inventory> GetActiveInventories()
         {

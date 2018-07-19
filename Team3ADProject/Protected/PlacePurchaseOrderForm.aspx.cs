@@ -24,7 +24,7 @@ namespace Team3ADProject.Protected
                 
                 //Binding the supplier to a dropdownlist to the item selected
                 DropDownListSupplier.DataSource = Code.BusinessLogic.GetSupplier(itemid);
-                DropDownListSupplier.DataTextField = "supplier_id";
+                DropDownListSupplier.DataTextField = "supplier_name";
                 DropDownListSupplier.DataValueField = "unit_price";
                 DropDownListSupplier.DataBind();
                 unitCost.Text = DropDownListSupplier.SelectedItem.Value.ToString();

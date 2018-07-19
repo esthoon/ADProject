@@ -34,7 +34,7 @@
 	$<asp:Label ID="unitCost" runat="server"></asp:Label>
 	<br />
 	Quantity :
-	<asp:TextBox ID="quantity" runat="server" OnTextChanged="DropDownListSupplier_SelectedIndexChanged"></asp:TextBox>
+	<asp:TextBox ID="quantity" runat="server"  AutoPostBack="True" OnTextChanged="DropDownListSupplier_SelectedIndexChanged"></asp:TextBox>
 	<br />
 	Total Cost :
 	<asp:Label ID="totalCost" runat="server"></asp:Label>
