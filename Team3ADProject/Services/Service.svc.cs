@@ -22,7 +22,7 @@ namespace Team3ADProject.Services
 
             foreach (requisition_order ro in requisitionOrders)
             {
-                WCF_RequisitionOrder wcf_ro = new WCF_RequisitionOrder(ro.requisition_id, ro.employee_id, ro.requisition_status, ro.requisition_date);
+                WCF_RequisitionOrder wcf_ro = new WCF_RequisitionOrder(ro.requisition_id.Trim(), ro.employee_id, ro.requisition_status, ro.requisition_date);
                 wcf_requisitionOrders.Add(wcf_ro);
             }
 
@@ -111,6 +111,36 @@ namespace Team3ADProject.Services
             foreach (var i in result.ToList())
             {
                 wcfList.Add(new WCF_RequestQuantityByDepartment(i.department_id.Trim(), i.item_request_quantity));
+            }
+
+            return wcfList;
+        }
+
+        public List<WCF_Item> getLowStockItemsByCategory()
+        {
+            List<WCF_Item> wcfList = new List<WCF_Item>();
+
+            var context = new LogicUniversityEntities();
+            var result = context.getLowStockItemsByCategory();
+
+            foreach (var i in result.ToList())
+            {
+                wcfList.Add(new WCF_Item(i.item_number, i.description, i.current_quantity, i.reorder_level));
+            }
+
+            return wcfList;
+        }
+
+        public List<WCF_MegaObject> getPendingPurchaseOrderCountBySupplier()
+        {
+            List<WCF_MegaObject> wcfList = new List<WCF_MegaObject>();
+
+            var context = new LogicUniversityEntities();
+            var result = context.getPendingPurchaseOrderCountBySupplier();
+
+            foreach (var i in result.ToList())
+            {
+                wcfList.Add(new WCF_MegaObject(i.SupplierId.Trim(), i.PendingPurchaseOrderQuantity));
             }
 
             return wcfList;

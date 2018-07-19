@@ -11,6 +11,7 @@
  * requisitionOrderDateChart: A column chart that shows dates of requisition orders made
  * purchaseQuantityByItemQuantityBarChart: A Column chart that shows stationaries purchased by category
  *  - monthsParam: Sets the number of months to look back up to present
+ *  pendingPurchaseOrderCountBySupplierChart: A Column chart showing pending purchase orders by each supplier
  */
 window.onload = function () {
    
@@ -244,7 +245,53 @@ window.onload = function () {
             });
     }
 
+    // A test chart to show that the javascript is running
+    if ($("#pendingPurchaseOrderCountBySupplierChart").length == 1) {
+
+        // Prepare data
+        var dataPoints = [];
+
+        $.getJSON("http://" + window.location.host + "/Services/Service.svc/Chart/getPendingPurchaseOrderCountBySupplier", {},
+            function (data) {
+                // Place data on the chart
+                $.each(data, function (key, value) {
+                    dataPoints.push({ y: value.Count, label: value.SupplierId });
+                });
+
+                // Render the chart
+                var chart = new CanvasJS.Chart("pendingPurchaseOrderCountBySupplierChart",
+                    {
+                        title: {
+                            text: "Count of Pending purchase orders by suppliers"
+                        },
+                        theme: "theme2",
+                        animationEnabled: true,
+                        axisX: {
+                            title: "Department",
+                            gridThickness: 2
+                        },
+                        axisY: {
+                            title: "Quantity"
+                        },
+                        data: [
+                            {
+                                type: "column",
+                                dataPoints: dataPoints
+                            }
+                        ]
+                    });
+                chart.render();
+
+            });
+    }
+    
+
+
 };
+
+
+
+
 
 
 

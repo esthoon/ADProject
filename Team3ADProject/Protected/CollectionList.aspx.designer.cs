@@ -10,24 +10,24 @@
 namespace Team3ADProject.Protected {
     
     
-    public partial class Dashboard1 {
+    public partial class CollectionList {
         
         /// <summary>
-        /// LowStockItemGridView control.
+        /// gv_CollectionList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView LowStockItemGridView;
+        protected global::System.Web.UI.WebControls.GridView gv_CollectionList;
         
         /// <summary>
-        /// RequisitionOrder_Link control.
+        /// btn_submitCollectionList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton RequisitionOrder_Link;
+        protected global::System.Web.UI.WebControls.Button btn_submitCollectionList;
     }
 }

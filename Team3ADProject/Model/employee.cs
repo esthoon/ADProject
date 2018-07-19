@@ -22,8 +22,8 @@ namespace Team3ADProject.Model
             this.departments1 = new HashSet<department>();
             this.department_rep = new HashSet<department_rep>();
             this.employee1 = new HashSet<employee>();
-            this.purchase_order = new HashSet<purchase_order>();
             this.requisition_order = new HashSet<requisition_order>();
+            this.purchase_order = new HashSet<purchase_order>();
         }
     
         public int employee_id { get; set; }
@@ -45,8 +45,8 @@ namespace Team3ADProject.Model
         public virtual ICollection<employee> employee1 { get; set; }
         public virtual employee employee2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<purchase_order> purchase_order { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<requisition_order> requisition_order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<purchase_order> purchase_order { get; set; }
     }
 }

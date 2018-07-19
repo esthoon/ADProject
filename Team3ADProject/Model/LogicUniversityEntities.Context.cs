@@ -35,13 +35,37 @@ namespace Team3ADProject.Model
         public virtual DbSet<department_rep> department_rep { get; set; }
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<inventory> inventories { get; set; }
-        public virtual DbSet<purchase_order> purchase_order { get; set; }
-        public virtual DbSet<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual DbSet<requisition_disbursement_detail> requisition_disbursement_detail { get; set; }
         public virtual DbSet<requisition_order> requisition_order { get; set; }
         public virtual DbSet<requisition_order_detail> requisition_order_detail { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<supplier_itemdetail> supplier_itemdetail { get; set; }
+        public virtual DbSet<purchase_order> purchase_order { get; set; }
+        public virtual DbSet<purchase_order_detail> purchase_order_detail { get; set; }
+    
+        public virtual ObjectResult<spGetCollectionList_Result> spGetCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetCollectionList_Result>("spGetCollectionList");
+        }
+    
+        public virtual ObjectResult<spGetUndisbursedROList_Result> spGetUndisbursedROList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUndisbursedROList_Result>("spGetUndisbursedROList");
+        }
+    
+        public virtual ObjectResult<spGetDepartmentList_Result> spGetDepartmentList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetDepartmentList_Result>("spGetDepartmentList");
+        }
+    
+        public virtual ObjectResult<spGetRODetailsByROId_Result> spGetRODetailsByROId(string roId)
+        {
+            var roIdParameter = roId != null ?
+                new ObjectParameter("roId", roId) :
+                new ObjectParameter("roId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetRODetailsByROId_Result>("spGetRODetailsByROId", roIdParameter);
+        }
     
         public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
         {
@@ -80,6 +104,26 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionQuantityByDepartment_Result>("getRequisitionQuantityByDepartment");
         }
     
+        public virtual ObjectResult<getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result> getApprovedRequisitionsWithNoDisbursementIdByDepartment()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result>("getApprovedRequisitionsWithNoDisbursementIdByDepartment");
+        }
+    
+        public virtual ObjectResult<getLowStockItemsByCategory_Result> getLowStockItemsByCategory()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getLowStockItemsByCategory_Result>("getLowStockItemsByCategory");
+        }
+    
+        public virtual ObjectResult<getPendingPurchaseOrderCountBySupplier_Result> getPendingPurchaseOrderCountBySupplier()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPendingPurchaseOrderCountBySupplier_Result>("getPendingPurchaseOrderCountBySupplier");
+        }
+    
+        public virtual ObjectResult<getRecentRequisitionOrders_Result> getRecentRequisitionOrders()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRecentRequisitionOrders_Result>("getRecentRequisitionOrders");
+        }
+    
         public virtual ObjectResult<getRequisitionOrderDetails_Result> getRequisitionOrderDetails(string var)
         {
             var varParameter = var != null ?
@@ -96,6 +140,16 @@ namespace Team3ADProject.Model
                 new ObjectParameter("var", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionOrderDetailsforEdit_Result>("getRequisitionOrderDetailsforEdit", varParameter);
+        }
+    
+        public virtual ObjectResult<string> GetRequisitionStatus()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetRequisitionStatus");
+        }
+    
+        public virtual ObjectResult<getStationariesOrderedLastMonthByCategory_Result> getStationariesOrderedLastMonthByCategory()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getStationariesOrderedLastMonthByCategory_Result>("getStationariesOrderedLastMonthByCategory");
         }
     }
 }

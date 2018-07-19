@@ -49,6 +49,17 @@ namespace Team3ADProject.Services
         [WebGet(UriTemplate = "/Chart/getRequisitionQuantityByDepartment", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_RequestQuantityByDepartment> getRequisitionQuantityByDepartment();
 
+        // Outputs data used with the purchaseOrderCategoryChart chart
+        [OperationContract]
+        [WebGet(UriTemplate = "/Chart/getLowStockItemsByCategory", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Item> getLowStockItemsByCategory();
+
+        // Outputs data used with the getPendingPurchaseOrderCountBySupplier chart
+        [OperationContract]
+        [WebGet(UriTemplate = "/Chart/getPendingPurchaseOrderCountBySupplier", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_MegaObject> getPendingPurchaseOrderCountBySupplier();
+
+
     }
 
     [DataContract]
@@ -131,6 +142,18 @@ namespace Team3ADProject.Services
         public string UnitOfMeasurement;
 
         [DataMember]
+        public int CurrentQuantity;
+
+        [DataMember]
+        public int ReorderLevel;
+
+        [DataMember]
+        public int ReorderQuantity;
+
+        [DataMember]
+        public int ItemBin;
+
+        [DataMember]
         public string ItemStatus;
 
         public WCF_Item(string itemNumber, string description, string category, string unitOfMeasurement, string itemStatus)
@@ -140,6 +163,14 @@ namespace Team3ADProject.Services
             Category = category;
             UnitOfMeasurement = unitOfMeasurement;
             ItemStatus = itemStatus;
+        }
+
+        public WCF_Item(string itemNumber, string description, int currentQuantity, int reorderLevel)
+        {
+            ItemNumber = itemNumber;
+            Description = description;
+            CurrentQuantity = currentQuantity;
+            ReorderLevel = reorderLevel;
         }
     }
 
@@ -164,6 +195,7 @@ namespace Team3ADProject.Services
         [DataMember]
         public string ItemStatus;
 
+
         public WCF_PurchaseOrder(int purchaseOrderNumber, string itemNumber, string category, int itemPurchaseOrderQuantity, int itemAcceptQuantity, string itemStatus)
         {
             PurchaseOrderNumber = purchaseOrderNumber;
@@ -173,6 +205,8 @@ namespace Team3ADProject.Services
             ItemAcceptQuantity = itemAcceptQuantity;
             ItemStatus = itemStatus;
         }
+
+
     }
 
     [DataContract]
@@ -207,4 +241,19 @@ namespace Team3ADProject.Services
         }
     }
 
+    [DataContract]
+    public class WCF_MegaObject
+    {
+        [DataMember]
+        public string SupplierId;
+
+        [DataMember]
+        public int? Count;
+
+        public WCF_MegaObject(string supplierId, int? count)
+        {
+            SupplierId = supplierId;
+            Count = count;
+        }
+    }
 }
