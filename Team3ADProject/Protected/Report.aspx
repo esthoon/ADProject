@@ -10,7 +10,7 @@
             <asp:ListItem Value="requisitionOrderDateChart">Requisition Order By Date</asp:ListItem>
             <asp:ListItem Value="purchaseQuantityByItemQuantityBarChart">Stationaries purchased ordered by Item Quantity</asp:ListItem>
             <asp:ListItem Value="requisitionQuantityByDepartmentChart">Requisition Item Quantity by Department</asp:ListItem>
-
+            <asp:ListItem Value="pendingPurchaseOrderCountBySupplierChart">pendingPurchaseOrderCountBySupplierChart</asp:ListItem>
             
         </asp:DropDownList>
         </div>

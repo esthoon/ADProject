@@ -7,16 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace Team3ADProject
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Guest : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
-        }
-
-        protected void Login1_LoggedIn(object sender, EventArgs e)
-        {
-            Response.Redirect(ResolveUrl("~/Protected/Dashboard"));
         }
     }
 }

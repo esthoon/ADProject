@@ -56,5 +56,35 @@ namespace Team3ADProject.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionQuantityByDepartment_Result>("getRequisitionQuantityByDepartment");
         }
+    
+        public virtual ObjectResult<getRecentRequisitionOrders_Result> getRecentRequisitionOrders()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRecentRequisitionOrders_Result>("getRecentRequisitionOrders");
+        }
+    
+        public virtual ObjectResult<getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result> getApprovedRequisitionsWithNoDisbursementIdByDepartment()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result>("getApprovedRequisitionsWithNoDisbursementIdByDepartment");
+        }
+    
+        public virtual ObjectResult<getLowStockItemsByCategory_Result> getLowStockItemsByCategory()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getLowStockItemsByCategory_Result>("getLowStockItemsByCategory");
+        }
+    
+        public virtual ObjectResult<getPendingPurchaseOrdersBySupplier_Result> getPendingPurchaseOrdersBySupplier()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPendingPurchaseOrdersBySupplier_Result>("getPendingPurchaseOrdersBySupplier");
+        }
+    
+        public virtual ObjectResult<getStationariesOrderedLastMonthByCategory_Result> getStationariesOrderedLastMonthByCategory()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getStationariesOrderedLastMonthByCategory_Result>("getStationariesOrderedLastMonthByCategory");
+        }
+    
+        public virtual ObjectResult<getPendingPurchaseOrderCountBySupplier_Result> getPendingPurchaseOrderCountBySupplier()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPendingPurchaseOrderCountBySupplier_Result>("getPendingPurchaseOrderCountBySupplier");
+        }
     }
 }
