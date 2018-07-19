@@ -26,6 +26,7 @@ namespace Team3ADProject.Model
         public string suppler_id { get; set; }
         public int employee_id { get; set; }
         public string purchase_order_status { get; set; }
+        public string manager_remark { get; set; }
     
         public virtual employee employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

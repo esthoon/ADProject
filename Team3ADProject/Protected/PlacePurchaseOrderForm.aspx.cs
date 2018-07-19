@@ -12,7 +12,6 @@ namespace Team3ADProject.Protected
     public partial class PlacePurchaseOrderForm : System.Web.UI.Page
     {
         string itemid;
-        List<StagingItem> stagingitem;
         protected void Page_Load(object sender, EventArgs e)
         {   //Get the item code
             if (Request.QueryString["itemid"] != null)
@@ -62,29 +61,40 @@ namespace Team3ADProject.Protected
 
         protected void Submit_Click(object sender, EventArgs e)
         {
-            if(Session["staging"] != null)
+            if (Session["staging"] != null)
             {
-                stagingitem = (List<StagingItem>)Session["staging"];
+                //var stagingitem = (List<var>)Session["staging"];
             }
             else
             {
-                stagingitem = new List<StagingItem>();
+                //stagingitem = new List<StagingItem>();
             }
 
-            StagingItem newItem = new StagingItem();
+            LogicUniversityEntities entities = new LogicUniversityEntities();
 
-            newItem.item_id = itemDescription.Text;
-            newItem.date_required = Calendar1.SelectedDate.ToString("dd/MM/yyyy");
-            newItem.quantity = quantity.Text;
-            newItem.buyer = createByWho.Text;
-            newItem.unit_price = Convert.ToDouble(unitCost.Text);
-            newItem.supplier = DropDownListSupplier.SelectedItem.Text;
+            var newpurchaseorderdetail = entities.purchase_order_detail.Create();
+            
+            newpurchaseorderdetail.item_number = itemDescription.Text;
 
-            stagingitem.Add(newItem);
-
-            Session["staging"] = stagingitem;
+            Session["staging"] = newpurchaseorderdetail;
 
             Response.Redirect("ClerkInventory.aspx");
+
+
+            //StagingItem newItem = new StagingItem();
+
+            //newItem.item_id = itemDescription.Text;
+            //newItem.date_required = Calendar1.SelectedDate.ToString("dd/MM/yyyy");
+            //newItem.quantity = quantity.Text;
+            //newItem.buyer = createByWho.Text;
+            //newItem.unit_price = Convert.ToDouble(unitCost.Text);
+            //newItem.supplier = DropDownListSupplier.SelectedItem.Text;
+
+            //stagingitem.Add(newItem);
+
+            //Session["staging"] = stagingitem;
+
+            //Response.Redirect("ClerkInventory.aspx");
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

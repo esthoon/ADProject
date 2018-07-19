@@ -219,13 +219,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LogicUniversityModel.Context.cs</LastGenOutput>
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Model\LogicUniversityModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
       <LastGenOutput>LogicUniversityModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Protected\AcknowledgeDistributionList.aspx" />
     <Content Include="Protected\Dashboard.aspx" />
     <Content Include="Protected\ViewCollectionInformation.aspx" />
     <Content Include="Protected\AdjustmentApproval.aspx" />
@@ -327,6 +327,12 @@
     <Compile Include="Model\getPurchaseQuantityByItemCategory_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\getRequisitionOrderDetailsforEdit_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getRequisitionOrderDetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\getRequisitionQuantityByDepartment_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -376,13 +382,6 @@
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protected\AcknowledgeDistributionList.aspx.cs">
-      <DependentUpon>AcknowledgeDistributionList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Protected\AcknowledgeDistributionList.aspx.designer.cs">
-      <DependentUpon>AcknowledgeDistributionList.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Protected\AdjustmentApproval.aspx.cs">
       <DependentUpon>AdjustmentApproval.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

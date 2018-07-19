@@ -10,21 +10,16 @@ namespace Team3ADProject.Protected
 {
     public partial class StagingOfPurchaseOrder : System.Web.UI.Page
     {
-        List<StagingItem> stagingitem;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["staging"] != null)
             {
-                stagingitem = (List<StagingItem>)Session["staging"];
+                //stagingitem = (List<StagingItem>)Session["staging"];
+                var stagingitem = new[] { Session["staging"] };
+                GridView1.DataSource = stagingitem;
+                GridView1.DataBind();
             }
-            else
-            {
-                
-            }
-
-            GridView1.DataSource = stagingitem;
-            GridView1.DataBind();
-
         }
     }
 }
