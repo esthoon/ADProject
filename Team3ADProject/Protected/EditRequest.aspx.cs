@@ -95,6 +95,7 @@ namespace Team3ADProject.Protected
         //remove item from cart
         protected void ReqItemRemove(string itemNumber)
         {
+           
             List<getRequisitionOrderDetails_Result> order = (List<getRequisitionOrderDetails_Result>)Session["OrderDetail"];
             order.RemoveAt(isExisting(itemNumber));
             Session["OrderDetail"] = order;
@@ -164,19 +165,6 @@ namespace Team3ADProject.Protected
             Session["OrderDetail"] = order;
 
         }
-
-        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GridView1.EditIndex = e.NewEditIndex;
-            UpdatePage();
-        }
-
-        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GridView1.EditIndex = -1;
-            UpdatePage();
-        }
-
        
     }
 }
