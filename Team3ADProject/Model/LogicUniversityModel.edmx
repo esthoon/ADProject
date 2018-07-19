@@ -4,8 +4,563 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LogicUniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="LogicUniversityModelStoreContainer" />
+    <Schema Namespace="LogicUniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="adjustment">
+          <Key>
+            <PropertyRef Name="adjustment_id" />
+          </Key>
+          <Property Name="adjustment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adjustment_date" Type="date" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="item_number" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="adjustment_quantity" Type="int" Nullable="false" />
+          <Property Name="adjustment_price" Type="float" Nullable="false" />
+          <Property Name="adjustment_status" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="employee_remark" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="manager_remark" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="budget">
+          <Key>
+            <PropertyRef Name="department_id" />
+            <PropertyRef Name="year" />
+            <PropertyRef Name="month" />
+          </Key>
+          <Property Name="department_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="month" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="budget" Type="int" />
+          <Property Name="spent" Type="int" />
+        </EntityType>
+        <EntityType Name="collection">
+          <Key>
+            <PropertyRef Name="place_id" />
+          </Key>
+          <Property Name="place_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="collection_place" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="collection_time" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="collection_dep">
+          <Key>
+            <PropertyRef Name="department_id" />
+            <PropertyRef Name="place_id" />
+          </Key>
+          <Property Name="department_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="place_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="collection_detail">
+          <Key>
+            <PropertyRef Name="collection_id" />
+          </Key>
+          <Property Name="collection_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="disbursement_list_id" Type="int" Nullable="false" />
+          <Property Name="place_id" Type="int" Nullable="false" />
+          <Property Name="collection_date" Type="date" Nullable="false" />
+          <Property Name="collection_status" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="head_id" Type="int" Nullable="false" />
+          <Property Name="temp_head_id" Type="int" />
+          <Property Name="department_pin" Type="int" Nullable="false" />
+          <Property Name="department_name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="contact_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone_number" Type="int" Nullable="false" />
+          <Property Name="fax_number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="department_rep">
+          <Key>
+            <PropertyRef Name="appointment_id" />
+          </Key>
+          <Property Name="appointment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="department_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="representative_id" Type="int" Nullable="false" />
+          <Property Name="appointed_date" Type="date" Nullable="false" />
+          <Property Name="representative_status" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employee_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="email_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="department_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="supervisor_id" Type="int" />
+        </EntityType>
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="item_number" />
+          </Key>
+          <Property Name="item_number" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="unit_of_measurement" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="current_quantity" Type="int" Nullable="false" />
+          <Property Name="reorder_level" Type="int" Nullable="false" />
+          <Property Name="reorder_quantity" Type="int" Nullable="false" />
+          <Property Name="item_bin" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="item_status" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="purchase_order">
+          <Key>
+            <PropertyRef Name="purchase_order_number" />
+          </Key>
+          <Property Name="purchase_order_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="purchase_order_required_date" Type="date" Nullable="false" />
+          <Property Name="suppler_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="purchase_order_status" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="manager_remark" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="purchase_order_detail">
+          <Key>
+            <PropertyRef Name="purchase_order_number" />
+            <PropertyRef Name="item_number" />
+          </Key>
+          <Property Name="purchase_order_number" Type="int" Nullable="false" />
+          <Property Name="item_number" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="item_purchase_order_quantity" Type="int" Nullable="false" />
+          <Property Name="item_accept_quantity" Type="int" Nullable="false" />
+          <Property Name="item_purchase_order_price" Type="float" Nullable="false" />
+          <Property Name="purchase_order_item_remark" Type="varchar" MaxLength="300" />
+          <Property Name="item_purchase_order_status" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="item_accept_date" Type="date" />
+          <Property Name="item_required_date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="requisition_disbursement_detail">
+          <Key>
+            <PropertyRef Name="disbursement_list_id" />
+          </Key>
+          <Property Name="requisition_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="disbursement_list_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="requisition_order">
+          <Key>
+            <PropertyRef Name="requisition_id" />
+          </Key>
+          <Property Name="requisition_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="employee_id" Type="int" Nullable="false" />
+          <Property Name="requisition_status" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="requisition_date" Type="date" Nullable="false" />
+          <Property Name="head_comment" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="requisition_order_detail">
+          <Key>
+            <PropertyRef Name="requisition_id" />
+            <PropertyRef Name="item_number" />
+          </Key>
+          <Property Name="requisition_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="item_number" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="item_requisition_quantity" Type="int" Nullable="false" />
+          <Property Name="item_distributed_quantity" Type="int" Nullable="false" />
+          <Property Name="item_pending_quantity" Type="int" Nullable="false" />
+          <Property Name="item_requisition_price" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="supplier_id" />
+          </Key>
+          <Property Name="supplier_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="supplier_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="supplier_status" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="supplier_email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contact_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone_number" Type="int" Nullable="false" />
+          <Property Name="fax_number" Type="int" Nullable="false" />
+          <Property Name="GST_registration" Type="varchar" MaxLength="50" />
+          <Property Name="address" Type="varchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supplier_itemdetail">
+          <Key>
+            <PropertyRef Name="supplier_id" />
+            <PropertyRef Name="item_number" />
+          </Key>
+          <Property Name="supplier_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="item_number" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="priority" Type="int" Nullable="false" />
+          <Property Name="unit_price" Type="float" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_adjustment_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="adjustment" Type="Self.adjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="adjustment">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_adjustment_inventory">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
+          <End Role="adjustment" Type="Self.adjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="item_number" />
+            </Principal>
+            <Dependent Role="adjustment">
+              <PropertyRef Name="item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_budget_detail_department">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="budget" Type="Self.budget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="budget">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_collection_dep_collection">
+          <End Role="collection" Type="Self.collection" Multiplicity="1" />
+          <End Role="collection_dep" Type="Self.collection_dep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="collection">
+              <PropertyRef Name="place_id" />
+            </Principal>
+            <Dependent Role="collection_dep">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_collection_dep_department">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="collection_dep" Type="Self.collection_dep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="collection_dep">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_collection_detail_collection">
+          <End Role="collection" Type="Self.collection" Multiplicity="1" />
+          <End Role="collection_detail" Type="Self.collection_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="collection">
+              <PropertyRef Name="place_id" />
+            </Principal>
+            <Dependent Role="collection_detail">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_collection_detail_requisition_disbursement_detail">
+          <End Role="requisition_disbursement_detail" Type="Self.requisition_disbursement_detail" Multiplicity="1" />
+          <End Role="collection_detail" Type="Self.collection_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="requisition_disbursement_detail">
+              <PropertyRef Name="disbursement_list_id" />
+            </Principal>
+            <Dependent Role="collection_detail">
+              <PropertyRef Name="disbursement_list_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_department_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="department" Type="Self.department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="department">
+              <PropertyRef Name="head_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_department_employee1">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="department" Type="Self.department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="department">
+              <PropertyRef Name="temp_head_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_department_rep_department">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="department_rep" Type="Self.department_rep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="department_rep">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_department_rep_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="department_rep" Type="Self.department_rep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="department_rep">
+              <PropertyRef Name="representative_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employee_employee1">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="employee1" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="employee1">
+              <PropertyRef Name="supervisor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_purchase_order_detail_inventory">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
+          <End Role="purchase_order_detail" Type="Self.purchase_order_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="item_number" />
+            </Principal>
+            <Dependent Role="purchase_order_detail">
+              <PropertyRef Name="item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_purchase_order_detail_purchase_order">
+          <End Role="purchase_order" Type="Self.purchase_order" Multiplicity="1" />
+          <End Role="purchase_order_detail" Type="Self.purchase_order_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="purchase_order">
+              <PropertyRef Name="purchase_order_number" />
+            </Principal>
+            <Dependent Role="purchase_order_detail">
+              <PropertyRef Name="purchase_order_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_purchase_order_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="purchase_order" Type="Self.purchase_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="purchase_order">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_purchase_order_supplier">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="1" />
+          <End Role="purchase_order" Type="Self.purchase_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="supplier_id" />
+            </Principal>
+            <Dependent Role="purchase_order">
+              <PropertyRef Name="suppler_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requisition_disbursement_detail_requisition_disbursement_detail">
+          <End Role="requisition_order" Type="Self.requisition_order" Multiplicity="1" />
+          <End Role="requisition_disbursement_detail" Type="Self.requisition_disbursement_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="requisition_order">
+              <PropertyRef Name="requisition_id" />
+            </Principal>
+            <Dependent Role="requisition_disbursement_detail">
+              <PropertyRef Name="requisition_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requisition_order_detail_inventory">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
+          <End Role="requisition_order_detail" Type="Self.requisition_order_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="item_number" />
+            </Principal>
+            <Dependent Role="requisition_order_detail">
+              <PropertyRef Name="item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requisition_order_detail_requisition_order">
+          <End Role="requisition_order" Type="Self.requisition_order" Multiplicity="1" />
+          <End Role="requisition_order_detail" Type="Self.requisition_order_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="requisition_order">
+              <PropertyRef Name="requisition_id" />
+            </Principal>
+            <Dependent Role="requisition_order_detail">
+              <PropertyRef Name="requisition_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requisition_order_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="requisition_order" Type="Self.requisition_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="requisition_order">
+              <PropertyRef Name="employee_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplier_itemdetail_inventory">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="1" />
+          <End Role="supplier_itemdetail" Type="Self.supplier_itemdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="item_number" />
+            </Principal>
+            <Dependent Role="supplier_itemdetail">
+              <PropertyRef Name="item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_supplier_itemdetail_supplier">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="1" />
+          <End Role="supplier_itemdetail" Type="Self.supplier_itemdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="supplier_id" />
+            </Principal>
+            <Dependent Role="supplier_itemdetail">
+              <PropertyRef Name="supplier_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="getRequisitionOrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="var" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getRequisitionOrderDetailsforEdit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="var" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetRequisitionStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="LogicUniversityModelStoreContainer">
+          <EntitySet Name="adjustment" EntityType="Self.adjustment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="budget" EntityType="Self.budget" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="collection" EntityType="Self.collection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="collection_dep" EntityType="Self.collection_dep" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="collection_detail" EntityType="Self.collection_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="department_rep" EntityType="Self.department_rep" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="inventory" EntityType="Self.inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="purchase_order" EntityType="Self.purchase_order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="purchase_order_detail" EntityType="Self.purchase_order_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requisition_disbursement_detail" EntityType="Self.requisition_disbursement_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requisition_order" EntityType="Self.requisition_order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requisition_order_detail" EntityType="Self.requisition_order_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplier_itemdetail" EntityType="Self.supplier_itemdetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_adjustment_employee" Association="Self.FK_adjustment_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="adjustment" EntitySet="adjustment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_adjustment_inventory" Association="Self.FK_adjustment_inventory">
+            <End Role="inventory" EntitySet="inventory" />
+            <End Role="adjustment" EntitySet="adjustment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_budget_detail_department" Association="Self.FK_budget_detail_department">
+            <End Role="department" EntitySet="department" />
+            <End Role="budget" EntitySet="budget" />
+          </AssociationSet>
+          <AssociationSet Name="FK_collection_dep_collection" Association="Self.FK_collection_dep_collection">
+            <End Role="collection" EntitySet="collection" />
+            <End Role="collection_dep" EntitySet="collection_dep" />
+          </AssociationSet>
+          <AssociationSet Name="FK_collection_dep_department" Association="Self.FK_collection_dep_department">
+            <End Role="department" EntitySet="department" />
+            <End Role="collection_dep" EntitySet="collection_dep" />
+          </AssociationSet>
+          <AssociationSet Name="FK_collection_detail_collection" Association="Self.FK_collection_detail_collection">
+            <End Role="collection" EntitySet="collection" />
+            <End Role="collection_detail" EntitySet="collection_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_collection_detail_requisition_disbursement_detail" Association="Self.FK_collection_detail_requisition_disbursement_detail">
+            <End Role="requisition_disbursement_detail" EntitySet="requisition_disbursement_detail" />
+            <End Role="collection_detail" EntitySet="collection_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_department_employee" Association="Self.FK_department_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="department" EntitySet="department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_department_employee1" Association="Self.FK_department_employee1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="department" EntitySet="department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_department_rep_department" Association="Self.FK_department_rep_department">
+            <End Role="department" EntitySet="department" />
+            <End Role="department_rep" EntitySet="department_rep" />
+          </AssociationSet>
+          <AssociationSet Name="FK_department_rep_employee" Association="Self.FK_department_rep_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="department_rep" EntitySet="department_rep" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_employee1" Association="Self.FK_employee_employee1">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="employee1" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_purchase_order_detail_inventory" Association="Self.FK_purchase_order_detail_inventory">
+            <End Role="inventory" EntitySet="inventory" />
+            <End Role="purchase_order_detail" EntitySet="purchase_order_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_purchase_order_detail_purchase_order" Association="Self.FK_purchase_order_detail_purchase_order">
+            <End Role="purchase_order" EntitySet="purchase_order" />
+            <End Role="purchase_order_detail" EntitySet="purchase_order_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_purchase_order_employee" Association="Self.FK_purchase_order_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="purchase_order" EntitySet="purchase_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_purchase_order_supplier" Association="Self.FK_purchase_order_supplier">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="purchase_order" EntitySet="purchase_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requisition_disbursement_detail_requisition_disbursement_detail" Association="Self.FK_requisition_disbursement_detail_requisition_disbursement_detail">
+            <End Role="requisition_order" EntitySet="requisition_order" />
+            <End Role="requisition_disbursement_detail" EntitySet="requisition_disbursement_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requisition_order_detail_inventory" Association="Self.FK_requisition_order_detail_inventory">
+            <End Role="inventory" EntitySet="inventory" />
+            <End Role="requisition_order_detail" EntitySet="requisition_order_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requisition_order_detail_requisition_order" Association="Self.FK_requisition_order_detail_requisition_order">
+            <End Role="requisition_order" EntitySet="requisition_order" />
+            <End Role="requisition_order_detail" EntitySet="requisition_order_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requisition_order_employee" Association="Self.FK_requisition_order_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="requisition_order" EntitySet="requisition_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplier_itemdetail_inventory" Association="Self.FK_supplier_itemdetail_inventory">
+            <End Role="inventory" EntitySet="inventory" />
+            <End Role="supplier_itemdetail" EntitySet="supplier_itemdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_supplier_itemdetail_supplier" Association="Self.FK_supplier_itemdetail_supplier">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="supplier_itemdetail" EntitySet="supplier_itemdetail" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -622,7 +1177,228 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LogicUniversityModelStoreContainer" CdmEntityContainer="LogicUniversityEntities">
-          </EntityContainerMapping>
+          <EntitySetMapping Name="adjustments">
+            <EntityTypeMapping TypeName="LogicUniversityModel.adjustment">
+              <MappingFragment StoreEntitySet="adjustment">
+                <ScalarProperty Name="adjustment_id" ColumnName="adjustment_id" />
+                <ScalarProperty Name="adjustment_date" ColumnName="adjustment_date" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="adjustment_quantity" ColumnName="adjustment_quantity" />
+                <ScalarProperty Name="adjustment_price" ColumnName="adjustment_price" />
+                <ScalarProperty Name="adjustment_status" ColumnName="adjustment_status" />
+                <ScalarProperty Name="employee_remark" ColumnName="employee_remark" />
+                <ScalarProperty Name="manager_remark" ColumnName="manager_remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="budgets">
+            <EntityTypeMapping TypeName="LogicUniversityModel.budget">
+              <MappingFragment StoreEntitySet="budget">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="budget1" ColumnName="budget" />
+                <ScalarProperty Name="spent" ColumnName="spent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="collections">
+            <EntityTypeMapping TypeName="LogicUniversityModel.collection">
+              <MappingFragment StoreEntitySet="collection">
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="collection_place" ColumnName="collection_place" />
+                <ScalarProperty Name="collection_time" ColumnName="collection_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="collection_detail">
+            <EntityTypeMapping TypeName="LogicUniversityModel.collection_detail">
+              <MappingFragment StoreEntitySet="collection_detail">
+                <ScalarProperty Name="collection_id" ColumnName="collection_id" />
+                <ScalarProperty Name="disbursement_list_id" ColumnName="disbursement_list_id" />
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="collection_date" ColumnName="collection_date" />
+                <ScalarProperty Name="collection_status" ColumnName="collection_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="LogicUniversityModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="head_id" ColumnName="head_id" />
+                <ScalarProperty Name="temp_head_id" ColumnName="temp_head_id" />
+                <ScalarProperty Name="department_pin" ColumnName="department_pin" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="fax_number" ColumnName="fax_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="department_rep">
+            <EntityTypeMapping TypeName="LogicUniversityModel.department_rep">
+              <MappingFragment StoreEntitySet="department_rep">
+                <ScalarProperty Name="appointment_id" ColumnName="appointment_id" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="representative_id" ColumnName="representative_id" />
+                <ScalarProperty Name="appointed_date" ColumnName="appointed_date" />
+                <ScalarProperty Name="representative_status" ColumnName="representative_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="LogicUniversityModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="email_id" ColumnName="email_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="supervisor_id" ColumnName="supervisor_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventories">
+            <EntityTypeMapping TypeName="LogicUniversityModel.inventory">
+              <MappingFragment StoreEntitySet="inventory">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="unit_of_measurement" ColumnName="unit_of_measurement" />
+                <ScalarProperty Name="current_quantity" ColumnName="current_quantity" />
+                <ScalarProperty Name="reorder_level" ColumnName="reorder_level" />
+                <ScalarProperty Name="reorder_quantity" ColumnName="reorder_quantity" />
+                <ScalarProperty Name="item_bin" ColumnName="item_bin" />
+                <ScalarProperty Name="item_status" ColumnName="item_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requisition_disbursement_detail">
+            <EntityTypeMapping TypeName="LogicUniversityModel.requisition_disbursement_detail">
+              <MappingFragment StoreEntitySet="requisition_disbursement_detail">
+                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+                <ScalarProperty Name="disbursement_list_id" ColumnName="disbursement_list_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requisition_order">
+            <EntityTypeMapping TypeName="LogicUniversityModel.requisition_order">
+              <MappingFragment StoreEntitySet="requisition_order">
+                <ScalarProperty Name="head_comment" ColumnName="head_comment" />
+                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="requisition_status" ColumnName="requisition_status" />
+                <ScalarProperty Name="requisition_date" ColumnName="requisition_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requisition_order_detail">
+            <EntityTypeMapping TypeName="LogicUniversityModel.requisition_order_detail">
+              <MappingFragment StoreEntitySet="requisition_order_detail">
+                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="item_requisition_quantity" ColumnName="item_requisition_quantity" />
+                <ScalarProperty Name="item_distributed_quantity" ColumnName="item_distributed_quantity" />
+                <ScalarProperty Name="item_pending_quantity" ColumnName="item_pending_quantity" />
+                <ScalarProperty Name="item_requisition_price" ColumnName="item_requisition_price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="suppliers">
+            <EntityTypeMapping TypeName="LogicUniversityModel.supplier">
+              <MappingFragment StoreEntitySet="supplier">
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="supplier_status" ColumnName="supplier_status" />
+                <ScalarProperty Name="supplier_email" ColumnName="supplier_email" />
+                <ScalarProperty Name="contact_name" ColumnName="contact_name" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="fax_number" ColumnName="fax_number" />
+                <ScalarProperty Name="GST_registration" ColumnName="GST_registration" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="supplier_itemdetail">
+            <EntityTypeMapping TypeName="LogicUniversityModel.supplier_itemdetail">
+              <MappingFragment StoreEntitySet="supplier_itemdetail">
+                <ScalarProperty Name="supplier_id" ColumnName="supplier_id" />
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="collection_dep" TypeName="LogicUniversityModel.collection_dep" StoreEntitySet="collection_dep">
+            <EndProperty Name="collection">
+              <ScalarProperty Name="place_id" ColumnName="place_id" />
+            </EndProperty>
+            <EndProperty Name="department">
+              <ScalarProperty Name="department_id" ColumnName="department_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="getRequisitionOrderDetailsforEdit" FunctionName="LogicUniversityModel.Store.getRequisitionOrderDetailsforEdit">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getRequisitionOrderDetailsforEdit_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="item_requisition_quantity" ColumnName="item_requisition_quantity" />
+                <ScalarProperty Name="item_requisition_price" ColumnName="item_requisition_price" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getRequisitionOrderDetails" FunctionName="LogicUniversityModel.Store.getRequisitionOrderDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getRequisitionOrderDetails_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="unit_of_measurement" ColumnName="unit_of_measurement" />
+                <ScalarProperty Name="item_requisition_quantity" ColumnName="item_requisition_quantity" />
+                <ScalarProperty Name="item_requisition_price" ColumnName="item_requisition_price" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="purchase_order">
+            <EntityTypeMapping TypeName="LogicUniversityModel.purchase_order">
+              <MappingFragment StoreEntitySet="purchase_order">
+                <ScalarProperty Name="manager_remark" ColumnName="manager_remark" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="suppler_id" ColumnName="suppler_id" />
+                <ScalarProperty Name="purchase_order_required_date" ColumnName="purchase_order_required_date" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="purchase_order_detail">
+            <EntityTypeMapping TypeName="LogicUniversityModel.purchase_order_detail">
+              <MappingFragment StoreEntitySet="purchase_order_detail">
+                <ScalarProperty Name="item_required_date" ColumnName="item_required_date" />
+                <ScalarProperty Name="item_accept_date" ColumnName="item_accept_date" />
+                <ScalarProperty Name="item_purchase_order_status" ColumnName="item_purchase_order_status" />
+                <ScalarProperty Name="purchase_order_item_remark" ColumnName="purchase_order_item_remark" />
+                <ScalarProperty Name="item_purchase_order_price" ColumnName="item_purchase_order_price" />
+                <ScalarProperty Name="item_accept_quantity" ColumnName="item_accept_quantity" />
+                <ScalarProperty Name="item_purchase_order_quantity" ColumnName="item_purchase_order_quantity" />
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetRequisitionStatus" FunctionName="LogicUniversityModel.Store.GetRequisitionStatus" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.GetRequisitionStatus_Result">
+                <ScalarProperty Name="requisition_status" ColumnName="requisition_status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
