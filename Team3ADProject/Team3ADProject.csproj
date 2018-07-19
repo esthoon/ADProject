@@ -164,26 +164,28 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Model\LogicUniversityModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LogicUniversityModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Model\LogicUniversityModel.edmx.diagram">
-      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
-    </Content>
     <Content Include="MasterPage.Master" />
+    <EntityDeploy Include="Model\LogicUniversityEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LogicUniversityEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model\LogicUniversityEntities.edmx.diagram">
+      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Model\LogicUniversityModel.Context.tt">
+    <Content Include="Model\LogicUniversityEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LogicUniversityModel.Context.cs</LastGenOutput>
-      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
+      <LastGenOutput>LogicUniversityEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\LogicUniversityModel.tt">
+    <Content Include="Model\LogicUniversityEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
-      <LastGenOutput>LogicUniversityModel.cs</LastGenOutput>
+      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
+      <LastGenOutput>LogicUniversityEntities.cs</LastGenOutput>
     </Content>
+    <Content Include="Protected\CollectionList.aspx" />
     <Content Include="Protected\Dashboard.aspx" />
+    <Content Include="Protected\DisbursementSorting.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvasjs.min.js" />
@@ -223,6 +225,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Code\BusinessLogic.cs" />
+    <Compile Include="Code\CollectionListItem.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -241,72 +244,98 @@
       <DependentUpon>MasterPage.Master</DependentUpon>
     </Compile>
     <Compile Include="Model\adjustment.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\budget.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\collection.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\collection_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\department.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\department_rep.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\employee.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\inventory.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogicUniversityModel.Context.cs">
+    <Compile Include="Model\LogicUniversityEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityModel.Context.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogicUniversityModel.cs">
+    <Compile Include="Model\LogicUniversityEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogicUniversityModel.Designer.cs">
+    <Compile Include="Model\LogicUniversityEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\purchase_order.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\purchase_order_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\requisition_disbursement_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\requisition_order.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\requisition_order_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetCollectionList_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetDepartmentList_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetRODetailsByROId_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetUndisbursedROList_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\supplier.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\supplier_itemdetail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protected\CollectionList.aspx.cs">
+      <DependentUpon>CollectionList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\CollectionList.aspx.designer.cs">
+      <DependentUpon>CollectionList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Protected\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\DisbursementSorting.aspx.cs">
+      <DependentUpon>DisbursementSorting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\DisbursementSorting.aspx.designer.cs">
+      <DependentUpon>DisbursementSorting.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\Service.svc.cs">

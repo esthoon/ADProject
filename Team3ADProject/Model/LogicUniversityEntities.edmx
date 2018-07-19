@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LogicUniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LogicUniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="adjustment">
           <Key>
             <PropertyRef Name="adjustment_id" />
@@ -145,6 +145,7 @@
           <Property Name="employee_id" Type="int" Nullable="false" />
           <Property Name="requisition_status" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="requisition_date" Type="date" Nullable="false" />
+          <Property Name="head_comment" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="requisition_order_detail">
           <Key>
@@ -446,6 +447,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="spGetCollectionList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetDepartmentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetRODetailsByROId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="roId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spGetUndisbursedROList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="LogicUniversityModelStoreContainer">
           <EntitySet Name="adjustment" EntityType="Self.adjustment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="budget" EntityType="Self.budget" Schema="dbo" store:Type="Tables" />
@@ -552,8 +559,7 @@
             <End Role="supplier_itemdetail" EntitySet="supplier_itemdetail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LogicUniversityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -725,6 +731,7 @@
           <NavigationProperty Name="employee" Relationship="Self.FK_requisition_order_employee" FromRole="requisition_order" ToRole="employee" />
           <NavigationProperty Name="requisition_disbursement_detail" Relationship="Self.FK_requisition_disbursement_detail_requisition_disbursement_detail" FromRole="requisition_order" ToRole="requisition_disbursement_detail" />
           <NavigationProperty Name="requisition_order_detail" Relationship="Self.FK_requisition_order_detail_requisition_order" FromRole="requisition_order" ToRole="requisition_order_detail" />
+          <Property Name="head_comment" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="requisition_order_detail">
           <Key>
@@ -1112,7 +1119,33 @@
             <End Role="collection" EntitySet="collections" />
             <End Role="department" EntitySet="departments" />
           </AssociationSet>
+          <FunctionImport Name="spGetCollectionList" ReturnType="Collection(LogicUniversityModel.spGetCollectionList_Result)" />
+          <FunctionImport Name="spGetUndisbursedROList" ReturnType="Collection(LogicUniversityModel.spGetUndisbursedROList_Result)" />
+          <FunctionImport Name="spGetDepartmentList" ReturnType="Collection(LogicUniversityModel.spGetDepartmentList_Result)" />
+          <FunctionImport Name="spGetRODetailsByROId" ReturnType="Collection(LogicUniversityModel.spGetRODetailsByROId_Result)">
+            <Parameter Name="roId" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="spGetCollectionList_Result">
+          <Property Type="String" Name="item_number" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="quantity_ordered" Nullable="true" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="current_quantity" Nullable="false" />
+          <Property Type="String" Name="unit_of_measurement" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="spGetUndisbursedROList_Result">
+          <Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="spGetDepartmentList_Result">
+          <Property Type="String" Name="department_name" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="spGetRODetailsByROId_Result">
+          <Property Type="String" Name="requisition_id" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="item_number" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="item_requisition_quantity" Nullable="true" />
+          <Property Type="Int32" Name="item_pending_quantity" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1254,6 +1287,7 @@
           <EntitySetMapping Name="requisition_order">
             <EntityTypeMapping TypeName="LogicUniversityModel.requisition_order">
               <MappingFragment StoreEntitySet="requisition_order">
+                <ScalarProperty Name="head_comment" ColumnName="head_comment" />
                 <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="requisition_status" ColumnName="requisition_status" />
@@ -1306,6 +1340,42 @@
               <ScalarProperty Name="department_id" ColumnName="department_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="spGetCollectionList" FunctionName="LogicUniversityModel.Store.spGetCollectionList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spGetCollectionList_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="quantity_ordered" ColumnName="quantity_ordered" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="current_quantity" ColumnName="current_quantity" />
+                <ScalarProperty Name="unit_of_measurement" ColumnName="unit_of_measurement" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetUndisbursedROList" FunctionName="LogicUniversityModel.Store.spGetUndisbursedROList" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spGetUndisbursedROList_Result">
+                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetDepartmentList" FunctionName="LogicUniversityModel.Store.spGetDepartmentList" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spGetDepartmentList_Result">
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetRODetailsByROId" FunctionName="LogicUniversityModel.Store.spGetRODetailsByROId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spGetRODetailsByROId_Result">
+                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="item_requisition_quantity" ColumnName="item_requisition_quantity" />
+                <ScalarProperty Name="item_pending_quantity" ColumnName="item_pending_quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

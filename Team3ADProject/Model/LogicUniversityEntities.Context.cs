@@ -12,6 +12,8 @@ namespace Team3ADProject.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class LogicUniversityEntities : DbContext
     {
@@ -40,5 +42,29 @@ namespace Team3ADProject.Model
         public virtual DbSet<requisition_order_detail> requisition_order_detail { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<supplier_itemdetail> supplier_itemdetail { get; set; }
+    
+        public virtual ObjectResult<spGetCollectionList_Result> spGetCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetCollectionList_Result>("spGetCollectionList");
+        }
+    
+        public virtual ObjectResult<spGetUndisbursedROList_Result> spGetUndisbursedROList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUndisbursedROList_Result>("spGetUndisbursedROList");
+        }
+    
+        public virtual ObjectResult<spGetDepartmentList_Result> spGetDepartmentList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetDepartmentList_Result>("spGetDepartmentList");
+        }
+    
+        public virtual ObjectResult<spGetRODetailsByROId_Result> spGetRODetailsByROId(string roId)
+        {
+            var roIdParameter = roId != null ?
+                new ObjectParameter("roId", roId) :
+                new ObjectParameter("roId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetRODetailsByROId_Result>("spGetRODetailsByROId", roIdParameter);
+        }
     }
 }
