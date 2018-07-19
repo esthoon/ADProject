@@ -15,9 +15,9 @@ namespace Team3ADProject
             
         }
 
-        protected void Login1_LoggedIn(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect(ResolveUrl("~/Protected/Dashboard"));
+            TextBox1.Text = "you clicked a button!";
         }
     }
 }
