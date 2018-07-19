@@ -22,6 +22,7 @@ namespace Team3ADProject.Model
         public string purchase_order_item_remark { get; set; }
         public string item_purchase_order_status { get; set; }
         public Nullable<System.DateTime> item_accept_date { get; set; }
+        public System.DateTime item_required_date { get; set; }
     
         public virtual inventory inventory { get; set; }
         public virtual purchase_order purchase_order { get; set; }

@@ -35,13 +35,13 @@ namespace Team3ADProject.Model
         public virtual DbSet<department_rep> department_rep { get; set; }
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<inventory> inventories { get; set; }
-        public virtual DbSet<purchase_order> purchase_order { get; set; }
-        public virtual DbSet<purchase_order_detail> purchase_order_detail { get; set; }
         public virtual DbSet<requisition_disbursement_detail> requisition_disbursement_detail { get; set; }
         public virtual DbSet<requisition_order> requisition_order { get; set; }
         public virtual DbSet<requisition_order_detail> requisition_order_detail { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<supplier_itemdetail> supplier_itemdetail { get; set; }
+        public virtual DbSet<purchase_order> purchase_order { get; set; }
+        public virtual DbSet<purchase_order_detail> purchase_order_detail { get; set; }
     
         public virtual ObjectResult<spGetCollectionList_Result> spGetCollectionList()
         {
@@ -57,16 +57,16 @@ namespace Team3ADProject.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetDepartmentList_Result>("spGetDepartmentList");
         }
-
+    
         public virtual ObjectResult<spGetRODetailsByROId_Result> spGetRODetailsByROId(string roId)
         {
             var roIdParameter = roId != null ?
                 new ObjectParameter("roId", roId) :
                 new ObjectParameter("roId", typeof(string));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetRODetailsByROId_Result>("spGetRODetailsByROId", roIdParameter);
         }
-
+    
         public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
@@ -80,16 +80,16 @@ namespace Team3ADProject.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetDepartmentPin", departmentnameParameter);
         }
-
+    
         public virtual ObjectResult<spAcknowledgeDistributionList_Result> spAcknowledgeDistributionList(Nullable<int> disbursementlistid)
         {
             var disbursementlistidParameter = disbursementlistid.HasValue ?
                 new ObjectParameter("disbursementlistid", disbursementlistid) :
                 new ObjectParameter("disbursementlistid", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spAcknowledgeDistributionList_Result>("spAcknowledgeDistributionList", disbursementlistidParameter);
         }
-
+    
         public virtual ObjectResult<getPurchaseQuantityByItemCategory_Result> getPurchaseQuantityByItemCategory(Nullable<int> monthsBack)
         {
             var monthsBackParameter = monthsBack.HasValue ?
@@ -102,12 +102,6 @@ namespace Team3ADProject.Model
         public virtual ObjectResult<getRequisitionQuantityByDepartment_Result> getRequisitionQuantityByDepartment()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionQuantityByDepartment_Result>("getRequisitionQuantityByDepartment");
-
-        }
-    
-        public virtual ObjectResult<getRecentRequisitionOrders_Result> getRecentRequisitionOrders()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRecentRequisitionOrders_Result>("getRecentRequisitionOrders");
         }
     
         public virtual ObjectResult<getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result> getApprovedRequisitionsWithNoDisbursementIdByDepartment()
@@ -120,19 +114,42 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getLowStockItemsByCategory_Result>("getLowStockItemsByCategory");
         }
     
-        public virtual ObjectResult<getPendingPurchaseOrdersBySupplier_Result> getPendingPurchaseOrdersBySupplier()
+        public virtual ObjectResult<getPendingPurchaseOrderCountBySupplier_Result> getPendingPurchaseOrderCountBySupplier()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPendingPurchaseOrdersBySupplier_Result>("getPendingPurchaseOrdersBySupplier");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPendingPurchaseOrderCountBySupplier_Result>("getPendingPurchaseOrderCountBySupplier");
+        }
+    
+        public virtual ObjectResult<getRecentRequisitionOrders_Result> getRecentRequisitionOrders()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRecentRequisitionOrders_Result>("getRecentRequisitionOrders");
+        }
+    
+        public virtual ObjectResult<getRequisitionOrderDetails_Result> getRequisitionOrderDetails(string var)
+        {
+            var varParameter = var != null ?
+                new ObjectParameter("var", var) :
+                new ObjectParameter("var", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionOrderDetails_Result>("getRequisitionOrderDetails", varParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionOrderDetailsforEdit_Result> getRequisitionOrderDetailsforEdit(string var)
+        {
+            var varParameter = var != null ?
+                new ObjectParameter("var", var) :
+                new ObjectParameter("var", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionOrderDetailsforEdit_Result>("getRequisitionOrderDetailsforEdit", varParameter);
+        }
+    
+        public virtual ObjectResult<string> GetRequisitionStatus()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetRequisitionStatus");
         }
     
         public virtual ObjectResult<getStationariesOrderedLastMonthByCategory_Result> getStationariesOrderedLastMonthByCategory()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getStationariesOrderedLastMonthByCategory_Result>("getStationariesOrderedLastMonthByCategory");
-        }
-    
-        public virtual ObjectResult<getPendingPurchaseOrderCountBySupplier_Result> getPendingPurchaseOrderCountBySupplier()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPendingPurchaseOrderCountBySupplier_Result>("getPendingPurchaseOrderCountBySupplier");
         }
     }
 }

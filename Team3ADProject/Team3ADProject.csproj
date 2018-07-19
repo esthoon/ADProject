@@ -214,6 +214,7 @@
     <Content Include="Model\LogicUniversityEntities.edmx.diagram">
       <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="Guest.Master" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Model\LogicUniversityEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -298,6 +299,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Guest.Master.cs">
+      <DependentUpon>Guest.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Guest.Master.designer.cs">
+      <DependentUpon>Guest.Master</DependentUpon>
+    </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -327,11 +335,32 @@
     <Compile Include="Model\employee.cs">
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getLowStockItemsByCategory_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getPendingPurchaseOrderCountBySupplier_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\getPurchaseQuantityByItemCategory_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getRecentRequisitionOrders_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getRequisitionOrderDetailsforEdit_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getRequisitionOrderDetails_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRequisitionQuantityByDepartment_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getStationariesOrderedLastMonthByCategory_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\inventory.cs">
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
@@ -379,10 +408,10 @@
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spAcknowledgeDistributionList_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spViewCollectionList_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\supplier.cs">
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
@@ -391,14 +420,13 @@
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-
     <Compile Include="Protected\CollectionList.aspx.cs">
       <DependentUpon>CollectionList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-  <Compile Include="Protected\CollectionList.aspx.designer.cs">
-    <DependentUpon>CollectionList.aspx</DependentUpon>
-  </Compile>
+    <Compile Include="Protected\CollectionList.aspx.designer.cs">
+      <DependentUpon>CollectionList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\AcknowledgeDistributionList.aspx.cs">
       <DependentUpon>AcknowledgeDistributionList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -420,7 +448,6 @@
     <Compile Include="Protected\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
-
     <Compile Include="Protected\DisbursementSorting.aspx.cs">
       <DependentUpon>DisbursementSorting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
