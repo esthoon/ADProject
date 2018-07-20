@@ -72,11 +72,7 @@ namespace Team3ADProject.Code
             return (int)context.spGetDepartmentPin(departmentname).ToList().Single();
         }
 
-        public static List<spAcknowledgeDistributionList_Result> ViewAcknowledgementList(int disbursement_list_id)
-        {
-            List<spAcknowledgeDistributionList_Result> list = new List<spAcknowledgeDistributionList_Result>();
-            return list = context.spAcknowledgeDistributionList(disbursement_list_id).ToList();
-        }
+
         //List all adjustment form
         public static List<adjustment> GetAdjustment()
         {

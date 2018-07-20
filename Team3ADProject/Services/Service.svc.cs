@@ -51,7 +51,7 @@ namespace Team3ADProject.Services
             var context = new LogicUniversityEntities();
             var query = from x in context.inventories select x;
             List<inventory> inventories = query.ToList();
-            List <WCF_Item> wcf_items = new List<WCF_Item>();
+            List<WCF_Item> wcf_items = new List<WCF_Item>();
 
             foreach (inventory i in inventories)
             {
@@ -69,7 +69,7 @@ namespace Team3ADProject.Services
                         join i in context.inventories on d.item_number equals i.item_number
                         select new { p, d, i };
 
-            var purchaseOrders  = query.ToList();
+            var purchaseOrders = query.ToList();
             List<WCF_PurchaseOrder> wcf_purchaseOrders = new List<WCF_PurchaseOrder>();
 
             foreach (var i in purchaseOrders)
@@ -83,22 +83,16 @@ namespace Team3ADProject.Services
         public List<WCF_PurchaseQuantityByItemQuantity> getPurchaseQuantityByItemCategoryWithMonthsBack(string monthsParam)
         {
             List<WCF_PurchaseQuantityByItemQuantity> wcfList = new List<WCF_PurchaseQuantityByItemQuantity>();
-            try
-            {
-                int monthsBack = int.Parse(monthsParam);
-                var context = new LogicUniversityEntities();
-                var result = context.getPurchaseQuantityByItemCategory(monthsBack);
 
-                foreach (var i in result.ToList())
-                {
-                    wcfList.Add(new WCF_PurchaseQuantityByItemQuantity(i.Category.Trim(), i.PurchaseQuantity));
-                }
+            int monthsBack = int.Parse(monthsParam);
+            var context = new LogicUniversityEntities();
+            var result = context.getPurchaseQuantityByItemCategory(monthsBack);
+
+            foreach (var i in result.ToList())
+            {
+                wcfList.Add(new WCF_PurchaseQuantityByItemQuantity(i.Category.Trim(), i.PurchaseQuantity));
             }
 
-            catch(Exception ex)
-            {
-                return null;
-            }
 
 
 

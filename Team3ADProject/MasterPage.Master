@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="Team3ADProject.MasterPage" %>
+
+<!DOCTYPE html>
 
 
 <html lang="en">

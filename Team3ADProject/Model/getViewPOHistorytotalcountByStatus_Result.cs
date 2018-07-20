@@ -11,9 +11,13 @@ namespace Team3ADProject.Model
 {
     using System;
     
-    public partial class getItemQuantityRequestedLastYear_Result
+    public partial class getViewPOHistorytotalcountByStatus_Result
     {
-        public string item_number { get; set; }
-        public Nullable<int> Column1 { get; set; }
+        public string supplier_name { get; set; }
+        public int purchase_order_number { get; set; }
+        public System.DateTime purchase_order_date { get; set; }
+        public string employee_name { get; set; }
+        public string purchase_order_status { get; set; }
+        public Nullable<int> po_total_item_count { get; set; }
     }
 }

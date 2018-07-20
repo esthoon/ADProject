@@ -17,7 +17,6 @@ namespace Team3ADProject.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public requisition_order()
         {
-            this.requisition_disbursement_detail = new HashSet<requisition_disbursement_detail>();
             this.requisition_order_detail = new HashSet<requisition_order_detail>();
         }
     
@@ -29,8 +28,7 @@ namespace Team3ADProject.Model
     
         public virtual employee employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<requisition_disbursement_detail> requisition_disbursement_detail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<requisition_order_detail> requisition_order_detail { get; set; }
+        public virtual collection_detail collection_detail { get; set; }
     }
 }

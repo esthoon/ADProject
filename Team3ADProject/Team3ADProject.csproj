@@ -210,27 +210,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MasterPage.Master" />
-    <EntityDeploy Include="Model\LogicUniversityEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LogicUniversityEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Model\LogicUniversityEntities.edmx.diagram">
-      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
-    </Content>
     <Content Include="Guest.Master" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Model\LogicUniversityEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LogicUniversityModel.Context.cs</LastGenOutput>
+    <EntityDeploy Include="Model\LogicUniversityModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LogicUniversityModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Model\LogicUniversityModel.edmx.diagram">
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
-      <SubType>Designer</SubType>
-      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
-      <LastGenOutput>LogicUniversityEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\LogicUniversityEntities.tt">
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Model\LogicUniversityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
-      <LastGenOutput>LogicUniversityEntities.cs</LastGenOutput>
+      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
+      <LastGenOutput>LogicUniversityModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\LogicUniversityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
+      <LastGenOutput>LogicUniversityModel.cs</LastGenOutput>
     </Content>
     <Content Include="Protected\CollectionList.aspx" />
     <Content Include="Protected\Dashboard.aspx" />
@@ -280,7 +277,9 @@
     <Content Include="Services\Service.svc" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Bundle.config" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -320,116 +319,179 @@
       <DependentUpon>MasterPage.Master</DependentUpon>
     </Compile>
     <Compile Include="Model\adjustment.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\budget.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\cInventory.cs" />
     <Compile Include="Model\collection.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\collection_detail.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\department.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\department_rep.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\employee.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbyPOandStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbyPO_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbyStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbySupandPoandStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbySupandPo_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbySupandStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbySupplier_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcount_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorytotalcount_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\getItemQuantityRequestedLastYear_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    <Compile Include="Model\getitemdetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getLowStockItemsByCategory_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getPendingPurchaseOrderCountBySupplier_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getpendingrequestdetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getpendingrequestsbydepartment_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getPurchaseQuantityByItemCategory_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRecentRequisitionOrders_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getrepdetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRequestedItemQuantityLastYear_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getrequesthistory_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRequisitionOrderDetailsforEdit_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRequisitionOrderDetails_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRequisitionQuantityByDepartment_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getStationariesOrderedLastMonthByCategory_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatusandSupplier_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbyPOandSupplier_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbyPO_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountByStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbysupandstatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbySupplier_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\inventory.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogicUniversityEntities.Context.cs">
+    <Compile Include="Model\LogicUniversityModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityEntities.Context.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogicUniversityEntities.cs">
+    <Compile Include="Model\LogicUniversityModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogicUniversityEntities.Designer.cs">
+    <Compile Include="Model\LogicUniversityModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogicUniversityEntities.edmx</DependentUpon>
+      <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\purchase_order.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\purchase_order_detail.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\requisition_disbursement_detail.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\requisition_order.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\requisition_order_detail.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetCollectionList_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetDepartmentList_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetRODetailsByROId_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetUndisbursedROList_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\spAcknowledgeDistributionList_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spViewCollectionList_Result.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_geteachPendingPOList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_getPendingPODetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_getPendingPOList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\supplier.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\supplier_itemdetail.cs">
-      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protected\CollectionList.aspx.cs">

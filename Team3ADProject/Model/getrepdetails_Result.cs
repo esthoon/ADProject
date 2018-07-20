@@ -11,13 +11,10 @@ namespace Team3ADProject.Model
 {
     using System;
     
-    public partial class spViewCollectionList_Result
+    public partial class getrepdetails_Result
     {
         public string employee_name { get; set; }
-        public string department_name { get; set; }
-        public System.DateTime collection_date { get; set; }
-        public string collection_place { get; set; }
-        public System.TimeSpan collection_time { get; set; }
-        public int collection_id { get; set; }
+        public string representative_status { get; set; }
+        public System.DateTime appointed_date { get; set; }
     }
 }

@@ -11,11 +11,13 @@ namespace Team3ADProject.Model
 {
     using System;
     
-    public partial class spAcknowledgeDistributionList_Result
+    public partial class getAllViewPOHistorypendingcountbyPO_Result
     {
-        public string item_number { get; set; }
-        public string description { get; set; }
-        public int item_requisition_quantity { get; set; }
-        public int item_distributed_quantity { get; set; }
+        public string supplier_name { get; set; }
+        public int purchase_order_number { get; set; }
+        public System.DateTime purchase_order_date { get; set; }
+        public string employee_name { get; set; }
+        public string purchase_order_status { get; set; }
+        public Nullable<int> outstanding_item_count { get; set; }
     }
 }
