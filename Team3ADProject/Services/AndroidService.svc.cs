@@ -56,18 +56,26 @@ namespace Team3ADProject.Services
         // Returns a token if there is one for the user, null if there is none.
         // TODO: Add username and password verification, the service only fetches a token for now
         // TODO: Generate a new token on successful login
-        public string Login(string username, string password)
+        public WCF_Employee Login(string username, string password)
         {
-            string token = null;
+            WCF_Employee wcfEmployee = null;
 
+            // TODO: Validate user data
+
+
+            // TODO: Generate and return token if correct
             var context = new LogicUniversityEntities();
             var query = context.getUserTokenByUsername(username);
+            var result = query.ToList();
 
-            if (query.Count() != 0)
+            if (result.Count() != 0)
             {
-                token = query.First().token;
+                wcfEmployee = new WCF_Employee(0, null, null, null, null, null, result.First().token);
             }
-            return token;
+            return wcfEmployee;
+
+            // TODO: Otherwise, return null;
+
         }
 
         // Query for the token, and set it to null
