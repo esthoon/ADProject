@@ -307,14 +307,7 @@ namespace Team3ADProject.Code
         {
             return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250).ToList();
         }
-        //Update adjustment form
-        public static void Updateadj(int id, string comment)
-        {
-            adjustment adj = context.adjustments.Where(x => x.adjustment_id == id).First<adjustment>();
-            adj.adjustment_status = "Approved";
-            adj.manager_remark = comment;
-            context.SaveChanges();
-        }
+       
         public static void rejectAdj(int id, string comment)
         {
             adjustment adj = context.adjustments.Where(x => x.adjustment_id == id).First<adjustment>();
@@ -326,11 +319,8 @@ namespace Team3ADProject.Code
         {
             return context.adjustments.Where(x => x.adjustment_date == date).ToList<adjustment>();
         }       
-        //List purchase order
-        public static List<purchase_order> GetPurchaseOrders()
-        {
-            return context.purchase_order.OrderBy(x=>x.suppler_id).Where(x => x.purchase_order_status == "awaiting approval").ToList();
-        }
+        
+        
         public static inventory GetInventory(string id)
         {
             return context.inventories.Where(i => i.item_number == id).ToList<inventory>()[0];
@@ -426,6 +416,116 @@ namespace Team3ADProject.Code
         {
             context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id);
         }
+
+        //Alan-start
+
+        //List all adjustment form
+        public static List<adjustment> StoreSupGetAdj()
+        {
+
+
+
+            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250).ToList();
+
+
+        }
+        public static List<adjustment> StoreManagerGetAdj()
+        {
+
+
+            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList();
+
+        }
+
+
+        //update upon approval adjustment form
+        public static void Updateadj(int id, string comment)
+        {
+            adjustment adj = context.adjustments.Where(x => x.adjustment_id == id).FirstOrDefault<adjustment>();
+            adj.adjustment_status = "Approved";
+            adj.manager_remark = comment;
+            context.SaveChanges();
+
+        }
+
+        //update upon reject adjustment form
+        public static void RejectAdj(int id, string comment)
+        {
+            adjustment adj = context.adjustments.Where(x => x.adjustment_id == id).FirstOrDefault<adjustment>();
+            adj.adjustment_status = "Rejected";
+            adj.manager_remark = comment;
+            context.SaveChanges();
+
+        }
+
+
+        //To search adjustment form base on date search
+        public static List<adjustment> SearchAdj(DateTime date)
+        {
+            return context.adjustments.Where(x => x.adjustment_date == date).ToList<adjustment>();
+        }
+
+
+        //To list pending purchase orders 
+        public static List<sp_getPendingPOList_Result> GetPurchaseOrders()
+        {
+            return context.sp_getPendingPOList().ToList();
+        }
+
+        //To pending PO purchase order details
+        public static List<sp_getPendingPODetails_Result> GetPODetails(int id)
+        {
+            return context.sp_getPendingPODetails(id).ToList();
+        }
+
+        //extra details for individual PO
+        public static List<sp_geteachPendingPOList_Result> GetEachPODetail(int id)
+        {
+            return context.sp_geteachPendingPOList(id).ToList();
+        }
+
+        //approval of PO
+        public static void UpdateUponPOApproval(int id, string mremark, string email)
+        {
+            purchase_order po = context.purchase_order.Where(x => x.purchase_order_number == id).FirstOrDefault<purchase_order>();
+            po.purchase_order_status = "Pending";
+            po.manager_remark = mremark;
+            //needs to be modfied
+            sendMail(email, "test", "testing");
+
+            context.SaveChanges();
+        }
+
+        //reject of PO
+        public static void UpdateUponPOReject(int id, string mremark)
+        {
+            purchase_order po = context.purchase_order.Where(x => x.purchase_order_number == id).FirstOrDefault<purchase_order>();
+            po.purchase_order_status = "Rejected";
+            po.manager_remark = mremark;
+            context.SaveChanges();
+        }
+
+        //E-mail util class
+        public static void sendMail(string to, string sub, string body)
+        {
+            MailMessage mail = new MailMessage();
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+            mail.From = new MailAddress("adteam3@gmail.com");
+            mail.To.Add(to);
+            mail.Subject = sub;
+            mail.Body = body;
+
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("adteam3@gmail.com", "testing!23");
+            SmtpServer.EnableSsl = true;
+
+            SmtpServer.Send(mail);
+
+        }
+
+
+        //alan-end
 
     }
 }

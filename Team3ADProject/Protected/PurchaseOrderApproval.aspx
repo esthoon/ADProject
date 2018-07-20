@@ -2,17 +2,30 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
     <br/>
+    <b>Summary</b>
+    <br/>
+    <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
     <br/>
     
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
-        
+   
+    
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowUpdating="GridView1_RowUpdating" Height="145px" Width="1000px"  >
+       
         <Columns>
-            <asp:BoundField  DataField="purchase_order_number" HeaderText="PO number" />
-            <asp:BoundField  DataField="purchase_order_required_date" HeaderText="Order Required Date" DataFormatString="{0:MM/dd/yyyy}"/>
+            <asp:BoundField DataField="purchase_order_number" HeaderText="PO No." />
+            <asp:BoundField DataField="supplier_name" HeaderText="Supplier Name" />
             <asp:BoundField DataField="purchase_order_date" HeaderText="PO Date" DataFormatString="{0:MM/dd/yyyy}"/>
-            <asp:BoundField DataField="suppler_id" HeaderText="Supplier ID"/>
-            <asp:BoundField DataField="employee_id" HeaderText="Employee ID"/>
-            <asp:BoundField DataField="purchase_order_status" HeaderText="PO status" />
+            <asp:BoundField DataField="employee_name" HeaderText="Employee Name" />
+            <asp:BoundField DataField="total_price" HeaderText="Total Price" DataFormatString="{0:c2}" />
+
+            <asp:TemplateField ShowHeader="False">
+                <ItemTemplate>
+                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="Update" Text="View"></asp:LinkButton>
+                   
+                </ItemTemplate>
+                
+            </asp:TemplateField>
+           
         </Columns>
     </asp:GridView>
 </asp:Content>

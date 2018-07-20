@@ -242,6 +242,7 @@
     <Content Include="Protected\ChangeRep.aspx" />
     <Content Include="Protected\DisbursementSorting.aspx" />
     <Content Include="Protected\AcknowledgeDistributionList.aspx" />
+    <Content Include="Protected\PurchaseOrderApprovalDetails.aspx" />
     <Content Include="Protected\ViewCollectionInformation.aspx" />
     <Content Include="Protected\AdjustmentApproval.aspx" />
     <Content Include="Protected\PurchaseOrderApproval.aspx" />
@@ -548,6 +549,13 @@
     </Compile>
     <Compile Include="Protected\DisbursementSorting.aspx.designer.cs">
       <DependentUpon>DisbursementSorting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\PurchaseOrderApprovalDetails.aspx.cs">
+      <DependentUpon>PurchaseOrderApprovalDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\PurchaseOrderApprovalDetails.aspx.designer.cs">
+      <DependentUpon>PurchaseOrderApprovalDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Protected\ViewCollectionInformation.aspx.cs">
       <DependentUpon>ViewCollectionInformation.aspx</DependentUpon>
