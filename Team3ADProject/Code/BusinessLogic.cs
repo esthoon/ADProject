@@ -185,6 +185,18 @@ namespace Team3ADProject.Code
             return 0;
         }
 
+        //ViewRO
+        public static int GetPlaceIdFromDptId(string dptId)
+        {
+            spGetPlaceIdFromDptId_Result result = context.spGetPlaceIdFromDptId(dptId).FirstOrDefault();
+            return (int)result.place_id;
+        }
+
+        //ViewRO
+        public static void SpecialRequestReadyUpdates(int placeId, DateTime collectionDate, string collectionStatus, string ro_id)
+        {
+            context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id);
+        }
 
     }
 }

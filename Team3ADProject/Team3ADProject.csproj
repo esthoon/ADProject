@@ -239,6 +239,7 @@
     <Content Include="Protected\PlacePurchaseOrderForm.aspx" />
     <Content Include="Protected\StagingOfPurchaseOrder.aspx" />
     <Content Include="Protected\ClerkInventory.aspx" />
+    <Content Include="Protected\ViewROSpecialRequest.aspx" />
     <Content Include="Protected\WebForm2.aspx" />
     <Content Include="Protected\Report.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -469,6 +470,9 @@
     <Compile Include="Model\spGetDepartmentList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\spGetPlaceIdFromDptId_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\spGetRODetailsByROId_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -563,6 +567,13 @@
     </Compile>
     <Compile Include="Protected\ClerkInventory.aspx.designer.cs">
       <DependentUpon>ClerkInventory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\ViewROSpecialRequest.aspx.cs">
+      <DependentUpon>ViewROSpecialRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\ViewROSpecialRequest.aspx.designer.cs">
+      <DependentUpon>ViewROSpecialRequest.aspx</DependentUpon>
     </Compile>
     <Compile Include="Protected\WebForm2.aspx.cs">
       <DependentUpon>WebForm2.aspx</DependentUpon>
