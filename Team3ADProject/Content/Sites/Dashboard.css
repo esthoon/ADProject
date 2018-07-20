@@ -1,15 +1,30 @@
-﻿.dashboard-flexbox-container-outer {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+﻿
+body{
+
 }
 
-.dashboard-flexbox-container-item {
+/* For Store clerk, manager and head use*/
+.dashboard-flexbox-container-outer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: stretch;
 }
 
-.dashboard-flexbox-item{
-    flex-grow: 1;
+
+.dashboard-flexbox-item {
+    flex-basis: 18vw;   
+}
+
+.dashboard-flex-shortcut{
+    height: 50%;
+}
+
+/* 
+    For employees
+*/
+
+.dashboard-flexbox-user{
+    height: 50vh;
 }

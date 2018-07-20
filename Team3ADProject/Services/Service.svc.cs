@@ -83,15 +83,24 @@ namespace Team3ADProject.Services
         public List<WCF_PurchaseQuantityByItemQuantity> getPurchaseQuantityByItemCategoryWithMonthsBack(string monthsParam)
         {
             List<WCF_PurchaseQuantityByItemQuantity> wcfList = new List<WCF_PurchaseQuantityByItemQuantity>();
-
-            int monthsBack = int.Parse(monthsParam);
-            var context = new LogicUniversityEntities();
-            var result = context.getPurchaseQuantityByItemCategory(monthsBack);
-
-            foreach(var i in result.ToList())
+            try
             {
-                wcfList.Add(new WCF_PurchaseQuantityByItemQuantity(i.Category.Trim(), i.PurchaseQuantity));
+                int monthsBack = int.Parse(monthsParam);
+                var context = new LogicUniversityEntities();
+                var result = context.getPurchaseQuantityByItemCategory(monthsBack);
+
+                foreach (var i in result.ToList())
+                {
+                    wcfList.Add(new WCF_PurchaseQuantityByItemQuantity(i.Category.Trim(), i.PurchaseQuantity));
+                }
             }
+
+            catch(Exception ex)
+            {
+                return null;
+            }
+
+
 
             return wcfList;
         }

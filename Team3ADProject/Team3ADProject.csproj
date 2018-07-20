@@ -148,8 +148,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Image\report-cover.jpg" />
     <Content Include="Content\Master.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Sites\Dashboard.css" />
+    <Content Include="Content\Sites\Default.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -243,7 +246,6 @@
     <Content Include="Protected\Report.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\Custom\Charts.js" />
     <Content Include="Scripts\jquery-1.12.1.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -252,6 +254,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -341,6 +344,9 @@
     <Compile Include="Model\getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result.cs">
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\getItemQuantityRequestedLastYear_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\getLowStockItemsByCategory_Result.cs">
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
@@ -351,6 +357,9 @@
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRecentRequisitionOrders_Result.cs">
+      <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getRequestedItemQuantityLastYear_Result.cs">
       <DependentUpon>LogicUniversityEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRequisitionOrderDetailsforEdit_Result.cs">
