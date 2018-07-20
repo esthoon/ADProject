@@ -441,5 +441,405 @@ namespace Team3ADProject.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
         }
+    
+        public virtual ObjectResult<getpendingrequestsbydepartment_Result> getpendingrequestsbydepartment(string departmentname)
+        {
+            var departmentnameParameter = departmentname != null ?
+                new ObjectParameter("departmentname", departmentname) :
+                new ObjectParameter("departmentname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getpendingrequestsbydepartment_Result>("getpendingrequestsbydepartment", departmentnameParameter);
+        }
+    
+        public virtual ObjectResult<getpendingrequestdetails_Result> getpendingrequestdetails(string requisitionnumber)
+        {
+            var requisitionnumberParameter = requisitionnumber != null ?
+                new ObjectParameter("requisitionnumber", requisitionnumber) :
+                new ObjectParameter("requisitionnumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getpendingrequestdetails_Result>("getpendingrequestdetails", requisitionnumberParameter);
+        }
+    
+        public virtual ObjectResult<getitemdetails_Result> getitemdetails(string requisitionnumber)
+        {
+            var requisitionnumberParameter = requisitionnumber != null ?
+                new ObjectParameter("requisitionnumber", requisitionnumber) :
+                new ObjectParameter("requisitionnumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getitemdetails_Result>("getitemdetails", requisitionnumberParameter);
+        }
+    
+        public virtual ObjectResult<getrequesthistory_Result> getrequesthistory(string departmentid)
+        {
+            var departmentidParameter = departmentid != null ?
+                new ObjectParameter("departmentid", departmentid) :
+                new ObjectParameter("departmentid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getrequesthistory_Result>("getrequesthistory", departmentidParameter);
+        }
+    
+        public virtual ObjectResult<getrepdetails_Result> getrepdetails(string depid)
+        {
+            var depidParameter = depid != null ?
+                new ObjectParameter("depid", depid) :
+                new ObjectParameter("depid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getrepdetails_Result>("getrepdetails", depidParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionOrderDetails_Result> getRequisitionOrderDetails(string var)
+        {
+            var varParameter = var != null ?
+                new ObjectParameter("var", var) :
+                new ObjectParameter("var", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionOrderDetails_Result>("getRequisitionOrderDetails", varParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionOrderDetailsforEdit_Result> getRequisitionOrderDetailsforEdit(string var)
+        {
+            var varParameter = var != null ?
+                new ObjectParameter("var", var) :
+                new ObjectParameter("var", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionOrderDetailsforEdit_Result>("getRequisitionOrderDetailsforEdit", varParameter);
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorypendingcount_Result> getAllViewPOHistorypendingcount()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorypendingcount_Result>("getAllViewPOHistorypendingcount");
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorypendingcountbyPO_Result> getAllViewPOHistorypendingcountbyPO(Nullable<int> varpo)
+        {
+            var varpoParameter = varpo.HasValue ?
+                new ObjectParameter("varpo", varpo) :
+                new ObjectParameter("varpo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorypendingcountbyPO_Result>("getAllViewPOHistorypendingcountbyPO", varpoParameter);
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorypendingcountbyPOandStatus_Result> getAllViewPOHistorypendingcountbyPOandStatus(Nullable<int> varpo, string varstat)
+        {
+            var varpoParameter = varpo.HasValue ?
+                new ObjectParameter("varpo", varpo) :
+                new ObjectParameter("varpo", typeof(int));
+    
+            var varstatParameter = varstat != null ?
+                new ObjectParameter("varstat", varstat) :
+                new ObjectParameter("varstat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorypendingcountbyPOandStatus_Result>("getAllViewPOHistorypendingcountbyPOandStatus", varpoParameter, varstatParameter);
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorypendingcountbyStatus_Result> getAllViewPOHistorypendingcountbyStatus(string varstat)
+        {
+            var varstatParameter = varstat != null ?
+                new ObjectParameter("varstat", varstat) :
+                new ObjectParameter("varstat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorypendingcountbyStatus_Result>("getAllViewPOHistorypendingcountbyStatus", varstatParameter);
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorypendingcountbySupandPo_Result> getAllViewPOHistorypendingcountbySupandPo(Nullable<int> varpo, string varsup)
+        {
+            var varpoParameter = varpo.HasValue ?
+                new ObjectParameter("varpo", varpo) :
+                new ObjectParameter("varpo", typeof(int));
+    
+            var varsupParameter = varsup != null ?
+                new ObjectParameter("varsup", varsup) :
+                new ObjectParameter("varsup", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorypendingcountbySupandPo_Result>("getAllViewPOHistorypendingcountbySupandPo", varpoParameter, varsupParameter);
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorypendingcountbySupandPoandStatus_Result> getAllViewPOHistorypendingcountbySupandPoandStatus(Nullable<int> varpo, string varsup, string varstat)
+        {
+            var varpoParameter = varpo.HasValue ?
+                new ObjectParameter("varpo", varpo) :
+                new ObjectParameter("varpo", typeof(int));
+    
+            var varsupParameter = varsup != null ?
+                new ObjectParameter("varsup", varsup) :
+                new ObjectParameter("varsup", typeof(string));
+    
+            var varstatParameter = varstat != null ?
+                new ObjectParameter("varstat", varstat) :
+                new ObjectParameter("varstat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorypendingcountbySupandPoandStatus_Result>("getAllViewPOHistorypendingcountbySupandPoandStatus", varpoParameter, varsupParameter, varstatParameter);
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorypendingcountbySupandStatus_Result> getAllViewPOHistorypendingcountbySupandStatus(string varsup, string varstat)
+        {
+            var varsupParameter = varsup != null ?
+                new ObjectParameter("varsup", varsup) :
+                new ObjectParameter("varsup", typeof(string));
+    
+            var varstatParameter = varstat != null ?
+                new ObjectParameter("varstat", varstat) :
+                new ObjectParameter("varstat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorypendingcountbySupandStatus_Result>("getAllViewPOHistorypendingcountbySupandStatus", varsupParameter, varstatParameter);
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorypendingcountbySupplier_Result> getAllViewPOHistorypendingcountbySupplier(string varsup)
+        {
+            var varsupParameter = varsup != null ?
+                new ObjectParameter("varsup", varsup) :
+                new ObjectParameter("varsup", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorypendingcountbySupplier_Result>("getAllViewPOHistorypendingcountbySupplier", varsupParameter);
+        }
+    
+        public virtual ObjectResult<getAllViewPOHistorytotalcount_Result> getAllViewPOHistorytotalcount()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllViewPOHistorytotalcount_Result>("getAllViewPOHistorytotalcount");
+        }
+    
+        public virtual ObjectResult<getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result> getApprovedRequisitionsWithNoDisbursementIdByDepartment()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result>("getApprovedRequisitionsWithNoDisbursementIdByDepartment");
+        }
+    
+        public virtual ObjectResult<getLowStockItemsByCategory_Result> getLowStockItemsByCategory()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getLowStockItemsByCategory_Result>("getLowStockItemsByCategory");
+        }
+    
+        public virtual ObjectResult<getPendingPurchaseOrderCountBySupplier_Result> getPendingPurchaseOrderCountBySupplier()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPendingPurchaseOrderCountBySupplier_Result>("getPendingPurchaseOrderCountBySupplier");
+        }
+    
+        public virtual ObjectResult<getPurchaseQuantityByItemCategory_Result> getPurchaseQuantityByItemCategory(Nullable<int> monthsBack)
+        {
+            var monthsBackParameter = monthsBack.HasValue ?
+                new ObjectParameter("MonthsBack", monthsBack) :
+                new ObjectParameter("MonthsBack", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPurchaseQuantityByItemCategory_Result>("getPurchaseQuantityByItemCategory", monthsBackParameter);
+        }
+    
+        public virtual ObjectResult<getRecentRequisitionOrders_Result> getRecentRequisitionOrders()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRecentRequisitionOrders_Result>("getRecentRequisitionOrders");
+        }
+    
+        public virtual ObjectResult<getRequestedItemQuantityLastYear_Result> getRequestedItemQuantityLastYear(string itemCode)
+        {
+            var itemCodeParameter = itemCode != null ?
+                new ObjectParameter("ItemCode", itemCode) :
+                new ObjectParameter("ItemCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequestedItemQuantityLastYear_Result>("getRequestedItemQuantityLastYear", itemCodeParameter);
+        }
+    
+        public virtual ObjectResult<getRequisitionQuantityByDepartment_Result> getRequisitionQuantityByDepartment()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionQuantityByDepartment_Result>("getRequisitionQuantityByDepartment");
+        }
+    
+        public virtual ObjectResult<string> GetRequisitionStatus()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetRequisitionStatus");
+        }
+    
+        public virtual ObjectResult<getStationariesOrderedLastMonthByCategory_Result> getStationariesOrderedLastMonthByCategory()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getStationariesOrderedLastMonthByCategory_Result>("getStationariesOrderedLastMonthByCategory");
+        }
+    
+        public virtual ObjectResult<getViewPOHistorytotalcountbyPO_Result> getViewPOHistorytotalcountbyPO(Nullable<int> varpo)
+        {
+            var varpoParameter = varpo.HasValue ?
+                new ObjectParameter("varpo", varpo) :
+                new ObjectParameter("varpo", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getViewPOHistorytotalcountbyPO_Result>("getViewPOHistorytotalcountbyPO", varpoParameter);
+        }
+    
+        public virtual ObjectResult<getViewPOHistorytotalcountbyPOandstatus_Result> getViewPOHistorytotalcountbyPOandstatus(Nullable<int> varpo, string varstat)
+        {
+            var varpoParameter = varpo.HasValue ?
+                new ObjectParameter("varpo", varpo) :
+                new ObjectParameter("varpo", typeof(int));
+    
+            var varstatParameter = varstat != null ?
+                new ObjectParameter("varstat", varstat) :
+                new ObjectParameter("varstat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getViewPOHistorytotalcountbyPOandstatus_Result>("getViewPOHistorytotalcountbyPOandstatus", varpoParameter, varstatParameter);
+        }
+    
+        public virtual ObjectResult<getViewPOHistorytotalcountbyPOandstatusandSupplier_Result> getViewPOHistorytotalcountbyPOandstatusandSupplier(string varsup, Nullable<int> varpo, string varstat)
+        {
+            var varsupParameter = varsup != null ?
+                new ObjectParameter("varsup", varsup) :
+                new ObjectParameter("varsup", typeof(string));
+    
+            var varpoParameter = varpo.HasValue ?
+                new ObjectParameter("varpo", varpo) :
+                new ObjectParameter("varpo", typeof(int));
+    
+            var varstatParameter = varstat != null ?
+                new ObjectParameter("varstat", varstat) :
+                new ObjectParameter("varstat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getViewPOHistorytotalcountbyPOandstatusandSupplier_Result>("getViewPOHistorytotalcountbyPOandstatusandSupplier", varsupParameter, varpoParameter, varstatParameter);
+        }
+    
+        public virtual ObjectResult<getViewPOHistorytotalcountbyPOandSupplier_Result> getViewPOHistorytotalcountbyPOandSupplier(Nullable<int> varpo, string varsup)
+        {
+            var varpoParameter = varpo.HasValue ?
+                new ObjectParameter("varpo", varpo) :
+                new ObjectParameter("varpo", typeof(int));
+    
+            var varsupParameter = varsup != null ?
+                new ObjectParameter("varsup", varsup) :
+                new ObjectParameter("varsup", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getViewPOHistorytotalcountbyPOandSupplier_Result>("getViewPOHistorytotalcountbyPOandSupplier", varpoParameter, varsupParameter);
+        }
+    
+        public virtual ObjectResult<getViewPOHistorytotalcountByStatus_Result> getViewPOHistorytotalcountByStatus(string varstat)
+        {
+            var varstatParameter = varstat != null ?
+                new ObjectParameter("varstat", varstat) :
+                new ObjectParameter("varstat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getViewPOHistorytotalcountByStatus_Result>("getViewPOHistorytotalcountByStatus", varstatParameter);
+        }
+    
+        public virtual ObjectResult<getViewPOHistorytotalcountbysupandstatus_Result> getViewPOHistorytotalcountbysupandstatus(string varsup, string varstat)
+        {
+            var varsupParameter = varsup != null ?
+                new ObjectParameter("varsup", varsup) :
+                new ObjectParameter("varsup", typeof(string));
+    
+            var varstatParameter = varstat != null ?
+                new ObjectParameter("varstat", varstat) :
+                new ObjectParameter("varstat", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getViewPOHistorytotalcountbysupandstatus_Result>("getViewPOHistorytotalcountbysupandstatus", varsupParameter, varstatParameter);
+        }
+    
+        public virtual ObjectResult<getViewPOHistorytotalcountbySupplier_Result> getViewPOHistorytotalcountbySupplier(string varsup)
+        {
+            var varsupParameter = varsup != null ?
+                new ObjectParameter("varsup", varsup) :
+                new ObjectParameter("varsup", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getViewPOHistorytotalcountbySupplier_Result>("getViewPOHistorytotalcountbySupplier", varsupParameter);
+        }
+    
+        public virtual ObjectResult<sp_geteachPendingPOList_Result> sp_geteachPendingPOList(Nullable<int> var4)
+        {
+            var var4Parameter = var4.HasValue ?
+                new ObjectParameter("var4", var4) :
+                new ObjectParameter("var4", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_geteachPendingPOList_Result>("sp_geteachPendingPOList", var4Parameter);
+        }
+    
+        public virtual ObjectResult<sp_getPendingPODetails_Result> sp_getPendingPODetails(Nullable<int> var5)
+        {
+            var var5Parameter = var5.HasValue ?
+                new ObjectParameter("var5", var5) :
+                new ObjectParameter("var5", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getPendingPODetails_Result>("sp_getPendingPODetails", var5Parameter);
+        }
+    
+        public virtual ObjectResult<sp_getPendingPOList_Result> sp_getPendingPOList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getPendingPOList_Result>("sp_getPendingPOList");
+        }
+    
+        public virtual ObjectResult<spGetCollectionList_Result> spGetCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetCollectionList_Result>("spGetCollectionList");
+        }
+    
+        public virtual ObjectResult<string> spGetDepartmentList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("spGetDepartmentList");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetDepartmentPin(string departmentname)
+        {
+            var departmentnameParameter = departmentname != null ?
+                new ObjectParameter("departmentname", departmentname) :
+                new ObjectParameter("departmentname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetDepartmentPin", departmentnameParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetPlaceIdFromDptId(string dptId)
+        {
+            var dptIdParameter = dptId != null ?
+                new ObjectParameter("dptId", dptId) :
+                new ObjectParameter("dptId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetPlaceIdFromDptId", dptIdParameter);
+        }
+    
+        public virtual ObjectResult<spGetRODetailsByROId_Result> spGetRODetailsByROId(string roId)
+        {
+            var roIdParameter = roId != null ?
+                new ObjectParameter("roId", roId) :
+                new ObjectParameter("roId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetRODetailsByROId_Result>("spGetRODetailsByROId", roIdParameter);
+        }
+    
+        public virtual ObjectResult<string> spGetUndisbursedROList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("spGetUndisbursedROList");
+        }
+    
+        public virtual int spInsertCollectionDetail(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus)
+        {
+            var placeIdParameter = placeId.HasValue ?
+                new ObjectParameter("placeId", placeId) :
+                new ObjectParameter("placeId", typeof(int));
+    
+            var collectionDateParameter = collectionDate.HasValue ?
+                new ObjectParameter("collectionDate", collectionDate) :
+                new ObjectParameter("collectionDate", typeof(System.DateTime));
+    
+            var collectionStatusParameter = collectionStatus != null ?
+                new ObjectParameter("collectionStatus", collectionStatus) :
+                new ObjectParameter("collectionStatus", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertCollectionDetail", placeIdParameter, collectionDateParameter, collectionStatusParameter);
+        }
+    
+        public virtual int spSpecialRequestReady(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus, string ro_id)
+        {
+            var placeIdParameter = placeId.HasValue ?
+                new ObjectParameter("placeId", placeId) :
+                new ObjectParameter("placeId", typeof(int));
+    
+            var collectionDateParameter = collectionDate.HasValue ?
+                new ObjectParameter("collectionDate", collectionDate) :
+                new ObjectParameter("collectionDate", typeof(System.DateTime));
+    
+            var collectionStatusParameter = collectionStatus != null ?
+                new ObjectParameter("collectionStatus", collectionStatus) :
+                new ObjectParameter("collectionStatus", typeof(string));
+    
+            var ro_idParameter = ro_id != null ?
+                new ObjectParameter("ro_id", ro_id) :
+                new ObjectParameter("ro_id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSpecialRequestReady", placeIdParameter, collectionDateParameter, collectionStatusParameter, ro_idParameter);
+        }
+    
+        public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
+        }
     }
 }
