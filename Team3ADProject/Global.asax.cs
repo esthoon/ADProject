@@ -18,7 +18,28 @@ namespace Team3ADProject
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-		
+        void Session_Start(object sender, EventArgs e)
+        {
+
+            //alan--start
+            Session["role"] = "11";
+
+
+            //alan-> need to code this using in User is in role after IIS setup
+            /*if (User.IsInRole("storemanager"))
+            {
+                Session["role"] = "storemanager";
+
+            }
+            else if (User.IsInRole("storesup"))
+            {
+                Session["role"] = "storesup";
+            }*/
+            //alan-- end
+
+        }
+
+
 
     }
 }

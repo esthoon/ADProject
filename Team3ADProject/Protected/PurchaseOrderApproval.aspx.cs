@@ -17,6 +17,13 @@ namespace Team3ADProject.Protected
                 BindGrid();
 
             }
+
+            if (GridView1.Rows.Count <= 0)
+            {
+                Label1.Text = "There is no Pending PO";
+                Label1.Visible = true;
+
+            }
         }
 
 
@@ -24,6 +31,16 @@ namespace Team3ADProject.Protected
         {
             GridView1.DataSource = BusinessLogic.GetPurchaseOrders();
             GridView1.DataBind();
+
+
+        }
+
+        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = GridView1.Rows[e.RowIndex];
+            int po = int.Parse(GridView1.Rows[e.RowIndex].Cells[0].Text);
+            Response.Redirect("PurchaseOrderApprovalDetails.aspx?po=" + po);
+
 
         }
     }
