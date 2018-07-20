@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\James Wang\source\Team3ADProject\Team3ADProject\Model\LogicUniversityModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\AnandTharrani\Source\Repos\Team3ADProject\Team3ADProject\Model\LogicUniversityModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

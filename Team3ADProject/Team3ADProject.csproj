@@ -433,9 +433,6 @@
     <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatusandSupplier_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatus_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\getViewPOHistorytotalcountbyPOandSupplier_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -450,27 +447,8 @@
     </Compile>
     <Compile Include="Model\getViewPOHistorytotalcountbySupplier_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatusandSupplier_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatus_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\getViewPOHistorytotalcountbyPOandSupplier_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\getViewPOHistorytotalcountbyPO_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\getViewPOHistorytotalcountByStatus_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\getViewPOHistorytotalcountbysupandstatus_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\getViewPOHistorytotalcountbySupplier_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\inventory.cs">
@@ -521,9 +499,6 @@
     <Compile Include="Model\spGetUndisbursedROList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\spViewCollectionList_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\sp_geteachPendingPOList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -542,7 +517,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protected\CollectionList.aspx.cs">
       <DependentUpon>CollectionList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Protected\CollectionList.aspx.designer.cs">
       <DependentUpon>CollectionList.aspx</DependentUpon>

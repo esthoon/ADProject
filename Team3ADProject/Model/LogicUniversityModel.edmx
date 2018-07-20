@@ -522,12 +522,6 @@
         <Function Name="getRequisitionQuantityByDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetRequisitionStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getStationariesOrderedLastMonthByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="getUserByToken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="token" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="getUserTokenByUsername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="username" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="getViewPOHistorytotalcountbyPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="varpo" Type="int" Mode="In" />
         </Function>
@@ -1341,7 +1335,7 @@
           <Parameter Name="departmentname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spGetPlaceIdFromDptId" ReturnType="Collection(LogicUniversityModel.spGetPlaceIdFromDptId_Result)">
-            <Parameter Name="dptId" Mode="In" Type="String" />
+          <Parameter Name="dptId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spGetRODetailsByROId" ReturnType="Collection(LogicUniversityModel.spGetRODetailsByROId_Result)">
           <Parameter Name="roId" Mode="In" Type="String" />
@@ -2284,28 +2278,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getUserTokenByUsername" FunctionName="LogicUniversityModel.Store.getUserTokenByUsername">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LogicUniversityModel.getUserTokenByUsername_Result">
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="token" ColumnName="token" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getUserByToken" FunctionName="LogicUniversityModel.Store.getUserByToken">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LogicUniversityModel.getUserByToken_Result">
-                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
-                <ScalarProperty Name="email_id" ColumnName="email_id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="department_id" ColumnName="department_id" />
-                <ScalarProperty Name="supervisor_id" ColumnName="supervisor_id" />
-                <ScalarProperty Name="token" ColumnName="token" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

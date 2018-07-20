@@ -17,8 +17,8 @@ namespace Team3ADProject.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public collection()
         {
-            this.departments = new HashSet<department>();
             this.collection_detail = new HashSet<collection_detail>();
+            this.departments = new HashSet<department>();
         }
     
         public int place_id { get; set; }
@@ -26,8 +26,8 @@ namespace Team3ADProject.Model
         public System.TimeSpan collection_time { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<department> departments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<collection_detail> collection_detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<department> departments { get; set; }
     }
 }
