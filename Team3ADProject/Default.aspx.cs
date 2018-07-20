@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Team3ADProject.Code;
 
 namespace Team3ADProject
 {
@@ -11,12 +12,12 @@ namespace Team3ADProject
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
-        protected void Login1_LoggedIn(object sender, EventArgs e)
+        protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect(ResolveUrl("~/Protected/Dashboard"));
+            TextBox1.Text = "you clicked a button!";
         }
     }
 }

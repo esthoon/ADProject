@@ -16,6 +16,13 @@ namespace Team3ADProject
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Application["RequestID"] = 235;
+        }
+
+        void Session_Start(object sender, EventArgs e)
+        {
+            Session["Employee"] = 19;
+            Session["Department"] = "ENGL";
         }
 
         void Session_Start(object sender, EventArgs e)
