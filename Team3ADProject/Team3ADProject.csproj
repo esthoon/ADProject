@@ -598,6 +598,7 @@
     </Compile>
     <Compile Include="Protected\ViewCollectionInformation.aspx.cs">
       <DependentUpon>ViewCollectionInformation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\EmployeeViewPending.aspx.cs">
       <DependentUpon>EmployeeViewPending.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -642,6 +643,7 @@
     </Compile>
     <Compile Include="Protected\WebForm2.aspx.cs">
       <DependentUpon>WebForm2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\RequestConfirm.aspx.cs">
       <DependentUpon>RequestConfirm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
