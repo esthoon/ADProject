@@ -62,6 +62,7 @@
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -229,8 +230,16 @@
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
       <LastGenOutput>LogicUniversityModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Protected\Change Collection Point.aspx" />
     <Content Include="Protected\CollectionList.aspx" />
     <Content Include="Protected\Dashboard.aspx" />
+    <Content Include="Protected\DepartmentPinChange.aspx" />
+    <Content Include="Protected\depheadpending.aspx" />
+    <Content Include="Protected\historydetails.aspx" />
+    <Content Include="Protected\pendingdetails.aspx" />
+    <Content Include="Protected\depheadviewhistory.aspx" />
+    <Content Include="Protected\DelegateRole.aspx" />
+    <Content Include="Protected\ChangeRep.aspx" />
     <Content Include="Protected\DisbursementSorting.aspx" />
     <Content Include="Protected\AcknowledgeDistributionList.aspx" />
     <Content Include="Protected\ViewCollectionInformation.aspx" />
@@ -519,6 +528,13 @@
     <Compile Include="Protected\AdjustmentApproval.aspx.designer.cs">
       <DependentUpon>AdjustmentApproval.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Protected\Change Collection Point.aspx.cs">
+      <DependentUpon>Change Collection Point.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\Change Collection Point.aspx.designer.cs">
+      <DependentUpon>Change Collection Point.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -588,6 +604,55 @@
     </Compile>
     <Compile Include="Protected\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\DepartmentPinChange.aspx.cs">
+      <DependentUpon>DepartmentPinChange.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\DepartmentPinChange.aspx.designer.cs">
+      <DependentUpon>DepartmentPinChange.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\depheadpending.aspx.cs">
+      <DependentUpon>depheadpending.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\depheadpending.aspx.designer.cs">
+      <DependentUpon>depheadpending.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\historydetails.aspx.cs">
+      <DependentUpon>historydetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\historydetails.aspx.designer.cs">
+      <DependentUpon>historydetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\pendingdetails.aspx.cs">
+      <DependentUpon>pendingdetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\pendingdetails.aspx.designer.cs">
+      <DependentUpon>pendingdetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\depheadviewhistory.aspx.cs">
+      <DependentUpon>depheadviewhistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\depheadviewhistory.aspx.designer.cs">
+      <DependentUpon>depheadviewhistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\DelegateRole.aspx.cs">
+      <DependentUpon>DelegateRole.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\DelegateRole.aspx.designer.cs">
+      <DependentUpon>DelegateRole.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\ChangeRep.aspx.cs">
+      <DependentUpon>ChangeRep.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\ChangeRep.aspx.designer.cs">
+      <DependentUpon>ChangeRep.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\Service.svc.cs">
