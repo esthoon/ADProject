@@ -285,6 +285,7 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="Services\AndroidService.svc" />
     <Content Include="Services\Service.svc" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Bundle.config" />
@@ -421,6 +422,12 @@
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getStationariesOrderedLastMonthByCategory_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getUserByToken_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getUserTokenByUsername_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatusandSupplier_Result.cs">
@@ -613,6 +620,10 @@
     <Compile Include="Protected\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\AndroidService.svc.cs">
+      <DependentUpon>AndroidService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\IAndroidService.cs" />
     <Compile Include="Protected\DepartmentPinChange.aspx.cs">
       <DependentUpon>DepartmentPinChange.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

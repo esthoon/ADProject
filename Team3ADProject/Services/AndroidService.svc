@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Team3ADProject.Services.AndroidService" CodeBehind="AndroidService.svc.cs" %>
