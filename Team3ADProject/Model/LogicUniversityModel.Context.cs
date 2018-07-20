@@ -241,9 +241,9 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequisitionQuantityByDepartment_Result>("getRequisitionQuantityByDepartment");
         }
     
-        public virtual ObjectResult<string> GetRequisitionStatus()
+        public virtual ObjectResult<GetRequisitionStatus_Result> GetRequisitionStatus()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetRequisitionStatus");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetRequisitionStatus_Result>("GetRequisitionStatus");
         }
     
         public virtual ObjectResult<getStationariesOrderedLastMonthByCategory_Result> getStationariesOrderedLastMonthByCategory()

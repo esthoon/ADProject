@@ -1294,7 +1294,7 @@
           <Parameter Name="var" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getRequisitionQuantityByDepartment" ReturnType="Collection(LogicUniversityModel.getRequisitionQuantityByDepartment_Result)" />
-          <FunctionImport Name="GetRequisitionStatus" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetRequisitionStatus" ReturnType="Collection(LogicUniversityModel.GetRequisitionStatus_Result)" />
           <FunctionImport Name="getStationariesOrderedLastMonthByCategory" ReturnType="Collection(LogicUniversityModel.getStationariesOrderedLastMonthByCategory_Result)" />
           <FunctionImport Name="getViewPOHistorytotalcountbyPO" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbyPO_Result)">
           <Parameter Name="varpo" Mode="In" Type="Int32" />
@@ -1645,6 +1645,9 @@
         </ComplexType>
         <ComplexType Name="spGetPlaceIdFromDptId_Result">
           <Property Type="Int32" Name="place_id" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetRequisitionStatus_Result">
+          <Property Type="String" Name="requisition_status" Nullable="false" MaxLength="8" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2086,7 +2089,13 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetRequisitionStatus" FunctionName="LogicUniversityModel.Store.GetRequisitionStatus" />
+          <FunctionImportMapping FunctionImportName="GetRequisitionStatus" FunctionName="LogicUniversityModel.Store.GetRequisitionStatus" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.GetRequisitionStatus_Result">
+                <ScalarProperty Name="requisition_status" ColumnName="requisition_status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="getStationariesOrderedLastMonthByCategory" FunctionName="LogicUniversityModel.Store.getStationariesOrderedLastMonthByCategory">
             <ResultMapping>
               <ComplexTypeMapping TypeName="LogicUniversityModel.getStationariesOrderedLastMonthByCategory_Result">
