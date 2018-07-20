@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="Team3ADProject.MasterPage" %>
+
+<!DOCTYPE html>
 
 
 <html lang="en">
@@ -70,10 +72,24 @@
                                 <li><a href="#">Distribution List</a></li>
                                 <li><a href="#">Delivery Schedule</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">PO Approval</a></li>
-                                <li><a href="#">Approve / Reject Item Adjustment</a></li>
+                                <li><a href="#">PO Approval<%=ResolveUrl("~/Protected/PurchaseOrderApproval")%></a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/AdjustmentApproval")%>">Approve / Reject Item Adjustment</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/Report")%>">View Reports</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">New Request</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Edit Request</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">View History</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Collection Details</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Disburse Items</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Pending Approval</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Request History</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Delegate</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Assign Representative</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Reports</a></li>
 
                             </ul>
                         </li>
@@ -88,7 +104,7 @@
                                 <li><a href="#">Another action</a></li>
                                 <li><a href="#">Something else here</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Logout")%>">Logout</a></li>
+                                <li><a href="<%=ResolveUrl("~/Logout")%>"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
                             </ul>
                         </li>
                     </ul>

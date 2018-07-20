@@ -18,9 +18,9 @@ namespace Team3ADProject.Model
         public inventory()
         {
             this.adjustments = new HashSet<adjustment>();
+            this.purchase_order_detail = new HashSet<purchase_order_detail>();
             this.requisition_order_detail = new HashSet<requisition_order_detail>();
             this.supplier_itemdetail = new HashSet<supplier_itemdetail>();
-            this.purchase_order_detail = new HashSet<purchase_order_detail>();
         }
     
         public string item_number { get; set; }
@@ -36,10 +36,10 @@ namespace Team3ADProject.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<adjustment> adjustments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<purchase_order_detail> purchase_order_detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<requisition_order_detail> requisition_order_detail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<supplier_itemdetail> supplier_itemdetail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<purchase_order_detail> purchase_order_detail { get; set; }
     }
 }

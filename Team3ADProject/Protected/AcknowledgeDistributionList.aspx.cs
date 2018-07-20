@@ -20,7 +20,7 @@ namespace Team3ADProject.Protected
                 LocationLabel.Text = Session["CollectionLocation"].ToString();
                 TimeLabel.Text = Session["CollectionTime"].ToString();
                 int disbursement_list_id = Convert.ToInt32(Session["disbursement_list_id"]);
-                myPageLoad(disbursement_list_id);
+                //myPageLoad(disbursement_list_id);
             }
             catch (Exception ex)
             {
@@ -31,7 +31,7 @@ namespace Team3ADProject.Protected
 
         protected void myPageLoad(int disbursement_list_id)
         {
-            gridview1.DataSource = BusinessLogic.ViewAcknowledgementList(disbursement_list_id);
+            //gridview1.DataSource = BusinessLogic.ViewAcknowledgementList(disbursement_list_id);
             gridview1.DataBind();
         }
         

@@ -19,7 +19,7 @@ namespace Team3ADProject.Protected
 
             LowStockItemGridView.DataSource = recentRequisitionOrders.ToList();
             LowStockItemGridView.DataBind();
-            
+           
             
 
         }
@@ -27,6 +27,11 @@ namespace Team3ADProject.Protected
         protected void RequisitionOrder_Link_Click(object sender, EventArgs e)
         {
             Response.Redirect(ResolveUrl("~/Protected/ClerkInventory"));
+        }
+
+        protected void PurchaseOrder_Link_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(ResolveUrl("~/Protected/PurchaseOrderListing"));
         }
     }
 }

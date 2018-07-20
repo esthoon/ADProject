@@ -17,8 +17,8 @@ namespace Team3ADProject.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public supplier()
         {
-            this.supplier_itemdetail = new HashSet<supplier_itemdetail>();
             this.purchase_order = new HashSet<purchase_order>();
+            this.supplier_itemdetail = new HashSet<supplier_itemdetail>();
         }
     
         public string supplier_id { get; set; }
@@ -32,8 +32,8 @@ namespace Team3ADProject.Model
         public string address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<supplier_itemdetail> supplier_itemdetail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<purchase_order> purchase_order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<supplier_itemdetail> supplier_itemdetail { get; set; }
     }
 }

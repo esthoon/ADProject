@@ -11,13 +11,13 @@ namespace Team3ADProject.Model
 {
     using System;
     
-    public partial class spViewCollectionList_Result
+    public partial class getAllViewPOHistorypendingcountbySupplier_Result
     {
+        public string supplier_name { get; set; }
+        public int purchase_order_number { get; set; }
+        public System.DateTime purchase_order_date { get; set; }
         public string employee_name { get; set; }
-        public string department_name { get; set; }
-        public System.DateTime collection_date { get; set; }
-        public string collection_place { get; set; }
-        public System.TimeSpan collection_time { get; set; }
-        public int collection_id { get; set; }
+        public string purchase_order_status { get; set; }
+        public Nullable<int> outstanding_item_count { get; set; }
     }
 }

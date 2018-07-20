@@ -72,11 +72,7 @@ namespace Team3ADProject.Code
             return (int)context.spGetDepartmentPin(departmentname).ToList().Single();
         }
 
-        public static List<spAcknowledgeDistributionList_Result> ViewAcknowledgementList(int disbursement_list_id)
-        {
-            List<spAcknowledgeDistributionList_Result> list = new List<spAcknowledgeDistributionList_Result>();
-            return list = context.spAcknowledgeDistributionList(disbursement_list_id).ToList();
-        }
+
         //List all adjustment form
         public static List<adjustment> GetAdjustment()
         {
@@ -170,6 +166,25 @@ namespace Team3ADProject.Code
         {
             return context.inventories.Where(x => x.category.Trim().ToLower() == category.Trim().ToLower()).ToList();
         }
+
+        // Returns a suggested reorder quantity when give an item code
+        // Returns zero if there are no purchase order in the past.
+        public static int GetSuggestedReorderQuantity(string itemCode)
+        {
+
+            var context = new LogicUniversityEntities();
+            var result = context.getRequestedItemQuantityLastYear(itemCode).ToList();
+            if (result.Count == 1)
+            {
+                // Formula: Quantity requested every month
+                int quantity = (int)result.First().quantity_requested;
+                quantity = quantity / 12;
+                return quantity;
+            }
+
+            return 0;
+        }
+
 
     }
 }

@@ -4,13 +4,10 @@
 
     <link rel="stylesheet" href="<%=ResolveUrl("~/Content/Sites/Dashboard.css")%>" />
 
+    
+    <h1>Dashboard</h1>
+    
     <!-- If user is a store clerk, display dashboard information -->
-    <%
-        if (System.Web.Security.Roles.Enabled)
-        {
-            if (Roles.GetRolesForUser(HttpContext.Current.User.Identity.Name).Contains(Team3ADProject.Code.Constants.ROLES_STORE_CLERK))
-            {  %>
-
     <div class="dashboard-flexbox-container-outer">
         <!--Flex item 1: Table for low stock items -->
         <div class="dashboard-flexbox-item">
@@ -23,7 +20,6 @@
                     <asp:BoundField DataField="reorder_level" HeaderText="Reorder Level" />
                 </Columns>
             </asp:GridView>
-            <asp:LinkButton ID="RequisitionOrder_Link" runat="server" CssClass="btn btn-success" OnClick="RequisitionOrder_Link_Click">Go to Inventory Listing</asp:LinkButton>
         </div>
 
         <!--Flex item 2: Chart -->
@@ -31,48 +27,23 @@
             <div id="pendingPurchaseOrderCountBySupplierChart"></div>
         </div>
 
+        <!-- Flex item 3: shortcuts -->
         <div class="dashboard-flexbox-item">
-            <div id="testChart"></div>
+            <div class="flexbox-column dashboard-flex-shortcut">
+                <h3>Shortcuts</h3>
+                <asp:LinkButton ID="RequisitionOrder_Link" runat="server" CssClass="btn btn-success" OnClick="RequisitionOrder_Link_Click">Go to Inventory Listing</asp:LinkButton>
+                <asp:LinkButton ID="PurchaseOrder_Link" runat="server" CssClass="btn btn-success" OnClick="PurchaseOrder_Link_Click">Go to Purchase Order Listing</asp:LinkButton>
+            </div>
         </div>
+
     </div>
-
-    <!-- Row 2-->
-    <div class="dashboard-flexbox-container">
-        <!--Flex item 3: Table for low stock items -->
-        <div class="dashboard-flexbox-item">
-            <div id="purchaseQuantityByItemQuantityBarChart"></div>
-        </div>
+    
+    <%=Team3ADProject.Code.BusinessLogic.GetSuggestedReorderQuantity("F031") %>
+    <%-- 
+    <!-- If user is an employee, show them pointers-->
+    <div class="flexbox-column dashboard-flexbox-user">
+        <h1>Welcome!</h1>
+        <div>Please start through the navigation bar above</div>
     </div>
-    <%} %>
-
-    <% else
-        {  %>
-    <!-- If user is something else, provide shortcut panels -->
-
-    <div class="dashboard-flexbox-container-outer">
-
-        <!--Flex container row 1: Table for low stock items -->
-        <div class="dashboard-flexbox-container-item">
-            <div class="dashboard-flexbox-item">
-                aaa
-            </div>
-
-            <div class="dashboard-flexbox-item">
-                bbb
-            </div>
-        </div>
-
-        <!--Flex container row 2 -->
-        <div class="dashboard-flexbox-container-item">
-            <div class="dashboard-flexbox-item">
-                ccc
-            </div>
-
-            <div class="dashboard-flexbox-item">
-                ddd
-            </div>
-        </div>
-    </div>
-    <%}
-        }      %>
+        --%>
 </asp:Content>

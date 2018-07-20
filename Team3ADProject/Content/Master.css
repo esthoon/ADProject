@@ -1,9 +1,33 @@
 ﻿body {
-    
+    background-color: #e1ebf8;
 }
 
-.body-content{
+.body-content {
+    background-color: #f3f8fb;
+
     margin-top: 5vh;
+}
+
+/*
+    Utilities
+*/
+.chart-container{
+    height:50vh;
+    width: 50vw;
+}
+
+.flexbox-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexbox-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /*

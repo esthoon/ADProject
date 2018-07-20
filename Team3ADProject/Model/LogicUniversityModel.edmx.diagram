@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c69693c542a649f99303c07228742c30" Name="Diagram1">
+        <EntityTypeShape EntityType="LogicUniversityModel.adjustment" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.budget" Width="1.5" PointX="8.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.collection" Width="1.5" PointX="3.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.collection_detail" Width="1.5" PointX="0.75" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.department" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.department_rep" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.employee" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.inventory" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.purchase_order" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.purchase_order_detail" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.requisition_order" Width="1.5" PointX="3" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.requisition_order_detail" Width="1.5" PointX="5.25" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.supplier" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogicUniversityModel.supplier_itemdetail" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="LogicUniversityModel.FK_adjustment_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_adjustment_inventory" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_budget_detail_department" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_collection_detail_collection" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_collection_detail_collection_detail" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_department_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_department_employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_department_rep_department" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_department_rep_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_employee_employee1" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_purchase_order_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_requisition_order_employee" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_purchase_order_detail_inventory" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_requisition_order_detail_inventory" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_supplier_itemdetail_inventory" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_purchase_order_detail_purchase_order" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_purchase_order_supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_requisition_order_detail_requisition_order" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.FK_supplier_itemdetail_supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.collection_dep" ManuallyRouted="false" />
+        <AssociationConnector Association="LogicUniversityModel.requisition_disbursement_detail" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

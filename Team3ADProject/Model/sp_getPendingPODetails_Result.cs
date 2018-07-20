@@ -11,14 +11,17 @@ namespace Team3ADProject.Model
 {
     using System;
     
-    public partial class spGetRODetailsByROId_Result
+    public partial class sp_getPendingPODetails_Result
     {
-        public string requisition_id { get; set; }
-        public string item_number { get; set; }
+        public int purchase_order_number { get; set; }
         public string description { get; set; }
-        public string unit_of_measurement { get; set; }
-        public Nullable<int> item_requisition_quantity { get; set; }
+        public System.DateTime purchase_order_date { get; set; }
+        public System.DateTime item_required_date { get; set; }
+        public double item_purchase_order_price { get; set; }
+        public int item_purchase_order_quantity { get; set; }
         public int current_quantity { get; set; }
-        public Nullable<int> item_pending_quantity { get; set; }
+        public int reorder_level { get; set; }
+        public string supplier_email { get; set; }
+        public string manager_remark { get; set; }
     }
 }
