@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="pendingdetails.aspx.cs" Inherits="Team3ADProject.Protected.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="pendingdetails.aspx.cs" Inherits="Team3ADProject.Protected.pendingdetails" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<html xmlns="http://www.w3.org/1999/xhtml">
 

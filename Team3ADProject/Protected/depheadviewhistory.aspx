@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="depheadviewhistory.aspx.cs" Inherits="Team3ADProject.Protected.WebForm2" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="depheadviewhistory.aspx.cs" Inherits="Team3ADProject.Protected.depheadviewhistory" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<html xmlns="http://www.w3.org/1999/xhtml">
 

@@ -10,7 +10,7 @@
 namespace Team3ADProject.Protected {
     
     
-    public partial class WebForm1 {
+    public partial class pendingdetails {
         
         /// <summary>
         /// Label2 control.

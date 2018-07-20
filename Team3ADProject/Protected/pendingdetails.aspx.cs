@@ -9,7 +9,7 @@ using Team3ADProject.Code;
 
 namespace Team3ADProject.Protected
 {
-	public partial class WebForm1 : System.Web.UI.Page
+	public partial class pendingdetails : System.Web.UI.Page
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
