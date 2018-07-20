@@ -19,14 +19,15 @@ namespace Team3ADProject
             Application["RequestID"] = 235;
         }
 
-        void Session_Start(object sender, EventArgs e)
-        {
-            Session["Employee"] = 19;
-            Session["Department"] = "ENGL";
-        }
 
         void Session_Start(object sender, EventArgs e)
         {
+
+            // Tharrani start
+            Session["Employee"] = 19;
+            Session["Department"] = "ENGL";
+            // Tharrani end
+
 
             //alan--start
             Session["role"] = "11";
