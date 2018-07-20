@@ -4,13 +4,242 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using Team3ADProject.Model;
+using System.Transactions;
 
 namespace Team3ADProject.Code
 {
     
     public class BusinessLogic
     {
-        static LogicUniversityEntities context = new LogicUniversityEntities();
+		public static LogicUniversityEntities context = new LogicUniversityEntities();
+
+		public static List<getpendingrequestsbydepartment_Result> ViewPendingRequests(string deptid)
+		{
+			List<getpendingrequestsbydepartment_Result> list = new List<getpendingrequestsbydepartment_Result>();
+			return list = context.getpendingrequestsbydepartment(deptid).ToList();
+		}
+
+		public static string getdepartment(string userid)
+		{
+			var k = (from employee in context.employees where employee.user_id == userid select employee);
+			 string dept = k.FirstOrDefault().department_id;
+			return dept;
+		}
+
+		public static getpendingrequestdetails_Result getdetails(string id)
+		{
+			return context.getpendingrequestdetails(id).ToList().Single();
+		}
+
+		public static List<getitemdetails_Result> pendinggetitemdetails(string reqid)
+		{
+			List<getitemdetails_Result> list = new List<getitemdetails_Result>();
+			return list = context.getitemdetails(reqid).ToList();
+		}
+
+		public static void approvestatus(string id)
+		{
+			var k = from requisition_order in context.requisition_order where requisition_order.requisition_id == id select requisition_order;
+			k.FirstOrDefault().requisition_status = "Approved";
+			context.SaveChanges();
+		}
+		public static void rejectstatus(string id)
+		{
+			var k = from requisition_order in context.requisition_order where requisition_order.requisition_id == id select requisition_order;
+			k.FirstOrDefault().requisition_status = "Rejected";
+			context.SaveChanges();
+		}
+		public static List<getrequesthistory_Result> gethistory(string dept)
+		{
+			List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
+			return list = context.getrequesthistory(dept).ToList();
+		}
+		public static List<getrequesthistory_Result> gethistorybyname(string name,string dept)
+		{
+			List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
+			list = (from requisitionorder in context.requisition_order
+					join employee in context.employees on requisitionorder.employee_id equals employee.employee_id
+					join requisitionorderdetails in context.requisition_order_detail on requisitionorder.requisition_id equals requisitionorderdetails.requisition_id
+					where (employee.department_id.Equals(dept) && employee.employee_name.Contains(name))
+					group requisitionorderdetails by requisitionorderdetails.requisition_id into reqgp
+					select new
+					{
+						id = reqgp.FirstOrDefault().requisition_id,
+						Date = reqgp.FirstOrDefault().requisition_order.requisition_date,
+						Name = reqgp.FirstOrDefault().requisition_order.employee.employee_name,
+						status = reqgp.FirstOrDefault().requisition_order.requisition_status,
+						Sum = reqgp.Sum(pt => pt.item_requisition_price)
+					}).ToList().
+						  Select(x => new getrequesthistory_Result()
+						  {
+							  id = x.id,
+							  Date = x.Date,
+							  Name=x.Name,
+							  status=x.status,
+							  Sum=x.Sum,
+						  }).ToList();
+			return list;
+		}
+		public static List<getrequesthistory_Result> gethistorybynameandstatus(string name, string dept,string status)
+		{
+			List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
+			list = (from requisitionorder in context.requisition_order
+					join employee in context.employees on requisitionorder.employee_id equals employee.employee_id
+					join requisitionorderdetails in context.requisition_order_detail on requisitionorder.requisition_id equals requisitionorderdetails.requisition_id
+					where (employee.department_id.Equals(dept) && employee.employee_name.Contains(name)&& requisitionorder.requisition_status.Equals(status))
+					group requisitionorderdetails by requisitionorderdetails.requisition_id into reqgp
+					select new
+					{
+						id = reqgp.FirstOrDefault().requisition_id,
+						Date = reqgp.FirstOrDefault().requisition_order.requisition_date,
+						Name = reqgp.FirstOrDefault().requisition_order.employee.employee_name,
+						status = reqgp.FirstOrDefault().requisition_order.requisition_status,
+						Sum = reqgp.Sum(pt => pt.item_requisition_price)
+					}).ToList().
+						  Select(x => new getrequesthistory_Result()
+						  {
+							  id = x.id,
+							  Date = x.Date,
+							  Name = x.Name,
+							  status = x.status,
+							  Sum = x.Sum,
+						  }).ToList();
+			return list;
+		}
+
+		public static List<getrequesthistory_Result> gethistorybystatus(string dept,string status)
+		{
+			List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
+			list = (from requisitionorder in context.requisition_order
+					join employee in context.employees on requisitionorder.employee_id equals employee.employee_id
+					join requisitionorderdetails in context.requisition_order_detail on requisitionorder.requisition_id equals requisitionorderdetails.requisition_id
+					where (employee.department_id.Equals(dept) && requisitionorder.requisition_status.Equals(status))
+					group requisitionorderdetails by requisitionorderdetails.requisition_id into reqgp
+					select new
+					{
+						id = reqgp.FirstOrDefault().requisition_id,
+						Date = reqgp.FirstOrDefault().requisition_order.requisition_date,
+						Name = reqgp.FirstOrDefault().requisition_order.employee.employee_name,
+						status = reqgp.FirstOrDefault().requisition_order.requisition_status,
+						Sum = reqgp.Sum(pt => pt.item_requisition_price)
+					}).ToList().
+						  Select(x => new getrequesthistory_Result()
+						  {
+							  id = x.id,
+							  Date = x.Date,
+							  Name = x.Name,
+							  status = x.status,
+							  Sum = x.Sum,
+						  }).ToList();
+			return list;
+		}
+
+		public static List<employee> getemployeenames(string dept)
+		{
+			//var q=from employee in context.employees where employee.department_id.Equals(dept) select employee.employee_name;
+			return context.employees.Where(x => x.department_id == dept).ToList();					
+
+		}
+
+		public static int getemployeeid(string name)
+		{
+			var q= from employee in context.employees where employee.employee_name == name select employee.employee_id;
+			return q.FirstOrDefault();
+		}
+
+		public static void updatetemporaryhead(int id,string dept)
+		{
+			var q = from department in context.departments where department.department_id == dept select department;
+			department d = q.FirstOrDefault();
+			d.temp_head_id = id;
+			context.SaveChanges();
+		}
+
+		public static string gettemporaryheadname(string dept)
+		{
+			var q = from department in context.departments
+					join employee in context.employees on
+					department.temp_head_id equals employee.employee_id
+					where department.department_id.Equals(dept)
+					select employee.employee_name;
+			return q.FirstOrDefault();
+
+		}
+
+		public static void revoketemporaryhead(string dept)
+		{
+			var q = from department in context.departments where department.department_id == dept select department;
+			department d = q.FirstOrDefault();
+			d.temp_head_id = null;
+			context.SaveChanges();
+
+		}
+
+		public static List<employee> getemployeenamebysearch(string dept,string name)
+		{
+			var q = from e in context.employees
+					join d in context.departments on e.department_id equals d.department_id
+					where e.employee_name.Contains(name) &&e.department_id.Equals(dept)
+					select e;
+			return q.ToList();
+
+		}
+
+		public static List<getrepdetails_Result> getpreviousrepdetails(string dept)
+		{
+			List<getrepdetails_Result> list = new List<getrepdetails_Result>();
+			list = context.getrepdetails(dept).ToList();
+			return list;
+
+		}
+
+		public static void saverepdetails(string dept, int id)
+		{
+			using (TransactionScope ts = new TransactionScope())
+			{
+				var q = from department_rep in context.department_rep
+						where department_rep.department_id.Equals(dept) &&
+						department_rep.representative_status.Equals("Active")
+						select department_rep;
+				department_rep d = q.FirstOrDefault();
+				d.representative_status = "InActive";
+				context.SaveChanges();
+				string today = DateTime.Now.ToString("yyyy-MM-dd");
+				department_rep dr = new department_rep
+				{
+					department_id = dept,
+					representative_id = id,
+					appointed_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
+					representative_status = "Active"
+				};
+				context.department_rep.Add(dr);
+				context.SaveChanges();
+				ts.Complete();
+			}
+
+
+	}
+		public static void updatepassword(string dept, int password)
+		{
+			var q = from department in context.departments where 
+					department.department_id.Equals(dept) select department;
+			department d = q.FirstOrDefault();
+			d.department_pin = password;
+			context.SaveChanges();
+		}
+
+		public static List<collection> GetCollection()
+		{
+			var q = from collection c in context.collections select c;
+			return q.ToList();
+
+		}
+
+		public static void updatelocation(string dept,int id)
+		{
+			//var q=from collection_de
+
+		}
 
         public static List<spGetCollectionList_Result> GetCollectionList()
         {
@@ -106,9 +335,18 @@ namespace Team3ADProject.Code
         {
             return context.inventories.Where(i => i.item_number == id).ToList<inventory>()[0];
         }
-        public static List<supplier_itemdetail> GetSupplier(string id)
+
+        public static System.Collections.IEnumerable GetSupplier(string id)
+       //     public static List<(string supplier_name, double unit_price)> GetSupplier(string id)
         {
-            return context.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
+            var nestedQuery = from s in context.suppliers
+                              from sid in s.supplier_itemdetail
+                              from i in context.inventories
+                              where (sid.item_number == id && i.item_number ==id)
+                              orderby (sid.priority)
+                              select new { s.supplier_name, sid.unit_price , i.description};
+            return nestedQuery.ToList();                
+            //return context.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
         }
         public static List<inventory> GetActiveInventories()
         {
@@ -176,6 +414,18 @@ namespace Team3ADProject.Code
             return 0;
         }
 
+        //ViewRO
+        public static int GetPlaceIdFromDptId(string dptId)
+        {
+            spGetPlaceIdFromDptId_Result result = context.spGetPlaceIdFromDptId(dptId).FirstOrDefault();
+            return (int)result.place_id;
+        }
+
+        //ViewRO
+        public static void SpecialRequestReadyUpdates(int placeId, DateTime collectionDate, string collectionStatus, string ro_id)
+        {
+            context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id);
+        }
 
     }
 }

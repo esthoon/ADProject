@@ -376,13 +376,13 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetDepartmentPin", departmentnameParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> spGetPlaceIdFromDptId(string dptId)
+        public virtual ObjectResult<spGetPlaceIdFromDptId_Result> spGetPlaceIdFromDptId(string dptId)
         {
             var dptIdParameter = dptId != null ?
                 new ObjectParameter("dptId", dptId) :
                 new ObjectParameter("dptId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetPlaceIdFromDptId", dptIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetPlaceIdFromDptId_Result>("spGetPlaceIdFromDptId", dptIdParameter);
         }
     
         public virtual ObjectResult<spGetRODetailsByROId_Result> spGetRODetailsByROId(string roId)

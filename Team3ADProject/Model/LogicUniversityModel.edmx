@@ -1340,8 +1340,8 @@
           <FunctionImport Name="spGetDepartmentPin" ReturnType="Collection(Int32)">
           <Parameter Name="departmentname" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="spGetPlaceIdFromDptId" ReturnType="Collection(Int32)">
-          <Parameter Name="dptId" Mode="In" Type="String" />
+          <FunctionImport Name="spGetPlaceIdFromDptId" ReturnType="Collection(LogicUniversityModel.spGetPlaceIdFromDptId_Result)">
+            <Parameter Name="dptId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spGetRODetailsByROId" ReturnType="Collection(LogicUniversityModel.spGetRODetailsByROId_Result)">
           <Parameter Name="roId" Mode="In" Type="String" />
@@ -1648,6 +1648,9 @@
           <Property Type="String" Name="department_id" Nullable="false" MaxLength="10" />
           <Property Type="Int32" Name="supervisor_id" Nullable="true" />
           <Property Type="String" Name="token" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetPlaceIdFromDptId_Result">
+          <Property Type="Int32" Name="place_id" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2240,7 +2243,13 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spGetDepartmentPin" FunctionName="LogicUniversityModel.Store.spGetDepartmentPin" />
-          <FunctionImportMapping FunctionImportName="spGetPlaceIdFromDptId" FunctionName="LogicUniversityModel.Store.spGetPlaceIdFromDptId" />
+          <FunctionImportMapping FunctionImportName="spGetPlaceIdFromDptId" FunctionName="LogicUniversityModel.Store.spGetPlaceIdFromDptId" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spGetPlaceIdFromDptId_Result">
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spGetRODetailsByROId" FunctionName="LogicUniversityModel.Store.spGetRODetailsByROId">
             <ResultMapping>
               <ComplexTypeMapping TypeName="LogicUniversityModel.spGetRODetailsByROId_Result">
