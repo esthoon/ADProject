@@ -441,5 +441,23 @@ namespace Team3ADProject.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
         }
+    
+        public virtual ObjectResult<getUserTokenByUsername_Result> getUserTokenByUsername(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getUserTokenByUsername_Result>("getUserTokenByUsername", usernameParameter);
+        }
+    
+        public virtual ObjectResult<getUserByToken_Result> getUserByToken(string token)
+        {
+            var tokenParameter = token != null ?
+                new ObjectParameter("token", token) :
+                new ObjectParameter("token", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getUserByToken_Result>("getUserByToken", tokenParameter);
+        }
     }
 }

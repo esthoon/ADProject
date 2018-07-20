@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LogicUniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LogicUniversityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="adjustment">
           <Key>
             <PropertyRef Name="adjustment_id" />
@@ -522,6 +522,12 @@
         <Function Name="getRequisitionQuantityByDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetRequisitionStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getStationariesOrderedLastMonthByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getUserByToken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="token" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="getUserTokenByUsername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="getViewPOHistorytotalcountbyPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="varpo" Type="int" Mode="In" />
         </Function>
@@ -689,8 +695,7 @@
             <End Role="supplier_itemdetail" EntitySet="supplier_itemdetail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LogicUniversityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1237,14 +1242,14 @@
           </AssociationSet>
           <FunctionImport Name="getAllViewPOHistorypendingcount" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcount_Result)" />
           <FunctionImport Name="getAllViewPOHistorypendingcountbyPO" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbyPO_Result)">
-            <Parameter Name="varpo" Mode="In" Type="Int32" />
+          <Parameter Name="varpo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getAllViewPOHistorypendingcountbyPOandStatus" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbyPOandStatus_Result)">
             <Parameter Name="varpo" Mode="In" Type="Int32" />
             <Parameter Name="varstat" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getAllViewPOHistorypendingcountbyStatus" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbyStatus_Result)">
-            <Parameter Name="varstat" Mode="In" Type="String" />
+          <Parameter Name="varstat" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getAllViewPOHistorypendingcountbySupandPo" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbySupandPo_Result)">
             <Parameter Name="varpo" Mode="In" Type="Int32" />
@@ -1260,45 +1265,45 @@
             <Parameter Name="varstat" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getAllViewPOHistorypendingcountbySupplier" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbySupplier_Result)">
-            <Parameter Name="varsup" Mode="In" Type="String" />
+          <Parameter Name="varsup" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getAllViewPOHistorytotalcount" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorytotalcount_Result)" />
           <FunctionImport Name="getApprovedRequisitionsWithNoDisbursementIdByDepartment" ReturnType="Collection(LogicUniversityModel.getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result)" />
           <FunctionImport Name="getitemdetails" ReturnType="Collection(LogicUniversityModel.getitemdetails_Result)">
-            <Parameter Name="requisitionnumber" Mode="In" Type="String" />
+          <Parameter Name="requisitionnumber" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getLowStockItemsByCategory" ReturnType="Collection(LogicUniversityModel.getLowStockItemsByCategory_Result)" />
           <FunctionImport Name="getPendingPurchaseOrderCountBySupplier" ReturnType="Collection(LogicUniversityModel.getPendingPurchaseOrderCountBySupplier_Result)" />
           <FunctionImport Name="getpendingrequestdetails" ReturnType="Collection(LogicUniversityModel.getpendingrequestdetails_Result)">
-            <Parameter Name="requisitionnumber" Mode="In" Type="String" />
+          <Parameter Name="requisitionnumber" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getpendingrequestsbydepartment" ReturnType="Collection(LogicUniversityModel.getpendingrequestsbydepartment_Result)">
-            <Parameter Name="departmentname" Mode="In" Type="String" />
+          <Parameter Name="departmentname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getPurchaseQuantityByItemCategory" ReturnType="Collection(LogicUniversityModel.getPurchaseQuantityByItemCategory_Result)">
-            <Parameter Name="MonthsBack" Mode="In" Type="Int32" />
+          <Parameter Name="MonthsBack" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getRecentRequisitionOrders" ReturnType="Collection(LogicUniversityModel.getRecentRequisitionOrders_Result)" />
           <FunctionImport Name="getrepdetails" ReturnType="Collection(LogicUniversityModel.getrepdetails_Result)">
-            <Parameter Name="depid" Mode="In" Type="String" />
+          <Parameter Name="depid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getRequestedItemQuantityLastYear" ReturnType="Collection(LogicUniversityModel.getRequestedItemQuantityLastYear_Result)">
-            <Parameter Name="ItemCode" Mode="In" Type="String" />
+          <Parameter Name="ItemCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getrequesthistory" ReturnType="Collection(LogicUniversityModel.getrequesthistory_Result)">
-            <Parameter Name="departmentid" Mode="In" Type="String" />
+          <Parameter Name="departmentid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getRequisitionOrderDetails" ReturnType="Collection(LogicUniversityModel.getRequisitionOrderDetails_Result)">
-            <Parameter Name="var" Mode="In" Type="String" />
+          <Parameter Name="var" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getRequisitionOrderDetailsforEdit" ReturnType="Collection(LogicUniversityModel.getRequisitionOrderDetailsforEdit_Result)">
-            <Parameter Name="var" Mode="In" Type="String" />
+          <Parameter Name="var" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getRequisitionQuantityByDepartment" ReturnType="Collection(LogicUniversityModel.getRequisitionQuantityByDepartment_Result)" />
           <FunctionImport Name="GetRequisitionStatus" ReturnType="Collection(String)" />
           <FunctionImport Name="getStationariesOrderedLastMonthByCategory" ReturnType="Collection(LogicUniversityModel.getStationariesOrderedLastMonthByCategory_Result)" />
           <FunctionImport Name="getViewPOHistorytotalcountbyPO" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbyPO_Result)">
-            <Parameter Name="varpo" Mode="In" Type="Int32" />
+          <Parameter Name="varpo" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getViewPOHistorytotalcountbyPOandstatus" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbyPOandstatus_Result)">
             <Parameter Name="varpo" Mode="In" Type="Int32" />
@@ -1314,32 +1319,32 @@
             <Parameter Name="varsup" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getViewPOHistorytotalcountByStatus" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountByStatus_Result)">
-            <Parameter Name="varstat" Mode="In" Type="String" />
+          <Parameter Name="varstat" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getViewPOHistorytotalcountbysupandstatus" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbysupandstatus_Result)">
             <Parameter Name="varsup" Mode="In" Type="String" />
             <Parameter Name="varstat" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getViewPOHistorytotalcountbySupplier" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbySupplier_Result)">
-            <Parameter Name="varsup" Mode="In" Type="String" />
+          <Parameter Name="varsup" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_geteachPendingPOList" ReturnType="Collection(LogicUniversityModel.sp_geteachPendingPOList_Result)">
-            <Parameter Name="var4" Mode="In" Type="Int32" />
+          <Parameter Name="var4" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_getPendingPODetails" ReturnType="Collection(LogicUniversityModel.sp_getPendingPODetails_Result)">
-            <Parameter Name="var5" Mode="In" Type="Int32" />
+          <Parameter Name="var5" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_getPendingPOList" ReturnType="Collection(LogicUniversityModel.sp_getPendingPOList_Result)" />
           <FunctionImport Name="spGetCollectionList" ReturnType="Collection(LogicUniversityModel.spGetCollectionList_Result)" />
           <FunctionImport Name="spGetDepartmentList" ReturnType="Collection(LogicUniversityModel.spGetDepartmentList_Result)" />
           <FunctionImport Name="spGetDepartmentPin" ReturnType="Collection(Int32)">
-            <Parameter Name="departmentname" Mode="In" Type="String" />
+          <Parameter Name="departmentname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spGetPlaceIdFromDptId" ReturnType="Collection(Int32)">
-            <Parameter Name="dptId" Mode="In" Type="String" />
+          <Parameter Name="dptId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spGetRODetailsByROId" ReturnType="Collection(LogicUniversityModel.spGetRODetailsByROId_Result)">
-            <Parameter Name="roId" Mode="In" Type="String" />
+          <Parameter Name="roId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spGetUndisbursedROList" ReturnType="Collection(LogicUniversityModel.spGetUndisbursedROList_Result)" />
           <FunctionImport Name="spInsertCollectionDetail">
@@ -1354,6 +1359,12 @@
             <Parameter Name="ro_id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spViewCollectionList" ReturnType="Collection(LogicUniversityModel.spViewCollectionList_Result)" />
+          <FunctionImport Name="getUserTokenByUsername" ReturnType="Collection(LogicUniversityModel.getUserTokenByUsername_Result)">
+          <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getUserByToken" ReturnType="Collection(LogicUniversityModel.getUserByToken_Result)">
+          <Parameter Name="token" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getAllViewPOHistorypendingcount_Result">
           <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
@@ -1624,6 +1635,19 @@
         </ComplexType>
         <ComplexType Name="spGetDepartmentList_Result">
           <Property Type="String" Name="department_name" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="getUserTokenByUsername_Result">
+          <Property Type="String" Name="user_id" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="token" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getUserByToken_Result">
+          <Property Type="Int32" Name="employee_id" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="email_id" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="user_id" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="department_id" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="supervisor_id" Nullable="true" />
+          <Property Type="String" Name="token" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2248,6 +2272,27 @@
                 <ScalarProperty Name="collection_place" ColumnName="collection_place" />
                 <ScalarProperty Name="collection_time" ColumnName="collection_time" />
                 <ScalarProperty Name="collection_id" ColumnName="collection_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getUserTokenByUsername" FunctionName="LogicUniversityModel.Store.getUserTokenByUsername">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getUserTokenByUsername_Result">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="token" ColumnName="token" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getUserByToken" FunctionName="LogicUniversityModel.Store.getUserByToken">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getUserByToken_Result">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="email_id" ColumnName="email_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="supervisor_id" ColumnName="supervisor_id" />
+                <ScalarProperty Name="token" ColumnName="token" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
