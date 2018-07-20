@@ -151,5 +151,23 @@ namespace Team3ADProject.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getStationariesOrderedLastMonthByCategory_Result>("getStationariesOrderedLastMonthByCategory");
         }
+    
+        public virtual ObjectResult<getItemQuantityRequestedLastYear_Result> getItemQuantityRequestedLastYear(string itemCode)
+        {
+            var itemCodeParameter = itemCode != null ?
+                new ObjectParameter("ItemCode", itemCode) :
+                new ObjectParameter("ItemCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getItemQuantityRequestedLastYear_Result>("getItemQuantityRequestedLastYear", itemCodeParameter);
+        }
+    
+        public virtual ObjectResult<getRequestedItemQuantityLastYear_Result> getRequestedItemQuantityLastYear(string itemCode)
+        {
+            var itemCodeParameter = itemCode != null ?
+                new ObjectParameter("ItemCode", itemCode) :
+                new ObjectParameter("ItemCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getRequestedItemQuantityLastYear_Result>("getRequestedItemQuantityLastYear", itemCodeParameter);
+        }
     }
 }

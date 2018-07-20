@@ -455,6 +455,9 @@
           <Parameter Name="MonthsBack" Type="int" Mode="In" />
         </Function>
         <Function Name="getRecentRequisitionOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getRequestedItemQuantityLastYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ItemCode" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="getRequisitionOrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="var" Type="varchar" Mode="In" />
         </Function>
@@ -1081,6 +1084,12 @@
             <End Role="supplier" EntitySet="suppliers" />
             <End Role="purchase_order" EntitySet="purchase_order" />
           </AssociationSet>
+          <FunctionImport Name="getItemQuantityRequestedLastYear" ReturnType="Collection(LogicUniversityModel.getItemQuantityRequestedLastYear_Result)">
+          <Parameter Name="ItemCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getRequestedItemQuantityLastYear" ReturnType="Collection(LogicUniversityModel.getRequestedItemQuantityLastYear_Result)">
+            <Parameter Name="ItemCode" Mode="In" Type="String" />
+          </FunctionImport>
 </EntityContainer>
 <ComplexType Name="spGetCollectionList_Result">
   <Property Type="String" Name="item_number" Nullable="true" MaxLength="10" />
@@ -1246,6 +1255,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="getItemQuantityRequestedLastYear_Result">
+          <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="Column1" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getRequestedItemQuantityLastYear_Result">
+          <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="quantity_requested" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1529,6 +1546,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getRequestedItemQuantityLastYear" FunctionName="LogicUniversityModel.Store.getRequestedItemQuantityLastYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getRequestedItemQuantityLastYear_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="quantity_requested" ColumnName="quantity_requested" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
