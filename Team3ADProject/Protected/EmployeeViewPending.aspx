@@ -16,9 +16,11 @@
        <DayHeaderStyle BackColor="#99CCCC" ForeColor="#336666" Height="1px" />
        <TitleStyle BackColor="#003399" BorderColor="#3366CC" BorderWidth="1px" Font-Bold="True" Font-Size="10pt" ForeColor="#CCCCFF" Height="25px" />
        </asp:Calendar>
-
-        <asp:Button ID="Button1" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="Button1_Click" />
-        <asp:Button ID="Button2" runat="server" Text="Add New Request" CssClass="btn btn-info" OnClick="Button2_Click"/>
+       </div>
+       <div>
+       <asp:Button ID="Button1" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="Button1_Click" />
+       <br />
+       <asp:Button ID="Button2" runat="server" Text="Add New Request" CssClass="btn btn-info" OnClick="Button2_Click"/>
     </div>
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">

@@ -116,7 +116,6 @@ namespace Team3ADProject.Protected
         protected void DropdonwAdd()
         {
             List<GetRequisitionStatus_Result> list = BusinessLogic.GetRequisitionStatus();
-            List<GetRequisitionStatus_Result> m = new List<GetRequisitionStatus_Result>();
             DropDownList1.Items.Add("All");
             foreach (GetRequisitionStatus_Result x in list)
             {

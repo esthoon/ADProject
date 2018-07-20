@@ -52,7 +52,6 @@
             <PropertyRef Name="collection_id" />
           </Key>
           <Property Name="collection_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="disbursement_list_id" Type="int" Nullable="false" />
           <Property Name="place_id" Type="int" Nullable="false" />
           <Property Name="collection_date" Type="date" Nullable="false" />
           <Property Name="collection_status" Type="varchar" MaxLength="10" Nullable="false" />
@@ -90,6 +89,7 @@
           <Property Name="user_id" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="department_id" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="supervisor_id" Type="int" />
+          <Property Name="token" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="inventory">
           <Key>
@@ -110,7 +110,7 @@
             <PropertyRef Name="purchase_order_number" />
           </Key>
           <Property Name="purchase_order_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="purchase_order_required_date" Type="date" Nullable="false" />
+          <Property Name="purchase_order_date" Type="date" Nullable="false" />
           <Property Name="suppler_id" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="employee_id" Type="int" Nullable="false" />
           <Property Name="purchase_order_status" Type="varchar" MaxLength="20" Nullable="false" />
@@ -133,10 +133,10 @@
         </EntityType>
         <EntityType Name="requisition_disbursement_detail">
           <Key>
-            <PropertyRef Name="disbursement_list_id" />
+            <PropertyRef Name="requisition_id" />
           </Key>
           <Property Name="requisition_id" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="disbursement_list_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="collection_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="requisition_order">
           <Key>
@@ -256,15 +256,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_collection_detail_requisition_disbursement_detail">
-          <End Role="requisition_disbursement_detail" Type="Self.requisition_disbursement_detail" Multiplicity="1" />
-          <End Role="collection_detail" Type="Self.collection_detail" Multiplicity="*" />
+        <Association Name="FK_collection_detail_collection_detail">
+          <End Role="collection_detail" Type="Self.collection_detail" Multiplicity="1" />
+          <End Role="collection_detail1" Type="Self.collection_detail" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="requisition_disbursement_detail">
-              <PropertyRef Name="disbursement_list_id" />
+            <Principal Role="collection_detail">
+              <PropertyRef Name="collection_id" />
             </Principal>
-            <Dependent Role="collection_detail">
-              <PropertyRef Name="disbursement_list_id" />
+            <Dependent Role="collection_detail1">
+              <PropertyRef Name="collection_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -376,9 +376,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_requisition_disbursement_detail_collection_detail">
+          <End Role="collection_detail" Type="Self.collection_detail" Multiplicity="1" />
+          <End Role="requisition_disbursement_detail" Type="Self.requisition_disbursement_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="collection_detail">
+              <PropertyRef Name="collection_id" />
+            </Principal>
+            <Dependent Role="requisition_disbursement_detail">
+              <PropertyRef Name="collection_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_requisition_disbursement_detail_requisition_disbursement_detail">
           <End Role="requisition_order" Type="Self.requisition_order" Multiplicity="1" />
-          <End Role="requisition_disbursement_detail" Type="Self.requisition_disbursement_detail" Multiplicity="*" />
+          <End Role="requisition_disbursement_detail" Type="Self.requisition_disbursement_detail" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="requisition_order">
               <PropertyRef Name="requisition_id" />
@@ -448,13 +460,125 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="getAllViewPOHistorypendingcount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getAllViewPOHistorypendingcountbyPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varpo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getAllViewPOHistorypendingcountbyPOandStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varpo" Type="int" Mode="In" />
+          <Parameter Name="varstat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getAllViewPOHistorypendingcountbyStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varstat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getAllViewPOHistorypendingcountbySupandPo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varpo" Type="int" Mode="In" />
+          <Parameter Name="varsup" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getAllViewPOHistorypendingcountbySupandPoandStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varpo" Type="int" Mode="In" />
+          <Parameter Name="varsup" Type="varchar" Mode="In" />
+          <Parameter Name="varstat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getAllViewPOHistorypendingcountbySupandStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varsup" Type="varchar" Mode="In" />
+          <Parameter Name="varstat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getAllViewPOHistorypendingcountbySupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varsup" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getAllViewPOHistorytotalcount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getApprovedRequisitionsWithNoDisbursementIdByDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getitemdetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="requisitionnumber" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getLowStockItemsByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getPendingPurchaseOrderCountBySupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getpendingrequestdetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="requisitionnumber" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getpendingrequestsbydepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="departmentname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getPurchaseQuantityByItemCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MonthsBack" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getRecentRequisitionOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getrepdetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="depid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getRequestedItemQuantityLastYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ItemCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="getrequesthistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="departmentid" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="getRequisitionOrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="var" Type="varchar" Mode="In" />
         </Function>
         <Function Name="getRequisitionOrderDetailsforEdit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="var" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="getRequisitionQuantityByDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetRequisitionStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getStationariesOrderedLastMonthByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getViewPOHistorytotalcountbyPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varpo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getViewPOHistorytotalcountbyPOandstatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varpo" Type="int" Mode="In" />
+          <Parameter Name="varstat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getViewPOHistorytotalcountbyPOandstatusandSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varsup" Type="varchar" Mode="In" />
+          <Parameter Name="varpo" Type="int" Mode="In" />
+          <Parameter Name="varstat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getViewPOHistorytotalcountbyPOandSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varpo" Type="int" Mode="In" />
+          <Parameter Name="varsup" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getViewPOHistorytotalcountByStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varstat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getViewPOHistorytotalcountbysupandstatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varsup" Type="varchar" Mode="In" />
+          <Parameter Name="varstat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getViewPOHistorytotalcountbySupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="varsup" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_geteachPendingPOList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="var4" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_getPendingPODetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="var5" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_getPendingPOList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetCollectionList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetDepartmentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetDepartmentPin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="departmentname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spGetPlaceIdFromDptId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dptId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spGetRODetailsByROId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="roId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spGetUndisbursedROList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spInsertCollectionDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="placeId" Type="int" Mode="In" />
+          <Parameter Name="collectionDate" Type="date" Mode="In" />
+          <Parameter Name="collectionStatus" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spSpecialRequestReady" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="placeId" Type="int" Mode="In" />
+          <Parameter Name="collectionDate" Type="date" Mode="In" />
+          <Parameter Name="collectionStatus" Type="varchar" Mode="In" />
+          <Parameter Name="ro_id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spViewCollectionList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="LogicUniversityModelStoreContainer">
           <EntitySet Name="adjustment" EntityType="Self.adjustment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="budget" EntityType="Self.budget" Schema="dbo" store:Type="Tables" />
@@ -496,9 +620,9 @@
             <End Role="collection" EntitySet="collection" />
             <End Role="collection_detail" EntitySet="collection_detail" />
           </AssociationSet>
-          <AssociationSet Name="FK_collection_detail_requisition_disbursement_detail" Association="Self.FK_collection_detail_requisition_disbursement_detail">
-            <End Role="requisition_disbursement_detail" EntitySet="requisition_disbursement_detail" />
+          <AssociationSet Name="FK_collection_detail_collection_detail" Association="Self.FK_collection_detail_collection_detail">
             <End Role="collection_detail" EntitySet="collection_detail" />
+            <End Role="collection_detail1" EntitySet="collection_detail" />
           </AssociationSet>
           <AssociationSet Name="FK_department_employee" Association="Self.FK_department_employee">
             <End Role="employee" EntitySet="employee" />
@@ -535,6 +659,10 @@
           <AssociationSet Name="FK_purchase_order_supplier" Association="Self.FK_purchase_order_supplier">
             <End Role="supplier" EntitySet="supplier" />
             <End Role="purchase_order" EntitySet="purchase_order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requisition_disbursement_detail_collection_detail" Association="Self.FK_requisition_disbursement_detail_collection_detail">
+            <End Role="collection_detail" EntitySet="collection_detail" />
+            <End Role="requisition_disbursement_detail" EntitySet="requisition_disbursement_detail" />
           </AssociationSet>
           <AssociationSet Name="FK_requisition_disbursement_detail_requisition_disbursement_detail" Association="Self.FK_requisition_disbursement_detail_requisition_disbursement_detail">
             <End Role="requisition_order" EntitySet="requisition_order" />
@@ -601,20 +729,8 @@
           <Property Name="place_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="collection_place" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="collection_time" Type="Time" Nullable="false" Precision="7" />
-          <NavigationProperty Name="collection_detail" Relationship="Self.FK_collection_detail_collection" FromRole="collection" ToRole="collection_detail" />
           <NavigationProperty Name="departments" Relationship="Self.collection_dep" FromRole="collection" ToRole="department" />
-        </EntityType>
-        <EntityType Name="collection_detail">
-          <Key>
-            <PropertyRef Name="collection_id" />
-          </Key>
-          <Property Name="collection_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="disbursement_list_id" Type="Int32" Nullable="false" />
-          <Property Name="place_id" Type="Int32" Nullable="false" />
-          <Property Name="collection_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="collection_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="collection" Relationship="Self.FK_collection_detail_collection" FromRole="collection_detail" ToRole="collection" />
-          <NavigationProperty Name="requisition_disbursement_detail" Relationship="Self.FK_collection_detail_requisition_disbursement_detail" FromRole="collection_detail" ToRole="requisition_disbursement_detail" />
+          <NavigationProperty Name="collection_detail" Relationship="LogicUniversityModel.FK_collection_detail_collection" FromRole="collection" ToRole="collection_detail" />
         </EntityType>
         <EntityType Name="department">
           <Key>
@@ -663,6 +779,7 @@
           <NavigationProperty Name="employee1" Relationship="Self.FK_employee_employee1" FromRole="employee" ToRole="employee1" />
           <NavigationProperty Name="employee2" Relationship="Self.FK_employee_employee1" FromRole="employee1" ToRole="employee" />
           <NavigationProperty Name="requisition_order" Relationship="Self.FK_requisition_order_employee" FromRole="employee" ToRole="requisition_order" />
+          <Property Name="token" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="purchase_order" Relationship="LogicUniversityModel.FK_purchase_order_employee" FromRole="employee" ToRole="purchase_order" />
         </EntityType>
         <EntityType Name="inventory">
@@ -683,15 +800,6 @@
           <NavigationProperty Name="supplier_itemdetail" Relationship="Self.FK_supplier_itemdetail_inventory" FromRole="inventory" ToRole="supplier_itemdetail" />
           <NavigationProperty Name="purchase_order_detail" Relationship="LogicUniversityModel.FK_purchase_order_detail_inventory" FromRole="inventory" ToRole="purchase_order_detail" />
         </EntityType>
-        <EntityType Name="requisition_disbursement_detail">
-          <Key>
-            <PropertyRef Name="disbursement_list_id" />
-          </Key>
-          <Property Name="requisition_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="disbursement_list_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="collection_detail" Relationship="Self.FK_collection_detail_requisition_disbursement_detail" FromRole="requisition_disbursement_detail" ToRole="collection_detail" />
-          <NavigationProperty Name="requisition_order" Relationship="Self.FK_requisition_disbursement_detail_requisition_disbursement_detail" FromRole="requisition_disbursement_detail" ToRole="requisition_order" />
-        </EntityType>
         <EntityType Name="requisition_order">
           <Key>
             <PropertyRef Name="requisition_id" />
@@ -701,9 +809,9 @@
           <Property Name="requisition_status" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="requisition_date" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="employee" Relationship="Self.FK_requisition_order_employee" FromRole="requisition_order" ToRole="employee" />
-          <NavigationProperty Name="requisition_disbursement_detail" Relationship="Self.FK_requisition_disbursement_detail_requisition_disbursement_detail" FromRole="requisition_order" ToRole="requisition_disbursement_detail" />
           <NavigationProperty Name="requisition_order_detail" Relationship="Self.FK_requisition_order_detail_requisition_order" FromRole="requisition_order" ToRole="requisition_order_detail" />
           <Property Name="head_comment" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="collection_detail" Relationship="LogicUniversityModel.requisition_disbursement_detail" FromRole="requisition_order" ToRole="collection_detail" />
         </EntityType>
         <EntityType Name="requisition_order_detail">
           <Key>
@@ -780,30 +888,6 @@
             </Principal>
             <Dependent Role="budget">
               <PropertyRef Name="department_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_collection_detail_collection">
-          <End Role="collection" Type="Self.collection" Multiplicity="1" />
-          <End Role="collection_detail" Type="Self.collection_detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="collection">
-              <PropertyRef Name="place_id" />
-            </Principal>
-            <Dependent Role="collection_detail">
-              <PropertyRef Name="place_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_collection_detail_requisition_disbursement_detail">
-          <End Role="requisition_disbursement_detail" Type="Self.requisition_disbursement_detail" Multiplicity="1" />
-          <End Role="collection_detail" Type="Self.collection_detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="requisition_disbursement_detail">
-              <PropertyRef Name="disbursement_list_id" />
-            </Principal>
-            <Dependent Role="collection_detail">
-              <PropertyRef Name="disbursement_list_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -903,18 +987,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_requisition_disbursement_detail_requisition_disbursement_detail">
-          <End Role="requisition_order" Type="Self.requisition_order" Multiplicity="1" />
-          <End Role="requisition_disbursement_detail" Type="Self.requisition_disbursement_detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="requisition_order">
-              <PropertyRef Name="requisition_id" />
-            </Principal>
-            <Dependent Role="requisition_disbursement_detail">
-              <PropertyRef Name="requisition_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_requisition_order_detail_requisition_order">
           <End Role="requisition_order" Type="Self.requisition_order" Multiplicity="1" />
           <End Role="requisition_order_detail" Type="Self.requisition_order_detail" Multiplicity="*" />
@@ -947,12 +1019,10 @@
           <EntitySet Name="adjustments" EntityType="Self.adjustment" />
           <EntitySet Name="budgets" EntityType="Self.budget" />
           <EntitySet Name="collections" EntityType="Self.collection" />
-          <EntitySet Name="collection_detail" EntityType="Self.collection_detail" />
           <EntitySet Name="departments" EntityType="Self.department" />
           <EntitySet Name="department_rep" EntityType="Self.department_rep" />
           <EntitySet Name="employees" EntityType="Self.employee" />
           <EntitySet Name="inventories" EntityType="Self.inventory" />
-          <EntitySet Name="requisition_disbursement_detail" EntityType="Self.requisition_disbursement_detail" />
           <EntitySet Name="requisition_order" EntityType="Self.requisition_order" />
           <EntitySet Name="requisition_order_detail" EntityType="Self.requisition_order_detail" />
           <EntitySet Name="suppliers" EntityType="Self.supplier" />
@@ -968,14 +1038,6 @@
           <AssociationSet Name="FK_budget_detail_department" Association="Self.FK_budget_detail_department">
             <End Role="department" EntitySet="departments" />
             <End Role="budget" EntitySet="budgets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_collection_detail_collection" Association="Self.FK_collection_detail_collection">
-            <End Role="collection" EntitySet="collections" />
-            <End Role="collection_detail" EntitySet="collection_detail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_collection_detail_requisition_disbursement_detail" Association="Self.FK_collection_detail_requisition_disbursement_detail">
-            <End Role="requisition_disbursement_detail" EntitySet="requisition_disbursement_detail" />
-            <End Role="collection_detail" EntitySet="collection_detail" />
           </AssociationSet>
           <AssociationSet Name="FK_department_employee" Association="Self.FK_department_employee">
             <End Role="employee" EntitySet="employees" />
@@ -1009,10 +1071,6 @@
             <End Role="inventory" EntitySet="inventories" />
             <End Role="supplier_itemdetail" EntitySet="supplier_itemdetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_requisition_disbursement_detail_requisition_disbursement_detail" Association="Self.FK_requisition_disbursement_detail_requisition_disbursement_detail">
-            <End Role="requisition_order" EntitySet="requisition_order" />
-            <End Role="requisition_disbursement_detail" EntitySet="requisition_disbursement_detail" />
-          </AssociationSet>
           <AssociationSet Name="FK_requisition_order_detail_requisition_order" Association="Self.FK_requisition_order_detail_requisition_order">
             <End Role="requisition_order" EntitySet="requisition_order" />
             <End Role="requisition_order_detail" EntitySet="requisition_order_detail" />
@@ -1037,15 +1095,141 @@
           <FunctionImport Name="getRequisitionOrderDetails" ReturnType="Collection(LogicUniversityModel.getRequisitionOrderDetails_Result)">
           <Parameter Name="var" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="purchase_order" EntityType="LogicUniversityModel.purchase_order" />
           <EntitySet Name="purchase_order_detail" EntityType="LogicUniversityModel.purchase_order_detail" />
-          <AssociationSet Name="FK_purchase_order_employee" Association="LogicUniversityModel.FK_purchase_order_employee">
-            <End Role="employee" EntitySet="employees" />
-            <End Role="purchase_order" EntitySet="purchase_order" />
-          </AssociationSet>
           <AssociationSet Name="FK_purchase_order_detail_inventory" Association="LogicUniversityModel.FK_purchase_order_detail_inventory">
             <End Role="inventory" EntitySet="inventories" />
             <End Role="purchase_order_detail" EntitySet="purchase_order_detail" />
+          </AssociationSet>
+          <FunctionImport Name="GetRequisitionStatus" ReturnType="Collection(LogicUniversityModel.GetRequisitionStatus_Result)" />
+          <FunctionImport Name="getAllViewPOHistorypendingcount" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcount_Result)" />
+          <FunctionImport Name="getAllViewPOHistorypendingcountbyPO" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbyPO_Result)">
+          <Parameter Name="varpo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getAllViewPOHistorypendingcountbyPOandStatus" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbyPOandStatus_Result)">
+            <Parameter Name="varpo" Mode="In" Type="Int32" />
+            <Parameter Name="varstat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getAllViewPOHistorypendingcountbyStatus" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbyStatus_Result)">
+          <Parameter Name="varstat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getAllViewPOHistorypendingcountbySupandPo" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbySupandPo_Result)">
+            <Parameter Name="varpo" Mode="In" Type="Int32" />
+            <Parameter Name="varsup" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getAllViewPOHistorypendingcountbySupandPoandStatus" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbySupandPoandStatus_Result)">
+            <Parameter Name="varpo" Mode="In" Type="Int32" />
+            <Parameter Name="varsup" Mode="In" Type="String" />
+            <Parameter Name="varstat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getAllViewPOHistorypendingcountbySupandStatus" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbySupandStatus_Result)">
+            <Parameter Name="varsup" Mode="In" Type="String" />
+            <Parameter Name="varstat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getAllViewPOHistorypendingcountbySupplier" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorypendingcountbySupplier_Result)">
+          <Parameter Name="varsup" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getAllViewPOHistorytotalcount" ReturnType="Collection(LogicUniversityModel.getAllViewPOHistorytotalcount_Result)" />
+          <FunctionImport Name="getApprovedRequisitionsWithNoDisbursementIdByDepartment" ReturnType="Collection(LogicUniversityModel.getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result)" />
+          <FunctionImport Name="getitemdetails" ReturnType="Collection(LogicUniversityModel.getitemdetails_Result)">
+          <Parameter Name="requisitionnumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getLowStockItemsByCategory" ReturnType="Collection(LogicUniversityModel.getLowStockItemsByCategory_Result)" />
+          <FunctionImport Name="getPendingPurchaseOrderCountBySupplier" ReturnType="Collection(LogicUniversityModel.getPendingPurchaseOrderCountBySupplier_Result)" />
+          <FunctionImport Name="getpendingrequestdetails" ReturnType="Collection(LogicUniversityModel.getpendingrequestdetails_Result)">
+          <Parameter Name="requisitionnumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getpendingrequestsbydepartment" ReturnType="Collection(LogicUniversityModel.getpendingrequestsbydepartment_Result)">
+          <Parameter Name="departmentname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getPurchaseQuantityByItemCategory" ReturnType="Collection(LogicUniversityModel.getPurchaseQuantityByItemCategory_Result)">
+          <Parameter Name="MonthsBack" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getRecentRequisitionOrders" ReturnType="Collection(LogicUniversityModel.getRecentRequisitionOrders_Result)" />
+          <FunctionImport Name="getrepdetails" ReturnType="Collection(LogicUniversityModel.getrepdetails_Result)">
+          <Parameter Name="depid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getRequestedItemQuantityLastYear" ReturnType="Collection(LogicUniversityModel.getRequestedItemQuantityLastYear_Result)">
+          <Parameter Name="ItemCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getrequesthistory" ReturnType="Collection(LogicUniversityModel.getrequesthistory_Result)">
+          <Parameter Name="departmentid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getRequisitionQuantityByDepartment" ReturnType="Collection(LogicUniversityModel.getRequisitionQuantityByDepartment_Result)" />
+          <FunctionImport Name="getStationariesOrderedLastMonthByCategory" ReturnType="Collection(LogicUniversityModel.getStationariesOrderedLastMonthByCategory_Result)" />
+          <FunctionImport Name="getViewPOHistorytotalcountbyPO" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbyPO_Result)">
+          <Parameter Name="varpo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getViewPOHistorytotalcountbyPOandstatus" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbyPOandstatus_Result)">
+            <Parameter Name="varpo" Mode="In" Type="Int32" />
+            <Parameter Name="varstat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getViewPOHistorytotalcountbyPOandstatusandSupplier" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbyPOandstatusandSupplier_Result)">
+            <Parameter Name="varsup" Mode="In" Type="String" />
+            <Parameter Name="varpo" Mode="In" Type="Int32" />
+            <Parameter Name="varstat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getViewPOHistorytotalcountbyPOandSupplier" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbyPOandSupplier_Result)">
+            <Parameter Name="varpo" Mode="In" Type="Int32" />
+            <Parameter Name="varsup" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getViewPOHistorytotalcountByStatus" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountByStatus_Result)">
+          <Parameter Name="varstat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getViewPOHistorytotalcountbysupandstatus" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbysupandstatus_Result)">
+            <Parameter Name="varsup" Mode="In" Type="String" />
+            <Parameter Name="varstat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getViewPOHistorytotalcountbySupplier" ReturnType="Collection(LogicUniversityModel.getViewPOHistorytotalcountbySupplier_Result)">
+          <Parameter Name="varsup" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_geteachPendingPOList" ReturnType="Collection(LogicUniversityModel.sp_geteachPendingPOList_Result)">
+          <Parameter Name="var4" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getPendingPODetails" ReturnType="Collection(LogicUniversityModel.sp_getPendingPODetails_Result)">
+          <Parameter Name="var5" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getPendingPOList" ReturnType="Collection(LogicUniversityModel.sp_getPendingPOList_Result)" />
+          <FunctionImport Name="spGetCollectionList" ReturnType="Collection(LogicUniversityModel.spGetCollectionList_Result)" />
+          <FunctionImport Name="spGetDepartmentList" ReturnType="Collection(String)" />
+          <FunctionImport Name="spGetDepartmentPin" ReturnType="Collection(Int32)">
+          <Parameter Name="departmentname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spGetPlaceIdFromDptId" ReturnType="Collection(Int32)">
+          <Parameter Name="dptId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spGetRODetailsByROId" ReturnType="Collection(LogicUniversityModel.spGetRODetailsByROId_Result)">
+          <Parameter Name="roId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spGetUndisbursedROList" ReturnType="Collection(String)" />
+          <FunctionImport Name="spInsertCollectionDetail">
+            <Parameter Name="placeId" Mode="In" Type="Int32" />
+            <Parameter Name="collectionDate" Mode="In" Type="DateTime" />
+            <Parameter Name="collectionStatus" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spSpecialRequestReady">
+            <Parameter Name="placeId" Mode="In" Type="Int32" />
+            <Parameter Name="collectionDate" Mode="In" Type="DateTime" />
+            <Parameter Name="collectionStatus" Mode="In" Type="String" />
+            <Parameter Name="ro_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spViewCollectionList" ReturnType="Collection(LogicUniversityModel.spViewCollectionList_Result)" />
+          <EntitySet Name="collection_detail" EntityType="LogicUniversityModel.collection_detail" />
+          <AssociationSet Name="FK_collection_detail_collection" Association="LogicUniversityModel.FK_collection_detail_collection">
+            <End Role="collection" EntitySet="collections" />
+            <End Role="collection_detail" EntitySet="collection_detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_collection_detail_collection_detail" Association="LogicUniversityModel.FK_collection_detail_collection_detail">
+            <End Role="collection_detail" EntitySet="collection_detail" />
+            <End Role="collection_detail1" EntitySet="collection_detail" />
+          </AssociationSet>
+          <AssociationSet Name="requisition_disbursement_detail" Association="LogicUniversityModel.requisition_disbursement_detail">
+            <End Role="collection_detail" EntitySet="collection_detail" />
+            <End Role="requisition_order" EntitySet="requisition_order" />
+          </AssociationSet>
+          <EntitySet Name="purchase_order" EntityType="LogicUniversityModel.purchase_order" />
+          <AssociationSet Name="FK_purchase_order_employee" Association="LogicUniversityModel.FK_purchase_order_employee">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="purchase_order" EntitySet="purchase_order" />
           </AssociationSet>
           <AssociationSet Name="FK_purchase_order_detail_purchase_order" Association="LogicUniversityModel.FK_purchase_order_detail_purchase_order">
             <End Role="purchase_order" EntitySet="purchase_order" />
@@ -1055,7 +1239,6 @@
             <End Role="supplier" EntitySet="suppliers" />
             <End Role="purchase_order" EntitySet="purchase_order" />
           </AssociationSet>
-          <FunctionImport Name="GetRequisitionStatus" ReturnType="Collection(LogicUniversityModel.GetRequisitionStatus_Result)" />
         </EntityContainer>
         <ComplexType Name="getRequsitionDetail_Result">
           <Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
@@ -1089,20 +1272,6 @@
           <Property Type="Double" Name="item_requisition_price" Nullable="false" />
           <Property Type="Double" Name="unit_price" Nullable="false" />
         </ComplexType>
-        <EntityType Name="purchase_order">
-          <Key>
-            <PropertyRef Name="purchase_order_number" />
-          </Key>
-          <Property Name="purchase_order_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="purchase_order_required_date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="suppler_id" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="employee_id" Type="Int32" Nullable="false" />
-          <Property Name="purchase_order_status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="manager_remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="employee" Relationship="LogicUniversityModel.FK_purchase_order_employee" FromRole="purchase_order" ToRole="employee" />
-          <NavigationProperty Name="purchase_order_detail" Relationship="LogicUniversityModel.FK_purchase_order_detail_purchase_order" FromRole="purchase_order" ToRole="purchase_order_detail" />
-          <NavigationProperty Name="supplier" Relationship="LogicUniversityModel.FK_purchase_order_supplier" FromRole="purchase_order" ToRole="supplier" />
-        </EntityType>
         <EntityType Name="purchase_order_detail">
           <Key>
             <PropertyRef Name="purchase_order_number" />
@@ -1120,18 +1289,6 @@
           <NavigationProperty Name="inventory" Relationship="LogicUniversityModel.FK_purchase_order_detail_inventory" FromRole="purchase_order_detail" ToRole="inventory" />
           <NavigationProperty Name="purchase_order" Relationship="LogicUniversityModel.FK_purchase_order_detail_purchase_order" FromRole="purchase_order_detail" ToRole="purchase_order" />
         </EntityType>
-        <Association Name="FK_purchase_order_employee">
-          <End Type="LogicUniversityModel.employee" Role="employee" Multiplicity="1" />
-          <End Type="LogicUniversityModel.purchase_order" Role="purchase_order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="employee">
-              <PropertyRef Name="employee_id" />
-            </Principal>
-            <Dependent Role="purchase_order">
-              <PropertyRef Name="employee_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_purchase_order_detail_inventory">
           <End Type="LogicUniversityModel.inventory" Role="inventory" Multiplicity="1" />
           <End Type="LogicUniversityModel.purchase_order_detail" Role="purchase_order_detail" Multiplicity="*" />
@@ -1141,6 +1298,323 @@
             </Principal>
             <Dependent Role="purchase_order_detail">
               <PropertyRef Name="item_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetRequisitionStatus_Result">
+          <Property Type="String" Name="requisition_status" Nullable="false" MaxLength="8" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorypendingcount_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="outstanding_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorypendingcountbyPO_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="outstanding_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorypendingcountbyPOandStatus_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="outstanding_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorypendingcountbyStatus_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="outstanding_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorypendingcountbySupandPo_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="outstanding_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorypendingcountbySupandPoandStatus_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="outstanding_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorypendingcountbySupandStatus_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="outstanding_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorypendingcountbySupplier_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="outstanding_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllViewPOHistorytotalcount_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="po_total_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result">
+          <Property Type="String" Name="RequisitionId" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="RequisitionDate" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getitemdetails_Result">
+          <Property Type="String" Name="category" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="item_requisition_quantity" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="getLowStockItemsByCategory_Result">
+          <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="current_quantity" Nullable="false" />
+          <Property Type="Int32" Name="reorder_level" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="getPendingPurchaseOrderCountBySupplier_Result">
+          <Property Type="String" Name="SupplierId" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="PendingPurchaseOrderQuantity" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getpendingrequestdetails_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="8" />
+          <Property Type="Double" Name="Sum" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getpendingrequestsbydepartment_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="8" />
+          <Property Type="Double" Name="Sum" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getPurchaseQuantityByItemCategory_Result">
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="PurchaseQuantity" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getRecentRequisitionOrders_Result">
+          <Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="employee_id" Nullable="false" />
+          <Property Type="String" Name="requisition_status" Nullable="false" MaxLength="8" />
+          <Property Type="DateTime" Name="requisition_date" Nullable="false" />
+          <Property Type="String" Name="head_comment" Nullable="true" MaxLength="300" />
+        </ComplexType>
+        <ComplexType Name="getrepdetails_Result">
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="representative_status" Nullable="false" MaxLength="8" />
+          <Property Type="DateTime" Name="appointed_date" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="getRequestedItemQuantityLastYear_Result">
+          <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="quantity_requested" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getrequesthistory_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="Date" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="8" />
+          <Property Type="Double" Name="Sum" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getRequisitionQuantityByDepartment_Result">
+          <Property Type="String" Name="department_id" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="item_request_quantity" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getStationariesOrderedLastMonthByCategory_Result">
+          <Property Type="String" Name="department_id" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="item_request_quantity" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getViewPOHistorytotalcountbyPO_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="po_total_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getViewPOHistorytotalcountbyPOandstatus_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="po_total_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getViewPOHistorytotalcountbyPOandstatusandSupplier_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="po_total_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getViewPOHistorytotalcountbyPOandSupplier_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="po_total_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getViewPOHistorytotalcountByStatus_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="po_total_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getViewPOHistorytotalcountbysupandstatus_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="po_total_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getViewPOHistorytotalcountbySupplier_Result">
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="purchase_order_status" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="po_total_item_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_geteachPendingPOList_Result">
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="Double" Name="total_price" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_getPendingPODetails_Result">
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="DateTime" Name="item_required_date" Nullable="false" />
+          <Property Type="Double" Name="item_purchase_order_price" Nullable="false" />
+          <Property Type="Int32" Name="item_purchase_order_quantity" Nullable="false" />
+          <Property Type="Int32" Name="current_quantity" Nullable="false" />
+          <Property Type="Int32" Name="reorder_level" Nullable="false" />
+          <Property Type="String" Name="supplier_email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="manager_remark" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_getPendingPOList_Result">
+          <Property Type="Int32" Name="purchase_order_number" Nullable="false" />
+          <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="purchase_order_date" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="Double" Name="total_price" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetCollectionList_Result">
+          <Property Type="String" Name="item_number" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="quantity_ordered" Nullable="true" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="current_quantity" Nullable="false" />
+          <Property Type="String" Name="unit_of_measurement" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="spGetRODetailsByROId_Result">
+          <Property Type="String" Name="requisition_id" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="item_number" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="unit_of_measurement" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="item_requisition_quantity" Nullable="true" />
+          <Property Type="Int32" Name="current_quantity" Nullable="false" />
+          <Property Type="Int32" Name="item_pending_quantity" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spViewCollectionList_Result">
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="department_name" Nullable="false" MaxLength="30" />
+          <Property Type="DateTime" Name="collection_date" Nullable="false" />
+          <Property Type="String" Name="collection_place" Nullable="false" MaxLength="30" />
+          <Property Type="Time" Name="collection_time" Nullable="false" />
+          <Property Type="Int32" Name="collection_id" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="collection_detail">
+          <Key>
+            <PropertyRef Name="collection_id" />
+          </Key>
+          <Property Name="collection_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="place_id" Type="Int32" Nullable="false" />
+          <Property Name="collection_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="collection_status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="collection" Relationship="LogicUniversityModel.FK_collection_detail_collection" FromRole="collection_detail" ToRole="collection" />
+          <NavigationProperty Name="collection_detail1" Relationship="LogicUniversityModel.FK_collection_detail_collection_detail" FromRole="collection_detail" ToRole="collection_detail1" />
+          <NavigationProperty Name="collection_detail2" Relationship="LogicUniversityModel.FK_collection_detail_collection_detail" FromRole="collection_detail1" ToRole="collection_detail" />
+          <NavigationProperty Name="requisition_order" Relationship="LogicUniversityModel.requisition_disbursement_detail" FromRole="collection_detail" ToRole="requisition_order" />
+        </EntityType>
+        <Association Name="FK_collection_detail_collection">
+          <End Type="LogicUniversityModel.collection" Role="collection" Multiplicity="1" />
+          <End Type="LogicUniversityModel.collection_detail" Role="collection_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="collection">
+              <PropertyRef Name="place_id" />
+            </Principal>
+            <Dependent Role="collection_detail">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_collection_detail_collection_detail">
+          <End Type="LogicUniversityModel.collection_detail" Role="collection_detail" Multiplicity="1" />
+          <End Type="LogicUniversityModel.collection_detail" Role="collection_detail1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="collection_detail">
+              <PropertyRef Name="collection_id" />
+            </Principal>
+            <Dependent Role="collection_detail1">
+              <PropertyRef Name="collection_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="requisition_disbursement_detail">
+          <End Type="LogicUniversityModel.collection_detail" Role="collection_detail" Multiplicity="0..1" />
+          <End Type="LogicUniversityModel.requisition_order" Role="requisition_order" Multiplicity="*" />
+        </Association>
+        <EntityType Name="purchase_order">
+          <Key>
+            <PropertyRef Name="purchase_order_number" />
+          </Key>
+          <Property Name="purchase_order_number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="purchase_order_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="suppler_id" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="employee_id" Type="Int32" Nullable="false" />
+          <Property Name="purchase_order_status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="manager_remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="employee" Relationship="LogicUniversityModel.FK_purchase_order_employee" FromRole="purchase_order" ToRole="employee" />
+          <NavigationProperty Name="purchase_order_detail" Relationship="LogicUniversityModel.FK_purchase_order_detail_purchase_order" FromRole="purchase_order" ToRole="purchase_order_detail" />
+          <NavigationProperty Name="supplier" Relationship="LogicUniversityModel.FK_purchase_order_supplier" FromRole="purchase_order" ToRole="supplier" />
+        </EntityType>
+        <Association Name="FK_purchase_order_employee">
+          <End Type="LogicUniversityModel.employee" Role="employee" Multiplicity="1" />
+          <End Type="LogicUniversityModel.purchase_order" Role="purchase_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="purchase_order">
+              <PropertyRef Name="employee_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1168,9 +1642,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GetRequisitionStatus_Result">
-          <Property Type="String" Name="requisition_status" Nullable="false" MaxLength="8" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1212,17 +1683,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="collection_detail">
-            <EntityTypeMapping TypeName="LogicUniversityModel.collection_detail">
-              <MappingFragment StoreEntitySet="collection_detail">
-                <ScalarProperty Name="collection_id" ColumnName="collection_id" />
-                <ScalarProperty Name="disbursement_list_id" ColumnName="disbursement_list_id" />
-                <ScalarProperty Name="place_id" ColumnName="place_id" />
-                <ScalarProperty Name="collection_date" ColumnName="collection_date" />
-                <ScalarProperty Name="collection_status" ColumnName="collection_status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="departments">
             <EntityTypeMapping TypeName="LogicUniversityModel.department">
               <MappingFragment StoreEntitySet="department">
@@ -1251,6 +1711,7 @@
           <EntitySetMapping Name="employees">
             <EntityTypeMapping TypeName="LogicUniversityModel.employee">
               <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="token" ColumnName="token" />
                 <ScalarProperty Name="employee_id" ColumnName="employee_id" />
                 <ScalarProperty Name="employee_name" ColumnName="employee_name" />
                 <ScalarProperty Name="email_id" ColumnName="email_id" />
@@ -1272,14 +1733,6 @@
                 <ScalarProperty Name="reorder_quantity" ColumnName="reorder_quantity" />
                 <ScalarProperty Name="item_bin" ColumnName="item_bin" />
                 <ScalarProperty Name="item_status" ColumnName="item_status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="requisition_disbursement_detail">
-            <EntityTypeMapping TypeName="LogicUniversityModel.requisition_disbursement_detail">
-              <MappingFragment StoreEntitySet="requisition_disbursement_detail">
-                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
-                <ScalarProperty Name="disbursement_list_id" ColumnName="disbursement_list_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1364,18 +1817,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="purchase_order">
-            <EntityTypeMapping TypeName="LogicUniversityModel.purchase_order">
-              <MappingFragment StoreEntitySet="purchase_order">
-                <ScalarProperty Name="manager_remark" ColumnName="manager_remark" />
-                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
-                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
-                <ScalarProperty Name="suppler_id" ColumnName="suppler_id" />
-                <ScalarProperty Name="purchase_order_required_date" ColumnName="purchase_order_required_date" />
-                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="purchase_order_detail">
             <EntityTypeMapping TypeName="LogicUniversityModel.purchase_order_detail">
               <MappingFragment StoreEntitySet="purchase_order_detail">
@@ -1398,6 +1839,430 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorypendingcount" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorypendingcount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorypendingcount_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="outstanding_item_count" ColumnName="outstanding_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorypendingcountbyPO" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorypendingcountbyPO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorypendingcountbyPO_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="outstanding_item_count" ColumnName="outstanding_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorypendingcountbyPOandStatus" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorypendingcountbyPOandStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorypendingcountbyPOandStatus_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="outstanding_item_count" ColumnName="outstanding_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorypendingcountbyStatus" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorypendingcountbyStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorypendingcountbyStatus_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="outstanding_item_count" ColumnName="outstanding_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorypendingcountbySupandPo" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorypendingcountbySupandPo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorypendingcountbySupandPo_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="outstanding_item_count" ColumnName="outstanding_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorypendingcountbySupandPoandStatus" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorypendingcountbySupandPoandStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorypendingcountbySupandPoandStatus_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="outstanding_item_count" ColumnName="outstanding_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorypendingcountbySupandStatus" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorypendingcountbySupandStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorypendingcountbySupandStatus_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="outstanding_item_count" ColumnName="outstanding_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorypendingcountbySupplier" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorypendingcountbySupplier">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorypendingcountbySupplier_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="outstanding_item_count" ColumnName="outstanding_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllViewPOHistorytotalcount" FunctionName="LogicUniversityModel.Store.getAllViewPOHistorytotalcount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getAllViewPOHistorytotalcount_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="po_total_item_count" ColumnName="po_total_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getApprovedRequisitionsWithNoDisbursementIdByDepartment" FunctionName="LogicUniversityModel.Store.getApprovedRequisitionsWithNoDisbursementIdByDepartment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result">
+                <ScalarProperty Name="RequisitionId" ColumnName="RequisitionId" />
+                <ScalarProperty Name="RequisitionDate" ColumnName="RequisitionDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getitemdetails" FunctionName="LogicUniversityModel.Store.getitemdetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getitemdetails_Result">
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="item_requisition_quantity" ColumnName="item_requisition_quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getLowStockItemsByCategory" FunctionName="LogicUniversityModel.Store.getLowStockItemsByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getLowStockItemsByCategory_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="current_quantity" ColumnName="current_quantity" />
+                <ScalarProperty Name="reorder_level" ColumnName="reorder_level" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getPendingPurchaseOrderCountBySupplier" FunctionName="LogicUniversityModel.Store.getPendingPurchaseOrderCountBySupplier">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getPendingPurchaseOrderCountBySupplier_Result">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="PendingPurchaseOrderQuantity" ColumnName="PendingPurchaseOrderQuantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getpendingrequestdetails" FunctionName="LogicUniversityModel.Store.getpendingrequestdetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getpendingrequestdetails_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getpendingrequestsbydepartment" FunctionName="LogicUniversityModel.Store.getpendingrequestsbydepartment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getpendingrequestsbydepartment_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getPurchaseQuantityByItemCategory" FunctionName="LogicUniversityModel.Store.getPurchaseQuantityByItemCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getPurchaseQuantityByItemCategory_Result">
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="PurchaseQuantity" ColumnName="PurchaseQuantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getRecentRequisitionOrders" FunctionName="LogicUniversityModel.Store.getRecentRequisitionOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getRecentRequisitionOrders_Result">
+                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="requisition_status" ColumnName="requisition_status" />
+                <ScalarProperty Name="requisition_date" ColumnName="requisition_date" />
+                <ScalarProperty Name="head_comment" ColumnName="head_comment" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getrepdetails" FunctionName="LogicUniversityModel.Store.getrepdetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getrepdetails_Result">
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="representative_status" ColumnName="representative_status" />
+                <ScalarProperty Name="appointed_date" ColumnName="appointed_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getRequestedItemQuantityLastYear" FunctionName="LogicUniversityModel.Store.getRequestedItemQuantityLastYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getRequestedItemQuantityLastYear_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="quantity_requested" ColumnName="quantity_requested" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getrequesthistory" FunctionName="LogicUniversityModel.Store.getrequesthistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getrequesthistory_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getRequisitionQuantityByDepartment" FunctionName="LogicUniversityModel.Store.getRequisitionQuantityByDepartment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getRequisitionQuantityByDepartment_Result">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="item_request_quantity" ColumnName="item_request_quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getStationariesOrderedLastMonthByCategory" FunctionName="LogicUniversityModel.Store.getStationariesOrderedLastMonthByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getStationariesOrderedLastMonthByCategory_Result">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="item_request_quantity" ColumnName="item_request_quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getViewPOHistorytotalcountbyPO" FunctionName="LogicUniversityModel.Store.getViewPOHistorytotalcountbyPO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getViewPOHistorytotalcountbyPO_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="po_total_item_count" ColumnName="po_total_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getViewPOHistorytotalcountbyPOandstatus" FunctionName="LogicUniversityModel.Store.getViewPOHistorytotalcountbyPOandstatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getViewPOHistorytotalcountbyPOandstatus_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="po_total_item_count" ColumnName="po_total_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getViewPOHistorytotalcountbyPOandstatusandSupplier" FunctionName="LogicUniversityModel.Store.getViewPOHistorytotalcountbyPOandstatusandSupplier">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getViewPOHistorytotalcountbyPOandstatusandSupplier_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="po_total_item_count" ColumnName="po_total_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getViewPOHistorytotalcountbyPOandSupplier" FunctionName="LogicUniversityModel.Store.getViewPOHistorytotalcountbyPOandSupplier">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getViewPOHistorytotalcountbyPOandSupplier_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="po_total_item_count" ColumnName="po_total_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getViewPOHistorytotalcountByStatus" FunctionName="LogicUniversityModel.Store.getViewPOHistorytotalcountByStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getViewPOHistorytotalcountByStatus_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="po_total_item_count" ColumnName="po_total_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getViewPOHistorytotalcountbysupandstatus" FunctionName="LogicUniversityModel.Store.getViewPOHistorytotalcountbysupandstatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getViewPOHistorytotalcountbysupandstatus_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="po_total_item_count" ColumnName="po_total_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getViewPOHistorytotalcountbySupplier" FunctionName="LogicUniversityModel.Store.getViewPOHistorytotalcountbySupplier">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getViewPOHistorytotalcountbySupplier_Result">
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="po_total_item_count" ColumnName="po_total_item_count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_geteachPendingPOList" FunctionName="LogicUniversityModel.Store.sp_geteachPendingPOList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.sp_geteachPendingPOList_Result">
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="total_price" ColumnName="total_price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getPendingPODetails" FunctionName="LogicUniversityModel.Store.sp_getPendingPODetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.sp_getPendingPODetails_Result">
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="item_required_date" ColumnName="item_required_date" />
+                <ScalarProperty Name="item_purchase_order_price" ColumnName="item_purchase_order_price" />
+                <ScalarProperty Name="item_purchase_order_quantity" ColumnName="item_purchase_order_quantity" />
+                <ScalarProperty Name="current_quantity" ColumnName="current_quantity" />
+                <ScalarProperty Name="reorder_level" ColumnName="reorder_level" />
+                <ScalarProperty Name="supplier_email" ColumnName="supplier_email" />
+                <ScalarProperty Name="manager_remark" ColumnName="manager_remark" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_getPendingPOList" FunctionName="LogicUniversityModel.Store.sp_getPendingPOList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.sp_getPendingPOList_Result">
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+                <ScalarProperty Name="supplier_name" ColumnName="supplier_name" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="total_price" ColumnName="total_price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetCollectionList" FunctionName="LogicUniversityModel.Store.spGetCollectionList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spGetCollectionList_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="quantity_ordered" ColumnName="quantity_ordered" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="current_quantity" ColumnName="current_quantity" />
+                <ScalarProperty Name="unit_of_measurement" ColumnName="unit_of_measurement" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetDepartmentList" FunctionName="LogicUniversityModel.Store.spGetDepartmentList" />
+          <FunctionImportMapping FunctionImportName="spGetDepartmentPin" FunctionName="LogicUniversityModel.Store.spGetDepartmentPin" />
+          <FunctionImportMapping FunctionImportName="spGetPlaceIdFromDptId" FunctionName="LogicUniversityModel.Store.spGetPlaceIdFromDptId" />
+          <FunctionImportMapping FunctionImportName="spGetRODetailsByROId" FunctionName="LogicUniversityModel.Store.spGetRODetailsByROId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spGetRODetailsByROId_Result">
+                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="unit_of_measurement" ColumnName="unit_of_measurement" />
+                <ScalarProperty Name="item_requisition_quantity" ColumnName="item_requisition_quantity" />
+                <ScalarProperty Name="current_quantity" ColumnName="current_quantity" />
+                <ScalarProperty Name="item_pending_quantity" ColumnName="item_pending_quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetUndisbursedROList" FunctionName="LogicUniversityModel.Store.spGetUndisbursedROList" />
+          <FunctionImportMapping FunctionImportName="spInsertCollectionDetail" FunctionName="LogicUniversityModel.Store.spInsertCollectionDetail" />
+          <FunctionImportMapping FunctionImportName="spSpecialRequestReady" FunctionName="LogicUniversityModel.Store.spSpecialRequestReady" />
+          <FunctionImportMapping FunctionImportName="spViewCollectionList" FunctionName="LogicUniversityModel.Store.spViewCollectionList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spViewCollectionList_Result">
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+                <ScalarProperty Name="collection_date" ColumnName="collection_date" />
+                <ScalarProperty Name="collection_place" ColumnName="collection_place" />
+                <ScalarProperty Name="collection_time" ColumnName="collection_time" />
+                <ScalarProperty Name="collection_id" ColumnName="collection_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="collection_detail">
+            <EntityTypeMapping TypeName="LogicUniversityModel.collection_detail">
+              <MappingFragment StoreEntitySet="collection_detail">
+                <ScalarProperty Name="collection_status" ColumnName="collection_status" />
+                <ScalarProperty Name="collection_date" ColumnName="collection_date" />
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="collection_id" ColumnName="collection_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="requisition_disbursement_detail" TypeName="LogicUniversityModel.requisition_disbursement_detail" StoreEntitySet="requisition_disbursement_detail">
+            <EndProperty Name="requisition_order">
+              <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+            </EndProperty>
+            <EndProperty Name="collection_detail">
+              <ScalarProperty Name="collection_id" ColumnName="collection_id" />
+            </EndProperty>
+            <Condition ColumnName="collection_id" IsNull="false" />
+          </AssociationSetMapping>
+          <EntitySetMapping Name="purchase_order">
+            <EntityTypeMapping TypeName="LogicUniversityModel.purchase_order">
+              <MappingFragment StoreEntitySet="purchase_order">
+                <ScalarProperty Name="manager_remark" ColumnName="manager_remark" />
+                <ScalarProperty Name="purchase_order_status" ColumnName="purchase_order_status" />
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="suppler_id" ColumnName="suppler_id" />
+                <ScalarProperty Name="purchase_order_date" ColumnName="purchase_order_date" />
+                <ScalarProperty Name="purchase_order_number" ColumnName="purchase_order_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

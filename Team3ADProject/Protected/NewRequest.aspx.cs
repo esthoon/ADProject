@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Team3ADProject.Code;
 using System.Security.Principal;
 using Team3ADProject.Model;
+using System.Drawing;
 
 namespace Team3ADProject.Protected
 {
@@ -43,6 +44,8 @@ namespace Team3ADProject.Protected
         {
             Button b = (Button)sender;
             HiddenField hd = (HiddenField)b.FindControl("HiddenFieldItemNumber");
+            b.CssClass = "btn btn-success disabled";
+            b.Enabled = false;
             string itemNumber = hd.Value;
             if (Session["RequestCart"] == null)
             { 

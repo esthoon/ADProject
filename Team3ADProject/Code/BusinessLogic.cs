@@ -40,7 +40,7 @@ namespace Team3ADProject.Code
         }
 
         //Add new entry to Requisition order table
-        public static void AddNewRequisitionOrder(string id, int emp, DateTime d )
+        public static void AddNewRequisitionOrder(string id, int emp, DateTime d)
         {
 
             requisition_order r = new requisition_order();
@@ -81,7 +81,7 @@ namespace Team3ADProject.Code
         //Return Pending requisition order by employee
         public static List<requisition_order> GetPendingRequisitionByEmployee(int id)
         {
-            return context.requisition_order.Where(x => x.employee_id == id && x.requisition_status=="Pending").ToList<requisition_order>();
+            return context.requisition_order.Where(x => x.employee_id == id && x.requisition_status == "Pending").ToList<requisition_order>();
         }
 
         //Return all requisition by employee
@@ -115,6 +115,7 @@ namespace Team3ADProject.Code
             return l = context.getRequisitionOrderDetails(id).ToList();
         }
 
+        //Cancel requisition order status to cancel
         public static void Cancelrequisition(string id)
         {
             requisition_order r = context.requisition_order.Where(x => x.requisition_id == id).First();
@@ -122,7 +123,8 @@ namespace Team3ADProject.Code
             context.SaveChanges();
         }
 
-        public static void UpdateRequisitionOrderDetail(string id, List<getRequisitionOrderDetails_Result> order )
+        //Save changes in edit request to requisition order
+        public static void UpdateRequisitionOrderDetail(string id, List<getRequisitionOrderDetails_Result> order)
         {
             if (order.Count > 0)
             {
@@ -157,6 +159,115 @@ namespace Team3ADProject.Code
             {
                 Cancelrequisition(id);
             }
+        }
+
+        //return all PO - with total PO item count
+        public static List<getAllViewPOHistorytotalcount_Result> viewpohistorytotal()
+        {
+            return context.getAllViewPOHistorytotalcount().ToList();
+        }
+
+        //return list of supplier for dropdown in ViewPoHistory
+        public static List<supplier> getSupplierNames()
+        {
+            return context.suppliers.ToList();
+        }
+
+        //return supplier code based on supplier name
+        public static supplier getSupplierCode(string text)
+        {
+            return context.suppliers.Where(x => x.supplier_name == text).FirstOrDefault();
+        }
+
+        //Return list of PO status for dropdown in ViewPoHistory
+        public static List<purchase_order> getPOStatus()
+        {
+            return context.purchase_order.ToList();
+        }
+
+        //return PO by status- with total PO item count
+        public static List<getViewPOHistorytotalcountByStatus_Result> ViewPOHistorytotalcountByStatus(string s)
+        {
+            return context.getViewPOHistorytotalcountByStatus(s).ToList();
+        }
+
+        //return  PO by Po number - with total PO item count
+        public static List<getViewPOHistorytotalcountbyPO_Result> viewPOHistorytotalcountbyPO(int po)
+        {
+            return context.getViewPOHistorytotalcountbyPO(po).ToList();
+        }
+
+        //return  PO by Po number and status - with total PO item count
+        public static List<getViewPOHistorytotalcountbyPOandstatus_Result> ViewPOHistorytotalcountbyPOandstatus(int po, string status)
+        {
+            return context.getViewPOHistorytotalcountbyPOandstatus(po, status).ToList();
+        }
+
+        //return  PO by supplier - with total PO item count
+        public static List<getViewPOHistorytotalcountbySupplier_Result> viewPOHistorytotalcountbySupplier(string supplier)
+        {
+            return context.getViewPOHistorytotalcountbySupplier(supplier).ToList();
+        }
+
+        //return  PO by supplier and PO number - with total PO item count
+        public static List<getViewPOHistorytotalcountbyPOandSupplier_Result> viewPOHistorytotalcountbyPOandSupplier(int po, string supplier)
+        {
+            return context.getViewPOHistorytotalcountbyPOandSupplier(po, supplier).ToList();
+        }
+
+        //return  PO by supplier and status - with total PO item count
+        public static List<getViewPOHistorytotalcountbysupandstatus_Result> viewPOHistorytotalcountbysupandstatus(string supplier, string status)
+        {
+            return context.getViewPOHistorytotalcountbysupandstatus(supplier, status).ToList();
+        }
+
+        //return  PO by supplier and status and Po number - with total PO item count
+        public static List<getViewPOHistorytotalcountbyPOandstatusandSupplier_Result> viewPOHistorytotalcountbyPOandstatusandSupplier(string supplier, int po, string status)
+        {
+            return context.getViewPOHistorytotalcountbyPOandstatusandSupplier(supplier, po, status).ToList();
+        }
+
+        //return all PO - with total PO item count
+        public static List<getAllViewPOHistorypendingcount_Result> viewPOHistorypendingcount()
+        {
+            return context.getAllViewPOHistorypendingcount().ToList();
+        }
+
+        //return PO detail based on PO ID
+        public static List<purchase_order_detail> getpurchaseorderdetail(int id)
+        {
+            return context.purchase_order_detail.Where(x => x.purchase_order_number == id).ToList();
+        }
+
+        //return supplier for PO by PO id
+        public static supplier getSupplierNameforPurchaseorder(int id)
+        {
+            purchase_order p = getpurchaseorder(id);
+            string sid = p.suppler_id;
+            return context.suppliers.Where(x => x.supplier_id == sid).FirstOrDefault();
+        }
+
+        //return po for id
+        public static purchase_order getpurchaseorder(int id)
+        {
+            return context.purchase_order.Where(x => x.purchase_order_number == id).FirstOrDefault();
+        }
+
+        //return employee name
+        public static employee GetEmployee(int id)
+        {
+            return context.employees.Where(x => x.employee_id == id).FirstOrDefault();
+        }
+
+        //accept item from supplier
+        public static void acceptitemfromsupplier(int po, string item, int quantity, string remark)
+        {
+            purchase_order_detail pod = context.purchase_order_detail.Where(x => x.purchase_order_number == po && x.item_number == item).FirstOrDefault();
+            pod.item_accept_quantity = quantity;
+            pod.purchase_order_item_remark = remark;
+            pod.item_purchase_order_status = "Accepted";
+            pod.item_accept_date = DateTime.Now.Date;
+            context.SaveChanges();
         }
     }
 }

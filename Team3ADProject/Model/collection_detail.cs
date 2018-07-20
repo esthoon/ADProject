@@ -14,13 +14,21 @@ namespace Team3ADProject.Model
     
     public partial class collection_detail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public collection_detail()
+        {
+            this.requisition_order = new HashSet<requisition_order>();
+        }
+    
         public int collection_id { get; set; }
-        public int disbursement_list_id { get; set; }
         public int place_id { get; set; }
         public System.DateTime collection_date { get; set; }
         public string collection_status { get; set; }
     
         public virtual collection collection { get; set; }
-        public virtual requisition_disbursement_detail requisition_disbursement_detail { get; set; }
+        public virtual collection_detail collection_detail1 { get; set; }
+        public virtual collection_detail collection_detail2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<requisition_order> requisition_order { get; set; }
     }
 }

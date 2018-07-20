@@ -36,7 +36,7 @@
 
             <asp:TemplateField HeaderText="Request Quantity">
                 <ItemTemplate>
-                    <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("item_requisition_quantity") %>' OnTextChanged="TextBox1_TextChanged" BackColor="Silver" text-align="right"></asp:TextBox>
+                    <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("item_requisition_quantity") %>' OnTextChanged="TextBox1_TextChanged" BackColor="#FFFFCC" text-align="right" ForeColor="Black"></asp:TextBox>
                     <asp:RegularExpressionValidator ID="Q" runat="server" ControlToValidate="TextBox2" ErrorMessage="Only numbers allowed"
                             ValidationExpression="(^([0-9]*\d*\d{1}?\d*)$)" Display="Dynamic" ForeColor ="Red"></asp:RegularExpressionValidator>
                     <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("description") %>'/>

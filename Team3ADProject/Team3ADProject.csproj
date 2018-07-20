@@ -189,8 +189,11 @@
     <Content Include="Protected\EmployeeViewHistory.aspx" />
     <Content Include="Protected\EmployeeViewPending.aspx" />
     <Content Include="Protected\NewRequest.aspx" />
+    <Content Include="Protected\OtherPODetails.aspx" />
+    <Content Include="Protected\PendingPODetails.aspx" />
     <Content Include="Protected\RequestCart.aspx" />
     <Content Include="Protected\RequestConfirm.aspx" />
+    <Content Include="Protected\ViewPOHistory.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\canvasjs.min.js" />
@@ -269,6 +272,66 @@
     <Compile Include="Model\employee.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbyPOandStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbyPO_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbyStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbySupandPoandStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbySupandPo_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbySupandStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcountbySupplier_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorypendingcount_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getAllViewPOHistorytotalcount_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getitemdetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getLowStockItemsByCategory_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getPendingPurchaseOrderCountBySupplier_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getpendingrequestdetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getpendingrequestsbydepartment_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getPurchaseQuantityByItemCategory_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getRecentRequisitionOrders_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getrepdetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getRequestedItemQuantityLastYear_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getrequesthistory_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\getRequisitionDetail_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -278,10 +341,37 @@
     <Compile Include="Model\getRequisitionOrderDetails_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\getRequisitionQuantityByDepartment_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\GetRequisitionStatus_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getRequsitionDetail_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getStationariesOrderedLastMonthByCategory_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatusandSupplier_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbyPOandstatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbyPOandSupplier_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbyPO_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountByStatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbysupandstatus_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getViewPOHistorytotalcountbySupplier_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\inventory.cs">
@@ -308,13 +398,28 @@
     <Compile Include="Model\purchase_order_detail.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\requisition_disbursement_detail.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\requisition_order.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\requisition_order_detail.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetCollectionList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetRODetailsByROId_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spViewCollectionList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_geteachPendingPOList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_getPendingPODetails_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_getPendingPOList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\supplier.cs">
@@ -359,6 +464,20 @@
     <Compile Include="Protected\NewRequest.aspx.designer.cs">
       <DependentUpon>NewRequest.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Protected\OtherPODetails.aspx.cs">
+      <DependentUpon>OtherPODetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\OtherPODetails.aspx.designer.cs">
+      <DependentUpon>OtherPODetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\PendingPODetails.aspx.cs">
+      <DependentUpon>PendingPODetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\PendingPODetails.aspx.designer.cs">
+      <DependentUpon>PendingPODetails.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\RequestCart.aspx.cs">
       <DependentUpon>RequestCart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -372,6 +491,13 @@
     </Compile>
     <Compile Include="Protected\RequestConfirm.aspx.designer.cs">
       <DependentUpon>RequestConfirm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\ViewPOHistory.aspx.cs">
+      <DependentUpon>ViewPOHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\ViewPOHistory.aspx.designer.cs">
+      <DependentUpon>ViewPOHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\Service.svc.cs">

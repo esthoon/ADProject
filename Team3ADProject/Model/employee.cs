@@ -32,6 +32,7 @@ namespace Team3ADProject.Model
         public string user_id { get; set; }
         public string department_id { get; set; }
         public Nullable<int> supervisor_id { get; set; }
+        public string token { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<adjustment> adjustments { get; set; }
