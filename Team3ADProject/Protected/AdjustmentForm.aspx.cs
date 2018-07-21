@@ -52,7 +52,6 @@ namespace Team3ADProject.Protected
         protected void ButtonCancel_Click(object sender, EventArgs e)
         {
             //Response.Redirect("ClerkInventory.aspx");
-            ClientScript.RegisterStartupScript(typeof(Page), "closePage", "window.open('close.html', '_self', null);", true);
         }
 
         protected double TotalPrice()
@@ -99,7 +98,8 @@ namespace Team3ADProject.Protected
                         tx.Complete();
                         Response.Write(MsgBox("SENT"));
                     }
-                    Response.Redirect("ClerkInventory.aspx");
+                    //Response.Redirect("ClerkInventory.aspx");
+                    Response.Write("<script language='javascript'> { window.close();}</script>");
                 }
                 catch (System.Transactions.TransactionException ex)
                 {
