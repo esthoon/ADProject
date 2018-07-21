@@ -22,6 +22,15 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
         /// Label4 control.
         /// </summary>
         /// <remarks>
@@ -121,13 +130,13 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label lbuprice;
         
         /// <summary>
-        /// Label2 control.
+        /// LabelUnitPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label LabelUnitPrice;
         
         /// <summary>
         /// lbad control.
@@ -157,6 +166,15 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.TextBox TextBoxAdjustment;
         
         /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
         /// lbtcost control.
         /// </summary>
         /// <remarks>
@@ -184,13 +202,13 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// TextBox1 control.
+        /// TextBoxRemarks control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxRemarks;
         
         /// <summary>
         /// ButtonCancel control.

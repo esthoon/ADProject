@@ -1,15 +1,27 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm2.aspx.cs" Inherits="Team3ADProject.Protected.WebForm2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdjustmentForm.aspx.cs" Inherits="Team3ADProject.Protected.WebForm2" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Adjustment Form</title>
+    <style type="text/css">
+        .auto-style1 {
+            height: 42px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:Label ID="Label2" runat="server" Text="Adjustment Form" Font-Bold="True" Font-Size="XX-Large"></asp:Label>
+        </div>
+        <div>
             <table>
+                <tr></tr>
+                <tr></tr>
                 <tr>
                     <td>
                         <asp:Label ID="Label4" runat="server" Text="Created on: "></asp:Label>
@@ -28,7 +40,6 @@
                 </tr>
             </table>
         </div>
-        <br />
         <br />
         <div>
             <table>
@@ -61,19 +72,21 @@
                         <asp:Label ID="lbuprice" runat="server" Text="Unit Price "></asp:Label>
                     </td>
                     <td>
-                        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+                        $<asp:Label ID="LabelUnitPrice" runat="server" Text="Label"></asp:Label>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="auto-style1">
                         <asp:Label ID="lbad" runat="server" Text="Adjustment Quantity "></asp:Label>
                     </td>
-                    <td>
-                        <asp:DropDownList ID="DropDownList1" runat="server">
-                            <asp:ListItem>+</asp:ListItem>
+                    <td class="auto-style1">
+                        <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" OnSelectedIndexChanged="TextBoxAdjustment_TextChanged">
+                            <asp:ListItem Selected="True">+</asp:ListItem>
                             <asp:ListItem>-</asp:ListItem>
                         </asp:DropDownList>
-                        <asp:TextBox ID="TextBoxAdjustment" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="TextBoxAdjustment" runat="server" CausesValidation="True" AutoPostBack="true" OnTextChanged="TextBoxAdjustment_TextChanged"></asp:TextBox>
+                        <asp:CompareValidator runat="server" Operator="DataTypeCheck" Type="Integer" ControlToValidate="TextBoxAdjustment" ErrorMessage="Value must be a whole number" ForeColor="Red"/>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxAdjustment" ErrorMessage="No quantity stated" ForeColor="Red"></asp:RequiredFieldValidator>
                     </td>
                 </tr>
                  <tr>
@@ -81,7 +94,7 @@
                         <asp:Label ID="lbtcost" runat="server" Text="Total cost: "></asp:Label>
                     </td>
                     <td>
-                        <asp:Label ID="LabelTotalCost" runat="server" Text="Label"></asp:Label>
+                        <asp:Label ID="LabelTotalCost" runat="server" Font-Bold="True"></asp:Label>
                     </td>
                 </tr>
                 <tr>
@@ -89,20 +102,38 @@
                         <asp:Label ID="Label1" runat="server" Text="Remarks: "></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="TextBox1" runat="server" Height="184px" Width="745px"></asp:TextBox>
+                        <asp:TextBox ID="TextBoxRemarks" runat="server" Height="184px" Width="745px" TextMode="MultiLine"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" style="position:relative; float:right; top: 0px; left: 20px; margin-right:20px;" />
-                        &nbsp;<asp:Button ID="ButtonSubmit" runat="server" Text="Submit" style="position:relative; float:right; top: 0px; left: 0px;" />
+                        <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" style="position:relative; float:right; top: 0px; left: 20px; margin-right:20px;" OnClick="ButtonCancel_Click"  causesvalidation="false" />
+                        &nbsp;<asp:Button ID="ButtonSubmit" runat="server" Text="Submit" style="position:relative; float:right; top: 0px; left: 0px;" OnClick="ButtonSubmit_Click" />
                     </td>
                 </tr>
             </table>
         </div>
-            
-            
     </form>
+<!--
+    <script>
+        $(document).ready(function () {
+            $('#DropDownList1, #TextBoxAdjustment').change(function(){
+                var a = parseFloat($('#<%=LabelUnitPrice.ClientID%>').text());
+                var b = $('#<%=DropDownList1.ClientID%>').val();
+                var c = $('#<%=TextBoxAdjustment.ClientID%>').val();
+                var d;
+                if (c != null && $.isNumeric(c)) {
+                    if (b == '-') {
+                        d = a * (-c);
+                    } else {
+                        d = a * c;
+                    }
+                    $('#<%=LabelTotalCost.ClientID%>').text(d);
+                }
+            })
+        })
+    </script>  
+-->
 </body>
 </html>

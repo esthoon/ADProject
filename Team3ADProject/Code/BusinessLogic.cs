@@ -303,13 +303,6 @@ department.department_id.Equals(dept)
             return (int)context.spGetDepartmentPin(departmentname).ToList().Single();
         }
 
-        
-        
-        public static inventory GetInventory(string id)
-        {
-            return context.inventories.Where(i => i.item_number == id).ToList<inventory>()[0];
-        }
-
         public static System.Collections.IEnumerable GetSupplier(string id)
         //     public static List<(string supplier_name, double unit_price)> GetSupplier(string id)
         {
@@ -322,54 +315,6 @@ department.department_id.Equals(dept)
             return nestedQuery.ToList();
             //return context.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
         }
-        public static List<inventory> GetActiveInventories()
-        {
-            return context.inventories.Where(x => x.item_status.ToLower() == "active").ToList();
-        }
-        public static List<inventory> GetAllInventories()
-        {
-            return context.inventories.ToList();
-        }
-        public static List<supplier> GetActiveSuppliers()
-        {
-            return context.suppliers.Distinct().Where(s => s.supplier_status.ToLower() == "active").ToList();
-        }
-        public static List<string> GetCategories()
-        {
-            return context.inventories.OrderBy(x => x.category).Select(x => x.category).Distinct().ToList();
-        }
-        public static int ReturnPendingPOqtyByStatus(inventory item, string status)
-        {
-            var q = context.purchase_order_detail.Where(x => x.item_purchase_order_status.ToLower().Trim() == "pending"
-            && x.purchase_order.purchase_order_status.ToLower().Trim() == status);
-            int qty = 0;
-            foreach (var a in q)
-            {
-                if (a.item_number.ToLower().Trim().Equals(item.item_number.ToLower().Trim()))
-                {
-                    qty += a.item_purchase_order_quantity;
-                }
-            }
-            return qty;
-        }
-        public static int ReturnPendingAdjustmentQty(inventory item)
-        {
-            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending");
-            int qty = 0;
-            foreach (var a in q)
-            {
-                if (a.item_number.ToLower().Trim().Equals(item.item_number.ToLower().Trim()))
-                {
-                    qty += a.adjustment_quantity;
-                }
-            }
-            return qty;
-        }
-        public static List<inventory> GetInventoriesByCategory(string category)
-        {
-            return context.inventories.Where(x => x.category.Trim().ToLower() == category.Trim().ToLower()).ToList();
-        }
-
         // Returns a suggested reorder quantity when give an item code
         // Returns zero if there are no purchase order in the past.
         public static int GetSuggestedReorderQuantity(string itemCode)
@@ -772,6 +717,158 @@ department.department_id.Equals(dept)
         }
         // Tharrani end
 
+
+        //Esther
+        //ClerkInventory
+        //return Active Inventories
+        public static List<inventory> GetActiveInventories()
+        {
+            return context.inventories.Where(x => x.item_status.ToLower() == "active").ToList();
+        }
+
+        //return all inventories
+        public static List<inventory> GetAllInventories()
+        {
+            return context.inventories.ToList();
+        }
+
+        //return string categories for dropdownlist
+        public static List<string> GetCategories()
+        {
+            return context.inventories.OrderBy(x => x.category).Select(x => x.category).Distinct().ToList();
+        }
+
+        //return pending PO for cInventory
+        public static int ReturnPendingPOqtyByStatus(inventory item, string status)
+        {
+            var q = context.purchase_order_detail.Where(x => x.item_purchase_order_status.ToLower().Trim() == "pending"
+            && x.purchase_order.purchase_order_status.ToLower().Trim() == status);
+            int qty = 0;
+            foreach (var a in q)
+            {
+                if (a.item_number.ToLower().Trim().Equals(item.item_number.ToLower().Trim()))
+                {
+                    qty += a.item_purchase_order_quantity;
+                }
+            }
+            return qty;
+
+        }
+
+        //return pendingadjqty for cInventory
+        public static int ReturnPendingAdjustmentQty(inventory item)
+        {
+            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending");
+            int qty = 0;
+            foreach (var a in q)
+            {
+                if (a.item_number.ToLower().Trim().Equals(item.item_number.ToLower().Trim()))
+                {
+                    qty += a.adjustment_quantity;
+                }
+            }
+            return qty;
+        }
+
+        //return low-in-stockinventories
+        public static List<inventory> GetLowInStockInventories()
+        {
+            return context.inventories.Where(x => x.current_quantity < x.reorder_level && x.item_status.ToLower().Trim() == "active").ToList();
+        }
+
+        //return adjustment price based on priority supplier
+        public static double Adjprice(string itemcode)
+        {
+            return context.supplier_itemdetail.Where(x => x.item_number.Trim().ToLower() == itemcode.ToLower().Trim() && x.priority == 1).Select(x => x.unit_price).FirstOrDefault();
+        }
+
+        //get inventory by itemcode
+        public static inventory GetInventory(string itemcode)
+        {
+            return context.inventories.Where(x => x.item_number.Trim().ToLower() == itemcode.Trim().ToLower()).FirstOrDefault();
+        }
+
+        //create new adjustment
+        public static string CreateAdjustment(adjustment a)
+        {
+            context.adjustments.Add(a);
+            context.SaveChanges();
+            return ("success");
+        }
+        public static employee GetEmployeeById(int id)
+        {
+            return context.employees.Where(x => x.employee_id == id).FirstOrDefault();
+        }
+        public static supplier_itemdetail GetPrioritySupplierItemDetail(string itemcode)
+        {
+            return context.supplier_itemdetail.Where(x => x.priority == 1 && x.item_number.Trim().ToLower() == itemcode.Trim().ToLower()).FirstOrDefault();
+        }
+
+        public static supplier FindSupplierBySupplierID(string supplierid)
+        {
+            return context.suppliers.Where(x => x.supplier_id.Trim().ToLower() == supplierid).FirstOrDefault();
+        }
+        public static int ReturnIndex(List<POStaging> StagingList, POStaging item)
+        {
+            string itemcode = item.Inventory.item_number.Trim().ToLower();
+            string supplier = item.Supplier.supplier_id.Trim().ToLower();
+            int value = -1;
+            if (StagingList != null)
+            {
+                for (int i = 0; i < StagingList.Count(); i++)
+                {
+                    string aItemCode = StagingList[i].Inventory.item_number.Trim().ToLower();
+                    string aSupplier = StagingList[i].Supplier.supplier_id.Trim().ToLower();
+                    if (itemcode.Equals(aItemCode) && supplier.Equals(aSupplier))
+                    {
+                        value = i;
+                    }
+                }
+            }
+            return value;
+        }
+
+        public static List<POStaging> AddToStaging(List<POStaging> StagingList, POStaging item)
+        {
+            int value = ReturnIndex(StagingList, item);
+            if (value == -1)
+            {
+                StagingList.Add(item);
+                return StagingList;
+            }
+            else
+            {
+                StagingList[value].OrderedQty += item.OrderedQty;
+                return StagingList;
+            }
+        }
+
+        //return last POIndex
+        public static int POIndex()
+        {
+            return context.purchase_order.OrderByDescending(x => x.purchase_order_number).Select(x => x.purchase_order_number).FirstOrDefault();
+        }
+        //create PO
+        public static void CreatePO(purchase_order purchaseorder)
+        {
+            context.purchase_order.Add(purchaseorder);
+            context.SaveChanges();
+        }
+
+        //create PO Details
+        public static void CreatePOdetails(purchase_order_detail purchaseorderdetails)
+        {
+            context.purchase_order_detail.Add(purchaseorderdetails);
+            context.SaveChanges();
+        }
+
+        //get supplier id
+        public static string GetSupplierID(string supplier_name)
+        {
+            return context.suppliers.Where(x => x.supplier_name.Trim().ToLower() == supplier_name.Trim().ToLower()).Select(x => x.supplier_id).FirstOrDefault();
+        }
+
+        //Esther end
 
 
     }

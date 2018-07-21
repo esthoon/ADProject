@@ -248,6 +248,8 @@
     <Content Include="Protected\DisbursementSorting.aspx" />
     <Content Include="Protected\AcknowledgeDistributionList.aspx" />
     <Content Include="Protected\PendingPODetails.aspx" />
+    <Content Include="Protected\POStagingDetails.aspx" />
+    <Content Include="Protected\POStagingSummary.aspx" />
     <Content Include="Protected\PurchaseOrderApprovalDetails.aspx" />
     <Content Include="Protected\RequestCart.aspx" />
     <Content Include="Protected\RequestConfirm.aspx" />
@@ -259,7 +261,7 @@
     <Content Include="Protected\ClerkInventory.aspx" />
     <Content Include="Protected\ViewPOHistory.aspx" />
     <Content Include="Protected\ViewROSpecialRequest.aspx" />
-    <Content Include="Protected\WebForm2.aspx" />
+    <Content Include="Protected\AdjustmentForm.aspx" />
     <Content Include="Protected\Report.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -316,6 +318,7 @@
     <Compile Include="Code\cart.cs" />
     <Compile Include="Code\CollectionListItem.cs" />
     <Compile Include="Code\Constants.cs" />
+    <Compile Include="Code\POStaging.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -346,7 +349,7 @@
     <Compile Include="Model\budget.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\cInventory.cs" />
+    <Compile Include="Code\cInventory.cs" />
     <Compile Include="Model\collection.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -537,6 +540,7 @@
     </Compile>
     <Compile Include="Protected\CollectionList.aspx.cs">
       <DependentUpon>CollectionList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Protected\CollectionList.aspx.designer.cs">
       <DependentUpon>CollectionList.aspx</DependentUpon>
@@ -597,6 +601,20 @@
     <Compile Include="Protected\PlacePurchaseOrderForm.aspx.designer.cs">
       <DependentUpon>PlacePurchaseOrderForm.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Protected\POStagingDetails.aspx.cs">
+      <DependentUpon>POStagingDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\POStagingDetails.aspx.designer.cs">
+      <DependentUpon>POStagingDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\POStagingSummary.aspx.cs">
+      <DependentUpon>POStagingSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\POStagingSummary.aspx.designer.cs">
+      <DependentUpon>POStagingSummary.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\PurchaseOrderApproval.aspx.cs">
       <DependentUpon>PurchaseOrderApproval.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -627,6 +645,7 @@
     </Compile>
     <Compile Include="Protected\ViewCollectionInformation.aspx.cs">
       <DependentUpon>ViewCollectionInformation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Protected\EmployeeViewPending.aspx.cs">
       <DependentUpon>EmployeeViewPending.aspx</DependentUpon>
@@ -673,8 +692,9 @@
     <Compile Include="Protected\ViewROSpecialRequest.aspx.designer.cs">
       <DependentUpon>ViewROSpecialRequest.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Protected\WebForm2.aspx.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
+    <Compile Include="Protected\AdjustmentForm.aspx.cs">
+      <DependentUpon>AdjustmentForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Protected\RequestConfirm.aspx.cs">
       <DependentUpon>RequestConfirm.aspx</DependentUpon>
@@ -690,8 +710,8 @@
     <Compile Include="Protected\ViewPOHistory.aspx.designer.cs">
       <DependentUpon>ViewPOHistory.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Protected\WebForm2.aspx.designer.cs">
-      <DependentUpon>WebForm2.aspx</DependentUpon>
+    <Compile Include="Protected\AdjustmentForm.aspx.designer.cs">
+      <DependentUpon>AdjustmentForm.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\AndroidService.svc.cs">
       <DependentUpon>AndroidService.svc</DependentUpon>
@@ -786,7 +806,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50772</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

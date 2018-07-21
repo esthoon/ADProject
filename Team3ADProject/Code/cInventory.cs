@@ -12,6 +12,7 @@ namespace Team3ADProject.Model
         private int orderedQty;
         private int pendingApprovalQty;
         private int pendingAdjustmentQty;
+        private int reorderQty;
 
         public cInventory(inventory item)
         {
@@ -19,6 +20,7 @@ namespace Team3ADProject.Model
             this.orderedQty = BusinessLogic.ReturnPendingPOqtyByStatus(item, "pending");
             this.pendingApprovalQty = BusinessLogic.ReturnPendingPOqtyByStatus(item, "awaiting approval");
             this.pendingAdjustmentQty = BusinessLogic.ReturnPendingAdjustmentQty(item);
+            this.reorderQty = ReorderQuantity(item);
         }
 
         public inventory Inventory
@@ -65,6 +67,29 @@ namespace Team3ADProject.Model
             set
             {
                 this.pendingAdjustmentQty = value;
+            }
+        }
+        public int reorder_quantity
+        {
+            get
+            {
+                return this.reorderQty;
+            }
+            set
+            {
+                this.reorderQty = value;
+            }
+        }
+        protected int ReorderQuantity(inventory item)
+        {
+            int x = item.reorder_level - item.current_quantity;
+            if (x > 0)
+            {
+                return x;
+            }
+            else
+            {
+                return 0;
             }
         }
     }
