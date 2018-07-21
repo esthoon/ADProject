@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="POStagingDetails.aspx.cs" Inherits="Team3ADProject.Protected.POStagingDetails" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<p>
+    <p>
         <br />
         <asp:Label ID="Labelheading" runat="server" Text="Purchase Order Staging Details for:" Font-Bold="True" Font-Size="XX-Large"></asp:Label>
         <br />
@@ -13,7 +13,7 @@
         <asp:GridView ID="GridViewPODetails" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPODetails_DataBound">
             <Columns>
                 <asp:BoundField HeaderText="No." />
-                <asp:BoundField DataField="DateRequired" HeaderText="Date Required" />
+                <asp:BoundField DataField="DateRequired" HeaderText="Date Required" DataFormatString="{0:yyyy/MM/dd}" />
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item" />
                 <asp:BoundField DataField="Inventory.item_number" HeaderText="Item Code" />
                 <asp:BoundField DataField="UnitPrice" HeaderText="Unit Price" />

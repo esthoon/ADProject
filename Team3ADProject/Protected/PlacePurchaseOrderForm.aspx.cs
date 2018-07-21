@@ -133,7 +133,7 @@ namespace Team3ADProject.Protected
             {
                 Label1.Text = ex.Message;
             }
-            Response.Redirect("ClerkInventory.aspx");
+            Response.Redirect("POStagingSummary.aspx");
         }
 
         protected void Cancel_Click(object sender, EventArgs e)
