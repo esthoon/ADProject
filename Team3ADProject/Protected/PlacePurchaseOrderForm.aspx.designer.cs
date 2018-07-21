@@ -94,13 +94,13 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label unitCost;
         
         /// <summary>
-        /// quantity control.
+        /// TextBoxOrderQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox quantity;
+        protected global::System.Web.UI.WebControls.TextBox TextBoxOrderQuantity;
         
         /// <summary>
         /// totalCost control.
@@ -137,5 +137,14 @@ namespace Team3ADProject.Protected {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Cancel;
+        
+        /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }

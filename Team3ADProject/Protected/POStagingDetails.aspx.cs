@@ -20,6 +20,14 @@ namespace Team3ADProject.Protected
         {
             if (!IsPostBack)
             {
+                if (Session["user"] != null)
+                {
+                    user = (employee)Session["user"];
+                }
+                else
+                {
+                    //redirect to login page
+                }
                 loadGrid();
             }
         }

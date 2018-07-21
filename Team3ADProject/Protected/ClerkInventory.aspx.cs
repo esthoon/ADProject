@@ -8,6 +8,7 @@ using Team3ADProject.Code;
 using Team3ADProject.Model;
 using System.Drawing;
 
+//Esther
 namespace Team3ADProject.Protected
 {
     public partial class WebForm1 : System.Web.UI.Page
@@ -25,11 +26,16 @@ namespace Team3ADProject.Protected
         {
             if (!IsPostBack)
             {
-                user = (employee)Session["user"];
-                if (user == null)
+                if (Session["user"] != null)
                 {
+                    user = (employee)Session["user"];
+                }
+                else
+                {
+                    //hardcoded
                     user = BusinessLogic.GetEmployeeById(10);
                     Session["user"] = user;
+                    //redirect to login homepage
                 }
                 cList = getCInventoryList(BusinessLogic.GetActiveInventories());
                 loadGrid(cList);
@@ -104,7 +110,7 @@ namespace Team3ADProject.Protected
                 showNoResult(list);
             }
         }
-
+        //get all active inventories
         protected List<cInventory> getList()
         {
             if (CheckBox1.Checked)
@@ -117,12 +123,15 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //category change event handler
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             TextBox1.Text = string.Empty;
             loadGrid(filterCat());
             showNoResult(filterCat());
         }
+
+        //display label
         protected void showNoResult(List<cInventory> list)
         {
             if (list.Count() > 0)
@@ -136,6 +145,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //method for filtering category
         private List<cInventory> filterCat()
         {
             string category = ddlCategory.SelectedItem.Text.ToLower().Trim();
@@ -159,6 +169,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //styling the grid, grid databound event handler
         protected void gvInventoryList_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -179,6 +190,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //Search button event handler
         protected void Button1_Click(object sender, EventArgs e)
         {
             string search = TextBox1.Text.ToLower();
@@ -192,22 +204,25 @@ namespace Team3ADProject.Protected
             loadGrid(list);
         }
 
+        //search result method
         protected List<cInventory> SearchResult(string search)
         {
             return filterCat().Where(x => x.Inventory.description.Trim().ToLower().Contains(search)).ToList();
         }
 
+        //adjustmentform button event handler
         protected void Button2_Click(object sender, EventArgs e)
         {
             Button lb = (Button)sender;
             HiddenField hd = (HiddenField)lb.FindControl("HiddenField1");
             string itemcode = hd.Value;
             Session["itemcode"] = itemcode;
-            string url = "WebForm2.aspx?itemcode=" + itemcode;
+            string url = "AdjustmentForm.aspx?itemcode=" + itemcode;
             //Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
             Response.Redirect(url);
         }
 
+        //place po for all low-in-stock items event handler
         protected void btnAllPO_Click(object sender, EventArgs e)
         {
             //lowinstock = getCInventoryList(BusinessLogic.GetLowInStockInventories());
@@ -235,7 +250,7 @@ namespace Team3ADProject.Protected
 
         }
 
-
+        //convert cInventory list to POStaging List
         protected List<POStaging> ConvertListToPOStaging(List<cInventory> blist)
         {
             List<POStaging> alist = new List<POStaging>();
@@ -258,15 +273,27 @@ namespace Team3ADProject.Protected
             return alist;
         }
 
+        //POStagingSummary button eventhandler
         protected void Button2_Click1(object sender, EventArgs e)
         {
             Response.Redirect("POStagingSummary.aspx");
         }
 
+        //Logic for low-in-stock items
         protected List<cInventory> GetLowInStockItems()
         {
             return cList.Where(x => ((x.Inventory.current_quantity + x.OrderedQty + x.PendingApprovalQty) < x.Inventory.reorder_level)).ToList();
         }
 
+        //direct to PO page
+        protected void Button1_Click1(object sender, EventArgs e)
+        {
+            Button lb = (Button)sender;
+            HiddenField hd = (HiddenField)lb.FindControl("HiddenField1");
+            string itemid = hd.Value;
+            Session["itemid"] = itemid;
+            string url = "PlacePurchaseOrderForm.aspx?itemid=" + itemid;
+            Response.Redirect(url);
+        }
     }
 }
