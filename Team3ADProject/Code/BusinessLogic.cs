@@ -868,6 +868,14 @@ department.department_id.Equals(dept)
             return context.suppliers.Where(x => x.supplier_name.Trim().ToLower() == supplier_name.Trim().ToLower()).Select(x => x.supplier_id).FirstOrDefault();
         }
 
+        //dialog box
+        public static string MsgBox(string sMessage)
+        {
+            string msg = "<script language=\"javascript\">";
+            msg += "alert('" + sMessage + "');";
+            msg += "</script>";
+            return msg;
+        }
         //Esther end
 
 

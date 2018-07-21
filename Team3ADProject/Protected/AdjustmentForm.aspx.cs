@@ -96,33 +96,26 @@ namespace Team3ADProject.Protected
                     {
                         BusinessLogic.CreateAdjustment(a);
                         tx.Complete();
-                        Response.Write(MsgBox("SENT"));
+                        Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
                     }
                     //Response.Redirect("ClerkInventory.aspx");
                     Response.Write("<script language='javascript'> { window.close();}</script>");
                 }
                 catch (System.Transactions.TransactionException ex)
                 {
-                    Response.Write(MsgBox(ex.Message));
+                    Response.Write(BusinessLogic.MsgBox(ex.Message));
                 }
                 catch (Exception ex)
                 {
-                    Response.Write(MsgBox(ex.Message));
+                    Response.Write(BusinessLogic.MsgBox(ex.Message));
                 }
             }
 
             catch (Exception ex)
             {
-                Response.Write(MsgBox(ex.Message));
+                Response.Write(BusinessLogic.MsgBox(ex.Message));
             }
 
-        }
-        protected static string MsgBox(string sMessage)
-        {
-            string msg = "<script language=\"javascript\">";
-            msg += "alert('" + sMessage + "');";
-            msg += "</script>";
-            return msg;
         }
 
         protected void TextBoxAdjustment_TextChanged(object sender, EventArgs e)

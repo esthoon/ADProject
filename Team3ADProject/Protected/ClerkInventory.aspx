@@ -38,13 +38,13 @@
             </tr>
         </table>
         <br />
-        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="Label2" runat="server"></asp:Label>
         <br />
     </div>
     <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
 
     <div>
-        <asp:GridView ID="gvInventoryList" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvInventoryList_RowDataBound">
+        <asp:GridView ID="gvInventoryList" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvInventoryList_RowDataBound" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="gvInventoryList_PageIndexChanging" PageSize="20">
             <Columns>
                 <asp:BoundField DataField="Inventory.item_number" HeaderText="Item no." />
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item Description" />

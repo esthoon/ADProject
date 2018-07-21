@@ -67,6 +67,7 @@ namespace Team3ADProject.Protected
         //select all or low-in-stock inventories
         protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            gvInventoryList.PageIndex =0;
             TextBox1.Text = string.Empty;
             ddlCategory.SelectedIndex = 0;
             List<cInventory> list = new List<cInventory>();
@@ -77,6 +78,7 @@ namespace Team3ADProject.Protected
                 btnAllPO.Enabled = false;
                 CheckBox1.Enabled = true;
                 CheckBox1.Visible = true;
+                CheckBox1.Checked = false;
             }
             else if (RadioButtonList1.SelectedItem.Value.Equals("2"))
             {
@@ -97,6 +99,7 @@ namespace Team3ADProject.Protected
             {
                 string category = ddlCategory.SelectedItem.Text.ToLower().Trim();
                 List<cInventory> list = getList();
+                cList = list;
                 string search = TextBox1.Text.ToLower().Trim();
                 if (search != null)
                 {
@@ -127,6 +130,7 @@ namespace Team3ADProject.Protected
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             TextBox1.Text = string.Empty;
+            gvInventoryList.PageIndex = 0;
             loadGrid(filterCat());
             showNoResult(filterCat());
         }
@@ -175,6 +179,11 @@ namespace Team3ADProject.Protected
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 string OrStatus = Convert.ToString(DataBinder.Eval(e.Row.DataItem, "Inventory.item_status"));
+                int CurrentQty = Int32.Parse(DataBinder.Eval(e.Row.DataItem, "Inventory.current_quantity").ToString());
+                int ReorderLevel = Int32.Parse(DataBinder.Eval(e.Row.DataItem, "Inventory.reorder_level").ToString());
+                int OrderedQty = Int32.Parse(DataBinder.Eval(e.Row.DataItem, "OrderedQty").ToString());
+                int PendingApproval = Int32.Parse(DataBinder.Eval(e.Row.DataItem, "PendingApprovalQty").ToString());
+                
                 if (OrStatus.ToLower().Trim() == "obsolete")
                 {
                     //You can use whatever you want to play with rows
@@ -186,6 +195,13 @@ namespace Team3ADProject.Protected
                     (e.Row.FindControl("Button1") as Button).BackColor = System.Drawing.Color.DarkSlateGray;
                     (e.Row.FindControl("Button2") as Button).Enabled = false;
                     (e.Row.FindControl("Button2") as Button).BackColor = System.Drawing.Color.DarkSlateGray;
+                }else if (CurrentQty+OrderedQty < ReorderLevel)
+                {
+                    e.Row.Cells[4].ForeColor = System.Drawing.Color.Red;
+                    if (CurrentQty + OrderedQty+PendingApproval < ReorderLevel)
+                    {
+                        e.Row.BackColor = System.Drawing.SystemColors.Highlight;
+                    }
                 }
             }
         }
@@ -282,7 +298,9 @@ namespace Team3ADProject.Protected
         //Logic for low-in-stock items
         protected List<cInventory> GetLowInStockItems()
         {
-            return cList.Where(x => ((x.Inventory.current_quantity + x.OrderedQty + x.PendingApprovalQty) < x.Inventory.reorder_level)).ToList();
+            //List<cInventory> lis= cList.Where(x => ((x.Inventory.current_quantity + x.OrderedQty + x.PendingApprovalQty) < x.Inventory.reorder_level)&&x.Inventory.item_status.Trim().ToLower()=="active").ToList();
+            List<cInventory> lis= cList.Where(x => ((x.Inventory.current_quantity + x.OrderedQty) < x.Inventory.reorder_level)&&x.Inventory.item_status.Trim().ToLower()=="active").ToList();
+            return lis;
         }
 
         //direct to PO page
@@ -294,6 +312,19 @@ namespace Team3ADProject.Protected
             Session["itemid"] = itemid;
             string url = "PlacePurchaseOrderForm.aspx?itemid=" + itemid;
             Response.Redirect(url);
+        }
+
+        protected void gvInventoryList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvInventoryList.PageIndex = e.NewPageIndex;
+            if (RadioButtonList1.SelectedItem.Value.Equals("2"))
+            {
+                loadGrid(lowinstock);
+            }
+            else
+            {
+                loadGrid(cList);
+            }
         }
     }
 }
