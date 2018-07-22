@@ -52,21 +52,29 @@ namespace Team3ADProject.Protected
         protected void ButtonCancel_Click(object sender, EventArgs e)
         {
             //Response.Redirect("ClerkInventory.aspx");
+            //Response.Write("<script language='javascript'> { window.close();}</script>");
         }
 
         protected double TotalPrice()
         {
-            string param_itemcode = Request.QueryString["itemcode"];
-            int qty = Int32.Parse(TextBoxAdjustment.Text);
-            double unitprice = BusinessLogic.Adjprice(param_itemcode);
-            string symbol = DropDownList1.SelectedItem.Value;
-            if (symbol == "-")
+            int qty = 0;
+            if (TextBoxAdjustment.Text.Trim() != null && Int32.TryParse(TextBoxAdjustment.Text, out qty))
             {
-                return (unitprice * (-qty));
+                string param_itemcode = Request.QueryString["itemcode"];
+                double unitprice = BusinessLogic.Adjprice(param_itemcode);
+                string symbol = DropDownList1.SelectedItem.Value;
+                if (symbol == "-")
+                {
+                    return (unitprice * (-qty));
+                }
+                else
+                {
+                    return (unitprice * qty);
+                }
             }
             else
             {
-                return (unitprice * qty);
+                return 0;
             }
         }
 
@@ -120,8 +128,11 @@ namespace Team3ADProject.Protected
 
         protected void TextBoxAdjustment_TextChanged(object sender, EventArgs e)
         {
-            double price = TotalPrice();
-            LabelTotalCost.Text = "$" + price;
+            if (TextBoxAdjustment.Text.Trim() != null)
+            {
+                double price = TotalPrice();
+                LabelTotalCost.Text = "$" + price.ToString("0.00");
+            }
         }
     }
 }
