@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
 using Team3ADProject.Code;
 
 namespace Team3ADProject.Protected
@@ -168,12 +169,21 @@ namespace Team3ADProject.Protected
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (TextBox2.Text == null)
+            String s = TextBox2.Text;
+
+            if (s.IsNullOrWhiteSpace())
             {
-
-
-
                 BindGrid();
+
+            }
+            else
+            {
+                DateTime search = Convert.ToDateTime(s);
+
+                GridView1.DataSource = BusinessLogic.SearchAdj(search);
+                GridView1.DataBind();
+                NoRowDetail();
+
             }
         }
 

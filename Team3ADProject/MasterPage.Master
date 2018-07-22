@@ -25,6 +25,8 @@
     <script src="<%=ResolveUrl("~/Scripts/jquery.canvasjs.min.js")%>"></script>
     <script src="<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>"></script>
     
+    <%-- Alan need this for select all checkbox jquery for adjustmentapproval --%>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
  
 
 </head>
