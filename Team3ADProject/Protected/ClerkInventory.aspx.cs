@@ -16,6 +16,7 @@ namespace Team3ADProject.Protected
         private static List<cInventory> cList = new List<cInventory>();
         private static List<cInventory> cCatList = new List<cInventory>();
         private static List<cInventory> lowinstock = new List<cInventory>();
+        private static List<cInventory> lisPOAll = new List<cInventory>();
         private static employee user;
         protected void loadGrid(List<cInventory> list)
         {
@@ -37,6 +38,11 @@ namespace Team3ADProject.Protected
                     Session["user"] = user;
                     //redirect to login homepage
                 }
+
+                CheckBox2.Enabled = false;
+                CheckBox2.Checked = false;
+                CheckBox2.Visible = false;
+                LabelLOWINSTOCK.Visible = false;
                 cList = getCInventoryList(BusinessLogic.GetActiveInventories());
                 loadGrid(cList);
                 List<string> categories = new List<string>();
@@ -67,9 +73,11 @@ namespace Team3ADProject.Protected
         //select all or low-in-stock inventories
         protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            gvInventoryList.PageIndex =0;
+            gvInventoryList.PageIndex = 0;
             TextBox1.Text = string.Empty;
             ddlCategory.SelectedIndex = 0;
+            lisPOAll = cList.Where(x => ((x.Inventory.current_quantity + x.OrderedQty + x.PendingApprovalQty) < x.Inventory.reorder_level) && x.Inventory.item_status.Trim().ToLower() == "active").ToList();
+            lowinstock = cList.Where(x => ((x.Inventory.current_quantity + x.OrderedQty) < x.Inventory.reorder_level) && x.Inventory.item_status.Trim().ToLower() == "active").ToList();
             List<cInventory> list = new List<cInventory>();
             if (RadioButtonList1.SelectedItem.Value.Equals("1"))
             {
@@ -79,15 +87,33 @@ namespace Team3ADProject.Protected
                 CheckBox1.Enabled = true;
                 CheckBox1.Visible = true;
                 CheckBox1.Checked = false;
+                CheckBox2.Enabled = false;
+                CheckBox2.Checked = false;
+                CheckBox2.Visible = false;
+                LabelLOWINSTOCK.Visible = false;
             }
             else if (RadioButtonList1.SelectedItem.Value.Equals("2"))
             {
-                lowinstock = GetLowInStockItems();
-                list = lowinstock;
+                CheckBox2.Enabled = true;
+                CheckBox2.Visible = true;
                 btnAllPO.Visible = true;
-                btnAllPO.Enabled = true;
-                CheckBox1.Enabled = false;
-                CheckBox1.Visible = false;
+                LabelLOWINSTOCK.Visible = true;
+                if (lisPOAll.Count > 0)
+                {
+                    list = lisPOAll;
+                    CheckBox2.Checked = true;
+                    btnAllPO.Enabled = true;
+                }
+                else
+                {
+                    list = lowinstock;
+                    btnAllPO.Enabled = false;
+                    CheckBox2.Checked = false;
+                    CheckBox1.Enabled = false;
+                    CheckBox1.Visible = false;
+                    btnAllPO.BackColor = System.Drawing.SystemColors.ControlDark;
+                }
+
             }
             loadGrid(list);
         }
@@ -160,8 +186,7 @@ namespace Team3ADProject.Protected
             }
             else if (RadioButtonList1.SelectedItem.Value.Equals("2"))
             {
-                lowinstock = GetLowInStockItems();
-                list = lowinstock;
+                list = ReturnLowInStockListType();
             }
             if (category != "all categories")
             {
@@ -183,7 +208,7 @@ namespace Team3ADProject.Protected
                 int ReorderLevel = Int32.Parse(DataBinder.Eval(e.Row.DataItem, "Inventory.reorder_level").ToString());
                 int OrderedQty = Int32.Parse(DataBinder.Eval(e.Row.DataItem, "OrderedQty").ToString());
                 int PendingApproval = Int32.Parse(DataBinder.Eval(e.Row.DataItem, "PendingApprovalQty").ToString());
-                
+
                 if (OrStatus.ToLower().Trim() == "obsolete")
                 {
                     //You can use whatever you want to play with rows
@@ -192,13 +217,14 @@ namespace Team3ADProject.Protected
                     //e.Row.ForeColor = System.Drawing.Color.LightGray;
                     e.Row.BackColor = System.Drawing.Color.DarkGray;
                     (e.Row.FindControl("Button1") as Button).Enabled = false;
-                    (e.Row.FindControl("Button1") as Button).BackColor = System.Drawing.Color.DarkSlateGray;
+                    (e.Row.FindControl("Button1") as Button).BackColor = System.Drawing.SystemColors.ControlDarkDark;
                     (e.Row.FindControl("Button2") as Button).Enabled = false;
-                    (e.Row.FindControl("Button2") as Button).BackColor = System.Drawing.Color.DarkSlateGray;
-                }else if (CurrentQty+OrderedQty < ReorderLevel)
+                    (e.Row.FindControl("Button2") as Button).BackColor = System.Drawing.SystemColors.ControlDarkDark;
+                }
+                else if (CurrentQty + OrderedQty < ReorderLevel)
                 {
                     e.Row.Cells[4].ForeColor = System.Drawing.Color.Red;
-                    if (CurrentQty + OrderedQty+PendingApproval < ReorderLevel)
+                    if (CurrentQty + OrderedQty + PendingApproval < ReorderLevel)
                     {
                         e.Row.BackColor = System.Drawing.SystemColors.Highlight;
                     }
@@ -241,7 +267,6 @@ namespace Team3ADProject.Protected
         //place po for all low-in-stock items event handler
         protected void btnAllPO_Click(object sender, EventArgs e)
         {
-            //lowinstock = getCInventoryList(BusinessLogic.GetLowInStockInventories());
             List<POStaging> purchaseorderlist = new List<POStaging>();
             List<POStaging> StagingList = new List<POStaging>();
             if (Session["StagingList"] != null)
@@ -250,7 +275,7 @@ namespace Team3ADProject.Protected
             }
             try
             {
-                purchaseorderlist = ConvertListToPOStaging(lowinstock);
+                purchaseorderlist = ConvertListToPOStaging(lisPOAll);
                 foreach (POStaging a in purchaseorderlist)
                 {
                     StagingList = BusinessLogic.AddToStaging(StagingList, a);
@@ -296,11 +321,16 @@ namespace Team3ADProject.Protected
         }
 
         //Logic for low-in-stock items
-        protected List<cInventory> GetLowInStockItems()
+        protected List<cInventory> ReturnLowInStockListType()
         {
-            //List<cInventory> lis= cList.Where(x => ((x.Inventory.current_quantity + x.OrderedQty + x.PendingApprovalQty) < x.Inventory.reorder_level)&&x.Inventory.item_status.Trim().ToLower()=="active").ToList();
-            List<cInventory> lis= cList.Where(x => ((x.Inventory.current_quantity + x.OrderedQty) < x.Inventory.reorder_level)&&x.Inventory.item_status.Trim().ToLower()=="active").ToList();
-            return lis;
+            if (CheckBox2.Checked)
+            {
+                return lisPOAll;
+            }
+            else
+            {
+                return lowinstock;
+            }
         }
 
         //direct to PO page
@@ -325,6 +355,26 @@ namespace Team3ADProject.Protected
             {
                 loadGrid(cList);
             }
+        }
+
+        protected void CheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            List<cInventory> list = new List<cInventory>();
+            if (RadioButtonList1.SelectedItem.Value.Equals("2"))
+            {
+                string category = ddlCategory.SelectedItem.Text.ToLower().Trim();
+                list = ReturnLowInStockListType();
+                string search = TextBox1.Text.ToLower().Trim();
+                if (search != null)
+                {
+                    list = SearchResult(search);
+                    if (category != "all categories")
+                    {
+                        list = list.Where(x => x.Inventory.category.ToLower().Trim() == category).ToList();
+                    }
+                }
+            }
+            loadGrid(list);
         }
     }
 }

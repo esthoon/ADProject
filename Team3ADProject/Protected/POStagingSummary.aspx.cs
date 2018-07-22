@@ -70,12 +70,14 @@ namespace Team3ADProject.Protected
             Button btn = (Button)sender;
             HiddenField hf = (HiddenField)btn.FindControl("HiddenField1");
             string sup = hf.Value;
-            for (int i = 0; i < list.Count; i++)
+            List<int> indexes = ReturnIndexSupplierMatch(sup);
+            using (TransactionScope tx = new TransactionScope())
             {
-                if (list[i].Supplier.supplier_name.Trim().ToLower() == sup.ToLower().Trim())
+                for(int i = indexes.Count - 1; i >= 0; i--)
                 {
-                    list.RemoveAt(i);
+                    list.RemoveAt(indexes[i]);
                 }
+                tx.Complete();
             }
             Session["StagingList"] = list;
             loadGrid();
@@ -86,7 +88,7 @@ namespace Team3ADProject.Protected
             List<int> indexes = new List<int>();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Supplier.supplier_name.Trim().ToLower() == supname.ToLower().Trim())
+                if (list[i].Supplier.supplier_name.Trim().ToLower().Equals(supname.ToLower().Trim()))
                 {
                     indexes.Add(i);
                 }
@@ -124,7 +126,7 @@ namespace Team3ADProject.Protected
                         for (int i = 0; i < list.Count; i++)
                         {
                             string DateRequired = list[i].DateRequired.ToString("yyyy-MM-dd");
-                            if (list[i].Supplier.supplier_id.ToLower().Trim() == supcode)
+                            if (list[i].Supplier.supplier_id.ToLower().Trim().Equals(supcode))
                             {
                                 purchase_order_detail poDetails = new purchase_order_detail()
                                 {
@@ -162,8 +164,16 @@ namespace Team3ADProject.Protected
             foreach (GridViewRow gvr in GridViewPOStagingSummary.Rows)
             {
                 gvr.Cells[0].Text = i.ToString();
+                HiddenField hf=(HiddenField) gvr.FindControl("HiddenField1");
                 i++;
             }
+        }
+
+        protected void ButtonClear_Click(object sender, EventArgs e)
+        {
+            list.Clear();
+            Session["StagingList"] = list;
+            loadGrid();
         }
     }
 }

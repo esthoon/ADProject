@@ -2,6 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div>
         <br />
+        <asp:Label ID="Label3" runat="server" Text="Inventory" Font-Size="XX-Large"></asp:Label>
+        <br />
     </div>
     <div>
         <table>
@@ -18,9 +20,9 @@
                 <td style="height: 27px">
                     <asp:Button ID="Button1" runat="server" Text="Search" OnClick="Button1_Click" />
                     &emsp;
+                    <asp:Button ID="Button2" runat="server" Text="View PO Staging" OnClick="Button2_Click1" AutoPostBack="true"/>
                 </td>
                 <td style="height: 27px">
-                    <asp:Button ID="Button2" runat="server" Text="View PO Staging" OnClick="Button2_Click1" AutoPostBack="true"/>
                 </td>
             </tr>
             <tr>
@@ -34,15 +36,17 @@
                         <asp:ListItem Selected="True" Value="1">All</asp:ListItem>
                         <asp:ListItem Value="2">Low in stock</asp:ListItem>
                     </asp:RadioButtonList>
+                    <asp:CheckBox ID="CheckBox2" runat="server" Text="Exclude items with adequate pending PO qty" OnCheckedChanged="CheckBox2_CheckedChanged" AutoPostBack="true"/>
                 </td>
             </tr>
         </table>
+    </div>
+    <div>
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         <br />
         <asp:Label ID="Label2" runat="server"></asp:Label>
-        <br />
     </div>
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
-
+ 
     <div>
         <asp:GridView ID="gvInventoryList" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvInventoryList_RowDataBound" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="gvInventoryList_PageIndexChanging" PageSize="20">
             <Columns>
@@ -71,11 +75,14 @@
                     </asp:TemplateField>
             </Columns>
         </asp:GridView>
+    </div>
+    <div>
+        <asp:Label ID="LabelLOWINSTOCK" runat="server" Text="(PO will be placed for only items with insufficient pending approval quantity)" style="position:relative; float:right; right:0px;" Font-Size="XX-Small"></asp:Label>
         <br />
-        <asp:Button ID="btnAllPO" runat="server" Text="Place PO for all low-in-stock items" style="position:relative; float:right; top: 0px; left: 0px;" OnClick="btnAllPO_Click" />
+        <asp:Button ID="btnAllPO" runat="server" Text="Place PO for all low-in-stock items" style="position:relative;  float:right; right:0px;" OnClick="btnAllPO_Click" />
         <br />
     </div>
-    
+   
 </asp:Content>
 
 

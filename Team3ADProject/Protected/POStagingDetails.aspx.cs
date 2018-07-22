@@ -64,7 +64,6 @@ namespace Team3ADProject.Protected
             polist[index].OrderedQty = Int32.Parse(tb.Text);
             Session["StagingList"] = polist;
             loadGrid();
-            Label3.Text = polist[index].OrderedQty.ToString();
         }
 
         protected void GridViewPODetails_DataBound(object sender, EventArgs e)
@@ -198,15 +197,9 @@ namespace Team3ADProject.Protected
                             }
                             try
                             {
-                                for (int j = 0; j < polist.Count; j++)
+                                for(int k = indexes.Count - 1; k >= 0; k--)
                                 {
-                                    foreach (int index in indexes)
-                                    {
-                                        if (j == index)
-                                        {
-                                            polist.RemoveAt(j);
-                                        }
-                                    }
+                                    polist.RemoveAt(indexes[k]);
                                 }
                                 tx.Complete();
                                 Session["StagingList"] = polist;
