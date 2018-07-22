@@ -2,7 +2,16 @@
 <%@ Import Namespace="Team3ADProject.Protected" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">   
-    
+    <%--checkbox select all function --%>
+    <script type="text/javascript">
+        function SelectAllCheckboxes(chk) {
+            $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function() {
+                if (this != chk) {
+                    this.checked = chk.checked;
+                }
+            });
+        }
+    </script>
    
 
     <h1>Adjustment Form Approval</h1>
@@ -25,7 +34,9 @@
     
     <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" />
     <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-    
+    <%--validators function --%>
+    <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please Enter a valid date in the format (mm/dd/yyyy)" ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"></asp:RegularExpressionValidator>
+    <%-- end of validators --%>
     
     <br/>
     <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
@@ -36,10 +47,10 @@
             <asp:TemplateField>
                  
                 <HeaderTemplate>
-                    <asp:CheckBox ID="chkSelectAll" runat="server" CssClass="chkHeader" />
+                    <asp:CheckBox ID="chkSelectAll" runat="server" onclick="javascript:SelectAllCheckboxes(this);" />
                 </HeaderTemplate>
                 <ItemTemplate>
-                    <asp:CheckBox ID="chkSelect"  runat="server" CssClass="chkItem" />
+                    <asp:CheckBox ID="chkSelect"  runat="server" />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="adjustment_id" HeaderText="Adj ID" InsertVisible="False" ReadOnly="True" SortExpression="adjustment_id" />
