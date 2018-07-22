@@ -90,7 +90,10 @@ namespace Team3ADProject.Protected
                 LinkButton1.Visible = false;
                 LinkButton3.Visible = false;
                 TextBox2.Enabled = false;
+                dateValRegex.Enabled = false;
                 Button1.Enabled = false;
+                Button2.Enabled = true;
+                
                 Label1.Text = "There are no more adjustment forms for approval";
                 Label1.Visible = true;
             }
