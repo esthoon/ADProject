@@ -24,7 +24,8 @@ namespace Team3ADProject
         {
 
             // Tharrani start
-            Session["Employee"] = 19;
+            Session["Employee"] = 17;
+
             Session["Department"] = "ENGL";
             // Tharrani end
 

@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="pendingdetails.aspx.cs" Inherits="Team3ADProject.Protected.pendingdetails" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-	<html xmlns="http://www.w3.org/1999/xhtml">
+	<html>
 
 <body>
     
@@ -41,6 +41,22 @@
 			</Columns>
 		</asp:GridView>
     	<p>
+			&nbsp;</p>
+		<p>
+			<asp:Label ID="Label13" runat="server" Text="Comments"></asp:Label>&emsp;&emsp;
+			<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+		</p>
+	<br />
+	<br />
+	<asp:Label ID="Label1" runat="server" Text="Allocated Budget"></asp:Label>&emsp;&emsp;
+	<asp:Label ID="Label5" runat="server" Text=""></asp:Label>
+	<br />
+	<br />
+	<asp:Label ID="Label14" runat="server" Text="Approved Budget"></asp:Label>&emsp;&emsp;
+	<asp:Label ID="Label15" runat="server" Text=""></asp:Label>
+	<br />
+	<br />
+		<p>
 			<asp:Button ID="Button2" runat="server" Text="Approve" BackColor="LightGreen" OnClick="Button2_Click" />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 			<asp:Button ID="Button1" runat="server" Text=" Reject" BackColor="Red" OnClick="Button1_Click" />

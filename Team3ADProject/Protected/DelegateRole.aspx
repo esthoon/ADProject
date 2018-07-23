@@ -34,6 +34,9 @@
 	<br />
 	<br />
 	<br />
+	<asp:Label ID="Label3" runat="server" Text="Delegated Employee" Font-Bold="true"></asp:Label>&emsp;
+	<br />
+	<br />
 	<asp:Label ID="Label4" runat="server" Text="Employee"></asp:Label>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<asp:TextBox ID="TextBox2" runat="server" ReadOnly="true" ></asp:TextBox>

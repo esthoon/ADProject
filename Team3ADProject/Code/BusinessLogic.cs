@@ -21,8 +21,8 @@ namespace Team3ADProject.Code
 
         public static string getdepartment(string userid)
         {
-            var k = (from employee in context.employees where employee.user_id == userid select employee);
-            string dept = k.FirstOrDefault().department_id;
+            employee k = (from employee in context.employees where employee.user_id == userid select employee).FirstOrDefault();
+            string dept = k.department_id;
             return dept;
         }
 
@@ -37,16 +37,38 @@ namespace Team3ADProject.Code
             return list = context.getitemdetails(reqid).ToList();
         }
 
-        public static void approvestatus(string id)
+        public static void approvestatus(string id, string status, string dept, int sum)
         {
-            var k = from requisition_order in context.requisition_order where requisition_order.requisition_id == id select requisition_order;
-            k.FirstOrDefault().requisition_status = "Approved";
-            context.SaveChanges();
+            using (TransactionScope ts = new TransactionScope())
+            {
+                var k = from requisition_order in context.requisition_order where requisition_order.requisition_id == id select requisition_order;
+                k.FirstOrDefault().requisition_status = "Approved";
+                k.FirstOrDefault().head_comment = status;
+                context.SaveChanges();
+                int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
+                string month = DateTime.Now.ToString("MMM");
+                var q = (from b in context.budgets where b.department_id.Equals(dept) && b.year.Equals(year) && b.month.Equals(month) select b);
+                budget b1 = q.FirstOrDefault();
+                if (q.FirstOrDefault().spent.HasValue)
+                {
+                    b1.spent = q.FirstOrDefault().spent.Value + sum;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    b1.spent = sum;
+                    context.SaveChanges();
+                }
+                ts.Complete();
+            }
+
+
         }
-        public static void rejectstatus(string id)
+        public static void rejectstatus(string id, string status)
         {
             var k = from requisition_order in context.requisition_order where requisition_order.requisition_id == id select requisition_order;
             k.FirstOrDefault().requisition_status = "Rejected";
+            k.FirstOrDefault().head_comment = status;
             context.SaveChanges();
         }
         public static List<getrequesthistory_Result> gethistory(string dept)
@@ -922,6 +944,67 @@ department.department_id.Equals(dept)
             return list = context.spViewCollectionListNew().ToList();
         }
         //Rohit -end
+
+
+        //Sruthi - start
+        public static void updatecollectionlocation(string dept, int id)
+        {
+            context.updatecollectiondepartment(dept, id);
+        }
+
+        public static List<budget> getbudget(string dept)
+        {
+            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) select b;
+            List<budget> list = q.ToList();
+            list = (List<budget>)list.OrderBy(x => DateTime.ParseExact(x.month, "MMM", System.Globalization.CultureInfo.InvariantCulture).Month).ToList();
+            return list;
+        }
+
+        public static void updatebudget(string dept, string month, int budget)
+        {
+            int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
+            var q = from b in context.budgets where b.department_id.Equals(dept) && b.month.Equals(month) && b.year.Equals(year) select b;
+            budget b1 = q.FirstOrDefault();
+            b1.budget1 = budget;
+            context.SaveChanges();
+
+        }
+        public static int getbudgetbydept(string dept)
+        {
+            int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
+            string month = DateTime.Now.ToString("MMM");
+            var q = (from b in context.budgets where b.department_id.Equals(dept) && b.year.Equals(year) && b.month.Equals(month) select b);
+            int b1 = 0;
+            if (q.FirstOrDefault().budget1.HasValue)
+            {
+                b1 = Convert.ToInt32(q.FirstOrDefault().budget1.Value);
+            }
+            return b1;
+        }
+
+        public static int getspentbudgetbydept(string dept)
+        {
+            int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
+            string month = DateTime.Now.ToString("MMM");
+            var q = (from b in context.budgets where b.department_id.Equals(dept) && b.year.Equals(year) && b.month.Equals(month) select b);
+            int b1 = 0;
+            if (q.FirstOrDefault().spent.HasValue)
+            {
+                b1 = Convert.ToInt32(q.FirstOrDefault().spent.Value);
+            }
+            return b1;
+        }
+
+
+        public static string GetUserID(int employee_id)
+        {
+            return context.employees.Where(x => x.employee_id == employee_id).Select(x => x.user_id).FirstOrDefault();
+        }
+
+
+
+        //Sruthi - End
+
 
     }
 }

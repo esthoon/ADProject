@@ -1,8 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="ChangeRep.aspx.cs" Inherits="Team3ADProject.Protected.WebForm4" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<h2>Change Representative</h2>
-	<asp:UpdatePanel runat="server" ID="updatepanel1" UpdateMode="Conditional">
-		<ContentTemplate>
+	
 	<asp:Label ID="Label1" runat="server" Text="Employee Name"></asp:Label>&emsp;
 	<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox> &emsp;
 	<asp:Button ID="Button1" runat="server" Text="Search" OnClick="Button1_Click" />
@@ -27,8 +26,7 @@
 	<asp:Label ID="Label4" runat="server" Text="No Rep selected" Visible="false" ForeColor="Red"></asp:Label>&emsp;
 	<br />
 	<br />
-	</ContentTemplate>
-	</asp:UpdatePanel>
+	
 	<asp:Label ID="Label3" runat="server" Text="Representative Details" Font-Bold="true" Font-Size="Medium"></asp:Label>
 	<asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false">
 		<Columns>

@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<h2>Change Location</h2>
 	<asp:Label ID="Label1" runat="server" Text="Select Location"></asp:Label>&emsp;
-	<asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+	<asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="false"></asp:DropDownList>
 	<br />
 	<br />
 	<asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Button1_Click" />
