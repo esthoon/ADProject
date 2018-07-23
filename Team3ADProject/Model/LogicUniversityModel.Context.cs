@@ -41,6 +41,7 @@ namespace Team3ADProject.Model
         public virtual DbSet<requisition_order_detail> requisition_order_detail { get; set; }
         public virtual DbSet<supplier> suppliers { get; set; }
         public virtual DbSet<supplier_itemdetail> supplier_itemdetail { get; set; }
+        public virtual DbSet<unique_id> unique_id { get; set; }
     
         public virtual ObjectResult<getAllViewPOHistorypendingcount_Result> getAllViewPOHistorypendingcount()
         {
@@ -550,6 +551,29 @@ namespace Team3ADProject.Model
                 new ObjectParameter("placeid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("updatecollectiondepartment", departmentidParameter, placeidParameter);
+        }
+    
+        public virtual ObjectResult<getUserByToken1_Result> getUserByToken1(string token)
+        {
+            var tokenParameter = token != null ?
+                new ObjectParameter("token", token) :
+                new ObjectParameter("token", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getUserByToken1_Result>("getUserByToken1", tokenParameter);
+        }
+    
+        public virtual ObjectResult<getUserTokenByUsername1_Result> getUserTokenByUsername1(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getUserTokenByUsername1_Result>("getUserTokenByUsername1", usernameParameter);
+        }
+    
+        public virtual ObjectResult<spViewCollectionList1_Result> spViewCollectionList1()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList1_Result>("spViewCollectionList1");
         }
     }
 }

@@ -1,12 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master"  EnableEventValidation="false" AutoEventWireup="true" CodeBehind="depheadpending.aspx.cs" Inherits="Team3ADProject.Protected.depheadpendingm" %>
 
 <%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-	<html>
-	<body>
-   
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">   
         <h2>Pending Orders</h2>
-    	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+    	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
 			<Columns>
 				<asp:BoundField DataField="id" HeaderText="Request Number" />
 				<asp:BoundField DataField="Date" HeaderText="Request Date" /> 
@@ -15,7 +12,7 @@
 				<asp:BoundField DataField="sum" HeaderText="Request Price" />
 				<asp:TemplateField>
 					<ItemTemplate>
-						<asp:Button Id="button" Text="View" BackColor="LightGreen" runat="server" OnClick="button_click"/>
+						<asp:Button Id="button" Text="View" runat="server" OnClick="button_click" CssClass="btn btn-info"/>
 						<asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("id")%>' />
 					</ItemTemplate>
 				</asp:TemplateField>
@@ -44,7 +41,4 @@
 				</ChartAreas>
 			</asp:Chart>
 		</div>
-   
-</body>
-</html>
 </asp:Content>

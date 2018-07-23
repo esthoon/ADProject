@@ -184,6 +184,13 @@
           <Property Name="priority" Type="int" Nullable="false" />
           <Property Name="unit_price" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="unique_id">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="req_id" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_adjustment_employee">
           <End Role="employee" Type="Self.employee" Multiplicity="1" />
           <End Role="adjustment" Type="Self.adjustment" Multiplicity="*" />
@@ -522,6 +529,12 @@
         <Function Name="getRequisitionQuantityByDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetRequisitionStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getStationariesOrderedLastMonthByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getUserByToken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="token" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="getUserTokenByUsername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="getViewPOHistorytotalcountbyPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="varpo" Type="int" Mode="In" />
         </Function>
@@ -601,7 +614,7 @@
           <Parameter Name="RequisitionID" Type="varchar" Mode="In" />
           <Parameter Name="ItemDistributedQuantity" Type="int" Mode="In" />
         </Function>
-        <Function Name="spViewCollectionListNew" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spViewCollectionList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="updatecollectiondepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="departmentid" Type="varchar" Mode="In" />
           <Parameter Name="placeid" Type="int" Mode="In" />
@@ -623,6 +636,7 @@
           <EntitySet Name="requisition_order_detail" EntityType="Self.requisition_order_detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="supplier_itemdetail" EntityType="Self.supplier_itemdetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="unique_id" EntityType="Self.unique_id" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_adjustment_employee" Association="Self.FK_adjustment_employee">
             <End Role="employee" EntitySet="employee" />
             <End Role="adjustment" EntitySet="adjustment" />
@@ -1387,7 +1401,7 @@
           <Parameter Name="token" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spAcknowledgeDistributionList" ReturnType="Collection(LogicUniversityModel.spAcknowledgeDistributionList_Result)">
-            <Parameter Name="collection_id" Mode="In" Type="Int32" />
+          <Parameter Name="collection_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spCheckSupplyQuantity" ReturnType="Collection(Int32)">
             <Parameter Name="itemNumber" Mode="In" Type="String" />
@@ -1398,7 +1412,7 @@
             <Parameter Name="ItemNumber" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spUpdateCollectionStatusCollected">
-            <Parameter Name="collection_id" Mode="In" Type="Int32" />
+          <Parameter Name="collection_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spUpdateInventory">
             <Parameter Name="ItemNumber" Mode="In" Type="String" />
@@ -1414,6 +1428,14 @@
             <Parameter Name="departmentid" Mode="In" Type="String" />
             <Parameter Name="placeid" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="unique_id" EntityType="LogicUniversityModel.unique_id" />
+          <FunctionImport Name="getUserByToken1" ReturnType="Collection(LogicUniversityModel.getUserByToken1_Result)">
+            <Parameter Name="token" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getUserTokenByUsername1" ReturnType="Collection(LogicUniversityModel.getUserTokenByUsername1_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spViewCollectionList1" ReturnType="Collection(LogicUniversityModel.spViewCollectionList1_Result)" />
         </EntityContainer>
         <ComplexType Name="getAllViewPOHistorypendingcount_Result">
           <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
@@ -1715,6 +1737,34 @@
           <Property Type="Int32" Name="item_distributed_quantity" Nullable="false" />
         </ComplexType>
         <ComplexType Name="spViewCollectionListNew_Result">
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="department_name" Nullable="false" MaxLength="30" />
+          <Property Type="DateTime" Name="collection_date" Nullable="false" />
+          <Property Type="String" Name="collection_place" Nullable="false" MaxLength="30" />
+          <Property Type="Time" Name="collection_time" Nullable="false" />
+          <Property Type="Int32" Name="collection_id" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="unique_id">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="req_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="getUserByToken1_Result">
+          <Property Type="Int32" Name="employee_id" Nullable="false" />
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="email_id" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="user_id" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="department_id" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="supervisor_id" Nullable="true" />
+          <Property Type="String" Name="token" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getUserTokenByUsername1_Result">
+          <Property Type="String" Name="user_id" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="token" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spViewCollectionList1_Result">
           <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="department_name" Nullable="false" MaxLength="30" />
           <Property Type="DateTime" Name="collection_date" Nullable="false" />
@@ -2370,9 +2420,39 @@
           <FunctionImportMapping FunctionImportName="spUpdateCollectionStatusCollected" FunctionName="LogicUniversityModel.Store.spUpdateCollectionStatusCollected" />
           <FunctionImportMapping FunctionImportName="spUpdateInventory" FunctionName="LogicUniversityModel.Store.spUpdateInventory" />
           <FunctionImportMapping FunctionImportName="spUpdateItemDistributedQuantity" FunctionName="LogicUniversityModel.Store.spUpdateItemDistributedQuantity" />
-          <FunctionImportMapping FunctionImportName="spViewCollectionListNew" FunctionName="LogicUniversityModel.Store.spViewCollectionListNew">
+          <FunctionImportMapping FunctionImportName="updatecollectiondepartment" FunctionName="LogicUniversityModel.Store.updatecollectiondepartment" />
+          <EntitySetMapping Name="unique_id">
+            <EntityTypeMapping TypeName="LogicUniversityModel.unique_id">
+              <MappingFragment StoreEntitySet="unique_id">
+                <ScalarProperty Name="req_id" ColumnName="req_id" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getUserByToken1" FunctionName="LogicUniversityModel.Store.getUserByToken">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="LogicUniversityModel.spViewCollectionListNew_Result">
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getUserByToken1_Result">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="employee_name" ColumnName="employee_name" />
+                <ScalarProperty Name="email_id" ColumnName="email_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="supervisor_id" ColumnName="supervisor_id" />
+                <ScalarProperty Name="token" ColumnName="token" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getUserTokenByUsername1" FunctionName="LogicUniversityModel.Store.getUserTokenByUsername">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getUserTokenByUsername1_Result">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="token" ColumnName="token" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spViewCollectionList1" FunctionName="LogicUniversityModel.Store.spViewCollectionList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spViewCollectionList1_Result">
                 <ScalarProperty Name="employee_name" ColumnName="employee_name" />
                 <ScalarProperty Name="department_name" ColumnName="department_name" />
                 <ScalarProperty Name="collection_date" ColumnName="collection_date" />
@@ -2382,7 +2462,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="updatecollectiondepartment" FunctionName="LogicUniversityModel.Store.updatecollectiondepartment" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

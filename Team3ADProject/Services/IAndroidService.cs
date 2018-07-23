@@ -25,13 +25,13 @@ namespace Team3ADProject.Services
 
         // Logs user with specified token out
         [OperationContract]
-        [WebGet(UriTemplate = "/Logout/{token}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/Logout/{*token}", ResponseFormat = WebMessageFormat.Json)]
         string Logout(string token);
 
 
         // Returns an employee based on given token
         [OperationContract]
-        [WebGet(UriTemplate = "/Employee/{token}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/Employee/{*token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee GetEmployeeByToken(String token);
     }
 
@@ -58,18 +58,22 @@ namespace Team3ADProject.Services
         public int SupervisorId;
 
         [DataMember]
-        public string token;
+        public string Token;
 
-        public WCF_Employee(int employeeId, string employeeName, string emailId, string userId, string departmentId, int? supervisorId, string token)
+        [DataMember]
+        public string Role;
+
+        public WCF_Employee(int employeeId, string employeeName, string emailId, string userId, string departmentId, int? supervisorId, string token, string role)
         {
             EmployeeId = employeeId;
-            EmployeeName = employeeName;
-            EmailId = emailId;
-            UserId = userId;
-            DepartmentId = departmentId;
+            EmployeeName = employeeName.Trim(); ;
+            EmailId = emailId.Trim();
+            UserId = userId.Trim();
+            DepartmentId = departmentId.Trim();
             if (supervisorId == null) { SupervisorId = 0; }
             else { SupervisorId = (int)supervisorId; };
-            this.token = token;
+            Token = token;
+            Role = role;
         }
     }
 

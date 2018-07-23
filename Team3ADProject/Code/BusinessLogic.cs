@@ -762,12 +762,24 @@ department.department_id.Equals(dept)
         //return employee based on userid
         public static employee GetEmployeeByUserID(string userid)
         {
-            return context.employees.Where(x => x.user_id == userid).FirstOrDefault();
+            return context.employees.Where(x => x.user_id.Trim() == userid.Trim()).FirstOrDefault();
         }
 
         public static department GetDepartmenthead(string dept)
         {
-            return context.departments.Where(x => x.department_id == dept).FirstOrDefault();
+            return context.departments.Where(x => x.department_id.Trim() == dept.Trim()).FirstOrDefault();
+        }
+
+        public static unique_id getlastrequestid(string Depid)
+        {
+            return context.unique_id.Where(x => x.department_id.Trim() == Depid).FirstOrDefault();
+        }
+
+        public static void updatelastrequestid(string Depid, int i)
+        {
+            unique_id u = context.unique_id.Where(x => x.department_id.Trim() == Depid).FirstOrDefault();
+            u.req_id = i;
+            context.SaveChanges();
         }
         // Tharrani end
 

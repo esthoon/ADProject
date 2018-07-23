@@ -146,7 +146,9 @@ namespace Team3ADProject.Protected
             int Empid = (int)Session["Employee"];
             string Depid = (string)Session["Department"]; //19 belongs to ENGL dep
             DateTime d = DateTime.Now.Date;
-            int i = (int)Application["RequestID"] + 1;
+            //int i = (int)Application["RequestID"] + 1;
+            unique_id u = BusinessLogic.getlastrequestid(Depid);
+            int i = (int)u.req_id + 1;
             string id = Depid + "/" + DateTime.Now.Year.ToString() + "/" + i;
             BusinessLogic.AddNewRequisitionOrder(id, Empid, d);
             List<cart> cart = (List<cart>)Session["RequestCart"];
@@ -154,7 +156,8 @@ namespace Team3ADProject.Protected
             {
                 BusinessLogic.AddRequisitionOrderDetail(cart[xi], id);
             }
-            Application["RequestID"] = i;
+            //Application["RequestID"] = i;
+            BusinessLogic.updatelastrequestid(Depid, i);
             Session["RequestCart"] = null;
             // string to = BusinessLogic.GetEmployee((int)Session["Head_id"]).email_id;
             string to = "tharrani2192@gmail.com";
@@ -163,6 +166,7 @@ namespace Team3ADProject.Protected
             string body = "New Request ID" + i + "has been placed by" + ename + "for your approval";
             BusinessLogic.sendMail(to, sub, body);
             Response.Redirect("~/Protected/RequestConfirm.aspx?id=" + id);
+
         }
 
         protected void TextBox1_TextChanged(object sender, EventArgs e)
