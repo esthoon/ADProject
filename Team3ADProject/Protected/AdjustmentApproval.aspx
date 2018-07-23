@@ -12,16 +12,14 @@
             });
         }
     </script>
-   
-
+    
     <h1>Adjustment Form Approval</h1>
     
     <br />
     
     
     <br />
-    
-    
+    <br/>
    
     <br/>
     <br />
