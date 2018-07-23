@@ -40,6 +40,7 @@
         <AssociationConnector Association="LogicUniversityModel.FK_supplier_itemdetail_supplier" ManuallyRouted="false" />
         <AssociationConnector Association="LogicUniversityModel.collection_dep" ManuallyRouted="false" />
         <AssociationConnector Association="LogicUniversityModel.requisition_disbursement_detail" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LogicUniversityModel.unique_id" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

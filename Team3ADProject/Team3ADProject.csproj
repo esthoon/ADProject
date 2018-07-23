@@ -451,7 +451,13 @@
     <Compile Include="Model\getStationariesOrderedLastMonthByCategory_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\getUserByToken1_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\getUserByToken_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\getUserTokenByUsername1_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\getUserTokenByUsername_Result.cs">
@@ -526,6 +532,9 @@
     <Compile Include="Model\spGetRODetailsByROId_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\spViewCollectionList1_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\spViewCollectionListNew_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
@@ -548,6 +557,9 @@
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\supplier_itemdetail.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\unique_id.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

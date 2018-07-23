@@ -769,6 +769,18 @@ department.department_id.Equals(dept)
         {
             return context.departments.Where(x => x.department_id.Trim() == dept.Trim()).FirstOrDefault();
         }
+
+        public static unique_id getlastrequestid(string Depid)
+        {
+            return context.unique_id.Where(x => x.department_id.Trim() == Depid).FirstOrDefault();
+        }
+
+        public static void updatelastrequestid(string Depid, int i)
+        {
+            unique_id u = context.unique_id.Where(x => x.department_id.Trim() == Depid).FirstOrDefault();
+            u.req_id = i;
+            context.SaveChanges();
+        }
         // Tharrani end
 
 
