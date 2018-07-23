@@ -76,7 +76,7 @@ namespace Team3ADProject.Protected
 
         protected void ButtonCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ClerkInventory.aspx");
+            Response.Redirect(ResolveUrl("~/Protected/ClerkInventory"));
             //Response.Write("<script language='javascript'> { window.close();}</script>");
         }
 
