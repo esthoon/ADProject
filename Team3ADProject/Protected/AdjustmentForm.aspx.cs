@@ -76,7 +76,7 @@ namespace Team3ADProject.Protected
 
         protected void ButtonCancel_Click(object sender, EventArgs e)
         {
-            //Response.Redirect("ClerkInventory.aspx");
+            Response.Redirect("ClerkInventory.aspx");
             //Response.Write("<script language='javascript'> { window.close();}</script>");
         }
 
@@ -133,8 +133,8 @@ namespace Team3ADProject.Protected
                             Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
                             BusinessLogic.sendMail("e0283990@u.nus.edu", "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
                         }
-                        //Response.Redirect("ClerkInventory.aspx");
-                        Response.Write("<script language='javascript'> { window.close();}</script>");
+                        Response.Redirect("ClerkInventory.aspx");
+                        //Response.Write("<script language='javascript'> { window.close();}</script>");
                     }
                     catch (System.Transactions.TransactionException ex)
                     {
@@ -166,11 +166,13 @@ namespace Team3ADProject.Protected
         {
             if (price > 250)
             {
-                return BusinessLogic.RetrieveEmailByEmployeeID(headid);
+                //return BusinessLogic.RetrieveEmailByEmployeeID(headid);
+                return "e0283390@u.nus.edu";
             }
             else
             {
-                return BusinessLogic.RetrieveEmailByEmployeeID(supid);
+                //return BusinessLogic.RetrieveEmailByEmployeeID(supid);
+                return "e0283390@u.nus.edu"; 
             }
         }
     }

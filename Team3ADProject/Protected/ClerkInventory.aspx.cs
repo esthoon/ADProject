@@ -261,8 +261,8 @@ namespace Team3ADProject.Protected
             string itemcode = hd.Value;
             Session["itemcode"] = itemcode;
             string url = "AdjustmentForm.aspx?itemcode=" + itemcode;
-            Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
-            //Response.Redirect(url);
+            //Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
+            Response.Redirect(url);
         }
 
         //place po for all low-in-stock items event handler
