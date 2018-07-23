@@ -8,7 +8,7 @@
         <Columns>
             <asp:BoundField DataField="employee_name" ReadOnly="true" HeaderText="Employee Name" SortExpression="employee_name"/>
             <asp:BoundField DataField="department_name" ReadOnly="true" HeaderText="Department Name" SortExpression="department_name"/>
-            <asp:BoundField DataField="disbursement_list_id" ReadOnly="true" HeaderText="Disbursement List" SortExpression="disbursement_list_id" />
+            <asp:BoundField DataField="collection_id" ReadOnly="true" HeaderText="Collection" SortExpression="collection_id" />
             <asp:BoundField DataField="collection_place" ReadOnly="true" HeaderText="Collection Place" SortExpression="collection_place"/>
             <asp:BoundField DataField="collection_date" ReadOnly="true" HeaderText="Collection Date" SortExpression="collection_date" DataFormatString="{0:dd-MM-yyyy}"/>            
             <asp:BoundField DataField="collection_time" ReadOnly="true" HeaderText="Collection Time" SortExpression="collection_time"/>

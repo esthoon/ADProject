@@ -883,6 +883,45 @@ department.department_id.Equals(dept)
         }
         //Esther end
 
+            //Rohit - start
+        public static List<spAcknowledgeDistributionList_Result> ViewAcknowledgementList(int collection_id)
+        {
+            List<spAcknowledgeDistributionList_Result> list = new List<spAcknowledgeDistributionList_Result>();
+            return list = context.spAcknowledgeDistributionList(collection_id).ToList();
+        }
+
+        public static int getActualSupplyQuantityValue(int collectionID, String ItemCode)
+        {
+            return (int)context.spCheckSupplyQuantity(ItemCode, collectionID).ToList().Single();
+        }
+
+        public static List<spGetRequisitionIDAndItemQuantity_Result> getRequisitionIDandItemQuantity(int collectionID, string itemCode)
+        {
+            List<spGetRequisitionIDAndItemQuantity_Result> list = new List<spGetRequisitionIDAndItemQuantity_Result>();
+            return list = context.spGetRequisitionIDAndItemQuantity(collectionID, itemCode).ToList();
+        }
+
+        public static void UpdateItemDistributedQuantity(string ItemCode, string requisitionID, int itemDistributedQuantity)
+        {
+            context.spUpdateItemDistributedQuantity(ItemCode, requisitionID, itemDistributedQuantity);
+        }
+
+        public static void updateInventory(string itemCode, int difference)
+        {
+            context.spUpdateInventory(itemCode, difference);
+        }
+
+        public static void updateCollectionStatus(int collectionID)
+        {
+            context.spUpdateCollectionStatusCollected(collectionID);
+        }
+
+        public static List<spViewCollectionListNew_Result> ViewCollectionListNew()
+        {
+            List<spViewCollectionListNew_Result> list = new List<spViewCollectionListNew_Result>();
+            return list = context.spViewCollectionListNew().ToList();
+        }
+        //Rohit -end
 
     }
 }

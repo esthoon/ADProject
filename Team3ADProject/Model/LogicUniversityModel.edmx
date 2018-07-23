@@ -555,6 +555,13 @@
           <Parameter Name="var5" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_getPendingPOList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spAcknowledgeDistributionList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="collection_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spCheckSupplyQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="itemNumber" Type="varchar" Mode="In" />
+          <Parameter Name="collectionID" Type="int" Mode="In" />
+        </Function>
         <Function Name="spGetCollectionList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetDepartmentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetDepartmentPin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -562,6 +569,10 @@
         </Function>
         <Function Name="spGetPlaceIdFromDptId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="dptId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spGetRequisitionIDAndItemQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="collectionID" Type="int" Mode="In" />
+          <Parameter Name="ItemNumber" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spGetRODetailsByROId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="roId" Type="varchar" Mode="In" />
@@ -578,7 +589,23 @@
           <Parameter Name="collectionStatus" Type="varchar" Mode="In" />
           <Parameter Name="ro_id" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="spViewCollectionList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spUpdateCollectionStatusCollected" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="collection_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spUpdateInventory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ItemNumber" Type="varchar" Mode="In" />
+          <Parameter Name="difference" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spUpdateItemDistributedQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ItemNumber" Type="varchar" Mode="In" />
+          <Parameter Name="RequisitionID" Type="varchar" Mode="In" />
+          <Parameter Name="ItemDistributedQuantity" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spViewCollectionListNew" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="updatecollectiondepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="departmentid" Type="varchar" Mode="In" />
+          <Parameter Name="placeid" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="LogicUniversityModelStoreContainer">
           <EntitySet Name="adjustment" EntityType="Self.adjustment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="budget" EntityType="Self.budget" Schema="dbo" store:Type="Tables" />
@@ -1359,6 +1386,34 @@
           <FunctionImport Name="getUserByToken" ReturnType="Collection(LogicUniversityModel.getUserByToken_Result)">
           <Parameter Name="token" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="spAcknowledgeDistributionList" ReturnType="Collection(LogicUniversityModel.spAcknowledgeDistributionList_Result)">
+            <Parameter Name="collection_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spCheckSupplyQuantity" ReturnType="Collection(Int32)">
+            <Parameter Name="itemNumber" Mode="In" Type="String" />
+            <Parameter Name="collectionID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spGetRequisitionIDAndItemQuantity" ReturnType="Collection(LogicUniversityModel.spGetRequisitionIDAndItemQuantity_Result)">
+            <Parameter Name="collectionID" Mode="In" Type="Int32" />
+            <Parameter Name="ItemNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spUpdateCollectionStatusCollected">
+            <Parameter Name="collection_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spUpdateInventory">
+            <Parameter Name="ItemNumber" Mode="In" Type="String" />
+            <Parameter Name="difference" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spUpdateItemDistributedQuantity">
+            <Parameter Name="ItemNumber" Mode="In" Type="String" />
+            <Parameter Name="RequisitionID" Mode="In" Type="String" />
+            <Parameter Name="ItemDistributedQuantity" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spViewCollectionListNew" ReturnType="Collection(LogicUniversityModel.spViewCollectionListNew_Result)" />
+          <FunctionImport Name="updatecollectiondepartment">
+            <Parameter Name="departmentid" Mode="In" Type="String" />
+            <Parameter Name="placeid" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getAllViewPOHistorypendingcount_Result">
           <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
@@ -1648,6 +1703,24 @@
         </ComplexType>
         <ComplexType Name="GetRequisitionStatus_Result">
           <Property Type="String" Name="requisition_status" Nullable="false" MaxLength="8" />
+        </ComplexType>
+        <ComplexType Name="spAcknowledgeDistributionList_Result">
+          <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="ordered_quantity" Nullable="true" />
+          <Property Type="Int32" Name="supply_quantity" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spGetRequisitionIDAndItemQuantity_Result">
+          <Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="item_distributed_quantity" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spViewCollectionListNew_Result">
+          <Property Type="String" Name="employee_name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="department_name" Nullable="false" MaxLength="30" />
+          <Property Type="DateTime" Name="collection_date" Nullable="false" />
+          <Property Type="String" Name="collection_place" Nullable="false" MaxLength="30" />
+          <Property Type="Time" Name="collection_time" Nullable="false" />
+          <Property Type="Int32" Name="collection_id" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2275,9 +2348,31 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spInsertCollectionDetail" FunctionName="LogicUniversityModel.Store.spInsertCollectionDetail" />
           <FunctionImportMapping FunctionImportName="spSpecialRequestReady" FunctionName="LogicUniversityModel.Store.spSpecialRequestReady" />
-          <FunctionImportMapping FunctionImportName="spViewCollectionList" FunctionName="LogicUniversityModel.Store.spViewCollectionList">
+          <FunctionImportMapping FunctionImportName="spAcknowledgeDistributionList" FunctionName="LogicUniversityModel.Store.spAcknowledgeDistributionList">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="LogicUniversityModel.spViewCollectionList_Result">
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spAcknowledgeDistributionList_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="ordered_quantity" ColumnName="ordered_quantity" />
+                <ScalarProperty Name="supply_quantity" ColumnName="supply_quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCheckSupplyQuantity" FunctionName="LogicUniversityModel.Store.spCheckSupplyQuantity" />
+          <FunctionImportMapping FunctionImportName="spGetRequisitionIDAndItemQuantity" FunctionName="LogicUniversityModel.Store.spGetRequisitionIDAndItemQuantity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spGetRequisitionIDAndItemQuantity_Result">
+                <ScalarProperty Name="requisition_id" ColumnName="requisition_id" />
+                <ScalarProperty Name="item_distributed_quantity" ColumnName="item_distributed_quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spUpdateCollectionStatusCollected" FunctionName="LogicUniversityModel.Store.spUpdateCollectionStatusCollected" />
+          <FunctionImportMapping FunctionImportName="spUpdateInventory" FunctionName="LogicUniversityModel.Store.spUpdateInventory" />
+          <FunctionImportMapping FunctionImportName="spUpdateItemDistributedQuantity" FunctionName="LogicUniversityModel.Store.spUpdateItemDistributedQuantity" />
+          <FunctionImportMapping FunctionImportName="spViewCollectionListNew" FunctionName="LogicUniversityModel.Store.spViewCollectionListNew">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.spViewCollectionListNew_Result">
                 <ScalarProperty Name="employee_name" ColumnName="employee_name" />
                 <ScalarProperty Name="department_name" ColumnName="department_name" />
                 <ScalarProperty Name="collection_date" ColumnName="collection_date" />
@@ -2287,6 +2382,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="updatecollectiondepartment" FunctionName="LogicUniversityModel.Store.updatecollectiondepartment" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
