@@ -12,18 +12,44 @@ namespace Team3ADProject.Protected
 {
     public partial class WebForm2 : System.Web.UI.Page
     {
+        static employee user;
+        static inventory item;
+        static int headid, supid;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 //retrieve user
-                employee user = (employee)Session["user"];
-                if (user == null)
+                if (Session["Employee"] != null)
                 {
-                    user = BusinessLogic.GetEmployeeById(10);
-                    Session["user"] = user;
+                    int employeeid = (int)Session["Employee"];
+                    user = BusinessLogic.GetEmployeeById(employeeid);
                 }
-                //
+                else
+                {
+                    //hardcoded
+                    Session["Employee"] = 10;
+                    user = BusinessLogic.GetEmployeeById(10);
+                    //redirect to login homepage
+                }
+                //retrieve headid
+                if (Session["Head_id"] != null)
+                {
+                    headid =(int)Session["Head_id"];
+                }
+                else
+                {
+                    headid = 12;
+                }
+                //retrieve headid
+                if (Session["Sup_id"] != null)
+                {
+                    supid = (int)Session["Head_id"];
+                }
+                else
+                {
+                    supid = 13;
+                }
                 LabelDate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
                 LabelName.Text = user.employee_name;
                 UpdatePage();
@@ -38,12 +64,11 @@ namespace Team3ADProject.Protected
             if (param_itemcode != null)
             {
                 string itemcode = param_itemcode;
-                inventory item = BusinessLogic.GetInventory(itemcode);
+                item = BusinessLogic.GetInventory(itemcode);
                 LabelUnitPrice.Text = BusinessLogic.Adjprice(itemcode).ToString();
                 LabelStock.Text = item.current_quantity.ToString();
                 LabelItemNum.Text = item.item_number.ToString();
                 LabelItem.Text = item.description;
-                Session["adjItem"] = item;
 
             }
 
@@ -80,50 +105,52 @@ namespace Team3ADProject.Protected
 
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
-            employee user = (employee)Session["user"];
-            inventory item = (inventory)Session["adjItem"];
             String today = DateTime.Now.ToString("yyyy-MM-dd");
             int qty = Int32.Parse(TextBoxAdjustment.Text);
-            try
+            string email = RetrieveEmail(TotalPrice());
+            if (qty != 0)
             {
-                adjustment a = new adjustment()
-                {
-                    adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
-                    employee_id = user.employee_id,
-                    item_number = item.item_number,
-                    adjustment_quantity = qty,
-                    adjustment_price = TotalPrice(),
-                    adjustment_status = "Pending",
-                    employee_remark = TextBoxRemarks.Text,
-                    manager_remark = "",
-                };
-
                 try
                 {
-                    using (TransactionScope tx = new TransactionScope())
+                    adjustment a = new adjustment()
                     {
-                        BusinessLogic.CreateAdjustment(a);
-                        tx.Complete();
-                        Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
+                        adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
+                        employee_id = user.employee_id,
+                        item_number = item.item_number,
+                        adjustment_quantity = qty,
+                        adjustment_price = TotalPrice(),
+                        adjustment_status = "Pending",
+                        employee_remark = TextBoxRemarks.Text,
+                        manager_remark = "",
+                    };
+
+                    try
+                    {
+                        using (TransactionScope tx = new TransactionScope())
+                        {
+                            BusinessLogic.CreateAdjustment(a);
+                            tx.Complete();
+                            Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
+                            BusinessLogic.sendMail("e0283990@u.nus.edu", "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
+                        }
+                        //Response.Redirect("ClerkInventory.aspx");
+                        Response.Write("<script language='javascript'> { window.close();}</script>");
                     }
-                    //Response.Redirect("ClerkInventory.aspx");
-                    Response.Write("<script language='javascript'> { window.close();}</script>");
+                    catch (System.Transactions.TransactionException ex)
+                    {
+                        Response.Write(BusinessLogic.MsgBox(ex.Message));
+                    }
+                    catch (Exception ex)
+                    {
+                        Response.Write(BusinessLogic.MsgBox(ex.Message));
+                    }
                 }
-                catch (System.Transactions.TransactionException ex)
-                {
-                    Response.Write(BusinessLogic.MsgBox(ex.Message));
-                }
+
                 catch (Exception ex)
                 {
                     Response.Write(BusinessLogic.MsgBox(ex.Message));
                 }
             }
-
-            catch (Exception ex)
-            {
-                Response.Write(BusinessLogic.MsgBox(ex.Message));
-            }
-
         }
 
         protected void TextBoxAdjustment_TextChanged(object sender, EventArgs e)
@@ -132,6 +159,18 @@ namespace Team3ADProject.Protected
             {
                 double price = TotalPrice();
                 LabelTotalCost.Text = "$" + price.ToString("0.00");
+            }
+        }
+
+        protected string RetrieveEmail(double price)
+        {
+            if (price > 250)
+            {
+                return BusinessLogic.RetrieveEmailByEmployeeID(headid);
+            }
+            else
+            {
+                return BusinessLogic.RetrieveEmailByEmployeeID(supid);
             }
         }
     }

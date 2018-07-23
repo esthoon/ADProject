@@ -876,6 +876,11 @@ department.department_id.Equals(dept)
             msg += "</script>";
             return msg;
         }
+
+        public static string RetrieveEmailByEmployeeID(int id)
+        {
+            return context.employees.Where(x => x.employee_id == id).Select(x => x.email_id).FirstOrDefault();
+        }
         //Esther end
 
 

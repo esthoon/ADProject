@@ -19,13 +19,17 @@ namespace Team3ADProject.Protected
         {
             if (!IsPostBack)
             {
-                if (Session["user"] != null)
+                if (Session["Employee"] != null)
                 {
-                    user = (employee)Session["user"];
+                    int employeeid = (int)Session["Employee"];
+                    user = BusinessLogic.GetEmployeeById(employeeid);
                 }
                 else
                 {
-                    //redirect to login page
+                    //hardcoded
+                    Session["Employee"] = 10;
+                    user = BusinessLogic.GetEmployeeById(10);
+                    //redirect to login homepage
                 }
                 loadGrid();
             }
@@ -146,6 +150,7 @@ namespace Team3ADProject.Protected
                         }
                     }
                     list.Clear();
+                    BusinessLogic.sendMail("e0283990@u.nus.edu", "New PO awaiting for approval", user.employee_name + " has submitted a new PO for approval.");
                     tx.Complete();
                     Session["StagingList"] = list;
                     loadGrid();

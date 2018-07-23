@@ -27,15 +27,16 @@ namespace Team3ADProject.Protected
         {
             if (!IsPostBack)
             {
-                if (Session["user"] != null)
+                if (Session["Employee"] != null)
                 {
-                    user = (employee)Session["user"];
+                    int employeeid = (int)Session["Employee"];
+                    user = BusinessLogic.GetEmployeeById(employeeid);
                 }
                 else
                 {
                     //hardcoded
+                    Session["Employee"] = 10;
                     user = BusinessLogic.GetEmployeeById(10);
-                    Session["user"] = user;
                     //redirect to login homepage
                 }
 
@@ -296,15 +297,6 @@ namespace Team3ADProject.Protected
         {
             List<POStaging> alist = new List<POStaging>();
             string requiredDate = DateTime.Now.AddDays(14).ToString("yyyy-MM-dd");
-            employee user = new employee();
-            if (Session["user"] != null)
-            {
-                user = (employee)Session["user"];
-            }
-            else
-            {
-                user = BusinessLogic.GetEmployeeById(10);
-            }
             foreach (cInventory a in blist)
             {
                 inventory item = a.Inventory;
