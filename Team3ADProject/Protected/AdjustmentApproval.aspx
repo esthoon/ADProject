@@ -1,54 +1,43 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="AdjustmentApproval.aspx.cs" Inherits="Team3ADProject.Protected.AdjustmentApproval" %>
+
 <%@ Import Namespace="Team3ADProject.Protected" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">   
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <%--checkbox select all function --%>
     <script type="text/javascript">
         function SelectAllCheckboxes(chk) {
-            $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function() {
+            $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function () {
                 if (this != chk) {
                     this.checked = chk.checked;
                 }
             });
         }
     </script>
-    
+
+
     <h1>Adjustment Form Approval</h1>
-    
-    <br />
-    
-    
-    <br />
-    <br/>
-   
-    <br/>
-    <br />
-    
-    <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar> 
-    
-    
-    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="All" />
-    
-    
-    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" />
+
+    <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar>
     <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+
+    <div>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="All" CssClass="btn btn-default" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" CssClass="btn btn-default" />
+    </div>
     <%--validators function --%>
     <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please Enter a valid date in the format (mm/dd/yyyy)" ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"></asp:RegularExpressionValidator>
     <%-- end of validators --%>
-    
-    <br/>
+
+    <h4>Search results: </h4>
     <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
-    <br/>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Height="99px" Width="1094px"  OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnPageIndexChanging="GridView1_PageIndexChanging" AllowPaging="True" PageSize="5"  >
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Height="99px" Width="1094px" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnPageIndexChanging="GridView1_PageIndexChanging" AllowPaging="True" PageSize="5">
         <Columns>
-            
             <asp:TemplateField>
-                 
                 <HeaderTemplate>
                     <asp:CheckBox ID="chkSelectAll" runat="server" onclick="javascript:SelectAllCheckboxes(this);" />
                 </HeaderTemplate>
                 <ItemTemplate>
-                    <asp:CheckBox ID="chkSelect"  runat="server" />
+                    <asp:CheckBox ID="chkSelect" runat="server" />
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="adjustment_id" HeaderText="Adj ID" InsertVisible="False" ReadOnly="True" SortExpression="adjustment_id" />
@@ -63,31 +52,26 @@
                 <ItemTemplate>
                     <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("manager_remark") %>'></asp:TextBox>
                 </ItemTemplate>
-               
+
             </asp:TemplateField>
+
             <asp:TemplateField ShowHeader="True">
                 <ItemTemplate>
-                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="Update" Text="Approve" CommandArgument='<%# Eval("adjustment_id") %>'></asp:LinkButton>
-                    &nbsp;<asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="Cancel" Text="Reject"></asp:LinkButton>
+                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="Update" Text="Approve" CssClass="btn btn-success" CommandArgument='<%# Eval("adjustment_id") %>'></asp:LinkButton>
+                    &nbsp;<asp:LinkButton ID="LinkButton2" runat="server" CausesValidation="False" CommandName="Cancel" Text="Reject" CssClass="btn btn-warning "></asp:LinkButton>
                 </ItemTemplate>
-           
+
             </asp:TemplateField>
         </Columns>
-      
+
         <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />
-      
+
     </asp:GridView>
-   
+
     <br />
-    <br />
-    <br />
-    <br />
-    <br/>
-   
-    <asp:LinkButton ID="LinkButton1"  runat="server" OnClick="LinkButton1_Click">Approve</asp:LinkButton>
-   <br/>
-    <asp:LinkButton ID="LinkButton3"  runat="server" OnClick="LinkButton3_Click">Reject</asp:LinkButton>
-  
+    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" CssClass="btn btn-success">Approve Selected</asp:LinkButton>
+    <asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click" CssClass="btn btn-warning">Reject Selected</asp:LinkButton>
+
 </asp:Content>
 
 

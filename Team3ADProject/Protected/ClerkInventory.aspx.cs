@@ -216,18 +216,18 @@ namespace Team3ADProject.Protected
                     //e.Row.Cells[0].Font.Bold = true;
                     //e.Row.Cells[2].CssClass = "gridcss";
                     //e.Row.ForeColor = System.Drawing.Color.LightGray;
-                    e.Row.BackColor = System.Drawing.Color.DarkGray;
+                    e.Row.BackColor = Color.FromArgb(1, 225, 225, 225);
                     (e.Row.FindControl("Button1") as Button).Enabled = false;
-                    (e.Row.FindControl("Button1") as Button).BackColor = System.Drawing.SystemColors.ControlDarkDark;
+                    //(e.Row.FindControl("Button1") as Button).BackColor = Color.FromArgb(1, 240, 240, 240);
                     (e.Row.FindControl("Button2") as Button).Enabled = false;
-                    (e.Row.FindControl("Button2") as Button).BackColor = System.Drawing.SystemColors.ControlDarkDark;
+                    //(e.Row.FindControl("Button2") as Button).BackColor = System.Drawing.SystemColors.ControlDarkDark;
                 }
                 else if (CurrentQty + OrderedQty < ReorderLevel)
                 {
-                    e.Row.Cells[4].ForeColor = System.Drawing.Color.Red;
+                    e.Row.Cells[4].ForeColor = Color.FromArgb(1, 180, 75, 50);
                     if (CurrentQty + OrderedQty + PendingApproval < ReorderLevel)
                     {
-                        e.Row.BackColor = System.Drawing.SystemColors.Highlight;
+                        e.Row.BackColor = Color.FromArgb(1, 252, 248, 227);
                     }
                 }
             }

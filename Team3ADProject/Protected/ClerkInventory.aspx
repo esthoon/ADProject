@@ -8,21 +8,21 @@
     <div>
         <table>
             <tr>
-                <td style="height: 27px">
-                    <asp:DropDownList ID="ddlCategory" runat="server" Width="208px" OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged" AutoPostBack="true">
+                <td>
+                    <asp:DropDownList ID="ddlCategory" runat="server" OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged" AutoPostBack="true">
                     </asp:DropDownList>
                     &emsp;
                 </td>
-                <td style="height: 27px">
-                    <asp:TextBox ID="TextBox1" runat="server" Width="352px" OnTextChanged="Button1_Click" AutoPostBack="true"></asp:TextBox>
+                <td>
+                    <asp:TextBox ID="TextBox1" runat="server" OnTextChanged="Button1_Click" AutoPostBack="true"></asp:TextBox>
                     &emsp;
                 </td>
                 <td style="height: 27px">
-                    <asp:Button ID="Button1" runat="server" Text="Search" OnClick="Button1_Click" />
+                    <asp:Button ID="Button1" runat="server" Text="Search" OnClick="Button1_Click" CssClass="btn btn-primary"/>
                     &emsp;
-                    <asp:Button ID="Button2" runat="server" Text="View PO Staging" OnClick="Button2_Click1" AutoPostBack="true"/>
+                    <asp:Button ID="Button2" runat="server" Text="View PO Staging" OnClick="Button2_Click1" AutoPostBack="true" CssClass="btn btn-info"/>
                 </td>
-                <td style="height: 27px">
+                <td>
                 </td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@
     </div>
  
     <div>
-        <asp:GridView ID="gvInventoryList" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvInventoryList_RowDataBound" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="gvInventoryList_PageIndexChanging" PageSize="20">
+        <asp:GridView ID="gvInventoryList" runat="server" AutoGenerateColumns="False" OnRowDataBound="gvInventoryList_RowDataBound" AllowPaging="True" AllowSorting="True" OnPageIndexChanging="gvInventoryList_PageIndexChanging" PageSize="20" CssClass="table table-hover">
             <Columns>
                 <asp:BoundField DataField="Inventory.item_number" HeaderText="Item no." />
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item Description" />
@@ -67,13 +67,13 @@
                 <asp:BoundField DataField="Inventory.item_status" HeaderText="Status" />
                 <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button1" runat="server" CommandName="" Text="PO" OnClick="Button1_Click1" />
+                            <asp:Button ID="Button1" runat="server" CommandName="" Text="PO" OnClick="Button1_Click1" CssClass="btn btn-info" />
                             <asp:HiddenField ID="HiddenFieldID" runat="server" Value='<%# Eval("Inventory.item_number") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="ADJ" OnClick="Button2_Click"/>
+                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="ADJ" OnClick="Button2_Click" CssClass="btn btn-success"/>
                         <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("Inventory.item_number") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>

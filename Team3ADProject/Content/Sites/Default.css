@@ -10,9 +10,11 @@
 
     height: 100vh;
     width: 100vw;
+
 }
 
-.flex-container-login{
+.flex-container-login {
     display: flex;
     flex-direction: column;
+    background-color: rgba(234, 241, 253, 0.15);
 }

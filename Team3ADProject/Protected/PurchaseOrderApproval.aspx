@@ -1,15 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="PurchaseOrderApproval.aspx.cs" Inherits="Team3ADProject.Protected.PurchaseOrderApproval" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
-    <br/>
-    <b>Summary</b>
-    <br/>
+    <h1>Purchase Order Approval</h1>
+    <h4>Summary</h4>
     <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
-    <br/>
-    
    
     
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowUpdating="GridView1_RowUpdating" Height="145px" Width="1000px"  >
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowUpdating="GridView1_RowUpdating" Height="145px" Width="1000px" CssClass="table table-hover" >
        
         <Columns>
             <asp:BoundField DataField="purchase_order_number" HeaderText="PO No." />
@@ -20,7 +17,7 @@
 
             <asp:TemplateField ShowHeader="False">
                 <ItemTemplate>
-                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="Update" Text="View"></asp:LinkButton>
+                    <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="True" CommandName="Update" Text="View" CssClass="btn btn-info"></asp:LinkButton>
                    
                 </ItemTemplate>
                 

@@ -211,6 +211,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Logout.aspx" />
     <Content Include="MasterPage.Master" />
     <Content Include="Guest.Master" />
     <EntityDeploy Include="Model\LogicUniversityModel.edmx">
@@ -337,6 +338,13 @@
     </Compile>
     <Compile Include="Guest.Master.designer.cs">
       <DependentUpon>Guest.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterPage.Master.cs">
       <DependentUpon>MasterPage.Master</DependentUpon>
