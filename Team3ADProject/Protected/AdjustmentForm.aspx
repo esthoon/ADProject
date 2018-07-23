@@ -110,7 +110,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" Style="position: relative; float: right; top: 0px; margin-left: 0.5vw;" CssClass="btn btn-warning" OnClientClick="javaScript:window.close(); return false;" CausesValidation="false" />
+                            <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" Style="position: relative; float: right; top: 0px; margin-left: 0.5vw;" CssClass="btn btn-warning" OnClientClick="ButtonCancel_Click" CausesValidation="false" />
                             <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" Style="position: relative; float: right; top: 0px;" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" />
                         </td>
                     </tr>
