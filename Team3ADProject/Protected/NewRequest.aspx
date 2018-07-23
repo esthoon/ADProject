@@ -5,8 +5,9 @@
         <h1>New Requisition Order</h1>
         <asp:Label ID="Label1" runat="server" Text="Search"></asp:Label>
         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-        <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" CssClass="btn btn-primary" />
+        <asp:Button ID="Button1" runat="server" Text="Search" OnClick="Button1_Click" CssClass="btn btn-primary" />
     </div>
+    <br />
     <div>
         <asp:GridView ID="GridView1" runat="server" GridLines="None" AllowPaging="True" PageSize="15" OnPageIndexChanging="GridView1_PageIndexChanging" AutoGenerateColumns="False" CssClass="table table-hover table-bordered">
             <Columns>

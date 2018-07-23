@@ -29,8 +29,8 @@ namespace Team3ADProject.Protected
                 TextBox1.Visible = true;
                 Label2.Text = "Select Date (YYYY/MM/DD)";
                 Button1.Visible = true;
-                ImageButton1.Visible = true;
-                Calendar1.Visible = false;
+                // ImageButton1.Visible = true;
+                // Calendar1.Visible = false;
                 DropDownList1.Visible = true;
                 GridView1.DataSource = list;
                 GridView1.DataBind();
@@ -38,8 +38,8 @@ namespace Team3ADProject.Protected
             }
             else
             {
-                Calendar1.Visible = false;
-                ImageButton1.Visible = false;
+                // Calendar1.Visible = false;
+                // ImageButton1.Visible = false;
                 Label2.Text = "There are no Request History";
                 TextBox1.Visible = false;
                 Button1.Visible = false;
@@ -90,13 +90,13 @@ namespace Team3ADProject.Protected
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Calendar1.Visible = true;
+            // Calendar1.Visible = true;
         }
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
             TextBox1.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
-            Calendar1.Visible = false;
+            // Calendar1.Visible = false;
         }
 
         protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
