@@ -86,7 +86,8 @@ namespace Team3ADProject.Services
                 if (query.Count() != 0)
                 {
                     var first = query.First();
-                    return new WCF_Employee(first.employee_id, first.employee_name, first.email_id, first.user_id, first.department_id, first.supervisor_id, first.token);
+                    String role = Roles.GetRolesForUser(first.user_id).FirstOrDefault();
+                    return new WCF_Employee(first.employee_id, first.employee_name, first.email_id, first.user_id, first.department_id, first.supervisor_id, first.token, role);
                 }
 
                 else
@@ -120,7 +121,7 @@ namespace Team3ADProject.Services
                 System.Diagnostics.Debug.WriteLine(context.SaveChanges());
 
                 // Pass the token to the service consumer
-                wcfEmployee = new WCF_Employee(0, null, null, username, null, null, token);
+                wcfEmployee = new WCF_Employee(0, null, null, username, null, null, token, null);
             }
             return wcfEmployee;
         }
