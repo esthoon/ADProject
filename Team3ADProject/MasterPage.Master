@@ -21,12 +21,9 @@
     <link rel="stylesheet" href="Content/Master.css" />
     <link rel="stylesheet" href="Content/utilities.css" />
 
-    <%-- Custom Javascript here --%>
-    <script src="<%=ResolveUrl("~/Scripts/jquery.canvasjs.min.js")%>"></script>
-    <script src="<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>"></script>
+
     
-    <%-- Alan need this for select all checkbox jquery for adjustmentapproval --%>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+
  
 
 </head>
@@ -52,7 +49,12 @@
             </Scripts>
         </asp:ScriptManager>
 
+    <%-- Custom Javascript here --%>
+    <script src="<%=ResolveUrl("~/Scripts/canvasjs.min.js")%>"></script>
+    <script src="<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>"></script>
 
+    <%-- Alan need this for select all checkbox jquery for adjustmentapproval --%>
+    <script type="text/javascript" src="<%=ResolveUrl("~/Scripts/jquery-1.12.1.js")%>"></script>
 
 
 
@@ -68,29 +70,31 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">View<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<%=ResolveUrl("~/Protected/ClerkInventory")%>">Inventory List</a></li>
-                                <li><a href="#">Purchase Order Staging</a></li>
-                                <li><a href="#">Purchase Order List</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/POStagingSummary")%>">Purchase Order Staging</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>">Purchase Order List</a></li>
                                 <li><a href="#">Weekly Collection List</a></li>
-                                <li><a href="#">Distribution List</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/AcknowledgeDistributionList")%>">Distribution List</a></li>
                                 <li><a href="#">Delivery Schedule</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">PO Approval<%=ResolveUrl("~/Protected/PurchaseOrderApproval")%></a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/AdjustmentApproval")%>">Approve / Reject Item Adjustment</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/PurchaseOrderApproval")%>">Purchase Order Approval</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/AdjustmentApproval")%>">Adjustment Approval</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/Report")%>">View Reports</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">New Request</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Edit Request</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">View History</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/NewRequest")%>">New Requisition Order</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/EmployeeViewPending")%>">Edit Requisition Order</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/EmployeeViewHistory")%>">View Requisition History</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Collection Details</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Change Collection Point")%>">Change Collection Location</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/ViewCollectionInformation")%>">Collection Details</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Disburse Items</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Pending Approval</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Request History</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Delegate</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Assign Representative</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/depheadpending")%>">Pending Requisition Approval</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/depheadviewhistory")%>">View Department Requisition History</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/DelegateRole")%>">Delegate Role</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/ChangeRep")%>">Assign Representative</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Reports</a></li>
 
                             </ul>

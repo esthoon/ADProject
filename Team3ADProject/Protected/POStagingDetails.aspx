@@ -2,15 +2,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <p>
         <br />
-        <asp:Label ID="Labelheading" runat="server" Text="Purchase Order Staging Details for:" Font-Bold="True" Font-Size="XX-Large"></asp:Label>
+        <asp:Label ID="Labelheading" runat="server" Text="Purchase Order Staging Details for:" Font-Size="XX-Large"></asp:Label>
         <br />
-        <asp:Label ID="LabelSupplier" runat="server" Text="Supplier" Font-Bold="True" Font-Size="X-Large"></asp:Label>
+        <asp:Label ID="LabelSupplier" runat="server" Text="Supplier" Font-Size="Larger"></asp:Label>
     </p>
     <p>
         <br />
         <asp:Label ID="Label1" runat="server" Text="No items in the list"></asp:Label>
     </p>
-        <asp:GridView ID="GridViewPODetails" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPODetails_DataBound">
+        <asp:GridView ID="GridViewPODetails" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPODetails_DataBound" CssClass="table table-hover">
             <Columns>
                 <asp:BoundField HeaderText="Index" />
                 <asp:BoundField DataField="DateRequired" HeaderText="Date Required" DataFormatString="{0:yyyy/MM/dd}" />
@@ -28,20 +28,20 @@
                 <asp:BoundField HeaderText="Total Cost"/>
                 <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button1" runat="server" CommandName="" Text="Update" OnClick="Button1_Click" CausesValidation="true" UseSubmitBehavior="false"/>
+                            <asp:Button ID="Button1" runat="server" CommandName="" Text="Update" OnClick="Button1_Click" CausesValidation="true" UseSubmitBehavior="false" CssClass="btn btn-success"/>
                             <asp:HiddenField ID="HiddenField3" runat="server"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="Remove" OnClick="Button2_Click"/>
+                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="Remove" OnClick="Button2_Click" CssClass="btn btn-warning"/>
                         <asp:HiddenField ID="HiddenField4" runat="server"/>
                         </ItemTemplate>
                     </asp:TemplateField>
             </Columns>
         </asp:GridView>
         <asp:Label ID="Label3" runat="server"></asp:Label>
-        <asp:Button ID="Button4" runat="server" Text="&lt;&lt;Staging Summary" style="position:relative; float:left; top: 0px; left: 0px;  margin-right:0x;" UseSubmitBehavior="false" OnClick="Button4_Click"/>
-        <asp:Button ID="Button3" runat="server" Text="Submit for approval" CausesValidation="true" UseSubmitBehavior="false" OnClick="Button3_Click" style="position:relative; float:left; top: 0px; left: 0px;"/>
+        <asp:Button ID="Button4" runat="server" Text="&lt;&lt;Staging Summary" style="position:relative; float:left; top: 0px; left: 0px;  margin-right:0x;" UseSubmitBehavior="false" OnClick="Button4_Click" CssClass="btn btn-default"/>
+        <asp:Button ID="Button3" runat="server" Text="Submit for approval" CausesValidation="true" UseSubmitBehavior="false" OnClick="Button3_Click" style="position:relative; float:left; top: 0px; left: 0px;" CssClass="btn btn-primary"/>
         <br />    
 </asp:Content>

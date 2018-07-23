@@ -18,7 +18,7 @@
     </div>
     <asp:Button ID="Button1" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="Button1_Click" />
     <div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound" CssClass="table table-hover">
             <Columns>
                 <asp:BoundField DataField="supplier_name" HeaderText="Supplier Name">
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />

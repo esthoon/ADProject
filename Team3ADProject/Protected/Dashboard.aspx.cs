@@ -31,7 +31,7 @@ namespace Team3ADProject.Protected
 
         protected void PurchaseOrder_Link_Click(object sender, EventArgs e)
         {
-            Response.Redirect(ResolveUrl("~/Protected/PurchaseOrderListing"));
+            Response.Redirect(ResolveUrl("~/Protected/ViewPOHistory"));
         }
     }
 }

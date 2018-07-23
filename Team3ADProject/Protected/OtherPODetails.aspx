@@ -32,7 +32,7 @@
      </div>
    <br />
     <div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-hover">
             <Columns>
                 <asp:BoundField DataField="item_number" HeaderText="Item Code">
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
@@ -67,7 +67,8 @@
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 </asp:BoundField>
             </Columns>
-
         </asp:GridView>
+        <a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>" class="btn btn-default"><< Purchase Order History</a>
+
     </div>
 </asp:Content>

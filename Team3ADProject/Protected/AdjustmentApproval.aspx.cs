@@ -71,12 +71,9 @@ namespace Team3ADProject.Protected
 
             DateTime day = Calendar1.SelectedDate;
             TextBox2.Text = day.ToShortDateString();
-
-
-
+            
             GridView1.DataSource = BusinessLogic.SearchAdj(day);
-
-
+            
             GridView1.DataBind();
             NoRowDetail();
 
@@ -103,6 +100,7 @@ namespace Team3ADProject.Protected
                 LinkButton3.Visible = true;
                 TextBox2.Enabled = true;
                 Button1.Enabled = true;
+                Label1.Visible = false;
             }
         }
 
@@ -192,6 +190,7 @@ namespace Team3ADProject.Protected
 
         protected void Button2_Click(object sender, EventArgs e)
         {
+            TextBox2.Text = string.Empty;
             BindGrid();
         }
 
