@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.Web.Security;
 using Team3ADProject.Model;
 
 namespace Team3ADProject.Services
@@ -59,23 +60,22 @@ namespace Team3ADProject.Services
         public WCF_Employee Login(string username, string password)
         {
             WCF_Employee wcfEmployee = null;
+            
+            // If login succeeds, fetch the token, otherwise, return null
+            // if(Membership.ValidateUser(username, password))
+            // {
+                // TODO: Generate and return token if correct
+                var context = new LogicUniversityEntities();
+                var query = context.getUserTokenByUsername(username);
+                var result = query.ToList();
 
-            // TODO: Validate user data
+                if (result.Count() != 0)
+                {
+                    wcfEmployee = new WCF_Employee(0, null, null, null, null, null, result.First().token);
+                }
+            //}
 
-
-            // TODO: Generate and return token if correct
-            var context = new LogicUniversityEntities();
-            var query = context.getUserTokenByUsername(username);
-            var result = query.ToList();
-
-            if (result.Count() != 0)
-            {
-                wcfEmployee = new WCF_Employee(0, null, null, null, null, null, result.First().token);
-            }
             return wcfEmployee;
-
-            // TODO: Otherwise, return null;
-
         }
 
         // Query for the token, and set it to null
