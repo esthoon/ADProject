@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Web.Security;
 using Team3ADProject.Model;
+using Team3ADProject.Code;
 
 namespace Team3ADProject.Services
 {
@@ -39,7 +40,7 @@ namespace Team3ADProject.Services
         protected bool AuthenticateToken(String token)
         {
             var context = new LogicUniversityEntities();
-            var query = context.getUserByToken(token);
+            var query = from x in context.employees where x.token == token select x;
 
             if (query.Count() != 0)
             {
@@ -80,13 +81,24 @@ namespace Team3ADProject.Services
             if (AuthenticateToken(token))
             {
                 var context = new LogicUniversityEntities();
-                var query = context.getUserByToken(token);
+                var query = from x in context.employees where x.token == token select x;
 
                 // If there exists the token for a user, create a wcf employee and return it
                 if (query.Count() != 0)
                 {
                     var first = query.First();
-                    String role = Roles.GetRolesForUser(first.user_id).FirstOrDefault();
+                    String role = null;
+
+                    if (System.Web.Security.Roles.Enabled)
+                    {
+                        role = Roles.GetRolesForUser(first.user_id).FirstOrDefault();
+                    }
+
+                    else
+                    {
+                        role = Constants.ROLES_STORE_CLERK;
+                    }
+
                     return new WCF_Employee(first.employee_id, first.employee_name, first.email_id, first.user_id, first.department_id, first.supervisor_id, first.token, role);
                 }
 
