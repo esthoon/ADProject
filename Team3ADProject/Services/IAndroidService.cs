@@ -21,7 +21,7 @@ namespace Team3ADProject.Services
         // Returns a token if successful, null if not
         [OperationContract]
         [WebGet(UriTemplate = "/Login/{username}/{password}", ResponseFormat = WebMessageFormat.Json)]
-        string Login(string username, string password);
+        WCF_Employee Login(string username, string password);
 
         // Logs user with specified token out
         [OperationContract]
@@ -67,7 +67,8 @@ namespace Team3ADProject.Services
             EmailId = emailId;
             UserId = userId;
             DepartmentId = departmentId;
-            SupervisorId = (int) supervisorId;
+            if (supervisorId == null) { SupervisorId = 0; }
+            else { SupervisorId = (int)supervisorId; };
             this.token = token;
         }
     }
