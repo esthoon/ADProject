@@ -736,6 +736,38 @@ department.department_id.Equals(dept)
             pod.item_purchase_order_status = "Accepted";
             pod.item_accept_date = DateTime.Now.Date;
             context.SaveChanges();
+            updatePOstatus(po);
+        }
+
+        public static void updatePOstatus(int po)
+        {
+            List<getAllViewPOHistorypendingcountbyPO_Result> pending_count = context.getAllViewPOHistorypendingcountbyPO(po).ToList();
+            bool flag = false;
+            for (int i = 0; i < pending_count.Count; i++)
+            {
+                if (pending_count[i].purchase_order_number == po)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag)
+            {
+                purchase_order p = getpurchaseorder(po);
+                p.purchase_order_status = "Completed";
+                context.SaveChanges();
+            }
+        }
+        //return employee based on userid
+        public static employee GetEmployeeByUserID(string userid)
+        {
+            return context.employees.Where(x => x.user_id == userid).FirstOrDefault();
+        }
+
+        public static department GetDepartmenthead(string dept)
+        {
+            return context.departments.Where(x => x.department_id == dept).FirstOrDefault();
         }
         // Tharrani end
 

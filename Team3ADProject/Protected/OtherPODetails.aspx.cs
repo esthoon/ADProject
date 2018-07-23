@@ -29,5 +29,10 @@ namespace Team3ADProject.Protected
                 Label13.Text = d.employee_name;    
             }
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Protected/ViewPOHistory.aspx");
+        }
     }
 }

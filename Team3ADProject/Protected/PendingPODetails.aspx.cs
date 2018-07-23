@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Team3ADProject.Code;
 using Team3ADProject.Model;
+using System.Windows.Forms;
 
 namespace Team3ADProject.Protected
 {
@@ -44,9 +45,9 @@ namespace Team3ADProject.Protected
             int r = GridView1.Rows.Count;
             for (int i = 0; i < r; i++)
             {
-                Button b = (Button)GridView1.Rows[i].FindControl("AcceptItem");
-                TextBox t1 = (TextBox)GridView1.Rows[i].FindControl("TextBox1");
-                TextBox t2 = (TextBox)GridView1.Rows[i].FindControl("TextBox2");
+                System.Web.UI.WebControls.Button b = (System.Web.UI.WebControls.Button)GridView1.Rows[i].FindControl("AcceptItem");
+                System.Web.UI.WebControls.TextBox t1 = (System.Web.UI.WebControls.TextBox)GridView1.Rows[i].FindControl("TextBox1");
+                System.Web.UI.WebControls.TextBox t2 = (System.Web.UI.WebControls.TextBox)GridView1.Rows[i].FindControl("TextBox2");
                 HiddenField hd2 = (HiddenField)GridView1.Rows[i].FindControl("HiddenField2");
                 string s = hd2.Value;
                 if(s == "Accepted")
@@ -75,22 +76,18 @@ namespace Team3ADProject.Protected
         protected void AcceptItem_Click(object sender, EventArgs e)
         {
             int po_id = (int)Session["po"];
-            Button b = (Button)sender;
-            TextBox t1 = (TextBox)b.FindControl("TextBox1");
-            TextBox t2 = (TextBox)b.FindControl("TextBox2");
+            System.Web.UI.WebControls.Button b = (System.Web.UI.WebControls.Button)sender;
+            System.Web.UI.WebControls.TextBox t1 = (System.Web.UI.WebControls.TextBox)b.FindControl("TextBox1");
+            System.Web.UI.WebControls.TextBox t2 = (System.Web.UI.WebControls.TextBox)b.FindControl("TextBox2");
             HiddenField hd1 = (HiddenField)b.FindControl("HiddenField1");
             HiddenField hd2 = (HiddenField)b.FindControl("HiddenField3");
             int order_quantity = Convert.ToInt32(hd2.Value);
             string item = hd1.Value;
             int accept_quantity = Convert.ToInt32(t1.Text);
             string remark = t2.Text;
-            if (accept_quantity <= 0) 
+            if (accept_quantity > order_quantity)
             {
-                Response.Write("Please enter quantity");
-            }
-            else if (accept_quantity > order_quantity)
-            {
-                Response.Write("Received quantity cannot be greater than ordered quantity");
+                MessageBox.Show("Received quantity cannot be greater than ordered quantity", "Accept Quantity Error", MessageBoxButtons.OK);
             }
             else
             {

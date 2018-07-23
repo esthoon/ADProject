@@ -58,8 +58,8 @@
                     <ItemTemplate>
                         <asp:TextBox ID="TextBox1" runat="server" BackColor="White" Text='<%# Bind("item_accept_quantity") %>'></asp:TextBox>
                         <asp:RegularExpressionValidator ID="Q" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please enter quantity"
-                            ValidationExpression="(^([1-9]*\d*\d{1}?\d*)$)" Display="Dynamic" ForeColor ="Red"></asp:RegularExpressionValidator>
-                        <asp:HiddenField ID="HiddenField3" runat="server" Value='<%# Eval("item_purchase_order_quantity") %>'/>
+                            ValidationExpression="(^[1-9][0-9]*$)" Display="Dynamic" ForeColor ="Red"  ValidationGroup = '<%# "Group_" + Container.DataItemIndex %>'></asp:RegularExpressionValidator>
+                    <asp:HiddenField ID="HiddenField3" runat="server" Value='<%# Eval("item_purchase_order_quantity") %>'/>
                         </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="item_accept_date" HeaderText="Item Receipt Date" DataFormatString="{0:yyyy/MM/dd}">

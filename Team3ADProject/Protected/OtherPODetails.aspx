@@ -30,7 +30,10 @@
         <asp:Label ID="Label6" runat="server" Text="Supplier ID :" Font-Bold="True"/>
         <asp:Label ID="Label7" runat="server" Text="Label" Font-Italic="True" />
      </div>
-   <br />
+<br />
+     <div> 
+		 <a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>" class="btn btn-default"><< Purchase Order History</a>
+     </div>
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-hover">
             <Columns>
@@ -68,7 +71,7 @@
                 </asp:BoundField>
             </Columns>
         </asp:GridView>
-        <a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>" class="btn btn-default"><< Purchase Order History</a>
+        
 
     </div>
 </asp:Content>
