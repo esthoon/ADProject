@@ -27,6 +27,10 @@
             </tr>
             <tr>
                 <td></td>
+                <td><asp:Label ID="Label4" runat="server" Font-Italic="True" Font-Size="X-Small" Text="Search by item description"></asp:Label></td>
+            </tr>
+            <tr>
+                <td></td>
                 <td>
                     <br />
                     <asp:CheckBox ID="CheckBox1" runat="server" Text="Include obsolete items" OnCheckedChanged="CheckBox1_CheckedChanged" autopostback="true"/>

@@ -46,6 +46,7 @@ namespace Team3ADProject.Protected
             {
                 LabelNoResult.Visible = true;
                 ButtonPOApproval.Visible = false;
+                ButtonClear.Visible = false;
             }
         }
 
