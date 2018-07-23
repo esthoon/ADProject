@@ -20,13 +20,17 @@ namespace Team3ADProject.Protected
             {
                 itemid = Request.QueryString["itemid"];
             }
-            if (Session["user"] != null)
+            if (Session["Employee"] != null)
             {
-                user = (employee)Session["user"];
+                int employeeid = (int)Session["Employee"];
+                user = BusinessLogic.GetEmployeeById(employeeid);
             }
             else
             {
-                //redirect to login page
+                //hardcoded
+                Session["Employee"] = 10;
+                user = BusinessLogic.GetEmployeeById(10);
+                //redirect to login homepage
             }
 
             if (!IsPostBack)

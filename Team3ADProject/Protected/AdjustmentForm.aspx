@@ -108,7 +108,7 @@
                 <tr>
                     <td></td>
                     <td>
-                        <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" style="position:relative; float:right; top: 0px; left: 20px; margin-right:20px;" OnClientClick="javaScript:window.close(); return false;"  causesvalidation="false" />
+                        <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" style="position:relative; float:right; top: 0px; left: 20px; margin-right:20px;" OnClick="ButtonCancel_Click" causesvalidation="false" />
                         &nbsp;<asp:Button ID="ButtonSubmit" runat="server" Text="Submit" style="position:relative; float:right; top: 0px; left: 0px;" OnClick="ButtonSubmit_Click" />
                     </td>
                 </tr>
