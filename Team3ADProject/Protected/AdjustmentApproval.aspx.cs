@@ -32,7 +32,12 @@ namespace Team3ADProject.Protected
             int adjid = int.Parse(GridView1.Rows[e.RowIndex].Cells[1].Text);
             string adjcomment = (row.FindControl("TextBox1") as TextBox).Text;
 
-            BusinessLogic.Updateadj(adjid, adjcomment);
+            string itemno = GridView1.Rows[e.RowIndex].Cells[4].Text;
+            int qty = int.Parse((GridView1.Rows[e.RowIndex].Cells[5].Text));
+
+
+
+            BusinessLogic.Updateadj(adjid, adjcomment, itemno, qty);
 
             GridView1.EditIndex = -1;
             BindGrid();
@@ -128,7 +133,10 @@ namespace Team3ADProject.Protected
                         int srow = Convert.ToInt32(row.Cells[1].Text);
                         string scomment = (row.FindControl("TextBox1") as TextBox).Text;
 
-                        BusinessLogic.Updateadj(srow, scomment);
+                        string itemno = row.Cells[4].Text;
+                        int qty = int.Parse(row.Cells[5].Text);
+
+                        BusinessLogic.Updateadj(srow, scomment, itemno, qty);
 
 
                     }

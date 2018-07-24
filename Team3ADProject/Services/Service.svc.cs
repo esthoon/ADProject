@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -80,28 +81,39 @@ namespace Team3ADProject.Services
             return wcf_purchaseOrders;
         }
 
-        public List<WCF_PurchaseQuantityByItemQuantity> getPurchaseQuantityByItemCategoryWithMonthsBack(string monthsParam)
+        public List<WCF_PurchaseQuantityByItemCategory> getPurchaseQuantityByItemCategoryWithMonthsBack(string startParam, string endParam)
         {
-            List<WCF_PurchaseQuantityByItemQuantity> wcfList = new List<WCF_PurchaseQuantityByItemQuantity>();
+            List<WCF_PurchaseQuantityByItemCategory> wcfList = new List<WCF_PurchaseQuantityByItemCategory>();
 
-            int monthsBack = int.Parse(monthsParam);
+            string format = "dd-mm-yyyy";
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            DateTime start = DateTime.ParseExact(startParam, format, provider);
+            DateTime end = DateTime.ParseExact(endParam, format, provider);
+
             var context = new LogicUniversityEntities();
-            var result = context.getPurchaseQuantityByItemCategory(monthsBack);
+            var query = from po in context.purchase_order
+                        join pod in context.purchase_order_detail on po.purchase_order_number equals pod.purchase_order_number
+                        join inv in context.inventories on pod.item_number equals inv.item_number
+                        where pod.item_purchase_order_status == "Completed" || pod.item_purchase_order_status == "Pending"
+                        select new { po, pod, inv };
+
+            var result = query.GroupBy(cat => cat.inv.category)
+                .Select(g => new
+                {
+                    Category = g.Key.Trim(),
+                    PurchaseQuantity = g.Sum(x => x.pod.item_purchase_order_quantity)
+                });
+
 
             foreach (var i in result.ToList())
             {
-                wcfList.Add(new WCF_PurchaseQuantityByItemQuantity(i.Category.Trim(), i.PurchaseQuantity));
+                wcfList.Add(new WCF_PurchaseQuantityByItemCategory(i.Category.Trim(), i.PurchaseQuantity));
             }
 
 
 
 
             return wcfList;
-        }
-
-        public List<WCF_PurchaseQuantityByItemQuantity> getPurchaseQuantityByItemCategory()
-        {
-            return getPurchaseQuantityByItemCategoryWithMonthsBack("0");
         }
 
         public List<WCF_RequestQuantityByDepartment> getRequisitionQuantityByDepartment()
@@ -118,6 +130,44 @@ namespace Team3ADProject.Services
 
             return wcfList;
         }
+
+        public List<WCF_RequestQuantityByDepartment> getRequisitionQuantityByDepartmentWithinTime(String startParam, String endParam)
+        {
+            List<WCF_RequestQuantityByDepartment> wcfList = new List<WCF_RequestQuantityByDepartment>();
+
+            string format = "dd-mm-yyyy";
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            DateTime start = DateTime.ParseExact(startParam, format, provider);
+            DateTime end = DateTime.ParseExact(endParam, format, provider);
+
+            var context = new LogicUniversityEntities();
+            var query = (from dept in context.departments
+                         join emp in context.employees on dept.department_id equals emp.department_id
+                         join req in context.requisition_order on emp.employee_id equals req.employee_id
+                         join reqDetails in context.requisition_order_detail on req.requisition_id equals reqDetails.requisition_id
+                         join inv in context.inventories on reqDetails.item_number equals inv.item_number
+                         where req.requisition_date.CompareTo(start) > 0
+                         && req.requisition_date.CompareTo(end) < 0
+                         select new { dept, emp, req, reqDetails, inv });
+
+            var result = query.GroupBy(d => d.dept.department_id)
+                .Select(g => new
+                {
+                    DepartmentId = g.Key.Trim(),
+                    ItemQuantity = g.Sum(x => x.reqDetails.item_requisition_quantity)
+                });
+
+            // String returnString = "";
+            foreach (var i in result)
+            {
+                //returnString = returnString + i;
+                wcfList.Add(new WCF_RequestQuantityByDepartment(i.DepartmentId, i.ItemQuantity));
+            }
+
+            return wcfList;
+        }
+
+
 
         public List<WCF_Item> getLowStockItemsByCategory()
         {

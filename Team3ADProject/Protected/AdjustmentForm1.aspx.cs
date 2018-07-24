@@ -10,7 +10,7 @@ using System.Transactions;
 
 namespace Team3ADProject.Protected
 {
-    public partial class WebForm2 : System.Web.UI.Page
+    public partial class AdjustmentForm1 : System.Web.UI.Page
     {
         static employee user;
         static inventory item;
@@ -35,7 +35,7 @@ namespace Team3ADProject.Protected
                 //retrieve headid
                 if (Session["Head_id"] != null)
                 {
-                    headid =(int)Session["Head_id"];
+                    headid = (int)Session["Head_id"];
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace Team3ADProject.Protected
                 string symbol = DropDownList1.SelectedItem.Value;
                 if (symbol == "-")
                 {
-                    qty= (-qty);
+                    qty = (-qty);
                 }
             }
             return qty;
@@ -147,8 +147,8 @@ namespace Team3ADProject.Protected
                             Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
                             BusinessLogic.sendMail("e0283990@u.nus.edu", "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
                         }
-                        Response.Redirect("ClerkInventory.aspx");
-                        //Response.Write("<script language='javascript'> { window.close();}</script>");
+                        //Response.Redirect("ClerkInventory.aspx");
+                        Response.Write("<script language='javascript'> { window.close();}</script>");
                     }
                     catch (System.Transactions.TransactionException ex)
                     {
@@ -186,7 +186,7 @@ namespace Team3ADProject.Protected
             else
             {
                 //return BusinessLogic.RetrieveEmailByEmployeeID(supid);
-                return "e0283390@u.nus.edu"; 
+                return "e0283390@u.nus.edu";
             }
         }
     }

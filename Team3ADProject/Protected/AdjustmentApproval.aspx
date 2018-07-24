@@ -13,10 +13,29 @@
             });
         }
     </script>
+    
+    <script>
+        $(document).ready(function () {
+            $("#datePicker").datepicker({
+                dateFormat: 'dd-mm-yy'
+            });
+                
+        
+        });
+    </script>
 
 
     <h1>Adjustment Form Approval</h1>
-
+    
+    
+    
+    
+    
+    
+    <br />
+    <input id="datePicker" type="text" />
+    <br />
+    <br/>
     <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar>
     <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
 
@@ -45,7 +64,7 @@
             <asp:BoundField DataField="employee_id" HeaderText="Employee Id" SortExpression="employee_id" />
             <asp:BoundField DataField="item_number" HeaderText="Item No." SortExpression="item_number" />
             <asp:BoundField DataField="adjustment_quantity" HeaderText="Adj Qty" SortExpression="adjustment_quantity" />
-            <asp:BoundField DataField="adjustment_price" HeaderText="Adj Price" SortExpression="adjustment_price" />
+            <asp:BoundField DataField="adjustment_price" HeaderText="Adj Price" SortExpression="adjustment_price" DataFormatString="{0:c2}" />
             <asp:BoundField DataField="adjustment_status" HeaderText="Adj Status" SortExpression="adjustment_status" />
             <asp:BoundField DataField="employee_remark" HeaderText="Employee Remark" SortExpression="employee_remark" />
             <asp:TemplateField HeaderText="Manager Remark" SortExpression="manager_remark">

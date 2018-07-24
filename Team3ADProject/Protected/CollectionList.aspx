@@ -35,14 +35,13 @@
             <asp:TemplateField HeaderText="Adjustment">
                 <ItemTemplate>
                     <asp:Button ID="btn_Adjustment" runat="server" Text="ADJ" UseSubmitBehavior="false" OnClick="btn_Adjustment_Click" />
-<%--                    <input type="button" name="btn_Adjustment" value="ADJ" class="btn btn-primary" runat="server" o onclick="btn_Adjustment_Click">--%>
                     <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("item_number") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
     </asp:GridView>
 
-    <asp:Button ID="btn_submitCollectionList" runat="server" Text="Submit" OnClick="btn_submitCollectionList_Click" />
-
+    <asp:Button ID="btn_submitCollectionList" runat="server" Text="Submit" OnClick="btn_submitCollectionList_Click" CssClass="btn btn-success"/>
+    
 </asp:Content>
 

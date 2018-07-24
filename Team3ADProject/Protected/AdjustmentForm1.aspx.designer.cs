@@ -10,7 +10,7 @@
 namespace Team3ADProject.Protected {
     
     
-    public partial class WebForm2 {
+    public partial class AdjustmentForm1 {
         
         /// <summary>
         /// form1 control.

@@ -81,16 +81,11 @@ namespace Team3ADProject.Protected
             {
                 TextBox tb = (TextBox)gvr.FindControl("TextBox1");
                 int orderedqty = Int32.Parse(tb.Text);
-                gvr.Cells[6].Text = String.Format("{0:c}", (Double.Parse(gvr.Cells[4].Text) * orderedqty));
+                HiddenField hf3 = (HiddenField)gvr.FindControl("HiddenField3");
+                gvr.Cells[6].Text = String.Format("{0:c}", (Double.Parse(hf3.Value) * orderedqty));
                 HiddenField hf1 = (HiddenField)gvr.FindControl("HiddenField1");
-                //HiddenField hf2 = (HiddenField)gvr.FindControl("HiddenField2");
-                //HiddenField hf3 = (HiddenField)gvr.FindControl("HiddenField3");
-                //HiddenField hf4 = (HiddenField)gvr.FindControl("HiddenField4");
                 string index = polist.FindIndex(x => x.Inventory.item_number.Trim().ToLower() == gvr.Cells[3].Text.ToLower().Trim() && x.Supplier.supplier_id.Trim().ToLower() == supplierid.Trim().ToLower()).ToString();
                 hf1.Value = index;
-                //hf2.Value = index;
-                //hf3.Value = index;
-                //hf4.Value = index;
                 gvr.Cells[0].Text = i.ToString();
                 i++;
             }

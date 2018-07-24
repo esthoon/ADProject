@@ -29,8 +29,7 @@
 	<asp:Label ID="itemDescription" runat="server"></asp:Label>
             <br />
             Required Date :
-	        <asp:Label ID="LabelRequiredDate" runat="server"></asp:Label>
-            <br />
+	        <asp:Label ID="LabelRequiredDate" runat="server" Text="Label"></asp:Label>
             <br />
             Stock :
 	<asp:Label ID="itemCurrentStock" runat="server"></asp:Label>
@@ -41,7 +40,7 @@
             Quantity :
 	<asp:TextBox ID="TextBoxOrderQuantity" runat="server" AutoPostBack="True" OnTextChanged="DropDownListSupplier_SelectedIndexChanged"></asp:TextBox>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter a qty" ForeColor="#FF3300" ControlToValidate="TextBoxOrderQuantity"></asp:RequiredFieldValidator>
-            <asp:CompareValidator runat="server" Operator="DataTypeCheck" Type="Integer" ControlToValidate="TextBoxOrderQuantity" ErrorMessage="Value must be a whole number" ForeColor="Red" />
+            <asp:CompareValidator runat="server" Operator="GreaterThan" Type="Integer" ControlToValidate="TextBoxOrderQuantity" ErrorMessage="Value must be a whole number" ForeColor="Red" ValueToCompare="0" />
             <br />
             Total Cost :
 	<asp:Label ID="totalCost" runat="server"></asp:Label>
