@@ -33,6 +33,10 @@ namespace Team3ADProject.Services
         [OperationContract]
         [WebGet(UriTemplate = "/Employee/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee GetEmployeeByToken(String token);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/RequisitionOrder/{id}/{token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Requisition_Order> GetAllRequisitionByEmployee(string id);
     }
 
 
@@ -99,9 +103,9 @@ namespace Team3ADProject.Services
         [DataMember]
         public string ItemRequisitionPrice;
 
-        public WCF_Requisition_Order_Details(int requisition_id, string item_number, int item_requisition_quantity, int item_distributed_quantity, int item_pending_quantity, double item_requisition_price)
+        public WCF_Requisition_Order_Details(string requisition_id, string item_number, int item_requisition_quantity, int item_distributed_quantity, int item_pending_quantity, double item_requisition_price)
         {
-            this.RequisitionId = requisition_id.ToString();
+            this.RequisitionId = requisition_id;
             this.ItemNumber = item_number;
             this.ItemRequisitionQty = item_requisition_quantity.ToString();
             this.ItemDistributedQty = item_distributed_quantity.ToString();
@@ -172,9 +176,9 @@ namespace Team3ADProject.Services
         [DataMember]
         public string HeadComment;
 
-        public WCF_Requisition_Order(int requisition_id, int employee_id, string requisition_status, DateTime requisition_date, string head_comment)
+        public WCF_Requisition_Order(string requisition_id, int employee_id, string requisition_status, DateTime requisition_date, string head_comment)
         {
-            this.RequisitionId = requisition_id.ToString();
+            this.RequisitionId = requisition_id;
             this.Employee_id = employee_id.ToString();
             this.RequisitionStatus = requisition_status;
             this.RequisitionDate = requisition_date.ToString("yyyy-MM-dd");

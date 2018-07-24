@@ -142,5 +142,18 @@ namespace Team3ADProject.Services
 
             return "done";
         }
+
+        public List<WCF_Requisition_Order> GetAllRequisitionByEmployee(string id)
+        {
+            int employeeId = Int32.Parse(id.Trim());
+            List<requisition_order> list = BusinessLogic.GetAllRequisitionByEmployee(employeeId);
+            List<WCF_Requisition_Order> returnlist = new List<WCF_Requisition_Order>();
+            foreach(requisition_order a in list)
+            {
+                returnlist.Add(new WCF_Requisition_Order(a.requisition_id, a.employee_id, a.requisition_status, a.requisition_date, a.head_comment));
+            }
+
+            return returnlist;
+        }
     }
 }
