@@ -103,6 +103,20 @@ namespace Team3ADProject.Protected
             }
         }
 
+        protected int ReturnQuantity()
+        {
+            int qty = 0;
+            if (TextBoxAdjustment.Text.Trim() != null && Int32.TryParse(TextBoxAdjustment.Text, out qty))
+            {
+                string symbol = DropDownList1.SelectedItem.Value;
+                if (symbol == "-")
+                {
+                    qty= (-qty);
+                }
+            }
+            return qty;
+        }
+
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
             String today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -117,7 +131,7 @@ namespace Team3ADProject.Protected
                         adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
                         employee_id = user.employee_id,
                         item_number = item.item_number,
-                        adjustment_quantity = qty,
+                        adjustment_quantity = ReturnQuantity(),
                         adjustment_price = TotalPrice(),
                         adjustment_status = "Pending",
                         employee_remark = TextBoxRemarks.Text,

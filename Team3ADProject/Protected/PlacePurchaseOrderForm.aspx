@@ -29,8 +29,7 @@
 	<asp:Label ID="itemDescription" runat="server"></asp:Label>
             <br />
             Required Date :
-	        <asp:Label ID="LabelRequiredDate" runat="server"></asp:Label>
-            <br />
+	        <asp:Label ID="LabelRequiredDate" runat="server" Text="Label"></asp:Label>
             <br />
             Stock :
 	<asp:Label ID="itemCurrentStock" runat="server"></asp:Label>

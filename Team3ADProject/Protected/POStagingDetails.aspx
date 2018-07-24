@@ -16,7 +16,7 @@
                 <asp:BoundField DataField="DateRequired" HeaderText="Date Required" DataFormatString="{0:yyyy/MM/dd}" />
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item" />
                 <asp:BoundField DataField="Inventory.item_number" HeaderText="Item Code" />
-                <asp:BoundField DataField="UnitPrice" HeaderText="Unit Price" />
+                <asp:BoundField DataField="UnitPrice" HeaderText="Unit Price" DataFormatString="{0:c2}" />
                 <asp:TemplateField HeaderText="Ordered Qty">
                     <ItemTemplate>
                         <asp:TextBox ID="TextBox1" runat="server" Text='<%# Eval("OrderedQty") %>' CausesValidation="true" AutoPostBack="true" OnTextChanged="TextBox1_TextChanged"></asp:TextBox>
@@ -29,7 +29,7 @@
                 <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
                             <asp:Button ID="Button1" runat="server" CommandName="" Text="Update" OnClick="Button1_Click" CausesValidation="true" UseSubmitBehavior="false" CssClass="btn btn-success"/>
-                            <asp:HiddenField ID="HiddenField3" runat="server"/>
+                            <asp:HiddenField ID="HiddenField3" Value='<%# Eval("UnitPrice") %>' runat="server"/>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField ShowHeader="False">
