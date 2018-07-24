@@ -33,6 +33,31 @@ namespace Team3ADProject.Services
         [OperationContract]
         [WebGet(UriTemplate = "/Employee/{*token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee GetEmployeeByToken(String token);
+
+
+        //Tharrani - Start
+
+        //Return active inventory
+        [OperationContract]
+        [WebGet(UriTemplate = "/NewRequest/AllItems/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Inventory> GetActiveInventory(string token);
+
+        //Retrun inventory matching search
+        [OperationContract]
+        [WebGet(UriTemplate = "/NewRequest/SearchItems/{search}/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Inventory> SearchInventory(string token, string search);
+
+        //Add new request
+        [OperationContract]
+        [WebGet(UriTemplate = "/NewRequest/Addrequest/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        string AddNewRequest(string token);
+
+        //Add new request detail
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/NewRequest/Addrequestdetail/{*token}", Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        void AddNewRequestDetail(string token, WCF_Inventory i, string quantity, string id);
+        //Tharrani -End
+
     }
 
 
@@ -76,5 +101,42 @@ namespace Team3ADProject.Services
             Role = role;
         }
     }
+
+    [DataContract]
+    public class WCF_Inventory
+    {
+        [DataMember]
+        public string item_number;
+        [DataMember]
+        public string description;
+        [DataMember]
+        public string category;
+        [DataMember]
+        public string unit_of_measurement;
+        [DataMember]
+        public int current_quantity;
+        [DataMember]
+        public int reorder_level;
+        [DataMember]
+        public int reorder_quantity;
+        [DataMember]
+        public string item_bin;
+        [DataMember]
+        public string item_status;
+
+        public WCF_Inventory(string item, string desc, string category, string UOM, int cq, int reol, int req, string bin, string status)
+        {
+            item_number = item.Trim();
+            description = desc;
+            category = category.Trim();
+            unit_of_measurement = UOM;
+            current_quantity = cq;
+            reorder_level = reol;
+            reorder_quantity = req;
+            item_bin = bin;
+            item_status = status;
+        }
+    }
+
 
 }

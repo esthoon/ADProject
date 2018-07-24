@@ -151,5 +151,79 @@ namespace Team3ADProject.Services
 
             return "done";
         }
+
+        //Tharrani - start
+        //return active inventory list
+        public List<WCF_Inventory> GetActiveInventory(string token)
+        {
+            //if (AuthenticateToken(token))
+            //{
+                List<inventory> i = BusinessLogic.GetActiveInventory();
+                List<WCF_Inventory> list = new List<WCF_Inventory>();
+                foreach (inventory x in i)
+                {
+                    list.Add(new WCF_Inventory(x.item_number, x.description, x.category, x.unit_of_measurement, x.current_quantity, x.reorder_level, x.reorder_quantity, x.item_bin, x.item_status));
+                }
+                return list;
+            //}
+            //else
+            //{
+             //   return null;
+            //}
+        }
+
+        //return inventory matching search criteria
+        public List<WCF_Inventory> SearchInventory(string token, string search)
+        {
+            //if (AuthenticateToken(token))
+            //{
+                List<WCF_Inventory> list = new List<WCF_Inventory>();
+                List<inventory> i = BusinessLogic.SearchActiveInventory(search);
+                foreach (inventory x in i)
+                {
+                    list.Add(new WCF_Inventory(x.item_number, x.description, x.category, x.unit_of_measurement, x.current_quantity, x.reorder_level, x.reorder_quantity, x.item_bin, x.item_status));
+                }
+                return list;
+            //}
+            //else
+            //{
+              //  return null;
+           // }
+        }
+
+        //Add new requisition order
+        public string AddNewRequest(string token)
+        {
+            //if (AuthenticateToken(token))
+            //{
+                WCF_Employee emp = GetEmployeeByToken(token);
+                int emp_id = emp.EmployeeId;
+                string Depid = emp.DepartmentId;
+                DateTime d = DateTime.Now.Date;
+                unique_id u = BusinessLogic.getlastrequestid(Depid);
+                int i = (int)u.req_id + 1;
+                string id = Depid + "/" + DateTime.Now.Year.ToString() + "/" + i;
+                BusinessLogic.AddNewRequisitionOrder(id, emp_id, d);
+                BusinessLogic.updatelastrequestid(Depid, i);
+                return id;
+           // }
+            //else
+             //   return null;
+        }
+
+        //Add new requisition order detail
+        public void AddNewRequestDetail(string token, WCF_Inventory i, string quantity, string id)
+        {
+            int q = Convert.ToInt32(quantity);
+            inventory iny = BusinessLogic.GetInventoryById(i.item_number);
+            cart c = new cart(iny, q);
+            BusinessLogic.AddRequisitionOrderDetail(c, id);
+        }
+
+        //Tharrani – End
+
+
+
+
     }
 }
