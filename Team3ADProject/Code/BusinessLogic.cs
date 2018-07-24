@@ -414,11 +414,23 @@ department.department_id.Equals(dept)
         }
 
 
-        //To search adjustment form base on date search
-        public static List<adjustment> SearchAdj(DateTime date)
+        //searchdateforstoremanager
+        public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
-            return context.adjustments.Where(x => x.adjustment_date == date).ToList<adjustment>();
+
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+
+
         }
+        //searchdateforstoresup
+        public static List<adjustment> StoreSupSearchAdj(DateTime date)
+        {
+
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+
+
+        }
+
 
 
         //To list pending purchase orders 
