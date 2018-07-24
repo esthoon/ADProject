@@ -106,8 +106,13 @@ namespace Team3ADProject.Protected
         }
         protected void btn_Adjustment_Click(object sender, EventArgs e)
         {
-            //Add link to redirect to adjustment form
-            //Response.Redirect("~/Protected/DisbursementSorting.aspx");
+            Button lb = (Button)sender;
+            HiddenField hd = (HiddenField)lb.FindControl("HiddenField1");
+            string itemcode = hd.Value;
+            Session["itemcode"] = itemcode;
+            string url = "AdjustmentForm1.aspx?itemcode=" + itemcode;
+            Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
+            //Response.Redirect(url);
 
         }
 
