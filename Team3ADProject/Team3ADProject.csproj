@@ -255,6 +255,7 @@
     <Content Include="Protected\POStagingDetails.aspx" />
     <Content Include="Protected\POStagingSummary.aspx" />
     <Content Include="Protected\PurchaseOrderApprovalDetails.aspx" />
+    <Content Include="Protected\Reallocate.aspx" />
     <Content Include="Protected\RequestCart.aspx" />
     <Content Include="Protected\RequestConfirm.aspx" />
     <Content Include="Protected\ViewCollectionInformation.aspx" />
@@ -517,10 +518,25 @@
     <Compile Include="Model\spAcknowledgeDistributionList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\spFindAllDptRequiredQtyByItem_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spFindDptIdAndRequiredQtyByItem_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\spGetCollectionList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetDepartmentList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetFullCollectionROIDList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetLatestCollectionDetailId_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetListOfROIDForDisbursement_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetPlaceIdFromDptId_Result.cs">
@@ -530,6 +546,15 @@
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetRODetailsByROId_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetRODListForSorting_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetSortingTableByDpt_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spReallocateQty_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spViewCollectionList1_Result.cs">
@@ -667,6 +692,13 @@
     </Compile>
     <Compile Include="Protected\PurchaseOrderApprovalDetails.aspx.designer.cs">
       <DependentUpon>PurchaseOrderApprovalDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\Reallocate.aspx.cs">
+      <DependentUpon>Reallocate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\Reallocate.aspx.designer.cs">
+      <DependentUpon>Reallocate.aspx</DependentUpon>
     </Compile>
     <Compile Include="Protected\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
