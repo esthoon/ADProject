@@ -26,7 +26,7 @@ namespace Team3ADProject
         {
 
             // Tharrani start
-            Session["username"] = "lina"; //System.Web.HttpContext.Current.User.Identity.Name;
+            Session["username"] = "beesarecool"; //System.Web.HttpContext.Current.User.Identity.Name;
             employee emp = BusinessLogic.GetEmployeeByUserID((string)Session["username"]);
             Session["Employee"] = emp.employee_id;
             Session["Department"] = emp.department_id;

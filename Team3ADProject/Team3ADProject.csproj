@@ -563,16 +563,10 @@
     <Compile Include="Model\spReallocateQty_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\spViewCollectionList1_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\spViewCollectionListNew_Result.cs">
+    <Compile Include="Model\spGetUndisbursedROList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spViewCollectionList_Result.cs">
-      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\spGetUndisbursedROList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\sp_geteachPendingPOList_Result.cs">

@@ -982,10 +982,10 @@ department.department_id.Equals(dept)
             context.spUpdateCollectionStatusCollected(collectionID);
         }
 
-        public static List<spViewCollectionListNew_Result> ViewCollectionListNew()
+        public static List<spViewCollectionList_Result> ViewCollectionListNew()
         {
-            List<spViewCollectionListNew_Result> list = new List<spViewCollectionListNew_Result>();
-            return list = context.spViewCollectionListNew().ToList();
+            List<spViewCollectionList_Result> list = new List<spViewCollectionList_Result>();
+            return list = context.spViewCollectionList().ToList();
         }
         //Rohit -end
 
