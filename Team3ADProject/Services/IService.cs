@@ -35,19 +35,19 @@ namespace Team3ADProject.Services
 
         // Outputs data used with the purchaseOrderCategoryChart chart with number of months to go back
         [OperationContract]
-        [WebGet(UriTemplate = "/Chart/PurchaseQuantityByItemCategory/{monthsParam}", ResponseFormat = WebMessageFormat.Json)]
-        List<WCF_PurchaseQuantityByItemQuantity> getPurchaseQuantityByItemCategoryWithMonthsBack(string monthsParam);
-
-        // Outputs data used with the purchaseOrderCategoryChart chart
-        [OperationContract]
-        [WebGet(UriTemplate = "/Chart/PurchaseQuantityByItemCategory", ResponseFormat = WebMessageFormat.Json)]
-        List<WCF_PurchaseQuantityByItemQuantity> getPurchaseQuantityByItemCategory();
+        [WebGet(UriTemplate = "/Chart/PurchaseQuantityByItemCategory/{startParam}/{endParam}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_PurchaseQuantityByItemCategory> getPurchaseQuantityByItemCategoryWithMonthsBack(string startParam, string endParam);
 
 
-        // Outputs data used with the purchaseOrderCategoryChart chart
+        // Outputs data of items requested by each department
         [OperationContract]
         [WebGet(UriTemplate = "/Chart/getRequisitionQuantityByDepartment", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_RequestQuantityByDepartment> getRequisitionQuantityByDepartment();
+
+        // Outputs data of items requested by each department
+        [OperationContract]
+        [WebGet(UriTemplate = "/Chart/getRequisitionQuantityByDepartmentWithinTime/{startParam}/{endParam}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_RequestQuantityByDepartment> getRequisitionQuantityByDepartmentWithinTime(String startParam, String endParam);
 
         // Outputs data used with the purchaseOrderCategoryChart chart
         [OperationContract]
@@ -210,7 +210,7 @@ namespace Team3ADProject.Services
     }
 
     [DataContract]
-    public class WCF_PurchaseQuantityByItemQuantity
+    public class WCF_PurchaseQuantityByItemCategory
     {
         [DataMember]
         public string category;
@@ -218,7 +218,7 @@ namespace Team3ADProject.Services
         [DataMember]
         public int? quantity;
 
-        public WCF_PurchaseQuantityByItemQuantity(string category, int? quantity)
+        public WCF_PurchaseQuantityByItemCategory(string category, int? quantity)
         {
             this.category = category;
             this.quantity = quantity;

@@ -14,6 +14,8 @@ namespace Team3ADProject.Code
         public static string CHART_TEST = "testChart";
         public static string CHART_REQUISITION_ORDER_STATUS_PERCENTAGE = "requisitionOrderStatusChart";
         public static string CHART_REQUISITION_ORDER_DATE_CREATED = "requisitionOrderDateChart";
-        public static string CHART_PURCHASE_ORDER_ITEM_QUANTITY_BY_CATEGORY = "purchaseQuantityByItemQuantityBarChart";
+        public static string CHART_REQUISITION_ITEM_QUANTITY_BY_DEPARTMENT = "requisitionQuantityByDepartmentChart";
+        public static string CHART_STATIONARIES_ORDERED_BY_CATEGORY = "purchaseQuantityByItemCategoryBarChart";
+        public static string CHART_PENDING_PURCHASE_ORDER_BY_SUPPLIER = "pendingPurchaseOrderCountBySupplierChart";
     }
 }
