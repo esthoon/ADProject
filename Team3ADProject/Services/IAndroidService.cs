@@ -25,13 +25,13 @@ namespace Team3ADProject.Services
 
         // Logs user with specified token out
         [OperationContract]
-        [WebGet(UriTemplate = "/Logout/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/Logout/{token}", ResponseFormat = WebMessageFormat.Json)]
         string Logout(string token);
 
 
         // Returns an employee based on given token
         [OperationContract]
-        [WebGet(UriTemplate = "/Employee/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        [WebGet(UriTemplate = "/Employee/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee GetEmployeeByToken(String token);
     }
 
