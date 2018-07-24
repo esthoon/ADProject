@@ -74,7 +74,8 @@
                         <td>
                             <asp:Label ID="lbuprice" runat="server" Text="Unit Price "></asp:Label>
                         </td>
-                        <td>$<asp:Label ID="LabelUnitPrice" runat="server" Text="Label"></asp:Label>
+                        <td>
+                            $<asp:Label ID="LabelUnitPrice" runat="server" Text="Label"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -87,7 +88,7 @@
                                 <asp:ListItem>-</asp:ListItem>
                             </asp:DropDownList>
                             <asp:TextBox ID="TextBoxAdjustment" runat="server" CausesValidation="True" AutoPostBack="true" OnTextChanged="TextBoxAdjustment_TextChanged"></asp:TextBox>
-                            <asp:CompareValidator runat="server" Operator="DataTypeCheck" Type="Integer" ControlToValidate="TextBoxAdjustment" ErrorMessage="Value must be a whole number" ForeColor="Red" />
+                            <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="TextBoxAdjustment" ErrorMessage="Quantity must be more than 0" ForeColor="Red" Operator="GreaterThan" Type="Integer" ValueToCompare="0"></asp:CompareValidator>
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxAdjustment" ErrorMessage="No quantity stated" ForeColor="Red"></asp:RequiredFieldValidator>
                         </td>
                     </tr>

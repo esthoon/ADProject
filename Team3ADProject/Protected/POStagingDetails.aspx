@@ -21,7 +21,7 @@
                     <ItemTemplate>
                         <asp:TextBox ID="TextBox1" runat="server" Text='<%# Eval("OrderedQty") %>' CausesValidation="true" AutoPostBack="true" OnTextChanged="TextBox1_TextChanged"></asp:TextBox>
                         <br />
-                        <asp:CompareValidator runat="server" Operator="DataTypeCheck" Type="Integer" ControlToValidate="TextBox1" ErrorMessage="Value must be a whole number" ForeColor="Red"/>
+                        <asp:CompareValidator runat="server" Operator="GreaterThan" Type="Integer" ControlToValidate="TextBox1" ErrorMessage="Value must be a whole number" ForeColor="Red" ValueToCompare="0" />
                         <asp:HiddenField ID="HiddenField1" runat="server"/>
                     </ItemTemplate>
                 </asp:TemplateField>
