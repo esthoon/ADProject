@@ -78,7 +78,7 @@
                                 <li><a href="<%=ResolveUrl("~/Protected/ClerkInventory")%>">Inventory List</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/POStagingSummary")%>">Purchase Order Staging</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>">Purchase Order List</a></li>
-                                <li><a href="#">Weekly Collection List</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/CollectionList")%>">Weekly Collection List</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewCollection")%>">Distribution List</a></li>
                                 <li><a href="#">Delivery Schedule</a></li>
                                 <li class="divider"></li>
@@ -98,6 +98,7 @@
                                 <li><a href="<%=ResolveUrl("~/Protected/DisbursementSorting")%>">Disburse Items</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/depheadpending")%>">Pending Requisition Approval</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/budget")%>">Edit budget</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/depheadviewhistory")%>">View Department Requisition History</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/DelegateRole")%>">Delegate Role</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ChangeRep")%>">Assign Representative</a></li>

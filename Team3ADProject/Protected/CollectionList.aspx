@@ -41,7 +41,7 @@
         </Columns>
     </asp:GridView>
 
-    <asp:Button ID="btn_submitCollectionList" runat="server" Text="Submit" OnClick="btn_submitCollectionList_Click" />
+    <asp:Button ID="btn_submitCollectionList" runat="server" Text="Submit" OnClick="btn_submitCollectionList_Click" CssClass="btn btn-success"/>
     
 </asp:Content>
 

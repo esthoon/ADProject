@@ -32,11 +32,6 @@
 
         </div>
 
-        <!-- Flex item 3: shortcuts -->
-        <div class="dashboard-flexbox-item">
-            <div class="flexbox-column dashboard-flex-shortcut"></div>
-        </div>
-
     </div>
     <%-- 
     <!-- If user is an employee, show them pointers-->
