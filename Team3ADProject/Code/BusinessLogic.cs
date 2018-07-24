@@ -949,7 +949,7 @@ department.department_id.Equals(dept)
         }
         //Esther end
 
-            //Rohit - start
+        //Rohit - start
         public static List<spAcknowledgeDistributionList_Result> ViewAcknowledgementList(int collection_id)
         {
             List<spAcknowledgeDistributionList_Result> list = new List<spAcknowledgeDistributionList_Result>();
@@ -1147,6 +1147,12 @@ department.department_id.Equals(dept)
             i.current_quantity += item.qtyPrepared;
             context.SaveChanges();
         }
+
+        //Refactored
+
+
+        //Refactored
+
 
         //Joel - end
 
