@@ -57,19 +57,10 @@ namespace Team3ADProject.Services
         // To get the time created of the token, use the GetTokenCreation time method.
         protected string GenerateToken()
         {
-            byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            byte[] key = Guid.NewGuid().ToByteArray();
-            string token = Convert.ToBase64String(time.Concat(key).ToArray());
+            string key = Guid.NewGuid().ToString();
+            string token = key;
 
             return token;
-        }
-
-        // Fetches the generated time of the token
-        protected DateTime GetTokenCreationTime(String token)
-        {
-            byte[] data = Convert.FromBase64String(token);
-            DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
-            return when;
         }
 
 
@@ -221,6 +212,19 @@ namespace Team3ADProject.Services
         }
 
         //Tharrani – End
+
+        public List<WCF_Requisition_Order> GetAllRequisitionByEmployee(string id)
+        {
+            int employeeId = Int32.Parse(id.Trim());
+            List<requisition_order> list = BusinessLogic.GetAllRequisitionByEmployee(employeeId);
+            List<WCF_Requisition_Order> returnlist = new List<WCF_Requisition_Order>();
+            foreach (requisition_order a in list)
+            {
+                returnlist.Add(new WCF_Requisition_Order(a.requisition_id, a.employee_id, a.requisition_status, a.requisition_date, a.head_comment));
+            }
+
+            return returnlist;
+        }
 
 
 
