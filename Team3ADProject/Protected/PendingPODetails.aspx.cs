@@ -7,7 +7,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Team3ADProject.Code;
 using Team3ADProject.Model;
-using System.Windows.Forms;
 
 namespace Team3ADProject.Protected
 {
@@ -18,9 +17,11 @@ namespace Team3ADProject.Protected
         {
             int id = Convert.ToInt32(Request.QueryString["id"]);
             Session["po"] = id;
+            Label14.Visible = false;
             if (!IsPostBack)
             {
                 GenerateGrid();
+                Label14.Visible = false;
             }
         }
 
@@ -85,12 +86,14 @@ namespace Team3ADProject.Protected
             string item = hd1.Value;
             int accept_quantity = Convert.ToInt32(t1.Text);
             string remark = t2.Text;
-            if (accept_quantity > order_quantity)
+            if (accept_quantity == 0)
             {
-                MessageBox.Show("Received quantity cannot be greater than ordered quantity", "Accept Quantity Error", MessageBoxButtons.OK);
+                Label14.Visible = true;
+                Label14.Text = "Received quantity should be greater than 0";
             }
             else
             {
+                Label14.Visible = false;
                 BusinessLogic.acceptitemfromsupplier(po_id, item, accept_quantity, remark);
                 GenerateGrid();
             }

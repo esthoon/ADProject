@@ -737,6 +737,10 @@ department.department_id.Equals(dept)
             pod.item_accept_date = DateTime.Now.Date;
             context.SaveChanges();
             updatePOstatus(po);
+            inventory i = BusinessLogic.GetInventoryById(item);
+            i.current_quantity = i.current_quantity + quantity;
+            context.SaveChanges();
+
         }
 
         public static void updatePOstatus(int po)
