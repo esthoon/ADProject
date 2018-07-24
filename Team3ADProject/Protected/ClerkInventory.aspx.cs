@@ -296,7 +296,7 @@ namespace Team3ADProject.Protected
         protected List<POStaging> ConvertListToPOStaging(List<cInventory> blist)
         {
             List<POStaging> alist = new List<POStaging>();
-            string requiredDate = DateTime.Now.AddDays(14).ToString("yyyy-MM-dd");
+            string requiredDate = DateTime.Now.AddDays(28).ToString("yyyy-MM-dd");
             foreach (cInventory a in blist)
             {
                 inventory item = a.Inventory;
