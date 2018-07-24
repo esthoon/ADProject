@@ -23,8 +23,6 @@
             </div>
             <div>
                 <table>
-                    <tr></tr>
-                    <tr></tr>
                     <tr>
                         <td>
                             <asp:Label ID="Label4" runat="server" Text="Created on: "></asp:Label>
@@ -43,6 +41,7 @@
                     </tr>
                 </table>
             </div>
+            <asp:Label ID="LabelError" runat="server" ForeColor="Red"></asp:Label>
             <br />
             <div>
                 <table>
@@ -112,7 +111,7 @@
                         <td></td>
                         <td>
                             <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" Style="position: relative; float: right; top: 0px; margin-left: 0.5vw;" CssClass="btn btn-warning" CausesValidation="false" OnClick="ButtonCancel_Click" />
-                            <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" Style="position: relative; float: right; top: 0px;" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" />
+                            <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" Style="position: relative; float: right; top: 0px;" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" OnClientClick="this.disabled=true;" UseSubmitBehavior="false"/>
                         </td>
                     </tr>
                 </table>

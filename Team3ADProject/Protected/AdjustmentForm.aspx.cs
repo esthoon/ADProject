@@ -17,6 +17,7 @@ namespace Team3ADProject.Protected
         static int headid, supid;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ButtonSubmit.Enabled = true;
             if (!IsPostBack)
             {
                 //retrieve user
@@ -35,7 +36,7 @@ namespace Team3ADProject.Protected
                 //retrieve headid
                 if (Session["Head_id"] != null)
                 {
-                    headid =(int)Session["Head_id"];
+                    headid = (int)Session["Head_id"];
                 }
                 else
                 {
@@ -111,7 +112,7 @@ namespace Team3ADProject.Protected
                 string symbol = DropDownList1.SelectedItem.Value;
                 if (symbol == "-")
                 {
-                    qty= (-qty);
+                    qty = (-qty);
                 }
             }
             return qty;
@@ -119,50 +120,25 @@ namespace Team3ADProject.Protected
 
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
-            String today = DateTime.Now.ToString("yyyy-MM-dd");
+            ButtonSubmit.Enabled = false;
             int qty = Int32.Parse(TextBoxAdjustment.Text);
-            string email = RetrieveEmail(TotalPrice());
+            int submitqty = ReturnQuantity();
             if (qty != 0)
             {
-                try
+                if (submitqty < 0)
                 {
-                    adjustment a = new adjustment()
+                    if (Math.Abs(submitqty) > item.current_quantity)
                     {
-                        adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
-                        employee_id = user.employee_id,
-                        item_number = item.item_number,
-                        adjustment_quantity = ReturnQuantity(),
-                        adjustment_price = TotalPrice(),
-                        adjustment_status = "Pending",
-                        employee_remark = TextBoxRemarks.Text,
-                        manager_remark = "",
-                    };
-
-                    try
-                    {
-                        using (TransactionScope tx = new TransactionScope())
-                        {
-                            BusinessLogic.CreateAdjustment(a);
-                            tx.Complete();
-                            Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
-                            BusinessLogic.sendMail("e0283990@u.nus.edu", "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
-                        }
-                        Response.Redirect("ClerkInventory.aspx");
-                        //Response.Write("<script language='javascript'> { window.close();}</script>");
+                        LabelError.Text = "Entered quantity is > current quantity";
                     }
-                    catch (System.Transactions.TransactionException ex)
+                    else
                     {
-                        Response.Write(BusinessLogic.MsgBox(ex.Message));
-                    }
-                    catch (Exception ex)
-                    {
-                        Response.Write(BusinessLogic.MsgBox(ex.Message));
+                        CreateAdjustment();
                     }
                 }
-
-                catch (Exception ex)
+                else
                 {
-                    Response.Write(BusinessLogic.MsgBox(ex.Message));
+                    CreateAdjustment();
                 }
             }
         }
@@ -186,7 +162,53 @@ namespace Team3ADProject.Protected
             else
             {
                 //return BusinessLogic.RetrieveEmailByEmployeeID(supid);
-                return "e0283390@u.nus.edu"; 
+                return "e0283390@u.nus.edu";
+            }
+        }
+
+        protected void CreateAdjustment()
+        {
+            string email = RetrieveEmail(TotalPrice());
+            String today = DateTime.Now.ToString("yyyy-MM-dd");
+            try
+            {
+                adjustment a = new adjustment()
+                {
+                    adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
+                    employee_id = user.employee_id,
+                    item_number = item.item_number,
+                    adjustment_quantity = ReturnQuantity(),
+                    adjustment_price = TotalPrice(),
+                    adjustment_status = "Pending",
+                    employee_remark = TextBoxRemarks.Text,
+                    manager_remark = null,
+                };
+
+                try
+                {
+                    using (TransactionScope tx = new TransactionScope())
+                    {
+                        BusinessLogic.CreateAdjustment(a);
+                        tx.Complete();
+                        Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
+                        BusinessLogic.sendMail(email, "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
+                    }
+                    Response.Redirect("ClerkInventory.aspx");
+                    //Response.Write("<script language='javascript'> { window.close();}</script>");
+                }
+                catch (System.Transactions.TransactionException ex)
+                {
+                    Response.Write(BusinessLogic.MsgBox(ex.Message));
+                }
+                catch (Exception ex)
+                {
+                    Response.Write(BusinessLogic.MsgBox(ex.Message));
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Response.Write(BusinessLogic.MsgBox(ex.Message));
             }
         }
     }

@@ -19,6 +19,7 @@ namespace Team3ADProject.Protected
         static employee user;
         protected void Page_Load(object sender, EventArgs e)
         {
+            Button3.Enabled = true;
             if (!IsPostBack)
             {
                 if (Session["Employee"] != null)

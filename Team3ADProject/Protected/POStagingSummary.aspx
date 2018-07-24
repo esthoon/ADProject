@@ -29,7 +29,7 @@
         </asp:GridView>
         <br />
         <asp:Button ID="Button4" runat="server" Text="&lt;&lt;Inventory" style="position:relative; float:left; top: 1px; left: 0px;" UseSubmitBehavior="false" OnClick="Button4_Click" CssClass="btn btn-default"/>
-        <asp:Button ID="ButtonPOApproval" runat="server" Text="Submit all for approval" style="position:relative; float:left; top: 1px; left: 0px;" UseSubmitBehavior="false" OnClick="ButtonPOApproval_Click" CssClass="btn btn-primary"/>
+        <asp:Button ID="ButtonPOApproval" runat="server" Text="Submit all for approval" style="position:relative; float:left; top: 1px; left: 0px;" UseSubmitBehavior="false" OnClick="ButtonPOApproval_Click" CssClass="btn btn-primary" OnClientClick="this.disabled=true;"/>
         <asp:Button ID="ButtonClear" runat="server" Text="Remove all" style="position:relative; float:left; top: 1px; left: 0px;" UseSubmitBehavior="false" OnClick="ButtonClear_Click" CssClass="btn btn-danger"/>
     </p>
 </asp:Content>
