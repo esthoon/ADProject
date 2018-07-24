@@ -26,14 +26,14 @@ namespace Team3ADProject
         {
 
             // Tharrani start
-            Session["username"] = "lina"; //System.Web.HttpContext.Current.User.Identity.Name;
-            employee emp = BusinessLogic.GetEmployeeByUserID((string)Session["username"]);
-            Session["Employee"] = emp.employee_id;
-            Session["Department"] = emp.department_id;
-            Session["role"] = "employee";//Roles.GetRolesForUser((string)Session["username"]);
-            department dep = BusinessLogic.GetDepartmenthead((string)Session["Department"]);
-            Session["Head_id"] = dep.head_id;
-            Session["supervisor_id"] = emp.supervisor_id;
+            //Session["username"] = "lina"; //System.Web.HttpContext.Current.User.Identity.Name;
+            //employee emp = BusinessLogic.GetEmployeeByUserID((string)Session["username"]);
+            //Session["Employee"] = emp.employee_id;
+            //Session["Department"] = emp.department_id;
+            //Session["role"] = "employee";//Roles.GetRolesForUser((string)Session["username"]);
+            //department dep = BusinessLogic.GetDepartmenthead((string)Session["Department"]);
+            //Session["Head_id"] = dep.head_id;
+            //Session["supervisor_id"] = emp.supervisor_id;
             // Tharrani end
 
             //alan--start
