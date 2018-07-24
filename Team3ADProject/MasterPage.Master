@@ -95,7 +95,7 @@
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewCollectionInformation")%>">Collection Details</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Disburse Items</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/DisbursementSorting")%>">Disburse Items</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/depheadpending")%>">Pending Requisition Approval</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/depheadviewhistory")%>">View Department Requisition History</a></li>

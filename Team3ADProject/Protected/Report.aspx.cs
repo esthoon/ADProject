@@ -25,7 +25,7 @@ namespace Team3ADProject.Protected
             {
 
                 String today = DateTime.Now.ToString("dd-MM-yyyy");
-                startDate.Value = "01-01-2015";
+                startDate.Value = DateTime.Now.AddMonths(-2).ToString("dd-MM-yyyy");
                 endDate.Value = today;
 
                 startDate.Disabled = false;
