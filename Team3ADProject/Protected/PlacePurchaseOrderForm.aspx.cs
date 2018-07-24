@@ -55,6 +55,7 @@ namespace Team3ADProject.Protected
                 createByWho.Text = user.employee_name;
                 DateTime dateAndTime = DateTime.Now;
                 createOnWhen.Text = dateAndTime.ToString("dd/MM/yyyy");
+                LabelRequiredDate.Text = dateAndTime.AddDays(28).ToString("dd/MM/yyyy");
 
                 //When dropdownlist change, change the unit price and change the total price based on the quantity
                 CalculationForUnitCostAndTotalCost();
@@ -88,37 +89,29 @@ namespace Team3ADProject.Protected
         //esther-adding POitem to cart
         protected void Submit_Click(object sender, EventArgs e)
         {
-            if (Calendar.SelectedDate < DateTime.Now)
+            List<POStaging> alist = new List<POStaging>();
+            if (Session["StagingList"] != null)
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please select a date')", true);
+                alist = (List<POStaging>)Session["StagingList"];
             }
-            else
+            inventory item = BusinessLogic.GetInventory(itemid);
+            string suppliername = DropDownListSupplier.SelectedItem.Text;
+            string supplierid = BusinessLogic.GetSupplierID(suppliername);
+            int orderqty = Int32.Parse(TextBoxOrderQuantity.Text);
+            double unitprice = Double.Parse(unitCost.Text);
+            string requiredDate = DateTime.Now.AddDays(28).ToString("yyyy-MM-dd");
+            try
             {
+                POStaging poItem = new POStaging(item, supplierid, orderqty, unitprice, DateTime.ParseExact(requiredDate, "yyyy-MM-dd", null), user);
+                Session["StagingList"] = BusinessLogic.AddToStaging(alist, poItem);
 
-                List<POStaging> alist = new List<POStaging>();
-                if (Session["StagingList"] != null)
-                {
-                    alist = (List<POStaging>)Session["StagingList"];
-                }
-                inventory item = BusinessLogic.GetInventory(itemid);
-                string suppliername = DropDownListSupplier.SelectedItem.Text;
-                string supplierid = BusinessLogic.GetSupplierID(suppliername);
-                int orderqty = Int32.Parse(TextBoxOrderQuantity.Text);
-                double unitprice = Double.Parse(unitCost.Text);
-                string requiredDate = Calendar.SelectedDate.ToString("yyyy-MM-dd");
-                try
-                {
-                    POStaging poItem = new POStaging(item, supplierid, orderqty, unitprice, DateTime.ParseExact(requiredDate, "yyyy-MM-dd", null), user);
-                    Session["StagingList"] = BusinessLogic.AddToStaging(alist, poItem);
-
-                }
-                catch (Exception ex)
-                {
-                    Label1.Text = ex.Message;
-                }
-                Response.Redirect("POStagingSummary.aspx");
             }
-            
+            catch (Exception ex)
+            {
+                Label1.Text = ex.Message;
+            }
+            Response.Redirect("POStagingSummary.aspx");
+
         }
 
         protected void Cancel_Click(object sender, EventArgs e)

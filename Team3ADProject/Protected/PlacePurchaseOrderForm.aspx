@@ -29,7 +29,8 @@
 	<asp:Label ID="itemDescription" runat="server"></asp:Label>
             <br />
             Required Date :
-	<asp:Calendar ID="Calendar" runat="server" OnDayRender="CalendarSelected" ></asp:Calendar>
+	        <asp:Label ID="LabelRequiredDate" runat="server"></asp:Label>
+            <br />
             <br />
             Stock :
 	<asp:Label ID="itemCurrentStock" runat="server"></asp:Label>
