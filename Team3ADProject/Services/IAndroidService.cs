@@ -66,7 +66,7 @@ namespace Team3ADProject.Services
         public WCF_Employee(int employeeId, string employeeName, string emailId, string userId, string departmentId, int? supervisorId, string token, string role)
         {
             EmployeeId = employeeId;
-            EmployeeName = employeeName.Trim(); ;
+            EmployeeName = employeeName.Trim();
             EmailId = emailId.Trim();
             UserId = userId.Trim();
             DepartmentId = departmentId.Trim();

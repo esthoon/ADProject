@@ -133,7 +133,7 @@ namespace Team3ADProject.Services
                 System.Diagnostics.Debug.WriteLine(context.SaveChanges());
 
                 // Pass the token to the service consumer
-                wcfEmployee = new WCF_Employee(0, null, null, username, null, null, token, null);
+                wcfEmployee = new WCF_Employee(0, "", "", username, "", 0, token, "");
             }
             return wcfEmployee;
         }
