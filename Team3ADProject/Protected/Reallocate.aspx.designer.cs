@@ -10,60 +10,60 @@
 namespace Team3ADProject.Protected {
     
     
-    public partial class DisbursementSorting {
+    public partial class Reallocate {
         
         /// <summary>
-        /// RadioButtonList_Dpt control.
+        /// Label_itemNum control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList_Dpt;
+        protected global::System.Web.UI.WebControls.Label Label_itemNum;
         
         /// <summary>
-        /// btn_SortingSearch control.
+        /// Label_Description control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_SortingSearch;
+        protected global::System.Web.UI.WebControls.Label Label_Description;
         
         /// <summary>
-        /// gridview_DptSort control.
+        /// gridview_Reallocate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridview_DptSort;
+        protected global::System.Web.UI.WebControls.GridView gridview_Reallocate;
         
         /// <summary>
-        /// TextBox_Collect_Date control.
+        /// Label_collectedAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox_Collect_Date;
+        protected global::System.Web.UI.WebControls.Label Label_collectedAmount;
         
         /// <summary>
-        /// Calendar_Collect_Date control.
+        /// Button_Reallocate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Calendar Calendar_Collect_Date;
+        protected global::System.Web.UI.WebControls.Button Button_Reallocate;
         
         /// <summary>
-        /// btn_ReadyForCollection control.
+        /// Label_warning control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_ReadyForCollection;
+        protected global::System.Web.UI.WebControls.Label Label_warning;
     }
 }

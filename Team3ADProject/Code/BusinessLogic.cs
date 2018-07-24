@@ -1049,6 +1049,107 @@ department.department_id.Equals(dept)
 
         //Sruthi - End
 
+        //Joel - start
+
+        //InformDepRep - working
+        public static List<spGetSortingTableByDpt_Result> GetSortingListByDepartment(string dpt_Id)
+        {
+            List<spGetSortingTableByDpt_Result> list = new List<spGetSortingTableByDpt_Result>();
+            return list = context.spGetSortingTableByDpt(dpt_Id).ToList();
+        }
+
+        //InformDepRep - working
+        public static string GetDptIdFromDptName(string dptName)
+        {
+            return context.departments.Where(x => x.department_name == dptName).FirstOrDefault().department_id;
+        }
+
+        //InformDepRep
+        public static void InsertCollectionDetailsRow(int placeId, DateTime collectionDate, string collectionStatus)
+        {
+            context.spInsertCollectionDetail(placeId, collectionDate, collectionStatus);
+
+        }
+
+        //InformDepRep
+        public static int GetLatestCollectionId()
+        {
+            spGetLatestCollectionDetailId_Result latest = new spGetLatestCollectionDetailId_Result();
+            latest = context.spGetLatestCollectionDetailId().FirstOrDefault();
+            return Convert.ToInt32(latest.collection_id);
+        }
+
+        //InformDepRep
+        public static List<string> GetListOfROIDForDisbursement(string dpt_Id)
+        {
+            List<spGetListOfROIDForDisbursement_Result> list = context.spGetListOfROIDForDisbursement(dpt_Id).ToList();
+            List<string> sList = new List<string>();
+            foreach (var v in list)
+            {
+                sList.Add(v.requisition_id);
+            }
+
+            return sList;
+        }
+
+        //InformDepRep
+        public static void InsertDisbursementListROId(string dpt_Id)
+        {
+            int latestCollectionId = GetLatestCollectionId();
+            List<string> roList = GetListOfROIDForDisbursement(dpt_Id);
+
+            foreach (var v in roList)
+            {
+                context.spInsertDisbursementListROId(v, latestCollectionId);
+            }
+        }
+
+        //CollectionList
+        public static int GetAllDptRequiredQtyByItem(string itemNum)
+        {
+            spFindAllDptRequiredQtyByItem_Result demand = new spFindAllDptRequiredQtyByItem_Result();
+            demand = context.spFindAllDptRequiredQtyByItem(itemNum).FirstOrDefault();
+
+            return Convert.ToInt32(demand.total_required_qty);
+        }
+
+        //CollectionList
+        public static List<spFindDptIdAndRequiredQtyByItem_Result> spFindDptIdAndRequiredQtyByItem(string itemNum)
+        {
+            List<spFindDptIdAndRequiredQtyByItem_Result> list = new List<spFindDptIdAndRequiredQtyByItem_Result>();
+            return list = context.spFindDptIdAndRequiredQtyByItem(itemNum).ToList();
+        }
+
+        public static List<spGetRODListForSorting_Result> GetRODListForSorting(string dptId, string itemNum)
+        {
+            List<spGetRODListForSorting_Result> result = new List<spGetRODListForSorting_Result>();
+            return result = context.spGetRODListForSorting(dptId, itemNum).ToList();
+        }
+
+        //CollectionList
+        public static List<spGetFullCollectionROIDList_Result> GetFullCollectionROIDList()
+        {
+            List<spGetFullCollectionROIDList_Result> list = new List<spGetFullCollectionROIDList_Result>();
+            return list = context.spGetFullCollectionROIDList().ToList();
+        }
+
+        //Reallocate
+        public static List<spReallocateQty_Result> GetReallocateList(string itemNum)
+        {
+            List<spReallocateQty_Result> list = new List<spReallocateQty_Result>();
+            return list = context.spReallocateQty(itemNum).ToList();
+        }
+
+        //Reallocate
+        public static void AddtoInventory(CollectionListItem item)
+        {
+            inventory i = context.inventories.Where(x => x.item_number == item.itemNum).FirstOrDefault();
+            i.current_quantity += item.qtyPrepared;
+            context.SaveChanges();
+        }
+
+        //Joel - end
+
 
     }
 }
