@@ -10,7 +10,7 @@ using System.Transactions;
 
 namespace Team3ADProject.Protected
 {
-    public partial class WebForm2 : System.Web.UI.Page
+    public partial class AdjustmentForm1 : System.Web.UI.Page
     {
         static employee user;
         static inventory item;
@@ -120,9 +120,9 @@ namespace Team3ADProject.Protected
 
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
-            ButtonSubmit.Enabled = false;
             int qty = Int32.Parse(TextBoxAdjustment.Text);
             int submitqty = ReturnQuantity();
+            ButtonSubmit.Enabled = false;
             if (qty != 0)
             {
                 if (submitqty < 0)
@@ -193,8 +193,8 @@ namespace Team3ADProject.Protected
                         Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
                         BusinessLogic.sendMail(email, "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
                     }
-                    Response.Redirect("ClerkInventory.aspx");
-                    //Response.Write("<script language='javascript'> { window.close();}</script>");
+                    //Response.Redirect("ClerkInventory.aspx");
+                    Response.Write("<script language='javascript'> { window.close();}</script>");
                 }
                 catch (System.Transactions.TransactionException ex)
                 {

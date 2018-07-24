@@ -390,11 +390,15 @@ department.department_id.Equals(dept)
 
 
         //update upon approval adjustment form
-        public static void Updateadj(int id, string comment)
+        public static void Updateadj(int id, string comment, string itemno, int qty)
         {
             adjustment adj = context.adjustments.Where(x => x.adjustment_id == id).FirstOrDefault<adjustment>();
             adj.adjustment_status = "Approved";
             adj.manager_remark = comment;
+            //to update current qty in inventory
+            inventory item = context.inventories.Where(x => x.item_number == itemno).FirstOrDefault<inventory>();
+            item.current_quantity = item.current_quantity + qty;
+
             context.SaveChanges();
 
         }
@@ -410,11 +414,23 @@ department.department_id.Equals(dept)
         }
 
 
-        //To search adjustment form base on date search
-        public static List<adjustment> SearchAdj(DateTime date)
+        //searchdateforstoremanager
+        public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
-            return context.adjustments.Where(x => x.adjustment_date == date).ToList<adjustment>();
+
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+
+
         }
+        //searchdateforstoresup
+        public static List<adjustment> StoreSupSearchAdj(DateTime date)
+        {
+
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+
+
+        }
+
 
 
         //To list pending purchase orders 
@@ -441,8 +457,9 @@ department.department_id.Equals(dept)
             purchase_order po = context.purchase_order.Where(x => x.purchase_order_number == id).FirstOrDefault<purchase_order>();
             po.purchase_order_status = "Pending";
             po.manager_remark = mremark;
+            int pono = po.purchase_order_number;
             //needs to be modfied
-            sendMail(email, "test", "testing");
+            sendMail(email, "Email for Purchase Order "+pono, "Dear Supplier,/n This is an email to notified you on the purchase order "+pono+".");
 
             context.SaveChanges();
         }
@@ -949,7 +966,7 @@ department.department_id.Equals(dept)
         }
         //Esther end
 
-            //Rohit - start
+        //Rohit - start
         public static List<spAcknowledgeDistributionList_Result> ViewAcknowledgementList(int collection_id)
         {
             List<spAcknowledgeDistributionList_Result> list = new List<spAcknowledgeDistributionList_Result>();
@@ -1147,6 +1164,12 @@ department.department_id.Equals(dept)
             i.current_quantity += item.qtyPrepared;
             context.SaveChanges();
         }
+
+        //Refactored
+
+
+        //Refactored
+
 
         //Joel - end
 

@@ -42,6 +42,6 @@
         </asp:GridView>
         <asp:Label ID="Label3" runat="server"></asp:Label>
         <asp:Button ID="Button4" runat="server" Text="&lt;&lt;Staging Summary" style="position:relative; float:left; top: 0px; left: 0px;  margin-right:0x;" UseSubmitBehavior="false" OnClick="Button4_Click" CssClass="btn btn-default"/>
-        <asp:Button ID="Button3" runat="server" Text="Submit for approval" CausesValidation="true" UseSubmitBehavior="false" OnClick="Button3_Click" style="position:relative; float:left; top: 0px; left: 0px;" CssClass="btn btn-primary"/>
+        <asp:Button ID="Button3" runat="server" Text="Submit for approval" CausesValidation="true" UseSubmitBehavior="false" OnClick="Button3_Click" style="position:relative; float:left; top: 0px; left: 0px;" CssClass="btn btn-primary" OnClientClick="this.disabled=true;"/>
         <br />    
 </asp:Content>

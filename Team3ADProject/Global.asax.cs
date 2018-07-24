@@ -25,6 +25,7 @@ namespace Team3ADProject
         void Session_Start(object sender, EventArgs e)
         {
 
+
             // Tharrani start
             Session["username"] = "beesarecool"; //System.Web.HttpContext.Current.User.Identity.Name;
             employee emp = BusinessLogic.GetEmployeeByUserID((string)Session["username"]);
@@ -37,7 +38,7 @@ namespace Team3ADProject
             // Tharrani end
 
             //alan--start
-            Session["role"] = "11";
+            Session["role"] = "12";
 
 
             //alan-> need to code this using in User is in role after IIS setup

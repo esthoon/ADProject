@@ -1,19 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdjustmentForm.aspx.cs" Inherits="Team3ADProject.Protected.WebForm2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdjustmentForm1.aspx.cs" Inherits="Team3ADProject.Protected.AdjustmentForm1" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <script src="jquery-3.3.1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="<%=ResolveUrl("~/Content/bootstrap.css")%>" />
-    <link rel="stylesheet" href="<%=ResolveUrl("~/Content/bootstrap-theme.css")%>" />
-    <title>Adjustment Form</title>
-    <style type="text/css">
-        .auto-style1 {
-            height: 42px;
-        }
-    </style>
+    <title></title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -23,6 +14,8 @@
             </div>
             <div>
                 <table>
+                    <tr></tr>
+                    <tr></tr>
                     <tr>
                         <td>
                             <asp:Label ID="Label4" runat="server" Text="Created on: "></asp:Label>
@@ -110,7 +103,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" Style="position: relative; float: right; top: 0px; margin-left: 0.5vw;" CssClass="btn btn-warning" CausesValidation="false" OnClick="ButtonCancel_Click" />
+                            <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" Style="position: relative; float: right; top: 0px; margin-left: 0.5vw;" CssClass="btn btn-warning" CausesValidation="false" OnClientClick="javaScript:window.close(); return false;" />
                             <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" Style="position: relative; float: right; top: 0px;" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" OnClientClick="this.disabled=true;" UseSubmitBehavior="false"/>
                         </td>
                     </tr>

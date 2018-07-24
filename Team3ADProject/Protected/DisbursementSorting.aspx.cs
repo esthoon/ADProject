@@ -44,12 +44,12 @@ namespace Team3ADProject.Protected
 
         protected void btn_ReadyForCollection_Click(object sender, EventArgs e)
         {
-            //recommended distribution qty must be smaller than required qty or collected qty available(from session), whichever is smaller (validator - front end)
+            //(1) recommended distribution qty must be smaller than required qty or collected qty available(from session), whichever is smaller (validator - front end)
 
             string dpt_Id = GetDepartmentId();
 
 
-            //(3) create new collection_detail table row. 
+            //(2) create new collection_detail table row. 
             int placeId = BusinessLogic.GetPlaceIdFromDptId(dpt_Id);
             DateTime collectionDate = DateTime.Parse(TextBox_Collect_Date.Text);
             string collectionStatus = "Pending";
@@ -57,18 +57,13 @@ namespace Team3ADProject.Protected
             BusinessLogic.InsertCollectionDetailsRow(placeId, collectionDate, collectionStatus);
 
 
-            //(4) add RO IDs to requisition_disbursement_detail table w/ newest collection list id
+            //(3) add RO IDs to requisition_disbursement_detail table w/ newest collection list id
             BusinessLogic.InsertDisbursementListROId(dpt_Id);
 
 
-            //(5) send email to dpt rep
+            //(4) send email to dpt rep
 
-            ////if department count = 1, leftover items give back to inventory
-            //List<spGetUndisbursedROList_Result> roCount = BusinessLogic.GetUndisbursedROList();
-            //if (roCount.Count == 1)
-            //{
-            //    BusinessLogic.DeductFromInventory(allDptCollectionList);
-            //}
+            
 
 
             Response.Redirect(Request.RawUrl);

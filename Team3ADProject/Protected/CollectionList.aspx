@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="CollectionList.aspx.cs" Inherits="Team3ADProject.Protected.CollectionList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-	<h1>Collection List</h1>
+    <h1>Collection List</h1>
 
     <asp:GridView ID="gv_CollectionList" runat="server" AutoGenerateColumns="False" AllowPaging="true" PageSize="10" OnPageIndexChanging="gv_CollectionList_PageIndexChanging" CssClass="table table-hover align-center" EmptyDataText="There are no new items to collect">
         <Columns>
@@ -14,17 +14,16 @@
             <asp:TemplateField HeaderText="Qty Prepared">
                 <ItemTemplate>
                     <asp:TextBox ID="txt_QtyPrepared" runat="server" Text='<%# (Convert.ToInt32(Eval("quantity_ordered")) <= Convert.ToInt32(Eval("current_quantity")) ? Eval("quantity_ordered") : Eval("current_quantity")) %>'></asp:TextBox>
-                    <%--CssClass='<%# Container.DataItemIndex %>' OnTextChanged="txt_QtyPrepared_TextChanged" AutoPostBack="true"--%>
 
 
                     <asp:CompareValidator ID="CompareValidator_txt_QtyPrepared" runat="server"
                         ControlToValidate="txt_QtyPrepared" ErrorMessage="Must be &gt; 0"
-                        Operator="GreaterThan" Type="Integer" ForeColor="Red"
+                        Operator="GreaterThanEqual" Type="Integer" ForeColor="Red"
                         ValueToCompare="0" />
 
-                    <%--                    <asp:Label ID="Label1" runat="server" Visible="false"></asp:Label>
 
-                    <asp:CustomValidator ID="CustomValidator_txt_QtyPrepared" runat="server" ErrorMessage="Enter a smaller qty" ForeColor="Red" OnServerValidate="CustomValidator_txt_QtyPrepared_ServerValidate"></asp:CustomValidator>--%>
+
+					<%--<asp:CustomValidator ID="CustomValidator_txt_QtyPrepared" runat="server" ErrorMessage="Enter a smaller qty" ForeColor="Red" OnServerValidate="CustomValidator_txt_QtyPrepared_ServerValidate"></asp:CustomValidator>--%>
 
                     <asp:RequiredFieldValidator runat="server" ControlToValidate="txt_QtyPrepared" ID="RequiredValidator_txt_QtyPrepared" ErrorMessage="Enter a number" ForeColor="Red" />
 
@@ -35,7 +34,8 @@
 
             <asp:TemplateField HeaderText="Adjustment">
                 <ItemTemplate>
-                    <input type="button" name="btn_Adjustment" value="Adjust" class="btn btn-primary" runat="server" onclick="btn_Adjustment_Click">
+                    <asp:Button ID="btn_Adjustment" runat="server" Text="ADJ" UseSubmitBehavior="false" OnClick="btn_Adjustment_Click" />
+                    <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("item_number") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
