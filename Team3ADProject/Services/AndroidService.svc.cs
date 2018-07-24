@@ -57,19 +57,10 @@ namespace Team3ADProject.Services
         // To get the time created of the token, use the GetTokenCreation time method.
         protected string GenerateToken()
         {
-            byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            byte[] key = Guid.NewGuid().ToByteArray();
-            string token = Convert.ToBase64String(time.Concat(key).ToArray());
+            string key = Guid.NewGuid().ToString();
+            string token = key;
 
             return token;
-        }
-
-        // Fetches the generated time of the token
-        protected DateTime GetTokenCreationTime(String token)
-        {
-            byte[] data = Convert.FromBase64String(token);
-            DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
-            return when;
         }
 
 
