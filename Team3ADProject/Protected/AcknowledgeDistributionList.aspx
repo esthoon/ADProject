@@ -50,7 +50,7 @@
     <asp:Button ID="VerifyPasswordButton" runat="server" Text="Verify Pin" OnClick="VerifyPasswordButtonClick" CssClass="btn btn-default"/>
     <br /><br /><br />
         
-        <asp:GridView ID="gridview1" runat="server"  AutoGenerateColumns="false"  >
+        <asp:GridView ID="gridview1" runat="server"  AutoGenerateColumns="false" CssClass="table table-hover" >
                 <Columns>
                     <asp:BoundField DataField="item_number" ReadOnly="true" HeaderText="Item Number" SortExpression="item_number"/>
                     <asp:BoundField DataField="description" ReadOnly="true" HeaderText="Description" SortExpression="description"/>

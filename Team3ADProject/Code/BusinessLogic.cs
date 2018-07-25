@@ -375,7 +375,7 @@ department.department_id.Equals(dept)
 
 
 
-            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price <= 250 ).ToList();
 
 
         }
@@ -383,7 +383,7 @@ department.department_id.Equals(dept)
         {
 
 
-            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250 ).ToList();
 
         }
 
@@ -412,12 +412,14 @@ department.department_id.Equals(dept)
 
         }
 
+      
+
 
         //searchdateforstoremanager
         public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
 
 
         }
@@ -425,7 +427,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreSupSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price < 250).ToList<adjustment>();
 
 
         }
@@ -838,13 +840,26 @@ department.department_id.Equals(dept)
         }
 
         //return pendingadjqty for cInventory
-        public static int ReturnPendingAdjustmentQty(inventory item)
+        public static int ReturnPendingMinusAdjustmentQty(string item)
         {
-            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending");
+            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending" && x.adjustment_quantity<0);
             int qty = 0;
             foreach (var a in q)
             {
-                if (a.item_number.ToLower().Trim().Equals(item.item_number.ToLower().Trim()))
+                if (a.item_number.ToLower().Trim().Equals(item.ToLower().Trim())&&a.adjustment_quantity<0)
+                {
+                    qty += a.adjustment_quantity;
+                }
+            }
+            return qty;
+        }
+        public static int ReturnPendingPlusAdjustmentQty(string item)
+        {
+            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending" && x.adjustment_quantity>0);
+            int qty = 0;
+            foreach (var a in q)
+            {
+                if (a.item_number.ToLower().Trim().Equals(item.ToLower().Trim()))
                 {
                     qty += a.adjustment_quantity;
                 }
@@ -962,6 +977,11 @@ department.department_id.Equals(dept)
         public static string RetrieveEmailByEmployeeID(int id)
         {
             return context.employees.Where(x => x.employee_id == id).Select(x => x.email_id).FirstOrDefault();
+        }
+
+        public static List<adjustment> GetPendingAdjustmentsByItemCode(string itemcode)
+        {
+            return context.adjustments.Where(x => x.item_number.Trim().ToLower() == itemcode.Trim().ToLower() && x.adjustment_status.ToLower().Trim() == "pending").ToList();
         }
         //Esther end
 

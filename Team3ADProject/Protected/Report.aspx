@@ -16,21 +16,24 @@
             </asp:DropDownList>
         </div>
         <div>Start Date</div>
-        <input type="text" id="startDate" runat="server" ClientIDMode="static" class="datePicker" disabled value="-"/>
-
-        <div>End Date</div>
+        <input type="text" id="startDate" runat="server" ClientIDMode="static" class="datePicker" disabled value="-"/><asp:RequiredFieldValidator ID="StartDateRequiredValidator" runat="server" ControlToValidate="startDate" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="startDate" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="false"></asp:RegularExpressionValidator>
+&nbsp;<div>End Date</div>
         <input type="text" id="endDate" runat="server" ClientIDMode="static" class="datePicker" disabled value="-"/>
 
         <script>
             $(document).ready(function () {
                 $(".datePicker").datepicker({
-                    dateFormat: 'dd-mm-yy'
+                    dateFormat: 'dd-mm-yy',
+                    maxDate: new Date
                 });
                 
                 var chartStartDate = $("#startDate").val();
                 var chartEndDate = $("#endDate").val();
             });
         </script>
+        <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="endDate" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="EndDateValidator" runat="server" ControlToValidate="endDate" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="false"></asp:RegularExpressionValidator>
         <br />
         <asp:Button ID="submitButton" runat="server" Text="Submit" CssClass="btn btn-primary" />
 

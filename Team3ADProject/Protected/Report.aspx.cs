@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Team3ADProject.Model;
 using Team3ADProject.Code;
+using System.Globalization;
 
 namespace Team3ADProject.Protected
 {
@@ -13,6 +14,7 @@ namespace Team3ADProject.Protected
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+        
         }
 
         protected void ChartList_SelectedIndexChanged(object sender, EventArgs e)
@@ -30,6 +32,9 @@ namespace Team3ADProject.Protected
 
                 startDate.Disabled = false;
                 endDate.Disabled = false;
+
+                StartDateValidator.Enabled = true;
+                EndDateValidator.Enabled = true;
             }
 
             else
@@ -39,6 +44,9 @@ namespace Team3ADProject.Protected
 
                 startDate.Disabled = true;
                 endDate.Disabled = true;
+
+                StartDateValidator.Enabled = false;
+                EndDateValidator.Enabled = false;
             }
         }
     }

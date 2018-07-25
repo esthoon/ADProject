@@ -54,14 +54,8 @@
 
 
         <%-- Custom Javascript here --%>
-
-
-        <script src="<%=ResolveUrl("~/Scripts/canvasjs.min.js")%>"></script>
+        <script src="<%=ResolveUrl("~/Scripts/jquery.canvasjs.min.js")%>"></script>
         <script src="<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>"></script>
-
-        <%-- Alan need this for select all checkbox jquery for adjustmentapproval --%>
-        <%-- <script type="text/javascript" src="<%=ResolveUrl("~/Scripts/jquery-1.12.1.js")%>"></script> --%>
-
 
 
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -80,7 +74,6 @@
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>">Purchase Order List</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/CollectionList")%>">Weekly Collection List</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewCollection")%>">Distribution List</a></li>
-                                <li><a href="#">Delivery Schedule</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/PurchaseOrderApproval")%>">Purchase Order Approval</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/AdjustmentApproval")%>">Adjustment Approval</a></li>
@@ -97,8 +90,9 @@
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/DisbursementSorting")%>">Disburse Items</a></li>
                                 <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/DepartmentPinChange")%>">Department PIN Change</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/depheadpending")%>">Pending Requisition Approval</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/budget")%>">Edit budget</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/budget")%>">Edit Budget</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/depheadviewhistory")%>">View Department Requisition History</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/DelegateRole")%>">Delegate Role</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ChangeRep")%>">Assign Representative</a></li>

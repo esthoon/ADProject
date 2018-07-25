@@ -176,7 +176,7 @@ namespace Team3ADProject.Protected
 
             if (PinCorrect())
             {
-                Response.Write("\nPin entered is correct");
+                // Response.Write("\nPin entered is correct");
             }
             else
             {
