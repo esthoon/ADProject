@@ -984,6 +984,16 @@ department.department_id.Equals(dept)
         {
             return context.adjustments.Where(x => x.item_number.Trim().ToLower() == itemcode.Trim().ToLower() && x.adjustment_status.ToLower().Trim() == "pending").ToList();
         }
+
+        public static int? GetSupervisorID(int employeeid)
+        {
+            return context.employees.Where(x => x.employee_id == employeeid).Select(x => x.supervisor_id).First();
+        }
+
+        public static int DepartmentHeadID(employee employee)
+        {
+            return context.departments.Where(x => x.department_id.Trim().ToLower() == employee.department_id.Trim().ToLower()).Select(x => x.head_id).First();
+        }
         //Esther end
 
         //Rohit - start
