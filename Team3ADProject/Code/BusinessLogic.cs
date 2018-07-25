@@ -780,7 +780,7 @@ department.department_id.Equals(dept)
         //return employee based on userid
         public static employee GetEmployeeByUserID(string userid)
         {
-            return context.employees.Where(x => x.user_id.Trim() == userid.Trim()).FirstOrDefault();
+            return context.employees.Where(x =>x.user_id.Trim()==userid.Trim()).FirstOrDefault();
         }
 
         public static department GetDepartmenthead(string dept)
