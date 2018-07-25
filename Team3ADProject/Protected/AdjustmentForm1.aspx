@@ -14,8 +14,6 @@
             </div>
             <div>
                 <table>
-                    <tr></tr>
-                    <tr></tr>
                     <tr>
                         <td>
                             <asp:Label ID="Label4" runat="server" Text="Created on: "></asp:Label>

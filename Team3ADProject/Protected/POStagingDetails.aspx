@@ -13,7 +13,7 @@
         <asp:GridView ID="GridViewPODetails" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPODetails_DataBound" CssClass="table table-hover">
             <Columns>
                 <asp:BoundField HeaderText="Index" />
-                <asp:BoundField DataField="DateRequired" HeaderText="Date Required" DataFormatString="{0:yyyy/MM/dd}" />
+                <asp:BoundField DataField="DateRequired" HeaderText="Date Required" DataFormatString="{0:dd-MM-yyyy}" />
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item" />
                 <asp:BoundField DataField="Inventory.item_number" HeaderText="Item Code" />
                 <asp:BoundField DataField="UnitPrice" HeaderText="Unit Price" DataFormatString="{0:c2}" />

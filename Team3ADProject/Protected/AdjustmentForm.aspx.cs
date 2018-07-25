@@ -52,7 +52,7 @@ namespace Team3ADProject.Protected
                 {
                     supid = 13;
                 }
-                LabelDate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
+                LabelDate.Text = DateTime.Now.ToString("dd-MM-yyyy");
                 LabelName.Text = user.employee_name;
                 UpdatePage();
             }

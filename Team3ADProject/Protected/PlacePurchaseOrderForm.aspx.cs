@@ -54,8 +54,8 @@ namespace Team3ADProject.Protected
                 //Getting the user from the session and the current time to be posted on the webpage 
                 createByWho.Text = user.employee_name;
                 DateTime dateAndTime = DateTime.Now;
-                createOnWhen.Text = dateAndTime.ToString("dd/MM/yyyy");
-                LabelRequiredDate.Text = dateAndTime.AddDays(28).ToString("dd/MM/yyyy");
+                createOnWhen.Text = dateAndTime.ToString("dd-MM-yyyy");
+                LabelRequiredDate.Text = dateAndTime.AddDays(28).ToString("dd-MM-yyyy");
 
                 //When dropdownlist change, change the unit price and change the total price based on the quantity
                 CalculationForUnitCostAndTotalCost();
