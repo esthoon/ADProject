@@ -22,7 +22,7 @@
     <script src="<%=ResolveUrl("~/Scripts/jquery-1.12.1.js")%>"></script>
     <script src="<%=ResolveUrl("~/Scripts/jquery-ui-1.12.1.js")%>"></script>
 
-
+    <%@ Import Namespace="Team3ADProject.Code" %>
 
 
 </head>
@@ -66,40 +66,104 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="<%=ResolveUrl("~/Protected/Dashboard")%>">Dashboard</a></li>
+
+
+                        <%-- View Dropdown
+                            Supervisor doesnt need to view anything, they only approve.
+                        --%>
+                        <% if (!Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
+                            {%>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">View<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">View <span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK))
+                                    {
+                                %>
                                 <li><a href="<%=ResolveUrl("~/Protected/ClerkInventory")%>">Inventory List</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/POStagingSummary")%>">Purchase Order Staging</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>">Purchase Order List</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/CollectionList")%>">Weekly Collection List</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/ViewCollection")%>">Distribution List</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/PurchaseOrderApproval")%>">Purchase Order Approval</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/AdjustmentApproval")%>">Adjustment Approval</a></li>
-                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/CollectionList")%>">Warehouse Collection List</a></li>
+                                <%-- %><li><a href="<%=ResolveUrl("~/Protected/ViewCollection")%>">Distribution List</a></li> --%>
+                                <li><a href="<%=ResolveUrl("~/Protected/ViewCollectionInformation")%>">Collecion Point Disbursement</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/DisbursementSorting")%>">Item Sorting</a></li>
+                                <%}%>
+
+
+                                <%else if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER))
+                                    {
+                                %>
                                 <li><a href="<%=ResolveUrl("~/Protected/Report")%>">View Reports</a></li>
-                                <li class="divider"></li>
+                                <%}%>
+
+                                <%else if (Roles.IsUserInRole(Constants.ROLES_EMPLOYEE))
+                                    {
+                                %>
+                                <li><a href="<%=ResolveUrl("~/Protected/NewRequest")%>">New Requisition Order</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/EmployeeViewPending")%>">Edit Requisition Order</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/EmployeeViewHistory")%>">View Requisition History</a></li>
+                                <%}%>
+
+
+                                <%else if (Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_REPRESENTATIVE))
+                                    {
+                                %>
                                 <li><a href="<%=ResolveUrl("~/Protected/NewRequest")%>">New Requisition Order</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/EmployeeViewPending")%>">Edit Requisition Order</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/EmployeeViewHistory")%>">View Requisition History</a></li>
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/Change Collection Point")%>">Change Collection Location</a></li>
-                                <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/ViewCollectionInformation")%>">Collection Details</a></li>
-                                <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/DisbursementSorting")%>">Disburse Items</a></li>
-                                <li class="divider"></li>
+                                <%}%>
+
+
+                                <%else if (Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD))
+                                    {
+                                %>
                                 <li><a href="<%=ResolveUrl("~/Protected/DepartmentPinChange")%>">Department PIN Change</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/depheadpending")%>">Pending Requisition Approval</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/budget")%>">Edit Budget</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/depheadviewhistory")%>">View Department Requisition History</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/DelegateRole")%>">Delegate Role</a></li>
+                                <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ChangeRep")%>">Assign Representative</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">Reports</a></li>
-
+                                <li><a href="<%=ResolveUrl("~/Protected/DelegateRole")%>">Delegate Role</a></li>
+                                <li class="divider"></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/Report")%>">View Reports</a></li>
+                                <%}%>
                             </ul>
                         </li>
+                        <%} %>
+
+                        <%-- Approve dropdown --%>
+                        <% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR) || Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD))
+                            {%>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Approve <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+
+                                <%if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER))
+                                    {
+                                %>
+                                <li><a href="<%=ResolveUrl("~/Protected/AdjustmentApproval")%>">Adjustment Forms</a></li>
+                                <%}%>
+
+
+                                <%else if (Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
+                                    {
+                                %>
+                                <li><a href="<%=ResolveUrl("~/Protected/PurchaseOrderApproval")%>">Purchase Orders</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/AdjustmentApproval")%>">Adjustment Forms</a></li>
+                                <%}%>
+
+
+                                <%else if (Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD))
+                                    {
+                                %>
+                                <li><a href="<%=ResolveUrl("~/Protected/depheadpending")%>">Requisition Orders</a></li>
+                                <%}%>
+                            </ul>
+                        </li>
+                        <%} %>
+
+
                         <li><a href="<%=ResolveUrl("~/Services/service.svc")%>">Services</a></li>
                     </ul>
 
@@ -119,6 +183,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">

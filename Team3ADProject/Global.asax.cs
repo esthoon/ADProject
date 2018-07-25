@@ -18,7 +18,7 @@ namespace Team3ADProject
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Application["RequestID"] = 247;
+            // Application["RequestID"] = 247;
         }
 
 
