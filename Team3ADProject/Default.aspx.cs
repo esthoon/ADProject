@@ -16,7 +16,7 @@ namespace Team3ADProject
 
         protected void Login1_LoggedIn(object sender, EventArgs e)
         {
-            // Setup the session varaibles
+            // Setup the session variables
 
 
             // Redirect users to their dashboard

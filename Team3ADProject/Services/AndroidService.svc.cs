@@ -80,15 +80,7 @@ namespace Team3ADProject.Services
                     var first = query.First();
                     String role = null;
 
-                    if (System.Web.Security.Roles.Enabled)
-                    {
-                        role = Roles.GetRolesForUser(first.user_id).FirstOrDefault();
-                    }
-
-                    else
-                    {
-                        role = Constants.ROLES_STORE_CLERK;
-                    }
+                    role = Roles.GetRolesForUser(first.user_id).FirstOrDefault();
 
                     return new WCF_Employee(first.employee_id, first.employee_name, first.email_id, first.user_id, first.department_id, first.supervisor_id, first.token, role);
                 }
@@ -103,29 +95,34 @@ namespace Team3ADProject.Services
 
         // Takes username and password in
         // Returns a token if there is one for the user, null if there is none.
-        // TODO: Add username and password verification, the service only fetches a token for now
         public WCF_Employee Login(string username, string password)
         {
             WCF_Employee wcfEmployee = null;
 
             // If login succeeds, fetch the token, otherwise, return null
-            // TODO: Validate username and password
-            var context = new LogicUniversityEntities();
-            var query = from x in context.employees where x.user_id == username select x;
-            var result = query.ToList();
-
-            if (query.Any())
+            // Validate username and password
+            if (Membership.ValidateUser(username, password))
             {
-                // Generate a token for the resulting employee.
-                String token = GenerateToken();
+                // Fetch or generate token
+                var context = new LogicUniversityEntities();
+                var query = from x in context.employees where x.user_id == username select x;
+                var result = query.ToList();
 
-                // Store token in database
-                result.First().token = token;
-                System.Diagnostics.Debug.WriteLine(context.SaveChanges());
+                if (query.Any())
+                {
+                    // Generate a token for the resulting employee.
+                    String token = GenerateToken();
 
-                // Pass the token to the service consumer
-                wcfEmployee = new WCF_Employee(0, "", "", username, "", 0, token, "");
+                    // Store token in database
+                    result.First().token = token;
+                    System.Diagnostics.Debug.WriteLine(context.SaveChanges());
+
+                    // Pass the token to the service consumer
+                    wcfEmployee = new WCF_Employee(0, "", "", username, "", 0, token, "");
+                }
             }
+
+            // Return the token to user
             return wcfEmployee;
         }
 
@@ -141,19 +138,6 @@ namespace Team3ADProject.Services
             context.SaveChanges();
 
             return "done";
-        }
-
-        public List<WCF_Requisition_Order> GetAllRequisitionByEmployee(string id)
-        {
-            int employeeId = Int32.Parse(id.Trim());
-            List<requisition_order> list = BusinessLogic.GetAllRequisitionByEmployee(employeeId);
-            List<WCF_Requisition_Order> returnlist = new List<WCF_Requisition_Order>();
-            foreach(requisition_order a in list)
-            {
-                returnlist.Add(new WCF_Requisition_Order(a.requisition_id, a.employee_id, a.requisition_status, a.requisition_date, a.head_comment));
-            }
-
-            return returnlist;
         }
     }
 }
