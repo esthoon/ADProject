@@ -31,6 +31,24 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.HtmlControls.HtmlInputText startDate;
         
         /// <summary>
+        /// StartDateRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator StartDateRequiredValidator;
+        
+        /// <summary>
+        /// StartDateValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator StartDateValidator;
+        
+        /// <summary>
         /// endDate control.
         /// </summary>
         /// <remarks>
@@ -38,6 +56,24 @@ namespace Team3ADProject.Protected {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText endDate;
+        
+        /// <summary>
+        /// EndDateRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator EndDateRequiredValidator;
+        
+        /// <summary>
+        /// EndDateValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator EndDateValidator;
         
         /// <summary>
         /// submitButton control.
