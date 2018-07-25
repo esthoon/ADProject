@@ -326,16 +326,15 @@ department.department_id.Equals(dept)
         }
 
         public static System.Collections.IEnumerable GetSupplier(string id)
-        //     public static List<(string supplier_name, double unit_price)> GetSupplier(string id)
         {
             var nestedQuery = from s in context.suppliers
                               from sid in s.supplier_itemdetail
                               from i in context.inventories
                               where (sid.item_number == id && i.item_number == id)
                               orderby (sid.priority)
-                              select new { s.supplier_name, sid.unit_price, i.description };
+                              select new { s.supplier_name, sid.unit_price, s.supplier_id };
             return nestedQuery.ToList();
-            //return context.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
+            
         }
         // Returns a suggested reorder quantity when give an item code
         // Returns zero if there are no purchase order in the past.
@@ -1174,6 +1173,12 @@ department.department_id.Equals(dept)
 
 
         //Joel - end
+
+        public static double getUnitPrice(string supplier_id, string item_number)
+        {
+            var query = context.supplier_itemdetail.Where(x => x.supplier_id == supplier_id && x.item_number == item_number).FirstOrDefault();
+            return query.unit_price;
+        }
 
 
     }

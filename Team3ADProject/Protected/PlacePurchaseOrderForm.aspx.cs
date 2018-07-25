@@ -38,14 +38,13 @@ namespace Team3ADProject.Protected
             {
                 
                 //Binding the supplier to a dropdownlist to the item selected
-                DropDownListSupplier.DataSource = Code.BusinessLogic.GetSupplier(itemid);
+                DropDownListSupplier.DataSource = BusinessLogic.GetSupplier(itemid);
                 DropDownListSupplier.DataTextField = "supplier_name";
-                DropDownListSupplier.DataValueField = "unit_price";
+                DropDownListSupplier.DataValueField = "supplier_id";
                 DropDownListSupplier.DataBind();
-                unitCost.Text = DropDownListSupplier.SelectedItem.Value.ToString();
-
+                
                 //Getting an object of the item selected and passed it to the web
-                inventory itemSelected = Code.BusinessLogic.GetInventory(itemid);
+                inventory itemSelected = BusinessLogic.GetInventory(itemid);
                 itemNumber.Text = itemSelected.item_number;
                 itemDescription.Text = itemSelected.description;
                 itemCurrentStock.Text = itemSelected.current_quantity.ToString();
@@ -71,7 +70,7 @@ namespace Team3ADProject.Protected
 
         public void CalculationForUnitCostAndTotalCost()
         {
-            unitCost.Text = DropDownListSupplier.SelectedItem.Value.ToString();
+            unitCost.Text = BusinessLogic.getUnitPrice(DropDownListSupplier.SelectedValue,itemid).ToString();
             totalCost.Text = (Convert.ToDouble(TextBoxOrderQuantity.Text) * Convert.ToDouble(unitCost.Text)).ToString("C");
         }
 
