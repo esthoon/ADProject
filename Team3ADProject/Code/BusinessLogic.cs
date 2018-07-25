@@ -265,22 +265,6 @@ department.department_id.Equals(dept)
 
         }
 
-        public static List<spGetCollectionList_Result> GetCollectionList()
-        {
-            List<spGetCollectionList_Result> list = new List<spGetCollectionList_Result>();
-            return list = context.spGetCollectionList().ToList();
-        }
-
-        public static void DeductFromInventory(List<CollectionListItem> list)
-        {
-            foreach (var item in list)
-            {
-                inventory i = context.inventories.Where(x => x.item_number == item.itemNum).First();
-                i.current_quantity -= item.qtyPrepared;
-                context.SaveChanges();
-            }
-        }
-
         public static List<spGetUndisbursedROList_Result> GetUndisbursedROList()
         {
             List<spGetUndisbursedROList_Result> list = new List<spGetUndisbursedROList_Result>();
@@ -355,18 +339,7 @@ department.department_id.Equals(dept)
             return 0;
         }
 
-        //ViewRO
-        public static int GetPlaceIdFromDptId(string dptId)
-        {
-            spGetPlaceIdFromDptId_Result result = context.spGetPlaceIdFromDptId(dptId).FirstOrDefault();
-            return (int)result.place_id;
-        }
 
-        //ViewRO
-        public static void SpecialRequestReadyUpdates(int placeId, DateTime collectionDate, string collectionStatus, string ro_id)
-        {
-            context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id);
-        }
 
         //Alan-start
 
@@ -459,7 +432,7 @@ department.department_id.Equals(dept)
             po.manager_remark = mremark;
             int pono = po.purchase_order_number;
             //needs to be modfied
-            sendMail(email, "Email for Purchase Order "+pono, "Dear Supplier,/n This is an email to notified you on the purchase order "+pono+".");
+            sendMail(email, "Email for Purchase Order " + pono, "Dear Supplier,/n This is an email to notified you on the purchase order " + pono + ".");
 
             context.SaveChanges();
         }
@@ -1005,12 +978,12 @@ department.department_id.Equals(dept)
             return list = context.spViewCollectionList().ToList();
         }
 
-   
-    //Rohit -end
+
+        //Rohit -end
 
 
-    //Sruthi - start
-    public static void updatecollectionlocation(string dept, int id)
+        //Sruthi - start
+        public static void updatecollectionlocation(string dept, int id)
         {
             context.updatecollectiondepartment(dept, id);
         }
@@ -1068,59 +1041,13 @@ department.department_id.Equals(dept)
 
         //Sruthi - End
 
-        //Joel - start
+        //JOEL - START
 
-        //InformDepRep - working
-        public static List<spGetSortingTableByDpt_Result> GetSortingListByDepartment(string dpt_Id)
+        //CollectionList - REFACTORED
+        public static List<spGetCollectionList_Result> GetCollectionList()
         {
-            List<spGetSortingTableByDpt_Result> list = new List<spGetSortingTableByDpt_Result>();
-            return list = context.spGetSortingTableByDpt(dpt_Id).ToList();
-        }
-
-        //InformDepRep - working
-        public static string GetDptIdFromDptName(string dptName)
-        {
-            return context.departments.Where(x => x.department_name == dptName).FirstOrDefault().department_id;
-        }
-
-        //InformDepRep
-        public static void InsertCollectionDetailsRow(int placeId, DateTime collectionDate, string collectionStatus)
-        {
-            context.spInsertCollectionDetail(placeId, collectionDate, collectionStatus);
-
-        }
-
-        //InformDepRep
-        public static int GetLatestCollectionId()
-        {
-            spGetLatestCollectionDetailId_Result latest = new spGetLatestCollectionDetailId_Result();
-            latest = context.spGetLatestCollectionDetailId().FirstOrDefault();
-            return Convert.ToInt32(latest.collection_id);
-        }
-
-        //InformDepRep
-        public static List<string> GetListOfROIDForDisbursement(string dpt_Id)
-        {
-            List<spGetListOfROIDForDisbursement_Result> list = context.spGetListOfROIDForDisbursement(dpt_Id).ToList();
-            List<string> sList = new List<string>();
-            foreach (var v in list)
-            {
-                sList.Add(v.requisition_id);
-            }
-
-            return sList;
-        }
-
-        //InformDepRep
-        public static void InsertDisbursementListROId(string dpt_Id)
-        {
-            int latestCollectionId = GetLatestCollectionId();
-            List<string> roList = GetListOfROIDForDisbursement(dpt_Id);
-
-            foreach (var v in roList)
-            {
-                context.spInsertDisbursementListROId(v, latestCollectionId);
-            }
+            List<spGetCollectionList_Result> list = new List<spGetCollectionList_Result>();
+            return list = context.spGetCollectionList().ToList();
         }
 
         //CollectionList
@@ -1139,12 +1066,6 @@ department.department_id.Equals(dept)
             return list = context.spFindDptIdAndRequiredQtyByItem(itemNum).ToList();
         }
 
-        public static List<spGetRODListForSorting_Result> GetRODListForSorting(string dptId, string itemNum)
-        {
-            List<spGetRODListForSorting_Result> result = new List<spGetRODListForSorting_Result>();
-            return result = context.spGetRODListForSorting(dptId, itemNum).ToList();
-        }
-
         //CollectionList
         public static List<spGetFullCollectionROIDList_Result> GetFullCollectionROIDList()
         {
@@ -1152,11 +1073,275 @@ department.department_id.Equals(dept)
             return list = context.spGetFullCollectionROIDList().ToList();
         }
 
+        //CollectionList - REFACTORED
+        public static void SortCollectedGoods(List<CollectionListItem> allDptCollectionList)
+        {
+            List<spGetFullCollectionROIDList_Result> list = BusinessLogic.GetFullCollectionROIDList();
+
+            foreach (var collectedItem in allDptCollectionList)
+            {
+                int store = collectedItem.qtyPrepared;
+                foreach (var roidListItem in list)
+                {
+                    {
+                        if (collectedItem.itemNum.Trim() == roidListItem.item_number.Trim())
+                        {
+                            if (collectedItem.qtyPrepared >= roidListItem.item_pending_quantity)
+                            {
+                                roidListItem.item_distributed_quantity += roidListItem.item_pending_quantity;
+                                collectedItem.qtyPrepared -= roidListItem.item_pending_quantity;
+                                roidListItem.item_pending_quantity = 0;
+
+                                requisition_order_detail rod = new requisition_order_detail();
+                                rod.requisition_id = roidListItem.requisition_id;
+                                rod.item_number = roidListItem.item_number;
+                                rod.item_distributed_quantity = roidListItem.item_distributed_quantity;
+                                rod.item_pending_quantity = roidListItem.item_pending_quantity;
+                                BusinessLogic.UpdateRODetails(rod);
+                            }
+                            else
+                            {
+                                roidListItem.item_distributed_quantity += collectedItem.qtyPrepared;
+                                roidListItem.item_pending_quantity -= collectedItem.qtyPrepared;
+                                collectedItem.qtyPrepared = 0;
+
+                                requisition_order_detail rod = new requisition_order_detail();
+                                rod.requisition_id = roidListItem.requisition_id;
+                                rod.item_number = roidListItem.item_number;
+                                rod.item_distributed_quantity = roidListItem.item_distributed_quantity;
+                                rod.item_pending_quantity = roidListItem.item_pending_quantity;
+                                BusinessLogic.UpdateRODetails(rod);
+                                BusinessLogic.UpdateRODetails(rod);
+                            }
+                        }
+                    }
+                }
+
+                collectedItem.qtyPrepared = store;
+            }
+        }
+
+        //CollectionList 
+        public static void DeductFromInventory(List<CollectionListItem> list)
+        {
+            foreach (var item in list)
+            {
+                inventory i = context.inventories.Where(x => x.item_number == item.itemNum).First();
+                i.current_quantity -= item.qtyPrepared;
+                context.SaveChanges();
+            }
+        }
+
+        //DisbursementSorting
+        public static List<spGetRODListForSorting_Result> GetRODListForSorting(string dptId, string itemNum)
+        {
+            List<spGetRODListForSorting_Result> result = new List<spGetRODListForSorting_Result>();
+            return result = context.spGetRODListForSorting(dptId, itemNum).ToList();
+        }
+
+        //DisbursementSorting
+        public static List<spGetSortingTableByDpt_Result> GetSortingListByDepartment(string dpt_Id)
+        {
+            List<spGetSortingTableByDpt_Result> list = new List<spGetSortingTableByDpt_Result>();
+            return list = context.spGetSortingTableByDpt(dpt_Id).ToList();
+        }
+
+        //DisbursementSorting
+        public static string GetDptIdFromDptName(string dptName)
+        {
+            return context.departments.Where(x => x.department_name == dptName).FirstOrDefault().department_id;
+        }
+
+        //DisbursementSorting
+        public static void InsertCollectionDetailsRow(int placeId, DateTime collectionDate, string dpt_Id)
+        {
+            string collectionStatus = "Pending";
+            context.spInsertCollectionDetail(placeId, collectionDate, collectionStatus, dpt_Id);
+        }
+
+        //DisbursementSorting
+        public static int GetLatestCollectionId()
+        {
+            spGetLatestCollectionDetailId_Result latest = new spGetLatestCollectionDetailId_Result();
+            latest = context.spGetLatestCollectionDetailId().FirstOrDefault();
+            return Convert.ToInt32(latest.collection_id);
+        }
+
+        //DisbursementSorting
+        public static List<string> GetListOfROIDForDisbursement(string dpt_Id)
+        {
+            List<spGetListOfROIDForDisbursement_Result> list = context.spGetListOfROIDForDisbursement(dpt_Id).ToList();
+            List<string> sList = new List<string>();
+            foreach (var v in list)
+            {
+                sList.Add(v.requisition_id);
+            }
+
+            return sList;
+        }
+
+        //DisbursementSorting - REFACTORED
+        public static List<string> DisplayListofDepartmentsForCollection()
+        {
+            List<spGetFullCollectionROIDList_Result> roidList = new List<spGetFullCollectionROIDList_Result>();
+            roidList = BusinessLogic.GetFullCollectionROIDList();
+            List<string> dptList = new List<string>();
+
+            foreach (spGetFullCollectionROIDList_Result q in roidList)
+            {
+                string dptName = q.department_name.Trim();
+                if (isExisting(dptName, dptList) > 0)
+                {
+                    dptList.Add(dptName);
+                }
+            }
+
+            return dptList;
+        }
+
+        //DisbursementSorting - REFACTORED
+        public static int isExisting(string department_name, List<string> dptList)
+        {
+            foreach (string dptName in dptList)
+            {
+                if (dptName.Contains(department_name))
+                {
+                    return -1;
+                }
+            }
+            return 1;
+        }
+
+        //DisbursementSorting
+        public static void InsertDisbursementListROId(string dpt_Id)
+        {
+            int latestCollectionId = GetLatestCollectionId();
+            List<string> roList = GetListOfROIDForDisbursement(dpt_Id);
+
+            foreach (var v in roList)
+            {
+                context.spInsertDisbursementListROId(v, latestCollectionId);
+            }
+        }
+
+        //ViewROSpecialRequest
+        public static int GetPlaceIdFromDptId(string dptId)
+        {
+            spGetPlaceIdFromDptId_Result result = context.spGetPlaceIdFromDptId(dptId).FirstOrDefault();
+            return (int)result.place_id;
+        }
+
+        //ViewROSpecialRequest - REFACTORED
+        public static void SpecialRequestReadyUpdatesCDRDD(int placeId, DateTime collectionDate, string ro_id, string dpt_id)
+        {
+            string collectionStatus = "Pending";
+
+            context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id, dpt_id);
+        }
+
+        //ViewROSpecialRequest - REFACTORED
+        public static void ViewROSpecialRequestUpdateRODTable(List<CollectionListItem> clList, string ro_id)
+        {
+            foreach (var item in clList)
+            {
+                requisition_order_detail rodFromDB = BusinessLogic.GetRODetailByROIdAndItemNum(ro_id, item.itemNum);
+
+                if (rodFromDB != null)
+                {
+                    rodFromDB.item_distributed_quantity += item.qtyPrepared;
+                    rodFromDB.item_pending_quantity -= item.qtyPrepared;
+                    BusinessLogic.UpdateRODetails(rodFromDB);
+                }
+            }
+        }
+
         //Reallocate
         public static List<spReallocateQty_Result> GetReallocateList(string itemNum)
         {
             List<spReallocateQty_Result> list = new List<spReallocateQty_Result>();
             return list = context.spReallocateQty(itemNum).ToList();
+        }
+
+        //Reallocate
+        public static int GetTotalCollectedVolumeForChosenItem(string itemNum)
+        {
+            List<spReallocateQty_Result> list = BusinessLogic.GetReallocateList(itemNum);
+            int itemCount = 0;
+            foreach (var q in list)
+            {
+                itemCount += (int)q.item_distributed_quantity;
+            }
+            return itemCount;
+        }
+
+        //Reallocate
+        public static void ResetRODTable(string dpt_id, string itemNum)
+        {
+            List<spGetFullCollectionROIDList_Result> roidList = BusinessLogic.GetFullCollectionROIDList();
+
+            foreach (spGetFullCollectionROIDList_Result q in roidList)
+            {
+                if ((dpt_id.ToUpper().Trim() == q.requisition_id.Substring(0, 4).ToUpper().Trim()) && (itemNum.ToUpper().Trim() == q.item_number.ToUpper().Trim()))
+                {
+                    q.item_distributed_quantity = 0;
+                    q.item_pending_quantity = q.item_requisition_quantity;
+
+                    requisition_order_detail rod = new requisition_order_detail();
+                    rod.requisition_id = q.requisition_id;
+                    rod.item_number = q.item_number;
+                    rod.item_distributed_quantity = q.item_distributed_quantity;
+                    rod.item_pending_quantity = q.item_pending_quantity;
+                    BusinessLogic.UpdateRODetails(rod);
+                }
+            }
+        }
+
+        public static void UpdateRODTableOnReallocate(string dpt_id, string itemNum, int distriQty)
+        {
+            List<spGetFullCollectionROIDList_Result> roidList = BusinessLogic.GetFullCollectionROIDList();
+
+            foreach (spGetFullCollectionROIDList_Result q in roidList)
+            {
+                if ((dpt_id.ToUpper().Trim() == q.requisition_id.Substring(0, 4).ToUpper().Trim()) && (itemNum.ToUpper().Trim() == q.item_number.ToUpper().Trim()))
+                {
+                    if (distriQty >= q.item_pending_quantity)
+                    {
+                        q.item_distributed_quantity += q.item_pending_quantity;
+                        distriQty -= q.item_pending_quantity;
+                        q.item_pending_quantity = 0;
+
+                        requisition_order_detail rod = new requisition_order_detail();
+                        rod.requisition_id = q.requisition_id;
+                        rod.item_number = q.item_number;
+                        rod.item_distributed_quantity = q.item_distributed_quantity;
+                        rod.item_pending_quantity = q.item_pending_quantity;
+                        BusinessLogic.UpdateRODetails(rod);
+                    }
+                    else
+                    {
+                        q.item_distributed_quantity += distriQty;
+                        q.item_pending_quantity -= distriQty;
+                        distriQty = 0;
+
+                        requisition_order_detail rod = new requisition_order_detail();
+                        rod.requisition_id = q.requisition_id;
+                        rod.item_number = q.item_number;
+                        rod.item_distributed_quantity = q.item_distributed_quantity;
+                        rod.item_pending_quantity = q.item_pending_quantity;
+                        BusinessLogic.UpdateRODetails(rod);
+                    }
+                }
+            }
+        }
+
+        //Reallocate
+        public static void ReturnToInventory(int returnBalance, string itemNum)
+        {
+            CollectionListItem item = new CollectionListItem();
+            item.itemNum = itemNum;
+            item.qtyPrepared = returnBalance;
+
+            BusinessLogic.AddtoInventory(item);
         }
 
         //Reallocate

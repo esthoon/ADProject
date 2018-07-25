@@ -43,7 +43,7 @@
         <asp:Label ID="Label_collectedAmount" runat="server" Text="Label" Font-Size="20px" ForeColor="Blue"></asp:Label></h3>
 
     <asp:Button ID="Button_Reallocate" runat="server" Text="Reallocate" CssClass="btn btn-primary" OnClick="Button_Reallocate_Click" ValidationGroup='valGroup1'/>
-    <asp:Label ID="Label_warning" runat="server" Text="You entered more quantity than collected" Font-Size="20px" ForeColor="Red"></asp:Label>
+    <asp:Label ID="Label_warning" runat="server" Font-Size="20px" ForeColor="Red"></asp:Label>
 
 
     <%-- <asp:Button ID="Button1" runat="server" Text="Test Modal" data-toggle="modal" data-target="#login_modal" />
