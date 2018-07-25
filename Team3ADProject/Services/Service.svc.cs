@@ -85,7 +85,8 @@ namespace Team3ADProject.Services
         {
             List<WCF_PurchaseQuantityByItemCategory> wcfList = new List<WCF_PurchaseQuantityByItemCategory>();
 
-            string format = "dd-mm-yyyy";
+            // Debugger test
+            string format = "dd-MM-yyyy";
             CultureInfo provider = CultureInfo.InvariantCulture;
             DateTime start = DateTime.ParseExact(startParam, format, provider);
             DateTime end = DateTime.ParseExact(endParam, format, provider);
@@ -95,8 +96,10 @@ namespace Team3ADProject.Services
                         join pod in context.purchase_order_detail on po.purchase_order_number equals pod.purchase_order_number
                         join inv in context.inventories on pod.item_number equals inv.item_number
                         where (pod.item_purchase_order_status.Trim() == "Completed" || pod.item_purchase_order_status.Trim() == "Pending")
-                        && (po.purchase_order_date.CompareTo(start) >= 0 && po.purchase_order_date.CompareTo(end) <= 0)
+                        && (po.purchase_order_date.CompareTo(end) <= 0 && po.purchase_order_date.CompareTo(start) >= 0)
                         select new { po, pod, inv };
+
+            // Query is definitely working fine.
 
             var result = query.GroupBy(cat => cat.inv.category)
                 .Select(g => new
@@ -110,9 +113,6 @@ namespace Team3ADProject.Services
             {
                 wcfList.Add(new WCF_PurchaseQuantityByItemCategory(i.Category.Trim(), i.PurchaseQuantity));
             }
-
-
-
 
             return wcfList;
         }
@@ -136,7 +136,7 @@ namespace Team3ADProject.Services
         {
             List<WCF_RequestQuantityByDepartment> wcfList = new List<WCF_RequestQuantityByDepartment>();
 
-            string format = "dd-mm-yyyy";
+            string format = "dd-MM-yyyy";
             CultureInfo provider = CultureInfo.InvariantCulture;
             DateTime start = DateTime.ParseExact(startParam, format, provider);
             DateTime end = DateTime.ParseExact(endParam, format, provider);
