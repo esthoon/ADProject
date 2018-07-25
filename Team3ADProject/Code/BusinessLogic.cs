@@ -1004,11 +1004,13 @@ department.department_id.Equals(dept)
             List<spViewCollectionList_Result> list = new List<spViewCollectionList_Result>();
             return list = context.spViewCollectionList().ToList();
         }
-        //Rohit -end
+
+   
+    //Rohit -end
 
 
-        //Sruthi - start
-        public static void updatecollectionlocation(string dept, int id)
+    //Sruthi - start
+    public static void updatecollectionlocation(string dept, int id)
         {
             context.updatecollectiondepartment(dept, id);
         }
