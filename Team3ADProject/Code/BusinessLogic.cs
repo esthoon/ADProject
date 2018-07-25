@@ -376,7 +376,7 @@ department.department_id.Equals(dept)
 
 
 
-            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250 && x.inventory.current_quantity >=0).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price <= 250 ).ToList();
 
 
         }
@@ -384,7 +384,7 @@ department.department_id.Equals(dept)
         {
 
 
-            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price >= 250 && x.inventory.current_quantity >= 0).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250 ).ToList();
 
         }
 
@@ -420,7 +420,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
 
 
         }
@@ -428,7 +428,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreSupSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price < 250).ToList<adjustment>();
 
 
         }

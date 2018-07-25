@@ -8,8 +8,9 @@
          function SelectAllCheckboxes(chk) {
              $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function () {
                  if (this != chk) {
-                     this.checked = chk.checked;
+                    this.checked = chk.checked;
                  }
+                
              });
          }
      </script> 
@@ -64,17 +65,21 @@
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:BoundField DataField="adjustment_id" HeaderText="Adj ID" InsertVisible="False" ReadOnly="True" SortExpression="adjustment_id" />
-            <asp:BoundField DataField="adjustment_date" HeaderText="Adj date" SortExpression="adjustment_date" DataFormatString="{0:MM/dd/yyyy}" />
+            <asp:BoundField DataField="adjustment_date" HeaderText="Adj date" SortExpression="adjustment_date" DataFormatString="{0:dd-MM-yyyy}" />
             <asp:BoundField DataField="employee_id" HeaderText="Employee Id" SortExpression="employee_id" />
             <asp:BoundField DataField="item_number" HeaderText="Item No." SortExpression="item_number" />
             <asp:BoundField DataField="adjustment_quantity" HeaderText="Adj Qty" SortExpression="adjustment_quantity" />
             <asp:BoundField DataField="adjustment_price" HeaderText="Adj Price" SortExpression="adjustment_price" DataFormatString="{0:c2}" />
             <asp:BoundField DataField="adjustment_status" HeaderText="Adj Status" SortExpression="adjustment_status" />
             <asp:BoundField DataField="employee_remark" HeaderText="Employee Remark" SortExpression="employee_remark" />
+            <asp:BoundField DataField="inventory.current_quantity" HeaderText="Current Qty" SortExpression="employee_remark" />
+
+
             <asp:TemplateField HeaderText="Manager Remark" SortExpression="manager_remark">
                 <ItemTemplate>
                     <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("manager_remark") %>'></asp:TextBox>
                 </ItemTemplate>
+
 
             </asp:TemplateField>
 
@@ -85,6 +90,8 @@
                 </ItemTemplate>
 
             </asp:TemplateField>
+           
+           
         </Columns>
 
         <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />

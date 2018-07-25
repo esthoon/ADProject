@@ -62,6 +62,7 @@ namespace Team3ADProject.Protected
 
             
             GridView1.DataBind();
+
             NoRowDetail();
 
 
@@ -96,13 +97,19 @@ namespace Team3ADProject.Protected
                 Label1.Text = "There are no more adjustment forms for approval";
                 Label1.Visible = true;
             }
+           
             else
             {
                 LinkButton1.Visible = true;
                 LinkButton3.Visible = true;
                 TextBox2.Enabled = true;
                 Button1.Enabled = true;
+                Button2.Enabled = true;
                 Label1.Visible = false;
+                if (TextBox2.Text.IsNullOrWhiteSpace())
+                {
+                    Button2.Enabled = false;
+                }
             }
         }
 
