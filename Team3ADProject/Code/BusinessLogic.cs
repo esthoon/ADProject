@@ -376,7 +376,7 @@ department.department_id.Equals(dept)
 
 
 
-            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250 && x.inventory.current_quantity >=0).ToList();
 
 
         }
@@ -384,7 +384,7 @@ department.department_id.Equals(dept)
         {
 
 
-            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price >= 250 && x.inventory.current_quantity >= 0).ToList();
 
         }
 
@@ -412,6 +412,8 @@ department.department_id.Equals(dept)
             context.SaveChanges();
 
         }
+
+      
 
 
         //searchdateforstoremanager

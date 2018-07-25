@@ -5,31 +5,44 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
    <%--checkbox select all function --%>
      <script>
-        function SelectAllCheckboxes(chk) {
-            $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function () {
-                if (this != chk) {
-                    this.checked = chk.checked;
-                }
-            });
-        }
-    </script> 
+         function SelectAllCheckboxes(chk) {
+             $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function () {
+                 if (this != chk) {
+                     this.checked = chk.checked;
+                 }
+             });
+         }
+     </script> 
     
     <script>
-        $(function() {
-            $(".datepicker").datepicker({ maxDate: 0 });
+    $(document).ready(function () {
+        
+            $(".datepicker").datepicker({
+                maxDate: 0,
+                dateFormat: 'dd-mm-yy'
+            });
         })
-           
+
     </script>
 
 
     <h1>Adjustment Form Approval</h1>
-    
     <br/>
-    <%--
-    <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar> --%>
-    <asp:TextBox ID="TextBox2" runat="server" CssClass="datepicker"></asp:TextBox>
+    
+   <%--  <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar>
+   --%>
+    
+    Date:<asp:TextBox ID="TextBox2" runat="server" CssClass="datepicker"></asp:TextBox> 
+    <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
+    <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="true"></asp:RegularExpressionValidator>
 
-    <div>
+    
+    
+
+    <%--  <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="endDate" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
+    <asp:RegularExpressionValidator ID="EndDateValidator" runat="server" ControlToValidate="endDate" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="false"></asp:RegularExpressionValidator>
+    --%>
+        <div>
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="All" CssClass="btn btn-default" />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" CssClass="btn btn-default" />
     </div>
@@ -40,7 +53,7 @@
 
     <h4>Search results: </h4>
     <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Height="99px" Width="1094px" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnPageIndexChanging="GridView1_PageIndexChanging" AllowPaging="True" PageSize="5">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Height="99px" Width="1094px" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnPageIndexChanging="GridView1_PageIndexChanging" AllowPaging="True" PageSize="5" >
         <Columns>
             <asp:TemplateField>
                 <HeaderTemplate>
