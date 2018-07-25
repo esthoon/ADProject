@@ -29,10 +29,7 @@ namespace Team3ADProject.Protected
                 }
                 else
                 {
-                    //hardcoded
-                    Session["Employee"] = 10;
-                    user = BusinessLogic.GetEmployeeById(10);
-                    //redirect to login homepage
+                    Response.Redirect("ClerkInventory.aspx");
                 }
                 loadGrid();
             }
@@ -73,6 +70,16 @@ namespace Team3ADProject.Protected
         protected void GridViewPODetails_DataBound(object sender, EventArgs e)
         {
             UpdateTotalCostGrid();
+            foreach(GridViewRow gvr in GridViewPODetails.Rows)
+            {
+                Button btn1 = (Button)gvr.FindControl("Button1");
+                Button btn2 = (Button)gvr.FindControl("Button2");
+                if (!Page.IsValid)
+                {
+                    btn1.Enabled = false;
+                    btn2.Enabled = false;
+                }
+            }
         }
 
         protected void UpdateTotalCostGrid()
@@ -141,6 +148,8 @@ namespace Team3ADProject.Protected
             Button3.Enabled = false;
             if (user != null && supplierid != null)
             {
+                string email;
+                int? id = user.supervisor_id;
                 string date = DateTime.Now.ToString("yyyy-MM-dd");
                 List<int> indexes = new List<int>();
                 for (int i = 0; i < polist.Count; i++)
@@ -200,7 +209,12 @@ namespace Team3ADProject.Protected
                                 {
                                     polist.RemoveAt(indexes[k]);
                                 }
-
+                                if (id != null)
+                                {
+                                    int supid = (int)id;
+                                    email = BusinessLogic.RetrieveEmailByEmployeeID(supid);
+                                    BusinessLogic.sendMail(email, "New PO awaiting for approval", user.employee_name + " has submitted a new PO for approval.");
+                                }
                                 BusinessLogic.sendMail("e0283990@u.nus.edu", "New PO awaiting for approval", user.employee_name + " has submitted a new PO for approval.");
                                 tx.Complete();
                                 Session["StagingList"] = polist;
