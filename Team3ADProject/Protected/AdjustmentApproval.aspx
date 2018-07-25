@@ -72,7 +72,6 @@
             <asp:BoundField DataField="adjustment_price" HeaderText="Adj Price" SortExpression="adjustment_price" DataFormatString="{0:c2}" />
             <asp:BoundField DataField="adjustment_status" HeaderText="Adj Status" SortExpression="adjustment_status" />
             <asp:BoundField DataField="employee_remark" HeaderText="Employee Remark" SortExpression="employee_remark" />
-            <asp:BoundField DataField="inventory.current_quantity" HeaderText="Current Qty" SortExpression="employee_remark" />
 
 
             <asp:TemplateField HeaderText="Manager Remark" SortExpression="manager_remark">
