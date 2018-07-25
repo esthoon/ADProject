@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -22,7 +23,9 @@ namespace Team3ADProject.Protected
                 GridView1.DataBind();
                 requisition_order r = BusinessLogic.GetRequisitionOrderById(param_id);
                 Label4.Text = r.requisition_id;
-                Label5.Text = r.requisition_date.ToShortDateString();
+                String DateTemp = r.requisition_date.ToShortDateString().ToString();
+                DateTime dt = DateTime.ParseExact(DateTemp, "d/M/yyyy", CultureInfo.InvariantCulture);
+                Label5.Text = dt.ToString("dd-MM-yyyy");
                 Label6.Text = r.requisition_status;
             }
         }

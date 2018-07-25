@@ -151,13 +151,14 @@ namespace Team3ADProject.Protected
             int i = (int)u.req_id + 1;
             string id = Depid.Trim() + "/" + DateTime.Now.Year.ToString() + "/" + i;
             BusinessLogic.AddNewRequisitionOrder(id, Empid, d);
+            BusinessLogic.updatelastrequestid(Depid, i);
             List<cart> cart = (List<cart>)Session["RequestCart"];
             for (int xi = 0; xi < cart.Count; xi++)
             {
                 BusinessLogic.AddRequisitionOrderDetail(cart[xi], id);
             }
             //Application["RequestID"] = i;
-            BusinessLogic.updatelastrequestid(Depid, i);
+            
             Session["RequestCart"] = null;
             // string to = BusinessLogic.GetEmployee((int)Session["Head_id"]).email_id;
             string to = "tharrani2192@gmail.com";
