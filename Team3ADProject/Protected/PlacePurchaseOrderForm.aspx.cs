@@ -80,7 +80,7 @@ namespace Team3ADProject.Protected
 
         public void CalculationForUnitCostAndTotalCost(int qty)
         {
-            if (qty > 0 && qty <1000000)
+            if (qty > 0 && qty <=1000000)
             {
                 unitCost.Text = BusinessLogic.getUnitPrice(DropDownListSupplier.SelectedValue, itemid).ToString();
                 totalCost.Text = (qty * Convert.ToDouble(unitCost.Text)).ToString("C");
