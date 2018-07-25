@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="budget.aspx.cs" Inherits="Team3ADProject.Protected.budget" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 	<h2> Budget</h2>
-	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" Width="600px">
 		<Columns>
 					<asp:BoundField DataField="month" HeaderText="Month" />
 					 <asp:BoundField DataField="budget1" HeaderText="Budget" />			       
@@ -19,7 +19,7 @@
 	<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 	<br />
 	<br />
-	<asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Button1_Click" />
+	<asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Button1_Click" CssClass="btn btn-primary"/>
 	<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Please enter a valid value" 
 	ControlToValidate="TextBox1" ValidationExpression="^(?!0+$)[0-9]+$">
 

@@ -22,6 +22,15 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList_Dpt;
         
         /// <summary>
+        /// Label_noDptWarning control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label_noDptWarning;
+        
+        /// <summary>
         /// btn_SortingSearch control.
         /// </summary>
         /// <remarks>
@@ -40,6 +49,15 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.GridView gridview_DptSort;
         
         /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
         /// TextBox_Collect_Date control.
         /// </summary>
         /// <remarks>
@@ -47,6 +65,15 @@ namespace Team3ADProject.Protected {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBox_Collect_Date;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
         /// Calendar_Collect_Date control.

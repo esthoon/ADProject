@@ -3,8 +3,8 @@
 <%@ Import Namespace="Team3ADProject.Protected" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <%--checkbox select all function --%>
-    <script type="text/javascript">
+   <%--checkbox select all function --%>
+     <script>
         function SelectAllCheckboxes(chk) {
             $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function () {
                 if (this != chk) {
@@ -12,40 +12,31 @@
                 }
             });
         }
-    </script>
+    </script> 
     
     <script>
-        $(document).ready(function () {
-            $("#datePicker").datepicker({
-                dateFormat: 'dd-mm-yy'
-            });
-                
-        
-        });
+        $(function() {
+            $(".datepicker").datepicker({ maxDate: 0 });
+        })
+           
     </script>
 
 
     <h1>Adjustment Form Approval</h1>
     
-    
-    
-    
-    
-    
-    <br />
-    <input id="datePicker" type="text" />
-    <br />
     <br/>
-    <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar>
-    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+    <%--
+    <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar> --%>
+    <asp:TextBox ID="TextBox2" runat="server" CssClass="datepicker"></asp:TextBox>
 
     <div>
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="All" CssClass="btn btn-default" />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" CssClass="btn btn-default" />
     </div>
     <%--validators function --%>
-    <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please Enter a valid date in the format (mm/dd/yyyy)" ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"></asp:RegularExpressionValidator>
-    <%-- end of validators --%>
+    <%-- <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please Enter a valid date in the format (mm/dd/yyyy)" ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"></asp:RegularExpressionValidator>
+    --%>
+        <%-- end of validators --%>
 
     <h4>Search results: </h4>
     <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
@@ -90,6 +81,7 @@
     <br />
     <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" CssClass="btn btn-success">Approve Selected</asp:LinkButton>
     <asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click" CssClass="btn btn-warning">Reject Selected</asp:LinkButton>
+
 
 </asp:Content>
 

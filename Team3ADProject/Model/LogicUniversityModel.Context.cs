@@ -438,11 +438,6 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSpecialRequestReady", placeIdParameter, collectionDateParameter, collectionStatusParameter, ro_idParameter);
         }
     
-        public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
-        }
-    
         public virtual ObjectResult<getUserTokenByUsername_Result> getUserTokenByUsername(string username)
         {
             var usernameParameter = username != null ?
@@ -535,11 +530,6 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUpdateItemDistributedQuantity", itemNumberParameter, requisitionIDParameter, itemDistributedQuantityParameter);
         }
     
-        public virtual ObjectResult<spViewCollectionListNew_Result> spViewCollectionListNew()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionListNew_Result>("spViewCollectionListNew");
-        }
-    
         public virtual int updatecollectiondepartment(string departmentid, Nullable<int> placeid)
         {
             var departmentidParameter = departmentid != null ?
@@ -569,11 +559,6 @@ namespace Team3ADProject.Model
                 new ObjectParameter("username", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getUserTokenByUsername1_Result>("getUserTokenByUsername1", usernameParameter);
-        }
-    
-        public virtual ObjectResult<spViewCollectionList1_Result> spViewCollectionList1()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList1_Result>("spViewCollectionList1");
         }
     
         public virtual ObjectResult<spFindAllDptRequiredQtyByItem_Result> spFindAllDptRequiredQtyByItem(string itemnum)
@@ -655,6 +640,11 @@ namespace Team3ADProject.Model
                 new ObjectParameter("itemNum", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReallocateQty_Result>("spReallocateQty", itemNumParameter);
+        }
+    
+        public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
         }
     }
 }

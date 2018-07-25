@@ -149,7 +149,7 @@ namespace Team3ADProject.Protected
             //int i = (int)Application["RequestID"] + 1;
             unique_id u = BusinessLogic.getlastrequestid(Depid);
             int i = (int)u.req_id + 1;
-            string id = Depid + "/" + DateTime.Now.Year.ToString() + "/" + i;
+            string id = Depid.Trim() + "/" + DateTime.Now.Year.ToString() + "/" + i;
             BusinessLogic.AddNewRequisitionOrder(id, Empid, d);
             List<cart> cart = (List<cart>)Session["RequestCart"];
             for (int xi = 0; xi < cart.Count; xi++)

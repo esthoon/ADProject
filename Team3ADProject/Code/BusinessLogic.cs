@@ -414,11 +414,23 @@ department.department_id.Equals(dept)
         }
 
 
-        //To search adjustment form base on date search
-        public static List<adjustment> SearchAdj(DateTime date)
+        //searchdateforstoremanager
+        public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
-            return context.adjustments.Where(x => x.adjustment_date == date).ToList<adjustment>();
+
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+
+
         }
+        //searchdateforstoresup
+        public static List<adjustment> StoreSupSearchAdj(DateTime date)
+        {
+
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+
+
+        }
+
 
 
         //To list pending purchase orders 
@@ -1005,16 +1017,18 @@ department.department_id.Equals(dept)
             context.spUpdateCollectionStatusCollected(collectionID);
         }
 
-        public static List<spViewCollectionListNew_Result> ViewCollectionListNew()
+        public static List<spViewCollectionList_Result> ViewCollectionListNew()
         {
-            List<spViewCollectionListNew_Result> list = new List<spViewCollectionListNew_Result>();
-            return list = context.spViewCollectionListNew().ToList();
+            List<spViewCollectionList_Result> list = new List<spViewCollectionList_Result>();
+            return list = context.spViewCollectionList().ToList();
         }
-        //Rohit -end
+
+   
+    //Rohit -end
 
 
-        //Sruthi - start
-        public static void updatecollectionlocation(string dept, int id)
+    //Sruthi - start
+    public static void updatecollectionlocation(string dept, int id)
         {
             context.updatecollectiondepartment(dept, id);
         }

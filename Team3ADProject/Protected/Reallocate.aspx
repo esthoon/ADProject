@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Reallocate.aspx.cs" Inherits="Team3ADProject.Protected.Reallocate" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-	<h1>Reallocate Quantity</h1>
+	 <h1>Reallocate Quantity</h1>
 
     <h3>Item Number:</h3>
     <asp:Label ID="Label_itemNum" runat="server" Text="Label"></asp:Label>
@@ -19,6 +19,18 @@
             <asp:TemplateField HeaderText="Recommended Distribution Quantity">
                 <ItemTemplate>
                     <asp:TextBox ID="txt_distribution_qty" runat="server"></asp:TextBox>
+
+                    <asp:Label ID="Label1" runat="server" ForeColor="Red"></asp:Label>
+
+                    <asp:CompareValidator ID="CompareValidator_txt_QtyPrepared" runat="server" ValidationGroup='valGroup1'
+                        ControlToValidate="txt_distribution_qty" ErrorMessage="Can't be -ve number."
+                        Operator="GreaterThanEqual" Type="Integer" ForeColor="Red"
+                        ValueToCompare="0" />
+
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txt_distribution_qty" ValidationGroup='valGroup1' ID="RequiredValidator_txt_QtyPrepared" ErrorMessage="Enter a number." ForeColor="Red" />
+
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator_txt_QtyPrepared" runat="server" ControlToValidate="txt_distribution_qty" ErrorMessage="Enter only numbers." ForeColor="Red" ValidationExpression="^\d+$" ValidationGroup='valGroup1'></asp:RegularExpressionValidator>
+
                 </ItemTemplate>
             </asp:TemplateField>
 
@@ -30,11 +42,11 @@
     <h3>Total Collected from Warehouse:  
         <asp:Label ID="Label_collectedAmount" runat="server" Text="Label" Font-Size="20px" ForeColor="Blue"></asp:Label></h3>
 
-    <asp:Button ID="Button_Reallocate" runat="server" Text="Reallocate" CssClass="btn btn-primary" OnClick="Button_Reallocate_Click" />
-    <asp:Label ID="Label_warning" runat="server" Text="You entered more quantity than collected" Visible="false" Font-Size="20px" ForeColor="Red"></asp:Label>
+    <asp:Button ID="Button_Reallocate" runat="server" Text="Reallocate" CssClass="btn btn-primary" OnClick="Button_Reallocate_Click" ValidationGroup='valGroup1'/>
+    <asp:Label ID="Label_warning" runat="server" Text="You entered more quantity than collected" Font-Size="20px" ForeColor="Red"></asp:Label>
 
 
-   <%-- <asp:Button ID="Button1" runat="server" Text="Test Modal" data-toggle="modal" data-target="#login_modal" />
+    <%-- <asp:Button ID="Button1" runat="server" Text="Test Modal" data-toggle="modal" data-target="#login_modal" />
 
 
     <div class="modal fade" id="login_modal" role="dialog">

@@ -12,7 +12,7 @@ namespace Team3ADProject.Protected
 {
     public partial class Reallocate : System.Web.UI.Page
     {
-      
+
         string itemNum;
         string description;
         static List<spReallocateQty_Result> list;
@@ -40,6 +40,8 @@ namespace Team3ADProject.Protected
 
                 Label_itemNum.Text = itemNum;
                 Label_Description.Text = description;
+                Label_warning.Visible = false;
+
 
                 int itemCount = 0;
                 foreach (var q in list)
@@ -70,6 +72,14 @@ namespace Team3ADProject.Protected
 
         protected void Button_Reallocate_Click(object sender, EventArgs e)
         {
+            Label_warning.Visible = false;
+
+
+            if (ValidatePreparedQty() < 0)
+            {
+                return;
+            }
+
             // getting total input
             int totalEnterQty = 0;
             foreach (GridViewRow gvr in gridview_Reallocate.Rows)
@@ -185,6 +195,34 @@ namespace Team3ADProject.Protected
                     }
                 }
             }
+        }
+
+        protected int ValidatePreparedQty()
+        {
+            bool flag = false;
+            foreach (GridViewRow gvr in gridview_Reallocate.Rows)
+            {
+                int qtyOrder = Convert.ToInt32(gvr.Cells[1].Text);
+
+                System.Web.UI.WebControls.TextBox tb = (System.Web.UI.WebControls.TextBox)gvr.FindControl("txt_distribution_qty");
+                int qtyToPrep = Convert.ToInt32(tb.Text);
+
+                System.Web.UI.WebControls.Label validator = (System.Web.UI.WebControls.Label)gvr.FindControl("Label1");
+                validator.Visible = false;
+
+                if (qtyToPrep > qtyOrder)
+                {
+                    validator.Visible = true;
+                    validator.Text = "Amount is more than Ordered Qty";
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == true)
+                return -1;
+
+            else
+                return 1;
         }
     }
 }

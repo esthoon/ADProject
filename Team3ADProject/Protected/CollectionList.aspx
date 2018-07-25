@@ -15,19 +15,16 @@
                 <ItemTemplate>
                     <asp:TextBox ID="txt_QtyPrepared" runat="server" Text='<%# (Convert.ToInt32(Eval("quantity_ordered")) <= Convert.ToInt32(Eval("current_quantity")) ? Eval("quantity_ordered") : Eval("current_quantity")) %>'></asp:TextBox>
 
+                    <asp:Label ID="Label1" runat="server" ForeColor="Red"></asp:Label>
 
                     <asp:CompareValidator ID="CompareValidator_txt_QtyPrepared" runat="server"
-                        ControlToValidate="txt_QtyPrepared" ErrorMessage="Must be &gt; 0"
+                        ControlToValidate="txt_QtyPrepared" ErrorMessage="Can't be -ve number."
                         Operator="GreaterThanEqual" Type="Integer" ForeColor="Red"
-                        ValueToCompare="0" />
+                        ValueToCompare="0" ValidationGroup='valGroup1' />
 
+                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txt_QtyPrepared" ID="RequiredValidator_txt_QtyPrepared" ErrorMessage="Enter a number." ForeColor="Red" ValidationGroup='valGroup1' />
 
-
-					<%--<asp:CustomValidator ID="CustomValidator_txt_QtyPrepared" runat="server" ErrorMessage="Enter a smaller qty" ForeColor="Red" OnServerValidate="CustomValidator_txt_QtyPrepared_ServerValidate"></asp:CustomValidator>--%>
-
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="txt_QtyPrepared" ID="RequiredValidator_txt_QtyPrepared" ErrorMessage="Enter a number" ForeColor="Red" />
-
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator_txt_QtyPrepared" runat="server" ControlToValidate="txt_QtyPrepared" ErrorMessage="Enter only numbers" ForeColor="Red" ValidationExpression="^\d+$"></asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator_txt_QtyPrepared" runat="server" ControlToValidate="txt_QtyPrepared" ErrorMessage="Enter only numbers." ForeColor="Red" ValidationExpression="^\d+$" ValidationGroup='valGroup1'></asp:RegularExpressionValidator>
 
                 </ItemTemplate>
             </asp:TemplateField>
@@ -41,7 +38,7 @@
         </Columns>
     </asp:GridView>
 
-    <asp:Button ID="btn_submitCollectionList" runat="server" Text="Submit" OnClick="btn_submitCollectionList_Click" CssClass="btn btn-success"/>
-    
+    <asp:Button ID="btn_submitCollectionList" runat="server" Text="Submit" OnClick="btn_submitCollectionList_Click" CssClass="btn btn-success" ValidationGroup='valGroup1' />
+
 </asp:Content>
 
