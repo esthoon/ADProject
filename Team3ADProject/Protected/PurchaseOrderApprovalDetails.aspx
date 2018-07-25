@@ -21,7 +21,7 @@
         <tr>
             <td>
                 <b>PO Date</b>
-                <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+                <asp:Label ID="Label4" runat="server" Text="Label" ></asp:Label>
             </td>
             <td>
                 <b>Total PO Price:</b>

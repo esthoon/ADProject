@@ -8,8 +8,9 @@
          function SelectAllCheckboxes(chk) {
              $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function () {
                  if (this != chk) {
-                     this.checked = chk.checked;
+                    this.checked = chk.checked;
                  }
+                
              });
          }
      </script> 
@@ -29,24 +30,18 @@
     <h1>Adjustment Form Approval</h1>
     <br/>
     
-   <%--  <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar>
+   <%-- not in used, incase calendar function don't work  <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" OnDayRender="Calendar1_DayRender"></asp:Calendar>
    --%>
     
     Date:<asp:TextBox ID="TextBox2" runat="server" CssClass="datepicker"></asp:TextBox> 
     <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
     <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please enter a valid date of the form: dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="true"></asp:RegularExpressionValidator>
 
-    
-    
-
-    <%--  <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="endDate" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
-    <asp:RegularExpressionValidator ID="EndDateValidator" runat="server" ControlToValidate="endDate" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="false"></asp:RegularExpressionValidator>
-    --%>
         <div>
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="All" CssClass="btn btn-default" />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" CssClass="btn btn-default" />
     </div>
-    <%--validators function --%>
+    <%--validators function for aspnet calendar --%>
     <%-- <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please Enter a valid date in the format (mm/dd/yyyy)" ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"></asp:RegularExpressionValidator>
     --%>
         <%-- end of validators --%>
@@ -71,10 +66,13 @@
             <asp:BoundField DataField="adjustment_price" HeaderText="Adj Price" SortExpression="adjustment_price" DataFormatString="{0:c2}" />
             <asp:BoundField DataField="adjustment_status" HeaderText="Adj Status" SortExpression="adjustment_status" />
             <asp:BoundField DataField="employee_remark" HeaderText="Employee Remark" SortExpression="employee_remark" />
+
+
             <asp:TemplateField HeaderText="Manager Remark" SortExpression="manager_remark">
                 <ItemTemplate>
                     <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("manager_remark") %>'></asp:TextBox>
                 </ItemTemplate>
+
 
             </asp:TemplateField>
 
@@ -85,6 +83,8 @@
                 </ItemTemplate>
 
             </asp:TemplateField>
+           
+           
         </Columns>
 
         <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />
