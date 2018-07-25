@@ -228,7 +228,6 @@
     <Content Include="Model\LogicUniversityModel.edmx.diagram">
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
     </Content>
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Model\LogicUniversityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
@@ -279,10 +278,6 @@
     <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\Custom\Charts.js" />
     <Content Include="Scripts\jquery-1.12.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.canvasjs.min.js" />
@@ -860,8 +855,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

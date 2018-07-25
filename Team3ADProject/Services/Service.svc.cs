@@ -94,7 +94,8 @@ namespace Team3ADProject.Services
             var query = from po in context.purchase_order
                         join pod in context.purchase_order_detail on po.purchase_order_number equals pod.purchase_order_number
                         join inv in context.inventories on pod.item_number equals inv.item_number
-                        where pod.item_purchase_order_status == "Completed" || pod.item_purchase_order_status == "Pending"
+                        where (pod.item_purchase_order_status.Trim() == "Completed" || pod.item_purchase_order_status.Trim() == "Pending")
+                        && (po.purchase_order_date.CompareTo(start) >= 0 && po.purchase_order_date.CompareTo(end) <= 0)
                         select new { po, pod, inv };
 
             var result = query.GroupBy(cat => cat.inv.category)
@@ -146,8 +147,8 @@ namespace Team3ADProject.Services
                          join req in context.requisition_order on emp.employee_id equals req.employee_id
                          join reqDetails in context.requisition_order_detail on req.requisition_id equals reqDetails.requisition_id
                          join inv in context.inventories on reqDetails.item_number equals inv.item_number
-                         where req.requisition_date.CompareTo(start) > 0
-                         && req.requisition_date.CompareTo(end) < 0
+                         where req.requisition_date.CompareTo(start) >= 0
+                         && req.requisition_date.CompareTo(end) <= 0
                          select new { dept, emp, req, reqDetails, inv });
 
             var result = query.GroupBy(d => d.dept.department_id)
