@@ -8,8 +8,14 @@ namespace Team3ADProject.Code
     public class Constants
     {
         // Roles
-        public static string ROLES_STORE_CLERK = "Store Clerk";
+        public static string ROLES_STORE_CLERK = "storeclerk";
+        public static string ROLES_STORE_SUPERVISOR = "storesup";
+        public static string ROLES_STORE_MANAGER = "storemanager";
 
+        public static string ROLES_EMPLOYEE = "employee";
+        public static string ROLES_DEPARTMENT_REPRESENTATIVE = "deprep";
+        public static string ROLES_DEPARTMENT_HEAD = "dephead";
+    
         // Chart values
         public static string CHART_TEST = "testChart";
         public static string CHART_REQUISITION_ORDER_STATUS_PERCENTAGE = "requisitionOrderStatusChart";

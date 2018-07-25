@@ -16,6 +16,10 @@ namespace Team3ADProject
 
         protected void Login1_LoggedIn(object sender, EventArgs e)
         {
+            // Setup the session varaibles
+
+
+            // Redirect users to their dashboard
             Response.Redirect(ResolveUrl("~/Protected/Dashboard"));
         }
     }
