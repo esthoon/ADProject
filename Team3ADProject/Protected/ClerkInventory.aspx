@@ -62,7 +62,8 @@
                 <asp:BoundField DataField="reorder_quantity" HeaderText="Reorder Qty" />
                 <asp:BoundField HeaderText="Ordered Qty" DataField="OrderedQty" />
                 <asp:BoundField HeaderText="Pending Approval Qty" DataField="PendingApprovalQty" />
-                <asp:BoundField DataField="PendingAdjustmentQty" HeaderText="Pending Adjustment Qty" />
+                <asp:BoundField DataField="PendingMinusAdjustmentQty" HeaderText="Pending Adjustment Qty (-)" />
+                <asp:BoundField DataField="PendingPlusAdjustmentQty" HeaderText="Pending Adjustment Qty (+)" />
                 <asp:BoundField DataField="Inventory.unit_of_measurement" HeaderText="Unit of Measure" />
                 <asp:BoundField DataField="Inventory.item_status" HeaderText="Status" />
                 <asp:TemplateField ShowHeader="False">
