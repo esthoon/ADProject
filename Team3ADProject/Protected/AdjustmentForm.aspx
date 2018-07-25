@@ -72,8 +72,7 @@
                         <td>
                             <asp:Label ID="lbuprice" runat="server" Text="Unit Price "></asp:Label>
                         </td>
-                        <td>
-                            $<asp:Label ID="LabelUnitPrice" runat="server" Text="Label"></asp:Label>
+                        <td>$<asp:Label ID="LabelUnitPrice" runat="server" Text="Label"></asp:Label>
                         </td>
                     </tr>
                     <tr>
@@ -110,54 +109,43 @@
                         <td></td>
                         <td>
                             <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" Style="position: relative; float: right; top: 0px; margin-left: 0.5vw;" CssClass="btn btn-warning" CausesValidation="false" OnClick="ButtonCancel_Click" />
-                            <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" Style="position: relative; float: right; top: 0px;" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" OnClientClick="this.disabled=true;" UseSubmitBehavior="false"/>
-                        </td>
-                    </tr>
-                    </table>
-
-                <table>
-                    <tr>
-                            <asp:Label ID="LabelGrid" runat="server" Text="Label"></asp:Label>
-                    </tr>
-                    <tr>
-                        <td>
-                            
-                            <asp:Label ID="LabelGridMinus" runat="server" Text="Label"></asp:Label>
-                            
-                        </td>
-                        <td></td>
-                        <td>
-                            
-                            <asp:Label ID="LabelGridPlus" runat="server" Text="Label"></asp:Label>
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:GridView ID="GridViewAdjMinus" runat="server" AutoGenerateColumns="False">
-                                <Columns>
-                                    <asp:BoundField DataField="item_number" HeaderText="Item number" />
-                                    <asp:BoundField DataField="employee.employee_name" HeaderText="Raised by" />
-                                    <asp:BoundField DataField="adjustment_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Raised" />
-                                    <asp:BoundField DataField="employee_remark" HeaderText="Remarks" />
-                                    <asp:BoundField DataField="adjustment_quantity" HeaderText="Adjusted Quantity" />
-                                </Columns>
-                            </asp:GridView>
-                        </td>
-                        <td>&emsp;</td>
-                        <td>
-                            <asp:GridView ID="GridViewAdjPlus" runat="server" AutoGenerateColumns="False">
-                                <Columns>
-                                    <asp:BoundField DataField="item_number" HeaderText="Item number" />
-                                    <asp:BoundField DataField="employee.employee_name" HeaderText="Raised by" />
-                                    <asp:BoundField DataField="adjustment_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Raised" />
-                                    <asp:BoundField DataField="employee_remark" HeaderText="Remarks" />
-                                    <asp:BoundField DataField="adjustment_quantity" HeaderText="Adjusted Quantity" />
-                                </Columns>
-                            </asp:GridView>
+                            <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" Style="position: relative; float: right; top: 0px;" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" OnClientClick="this.disabled=true;" UseSubmitBehavior="false" />
                         </td>
                     </tr>
                 </table>
+
+
+                <asp:Label ID="LabelGrid" runat="server" Text="Label"></asp:Label>
+
+                <div class="row" style="margin-top: 2.5vh;">
+                    <div class="col col-md-6">
+                        
+                        <asp:Label ID="LabelGridMinus" runat="server" Text="Label"></asp:Label>
+                        <asp:GridView ID="GridViewAdjMinus" runat="server" AutoGenerateColumns="False" CssClass="table">
+                            <Columns>
+                                <asp:BoundField DataField="item_number" HeaderText="Item number" />
+                                <asp:BoundField DataField="employee.employee_name" HeaderText="Raised by" />
+                                <asp:BoundField DataField="adjustment_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Raised" />
+                                <asp:BoundField DataField="employee_remark" HeaderText="Remarks" />
+                                <asp:BoundField DataField="adjustment_quantity" HeaderText="Adjusted Quantity" />
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+
+                    <div class="col col-md-6">
+
+                        <asp:Label ID="LabelGridPlus" runat="server" Text="Label"></asp:Label>
+                        <asp:GridView ID="GridViewAdjPlus" runat="server" AutoGenerateColumns="False" CssClass="table" Style="margin-top: 1px">
+                            <Columns>
+                                <asp:BoundField DataField="item_number" HeaderText="Item number" />
+                                <asp:BoundField DataField="employee.employee_name" HeaderText="Raised by" />
+                                <asp:BoundField DataField="adjustment_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Raised" />
+                                <asp:BoundField DataField="employee_remark" HeaderText="Remarks" />
+                                <asp:BoundField DataField="adjustment_quantity" HeaderText="Adjusted Quantity" />
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

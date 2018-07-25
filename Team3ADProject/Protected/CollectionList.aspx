@@ -31,7 +31,7 @@
 
             <asp:TemplateField HeaderText="Adjustment">
                 <ItemTemplate>
-                    <asp:Button ID="btn_Adjustment" runat="server" Text="ADJ" UseSubmitBehavior="false" OnClick="btn_Adjustment_Click" />
+                    <asp:Button ID="btn_Adjustment" runat="server" Text="ADJ" UseSubmitBehavior="false" OnClick="btn_Adjustment_Click" CssClass="btn btn-info" />
                     <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("item_number") %>' />
                 </ItemTemplate>
             </asp:TemplateField>

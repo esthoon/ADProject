@@ -3,7 +3,7 @@
 
     <h2>View Collection List</h2>
 
-    <asp:GridView ID="gridview1" runat="server" AutoGenerateSelectButton="true" AutoGenerateColumns="false" OnSelectedIndexChanging="gridview1_SelectedIndexChanging">
+    <asp:GridView ID="gridview1" runat="server" AutoGenerateSelectButton="true" AutoGenerateColumns="false" OnSelectedIndexChanging="gridview1_SelectedIndexChanging" CssClass="table table-hover">
 
         <Columns>
             <asp:BoundField DataField="employee_name" ReadOnly="true" HeaderText="Employee Name" SortExpression="employee_name"/>

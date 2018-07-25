@@ -4,6 +4,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="<%=ResolveUrl("~/Content/bootstrap.css")%>" />
+    <link rel="stylesheet" href="<%=ResolveUrl("~/Content/bootstrap-theme.css")%>" />
     <title></title>
 </head>
 <body>
@@ -105,49 +108,37 @@
                     </tr>
                 </table>
                 
-                <table>
-                    <tr>
-                            <asp:Label ID="LabelGrid" runat="server" Text="Label"></asp:Label>
-                    </tr>
-                    <tr>
-                        <td>
-                            
-                            <asp:Label ID="LabelGridMinus" runat="server" Text="Label"></asp:Label>
-                            
-                        </td>
-                        <td></td>
-                        <td>
-                            
-                            <asp:Label ID="LabelGridPlus" runat="server" Text="Label"></asp:Label>
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:GridView ID="GridViewAdjMinus" runat="server" AutoGenerateColumns="False">
-                                <Columns>
-                                    <asp:BoundField DataField="item_number" HeaderText="Item number" />
-                                    <asp:BoundField DataField="employee.employee_name" HeaderText="Raised by" />
-                                    <asp:BoundField DataField="adjustment_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Raised" />
-                                    <asp:BoundField DataField="employee_remark" HeaderText="Remarks" />
-                                    <asp:BoundField DataField="adjustment_quantity" HeaderText="Adjusted Quantity" />
-                                </Columns>
-                            </asp:GridView>
-                        </td>
-                        <td>&emsp;</td>
-                        <td>
-                            <asp:GridView ID="GridViewAdjPlus" runat="server" AutoGenerateColumns="False">
-                                <Columns>
-                                    <asp:BoundField DataField="item_number" HeaderText="Item number" />
-                                    <asp:BoundField DataField="employee.employee_name" HeaderText="Raised by" />
-                                    <asp:BoundField DataField="adjustment_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Raised" />
-                                    <asp:BoundField DataField="employee_remark" HeaderText="Remarks" />
-                                    <asp:BoundField DataField="adjustment_quantity" HeaderText="Adjusted Quantity" />
-                                </Columns>
-                            </asp:GridView>
-                        </td>
-                    </tr>
-                </table>
+                <asp:Label ID="LabelGrid" runat="server" Text="Label"></asp:Label>
+
+                <div class="row" style="margin-top: 2.5vh;">
+                    <div class="col col-md-6">
+                        
+                        <asp:Label ID="LabelGridMinus" runat="server" Text="Label"></asp:Label>
+                        <asp:GridView ID="GridViewAdjMinus" runat="server" AutoGenerateColumns="False" CssClass="table">
+                            <Columns>
+                                <asp:BoundField DataField="item_number" HeaderText="Item number" />
+                                <asp:BoundField DataField="employee.employee_name" HeaderText="Raised by" />
+                                <asp:BoundField DataField="adjustment_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Raised" />
+                                <asp:BoundField DataField="employee_remark" HeaderText="Remarks" />
+                                <asp:BoundField DataField="adjustment_quantity" HeaderText="Adjusted Quantity" />
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+
+                    <div class="col col-md-6">
+
+                        <asp:Label ID="LabelGridPlus" runat="server" Text="Label"></asp:Label>
+                        <asp:GridView ID="GridViewAdjPlus" runat="server" AutoGenerateColumns="False" CssClass="table" Style="margin-top: 1px">
+                            <Columns>
+                                <asp:BoundField DataField="item_number" HeaderText="Item number" />
+                                <asp:BoundField DataField="employee.employee_name" HeaderText="Raised by" />
+                                <asp:BoundField DataField="adjustment_date" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Date Raised" />
+                                <asp:BoundField DataField="employee_remark" HeaderText="Remarks" />
+                                <asp:BoundField DataField="adjustment_quantity" HeaderText="Adjusted Quantity" />
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

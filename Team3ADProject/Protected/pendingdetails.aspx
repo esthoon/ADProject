@@ -22,7 +22,7 @@
             <asp:Label ID="Label6" runat="server" Text="Request Price"></asp:Label>
             <asp:Label ID="Label12" runat="server" Text="Label"></asp:Label>
         </p>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" Width="600px" CssClass="table table-hover">
             <Columns>
                 <asp:BoundField DataField="category" HeaderText="Category" />
                 <asp:BoundField DataField="description" HeaderText="Description" />
