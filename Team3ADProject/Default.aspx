@@ -8,7 +8,6 @@
 
     <%--The default landing page is a login page. --%>
     
-        Development version: Jump to <a href="<%=ResolveUrl("~/protected/dashboard") %>">Dashboard</a>
     <div class="flex-container">
         <div class="flex-item">
             <h1>Logic University</h1>

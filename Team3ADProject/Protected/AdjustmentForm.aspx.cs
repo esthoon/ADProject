@@ -15,6 +15,7 @@ namespace Team3ADProject.Protected
         static employee user;
         static inventory item;
         static int headid, supid;
+        static int minusqty=0;
         protected void Page_Load(object sender, EventArgs e)
         {
             ButtonSubmit.Enabled = true;
@@ -28,30 +29,21 @@ namespace Team3ADProject.Protected
                 }
                 else
                 {
-                    //hardcoded
-                    Session["Employee"] = 10;
-                    user = BusinessLogic.GetEmployeeById(10);
-                    //redirect to login homepage
+                    Response.Redirect("ClerkInventory.aspx");
                 }
                 //retrieve headid
-                if (Session["Head_id"] != null)
+                headid = BusinessLogic.DepartmentHeadID(user);
+
+                //retrieve supid
+                if (user.supervisor_id != null)
                 {
-                    headid = (int)Session["Head_id"];
+                    supid = (int)user.supervisor_id;
                 }
                 else
                 {
-                    headid = 12;
+                    supid = headid;
                 }
-                //retrieve headid
-                if (Session["Sup_id"] != null)
-                {
-                    supid = (int)Session["Head_id"];
-                }
-                else
-                {
-                    supid = 13;
-                }
-                LabelDate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
+                LabelDate.Text = DateTime.Now.ToString("dd-MM-yyyy");
                 LabelName.Text = user.employee_name;
                 UpdatePage();
             }
@@ -66,10 +58,45 @@ namespace Team3ADProject.Protected
             {
                 string itemcode = param_itemcode;
                 item = BusinessLogic.GetInventory(itemcode);
+                List<adjustment> adjlist = BusinessLogic.GetPendingAdjustmentsByItemCode(itemcode);
                 LabelUnitPrice.Text = BusinessLogic.Adjprice(itemcode).ToString();
                 LabelStock.Text = item.current_quantity.ToString();
                 LabelItemNum.Text = item.item_number.ToString();
                 LabelItem.Text = item.description;
+                minusqty = BusinessLogic.ReturnPendingMinusAdjustmentQty(itemcode);
+                int plusqty = BusinessLogic.ReturnPendingPlusAdjustmentQty(itemcode);
+                GridViewAdjMinus.DataSource = adjlist.Where(x=>x.adjustment_quantity<0);
+                GridViewAdjMinus.DataBind();
+                GridViewAdjPlus.DataSource = adjlist.Where(x => x.adjustment_quantity > 0);
+                GridViewAdjPlus.DataBind();
+                if (adjlist.Count > 0)
+                {
+                    LabelGrid.Visible = false;
+                    if (minusqty != 0)
+                    {
+                        LabelGridMinus.Text = "Pending adjustment qty to be removed raised: "+minusqty;
+                    }
+                    else
+                    {
+                        LabelGridMinus.Text = "No pending adjustment qty to be removed.";
+                    }
+                    if (plusqty != 0)
+                    {
+                        LabelGridPlus.Text = "Pending adjustment qty to be added raised: " + plusqty;
+                    }
+                    else
+                    {
+                        LabelGridPlus.Text = "No pending adjustment qty to be removed.";
+                    }
+
+                }
+                else
+                {
+                    LabelGrid.Text = "No pending adjustments for this item.";
+                    LabelGridMinus.Visible = false;
+                    LabelGridPlus.Visible = false;
+                }
+
 
             }
 
@@ -127,9 +154,9 @@ namespace Team3ADProject.Protected
             {
                 if (submitqty < 0)
                 {
-                    if (Math.Abs(submitqty) > item.current_quantity)
+                    if (Math.Abs(submitqty) > (item.current_quantity+minusqty))
                     {
-                        LabelError.Text = "Entered quantity is > current quantity";
+                        LabelError.Text = "The quantity entered has exceed the outstanding pending quantity to be removed. Please review.";
                     }
                     else
                     {
@@ -156,13 +183,13 @@ namespace Team3ADProject.Protected
         {
             if (price > 250)
             {
-                //return BusinessLogic.RetrieveEmailByEmployeeID(headid);
-                return "e0283390@u.nus.edu";
+                return BusinessLogic.RetrieveEmailByEmployeeID(headid);
+                //return "e0283390@u.nus.edu";
             }
             else
             {
-                //return BusinessLogic.RetrieveEmailByEmployeeID(supid);
-                return "e0283390@u.nus.edu";
+                return BusinessLogic.RetrieveEmailByEmployeeID(supid);
+                //return "e0283390@u.nus.edu";
             }
         }
 

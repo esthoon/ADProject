@@ -152,12 +152,12 @@ namespace Team3ADProject.Protected
             string id = Depid.Trim() + "/" + DateTime.Now.Year.ToString() + "/" + i;
             BusinessLogic.AddNewRequisitionOrder(id, Empid, d);
             List<cart> cart = (List<cart>)Session["RequestCart"];
+            BusinessLogic.updatelastrequestid(Depid, i);
             for (int xi = 0; xi < cart.Count; xi++)
             {
                 BusinessLogic.AddRequisitionOrderDetail(cart[xi], id);
             }
             //Application["RequestID"] = i;
-            BusinessLogic.updatelastrequestid(Depid, i);
             Session["RequestCart"] = null;
             // string to = BusinessLogic.GetEmployee((int)Session["Head_id"]).email_id;
             string to = "tharrani2192@gmail.com";

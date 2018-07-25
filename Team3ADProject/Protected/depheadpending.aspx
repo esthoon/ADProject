@@ -2,11 +2,11 @@
 
 <%@ Register Assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI.DataVisualization.Charting" TagPrefix="asp" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">   
-        <h2>Pending Orders</h2>
-    	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
+		<h2>Pending Orders</h2>
+		<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
 			<Columns>
 				<asp:BoundField DataField="id" HeaderText="Request Number" />
-				<asp:BoundField DataField="Date" HeaderText="Request Date" /> 
+				<asp:BoundField DataField="Date" HeaderText="Request Date" DataFormatString="{0:dd-MM-yyyy}" /> 
 				<asp:BoundField DataField="Name" HeaderText="Employee" />
 				<asp:BoundField DataField="status" HeaderText="Request Status" />
 				<asp:BoundField DataField="sum" HeaderText="Request Price" />

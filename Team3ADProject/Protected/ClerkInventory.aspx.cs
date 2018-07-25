@@ -32,13 +32,6 @@ namespace Team3ADProject.Protected
                     int employeeid = (int)Session["Employee"];
                     user = BusinessLogic.GetEmployeeById(employeeid);
                 }
-                else
-                {
-                    //hardcoded
-                    Session["Employee"] = 10;
-                    user = BusinessLogic.GetEmployeeById(10);
-                    //redirect to login homepage
-                }
 
                 CheckBox2.Enabled = false;
                 CheckBox2.Checked = false;
@@ -260,34 +253,41 @@ namespace Team3ADProject.Protected
             HiddenField hd = (HiddenField)lb.FindControl("HiddenField1");
             string itemcode = hd.Value;
             Session["itemcode"] = itemcode;
-            string url = "AdjustmentForm.aspx?itemcode=" + itemcode;
+            //string url = "AdjustmentForm1.aspx?itemcode=" + itemcode;
             //Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
-            Response.Redirect(url);
+            Response.Redirect("AdjustmentForm.aspx?itemcode=" + itemcode);
         }
 
         //place po for all low-in-stock items event handler
         protected void btnAllPO_Click(object sender, EventArgs e)
         {
-            List<POStaging> purchaseorderlist = new List<POStaging>();
-            List<POStaging> StagingList = new List<POStaging>();
-            if (Session["StagingList"] != null)
+            if (user != null)
             {
-                StagingList = (List<POStaging>)Session["StagingList"];
-            }
-            try
-            {
-                purchaseorderlist = ConvertListToPOStaging(lisPOAll);
-                foreach (POStaging a in purchaseorderlist)
+                List<POStaging> purchaseorderlist = new List<POStaging>();
+                List<POStaging> StagingList = new List<POStaging>();
+                if (Session["StagingList"] != null)
                 {
-                    StagingList = BusinessLogic.AddToStaging(StagingList, a);
+                    StagingList = (List<POStaging>)Session["StagingList"];
                 }
-                Session["StagingList"] = StagingList;
-                Response.Redirect("POStagingSummary.aspx");
-                //Label2.Text = purchaseorderlist[2].Supplier.supplier_id;
+                try
+                {
+                    purchaseorderlist = ConvertListToPOStaging(lisPOAll);
+                    foreach (POStaging a in purchaseorderlist)
+                    {
+                        StagingList = BusinessLogic.AddToStaging(StagingList, a);
+                    }
+                    Session["StagingList"] = StagingList;
+                    Response.Redirect("POStagingSummary.aspx");
+                    //Label2.Text = purchaseorderlist[2].Supplier.supplier_id;
+                }
+                catch (Exception ex)
+                {
+                    Label2.Text = "1 " + ex.Message;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Label2.Text = "1 " + ex.Message;
+                Label2.Text = "Please log in...";
             }
 
         }

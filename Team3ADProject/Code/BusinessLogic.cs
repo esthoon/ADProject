@@ -310,16 +310,15 @@ department.department_id.Equals(dept)
         }
 
         public static System.Collections.IEnumerable GetSupplier(string id)
-        //     public static List<(string supplier_name, double unit_price)> GetSupplier(string id)
         {
             var nestedQuery = from s in context.suppliers
                               from sid in s.supplier_itemdetail
                               from i in context.inventories
                               where (sid.item_number == id && i.item_number == id)
                               orderby (sid.priority)
-                              select new { s.supplier_name, sid.unit_price, i.description };
+                              select new { s.supplier_name, sid.unit_price, s.supplier_id };
             return nestedQuery.ToList();
-            //return context.supplier_itemdetail.Where(i => i.item_number == id).OrderBy(i => i.priority).ToList<supplier_itemdetail>();
+            
         }
         // Returns a suggested reorder quantity when give an item code
         // Returns zero if there are no purchase order in the past.
@@ -349,7 +348,7 @@ department.department_id.Equals(dept)
 
 
 
-            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price <= 250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price <= 250 ).ToList();
 
 
         }
@@ -357,7 +356,7 @@ department.department_id.Equals(dept)
         {
 
 
-            return context.adjustments.Where(x => x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250 ).ToList();
 
         }
 
@@ -386,12 +385,14 @@ department.department_id.Equals(dept)
 
         }
 
+      
+
 
         //searchdateforstoremanager
         public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
 
 
         }
@@ -399,7 +400,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreSupSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price < 250).ToList<adjustment>();
 
 
         }
@@ -752,7 +753,7 @@ department.department_id.Equals(dept)
         //return employee based on userid
         public static employee GetEmployeeByUserID(string userid)
         {
-            return context.employees.Where(x => x.user_id.Trim() == userid.Trim()).FirstOrDefault();
+            return context.employees.Where(x =>x.user_id.Trim()==userid.Trim()).FirstOrDefault();
         }
 
         public static department GetDepartmenthead(string dept)
@@ -812,13 +813,26 @@ department.department_id.Equals(dept)
         }
 
         //return pendingadjqty for cInventory
-        public static int ReturnPendingAdjustmentQty(inventory item)
+        public static int ReturnPendingMinusAdjustmentQty(string item)
         {
-            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending");
+            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending" && x.adjustment_quantity<0);
             int qty = 0;
             foreach (var a in q)
             {
-                if (a.item_number.ToLower().Trim().Equals(item.item_number.ToLower().Trim()))
+                if (a.item_number.ToLower().Trim().Equals(item.ToLower().Trim())&&a.adjustment_quantity<0)
+                {
+                    qty += a.adjustment_quantity;
+                }
+            }
+            return qty;
+        }
+        public static int ReturnPendingPlusAdjustmentQty(string item)
+        {
+            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending" && x.adjustment_quantity>0);
+            int qty = 0;
+            foreach (var a in q)
+            {
+                if (a.item_number.ToLower().Trim().Equals(item.ToLower().Trim()))
                 {
                     qty += a.adjustment_quantity;
                 }
@@ -936,6 +950,21 @@ department.department_id.Equals(dept)
         public static string RetrieveEmailByEmployeeID(int id)
         {
             return context.employees.Where(x => x.employee_id == id).Select(x => x.email_id).FirstOrDefault();
+        }
+
+        public static List<adjustment> GetPendingAdjustmentsByItemCode(string itemcode)
+        {
+            return context.adjustments.Where(x => x.item_number.Trim().ToLower() == itemcode.Trim().ToLower() && x.adjustment_status.ToLower().Trim() == "pending").ToList();
+        }
+
+        public static int? GetSupervisorID(int employeeid)
+        {
+            return context.employees.Where(x => x.employee_id == employeeid).Select(x => x.supervisor_id).First();
+        }
+
+        public static int DepartmentHeadID(employee employee)
+        {
+            return context.departments.Where(x => x.department_id.Trim().ToLower() == employee.department_id.Trim().ToLower()).Select(x => x.head_id).First();
         }
         //Esther end
 
@@ -1359,6 +1388,12 @@ department.department_id.Equals(dept)
 
 
         //Joel - end
+
+        public static double getUnitPrice(string supplier_id, string item_number)
+        {
+            var query = context.supplier_itemdetail.Where(x => x.supplier_id == supplier_id && x.item_number == item_number).FirstOrDefault();
+            return query.unit_price;
+        }
 
 
     }

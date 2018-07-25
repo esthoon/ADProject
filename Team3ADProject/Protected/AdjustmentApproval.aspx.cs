@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -58,7 +59,10 @@ namespace Team3ADProject.Protected
             {
                 GridView1.DataSource = BusinessLogic.StoreSupGetAdj();
             }
+
+            
             GridView1.DataBind();
+
             NoRowDetail();
 
 
@@ -93,13 +97,19 @@ namespace Team3ADProject.Protected
                 Label1.Text = "There are no more adjustment forms for approval";
                 Label1.Visible = true;
             }
+           
             else
             {
                 LinkButton1.Visible = true;
                 LinkButton3.Visible = true;
                 TextBox2.Enabled = true;
                 Button1.Enabled = true;
+                Button2.Enabled = true;
                 Label1.Visible = false;
+                if (TextBox2.Text.IsNullOrWhiteSpace())
+                {
+                    Button2.Enabled = false;
+                }
             }
         }
 
@@ -171,23 +181,30 @@ namespace Team3ADProject.Protected
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            String s = TextBox2.Text;
-            DateTime search = Convert.ToDateTime(s);
-            if ((string)Session["role"] == "12")
-            {
+           
 
-                GridView1.DataSource = BusinessLogic.StoreManagerSearchAdj(search);
+            
+                String s = TextBox2.Text;
+                DateTime dt = DateTime.ParseExact(s, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                String x = dt.ToString("yyyy-MMMM-dd");
+                DateTime search = Convert.ToDateTime(x);
 
-            }
-            else if ((string)Session["role"] == "13")
-            {
+                if ((string) Session["role"] == "12")
+                {
 
-                GridView1.DataSource = BusinessLogic.StoreSupSearchAdj(search);
+                    GridView1.DataSource = BusinessLogic.StoreManagerSearchAdj(search);
 
-            }
-            GridView1.DataBind();
-            NoRowDetail();
+                }
+                else if ((string) Session["role"] == "13")
+                {
 
+                    GridView1.DataSource = BusinessLogic.StoreSupSearchAdj(search);
+
+                }
+
+                GridView1.DataBind();
+                NoRowDetail();
+            
 
         }
 
@@ -196,6 +213,8 @@ namespace Team3ADProject.Protected
             TextBox2.Text = string.Empty;
             BindGrid();
         }
+
+        
 
         //protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
         //{

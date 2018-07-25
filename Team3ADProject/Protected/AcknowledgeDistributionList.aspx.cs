@@ -23,6 +23,8 @@ namespace Team3ADProject.Protected
                     LocationLabel.Text = Session["CollectionLocation"].ToString();
                     TimeLabel.Text = Session["CollectionTime"].ToString();
                     int collection_id = Convert.ToInt32(Session["collection_id"]);
+                    AcknowledgeButton.Enabled = false;
+                    AcknowledgeButton.BackColor = Color.Red;
                     myPageLoad(collection_id);
                 }
                 catch (Exception ex)
@@ -60,7 +62,7 @@ namespace Team3ADProject.Protected
 
                     if (UserInput > ActualSupplyQuantityValue)
                     {
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('You cannot enter more than what you requested for. Please try again later')", true);
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('You cannot enter more than the requested supply quantity')", true);
                         GreaterThan = true;
                         break;
                     }
@@ -176,7 +178,7 @@ namespace Team3ADProject.Protected
 
             if (PinCorrect())
             {
-                Response.Write("\nPin entered is correct");
+                // Response.Write("\nPin entered is correct");
             }
             else
             {
@@ -210,7 +212,7 @@ namespace Team3ADProject.Protected
             catch (FormatException e)
             {
                 System.FormatException ex = e;
-                Response.Write("\nPin has to be numeric");
+                //Response.Write("\nPin has to be numeric");
                 return false;
             }
             catch (Exception e)

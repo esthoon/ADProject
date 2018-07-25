@@ -13,7 +13,7 @@
         <asp:GridView ID="GridViewPODetails" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPODetails_DataBound" CssClass="table table-hover">
             <Columns>
                 <asp:BoundField HeaderText="Index" />
-                <asp:BoundField DataField="DateRequired" HeaderText="Date Required" DataFormatString="{0:yyyy/MM/dd}" />
+                <asp:BoundField DataField="DateRequired" HeaderText="Date Required" DataFormatString="{0:dd-MM-yyyy}" />
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item" />
                 <asp:BoundField DataField="Inventory.item_number" HeaderText="Item Code" />
                 <asp:BoundField DataField="UnitPrice" HeaderText="Unit Price" DataFormatString="{0:c2}" />
@@ -21,8 +21,9 @@
                     <ItemTemplate>
                         <asp:TextBox ID="TextBox1" runat="server" Text='<%# Eval("OrderedQty") %>' CausesValidation="true" AutoPostBack="true" OnTextChanged="TextBox1_TextChanged"></asp:TextBox>
                         <br />
-                        <asp:CompareValidator runat="server" Operator="GreaterThan" Type="Integer" ControlToValidate="TextBox1" ErrorMessage="Value must be a whole number" ForeColor="Red" ValueToCompare="0" />
-                        <asp:HiddenField ID="HiddenField1" runat="server"/>
+                        <asp:RangeValidator ID="Value1RangeValidator" ControlToValidate="TextBox1" Type="Integer" MinimumValue="1" MaximumValue="1000000" Display="Dynamic" ErrorMessage="Please enter an integer between than 1 and 1,000,000." runat="server"/>
+						<asp:RequiredFieldValidator ID="Value2RangeValidator" ControlToValidate="TextBox1" Display = "Static" Width = "100%" ErrorMessage="Please enter an integer between than 1 and 1,000,000." runat="server"/>
+						<asp:HiddenField ID="HiddenField1" runat="server"/>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField HeaderText="Total Cost"/>
@@ -34,7 +35,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="Remove" OnClick="Button2_Click" CssClass="btn btn-warning"/>
+                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="Remove" OnClick="Button2_Click" CssClass="btn btn-warning" UseSubmitBehavior="false"/>
                         <asp:HiddenField ID="HiddenField4" runat="server"/>
                         </ItemTemplate>
                     </asp:TemplateField>

@@ -11,7 +11,8 @@ namespace Team3ADProject.Model
         private inventory inventory;
         private int orderedQty;
         private int pendingApprovalQty;
-        private int pendingAdjustmentQty;
+        private int pendingMinusAdjustmentQty;
+        private int pendingPlusAdjustmentQty;
         private int reorderQty;
 
         public cInventory(inventory item)
@@ -19,7 +20,8 @@ namespace Team3ADProject.Model
             this.inventory = item;
             this.orderedQty = BusinessLogic.ReturnPendingPOqtyByStatus(item, "pending");
             this.pendingApprovalQty = BusinessLogic.ReturnPendingPOqtyByStatus(item, "awaiting approval");
-            this.pendingAdjustmentQty = BusinessLogic.ReturnPendingAdjustmentQty(item);
+            this.pendingMinusAdjustmentQty = BusinessLogic.ReturnPendingMinusAdjustmentQty(item.item_number);
+            this.pendingPlusAdjustmentQty = BusinessLogic.ReturnPendingPlusAdjustmentQty(item.item_number);
             this.reorderQty = ReorderQuantity(item);
         }
 
@@ -58,15 +60,26 @@ namespace Team3ADProject.Model
                 this.pendingApprovalQty = value;
             }
         }
-        public int PendingAdjustmentQty
+        public int PendingMinusAdjustmentQty
         {
             get
             {
-                return this.pendingAdjustmentQty;
+                return this.pendingMinusAdjustmentQty;
             }
             set
             {
-                this.pendingAdjustmentQty = value;
+                this.pendingMinusAdjustmentQty = value;
+            }
+        }
+        public int PendingPlusAdjustmentQty
+        {
+            get
+            {
+                return this.pendingPlusAdjustmentQty;
+            }
+            set
+            {
+                this.pendingPlusAdjustmentQty = value;
             }
         }
         public int reorder_quantity
