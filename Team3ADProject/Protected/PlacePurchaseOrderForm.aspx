@@ -38,9 +38,8 @@
 	$<asp:Label ID="unitCost" runat="server"></asp:Label>
             <br />
             Quantity :
-	<asp:TextBox ID="TextBoxOrderQuantity" runat="server" AutoPostBack="True" OnTextChanged="DropDownListSupplier_SelectedIndexChanged"></asp:TextBox>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Enter a qty" ForeColor="#FF3300" ControlToValidate="TextBoxOrderQuantity"></asp:RequiredFieldValidator>
-            <asp:CompareValidator runat="server" Operator="GreaterThan" Type="Integer" ControlToValidate="TextBoxOrderQuantity" ErrorMessage="Value must be a whole number" ForeColor="Red" ValueToCompare="0" />
+	<asp:TextBox ID="TextBoxOrderQuantity" runat="server" AutoPostBack="true" OnTextChanged="DropDownListSupplier_SelectedIndexChanged"></asp:TextBox>
+            <asp:Label ID="ErrorText" runat="server" ForeColor="Red"></asp:Label>
             <br />
             Total Cost :
 	<asp:Label ID="totalCost" runat="server"></asp:Label>

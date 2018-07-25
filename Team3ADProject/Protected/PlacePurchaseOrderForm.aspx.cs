@@ -48,37 +48,59 @@ namespace Team3ADProject.Protected
                 itemNumber.Text = itemSelected.item_number;
                 itemDescription.Text = itemSelected.description;
                 itemCurrentStock.Text = itemSelected.current_quantity.ToString();
-                TextBoxOrderQuantity.Text = itemSelected.reorder_quantity.ToString();
+                TextBoxOrderQuantity.Text = (itemSelected.reorder_level - itemSelected.current_quantity).ToString();
 
                 //Getting the user from the session and the current time to be posted on the webpage 
                 createByWho.Text = user.employee_name;
                 DateTime dateAndTime = DateTime.Now;
-                createOnWhen.Text = dateAndTime.ToString("dd/MM/yyyy");
-                LabelRequiredDate.Text = dateAndTime.AddDays(28).ToString("dd/MM/yyyy");
+                createOnWhen.Text = dateAndTime.ToString("dd-MM-yyyy");
+                LabelRequiredDate.Text = dateAndTime.AddDays(28).ToString("dd-MM-yyyy");
 
                 //When dropdownlist change, change the unit price and change the total price based on the quantity
-                CalculationForUnitCostAndTotalCost();
+                CalculationForUnitCostAndTotalCost((itemSelected.reorder_quantity - itemSelected.current_quantity));
             }
         }
 
         protected void DropDownListSupplier_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //When dropdownlist change, change the unit price and change the total price based on the quantity
-            CalculationForUnitCostAndTotalCost();
+            int qty;
 
+                if (Int32.TryParse(TextBoxOrderQuantity.Text, out qty))
+                {
+                    //When dropdownlist change, change the unit price and change the total price based on the quantity
+                    CalculationForUnitCostAndTotalCost(qty);
+                }
+                else
+                {
+                    ErrorText.Text = "Please input a Whole Number between 1 and 1,000,000";
+                    Submit.Enabled = false;
+                }
+            
         }
 
-        public void CalculationForUnitCostAndTotalCost()
+        public void CalculationForUnitCostAndTotalCost(int qty)
         {
-            unitCost.Text = BusinessLogic.getUnitPrice(DropDownListSupplier.SelectedValue,itemid).ToString();
-            totalCost.Text = (Convert.ToDouble(TextBoxOrderQuantity.Text) * Convert.ToDouble(unitCost.Text)).ToString("C");
+            if (qty > 0 && qty <1000000)
+            {
+                unitCost.Text = BusinessLogic.getUnitPrice(DropDownListSupplier.SelectedValue, itemid).ToString();
+                totalCost.Text = (qty * Convert.ToDouble(unitCost.Text)).ToString("C");
+                ErrorText.Text = "";
+                Submit.Enabled = true;
+            }
+            else
+            {
+                ErrorText.Text = "Please input a Whole Number between 1 and 1,000,000";
+                Submit.Enabled = false;
+            }
+                    
+           
         }
+
 
         protected void CalendarSelected(object sender, DayRenderEventArgs e)
         {
             if (e.Day.Date <= DateTime.Now)
             {
-
                 e.Cell.BackColor = ColorTranslator.FromHtml("#a9a9a9");
 
                 e.Day.IsSelectable = false;
