@@ -20,6 +20,7 @@ namespace Team3ADProject.Model
             this.budgets = new HashSet<budget>();
             this.department_rep = new HashSet<department_rep>();
             this.collections = new HashSet<collection>();
+            this.collection_detail = new HashSet<collection_detail>();
         }
     
         public string department_id { get; set; }
@@ -39,5 +40,7 @@ namespace Team3ADProject.Model
         public virtual ICollection<department_rep> department_rep { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<collection> collections { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<collection_detail> collection_detail { get; set; }
     }
 }

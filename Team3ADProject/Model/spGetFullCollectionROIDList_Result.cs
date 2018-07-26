@@ -24,5 +24,7 @@ namespace Team3ADProject.Model
         public Nullable<int> collection_id { get; set; }
         public string description { get; set; }
         public string unit_of_measurement { get; set; }
+        public Nullable<int> current_quantity { get; set; }
+        public string department_name { get; set; }
     }
 }
