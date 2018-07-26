@@ -58,8 +58,6 @@ namespace Team3ADProject.Services
         [OperationContract]
         [WebGet(UriTemplate = "/Chart/getPendingPurchaseOrderCountBySupplier", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_MegaObject> getPendingPurchaseOrderCountBySupplier();
-
-
     }
 
     [DataContract]
@@ -256,4 +254,5 @@ namespace Team3ADProject.Services
             Count = count;
         }
     }
+
 }

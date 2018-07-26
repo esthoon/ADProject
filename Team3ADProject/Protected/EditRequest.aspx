@@ -5,11 +5,42 @@
     <div>
 
 <div>
-    <asp:Label ID="Label1" runat="server" Text="Requisition Number :" /><asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+     <br/>
+    
     <br/>
-    <asp:Label ID="Label2" runat="server" Text="Requisition Date :" /><asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
+    <table>
+        <tr>
+            <td>
+                <asp:Label ID="Label1" runat="server" Text="Requisition Number :" />
+            </td>
+            <td>&nbsp;&nbsp;
+                <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+            </td>
+        </tr>
+
+        <tr>
+             <td>
+                 <asp:Label ID="Label2" runat="server" Text="Requisition Date :" />
+            </td>
+            <td>&nbsp;&nbsp;
+                <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
+            </td>
+        </tr>
+
+        <tr>
+             <td>
+                 <asp:Label ID="Label3" runat="server" Text="Requisition Status :" />
+            </td>
+            <td>&nbsp;&nbsp;
+                <asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
+            </td>
+        </tr>
+    </table>
+    
+   
+    
     <br/>
-    <asp:Label ID="Label3" runat="server" Text="Requisition Status :" /><asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
+    
     <br/>
 </div>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-hover">

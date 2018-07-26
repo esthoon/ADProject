@@ -22,14 +22,17 @@ namespace Team3ADProject
             // Setup the session variables
             Session["username"] = Login1.UserName.ToString();
             employee emp = BusinessLogic.GetEmployeeByUserID((string)Session["username"]);
-            Session["Employee"] = emp.employee_id;
+
+                Session["Employee"] = emp.employee_id;
+                Session["Department"] = emp.department_id.Trim();
+                Session["role"] = Roles.GetRolesForUser((string)Session["username"]).FirstOrDefault();
 
 
-            Session["Department"] = BusinessLogic.getdepartment((string)Session["username"]);
-            Session["role"] = Roles.GetRolesForUser((string)Session["username"]).FirstOrDefault();
-            department dep = BusinessLogic.GetDepartmenthead(emp.department_id.Trim());
-            Session["Head_id"] = dep.head_id;
-            Session["supervisor_id"] = emp.supervisor_id;
+            department dep = BusinessLogic.GetDepartmenthead((string)Session["Department"]);
+                Session["Head_id"] = dep.head_id;
+                Session["supervisor_id"] = emp.supervisor_id;
+
+
             // Redirect users to their dashboard
             Response.Redirect(ResolveUrl("~/Protected/Dashboard"));
         }

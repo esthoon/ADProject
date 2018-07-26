@@ -27,7 +27,7 @@ namespace Team3ADProject.Protected
             if (list.Count > 0)
             {
                 TextBox1.Visible = true;
-                Label2.Text = "Search by Date(YYYY/ MM / DD)";
+                Label2.Text = "Search by Date(dd-MM-yyyy)";
                 Button1.Visible = true;
                 Button2.Visible = false;
                 // ImageButton1.Visible = true;
@@ -83,7 +83,7 @@ namespace Team3ADProject.Protected
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
-            TextBox1.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
+            TextBox1.Text = Calendar1.SelectedDate.ToString("dd-MM-yyyy");
             // Calendar1.Visible = false;
         }
 
