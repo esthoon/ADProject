@@ -400,7 +400,7 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUndisbursedROList_Result>("spGetUndisbursedROList");
         }
     
-        public virtual int spInsertCollectionDetail(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus)
+        public virtual int spInsertCollectionDetail(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus, string departmentId)
         {
             var placeIdParameter = placeId.HasValue ?
                 new ObjectParameter("placeId", placeId) :
@@ -414,10 +414,14 @@ namespace Team3ADProject.Model
                 new ObjectParameter("collectionStatus", collectionStatus) :
                 new ObjectParameter("collectionStatus", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertCollectionDetail", placeIdParameter, collectionDateParameter, collectionStatusParameter);
+            var departmentIdParameter = departmentId != null ?
+                new ObjectParameter("departmentId", departmentId) :
+                new ObjectParameter("departmentId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertCollectionDetail", placeIdParameter, collectionDateParameter, collectionStatusParameter, departmentIdParameter);
         }
     
-        public virtual int spSpecialRequestReady(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus, string ro_id)
+        public virtual int spSpecialRequestReady(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus, string ro_id, string departmentid)
         {
             var placeIdParameter = placeId.HasValue ?
                 new ObjectParameter("placeId", placeId) :
@@ -435,7 +439,11 @@ namespace Team3ADProject.Model
                 new ObjectParameter("ro_id", ro_id) :
                 new ObjectParameter("ro_id", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSpecialRequestReady", placeIdParameter, collectionDateParameter, collectionStatusParameter, ro_idParameter);
+            var departmentidParameter = departmentid != null ?
+                new ObjectParameter("departmentid", departmentid) :
+                new ObjectParameter("departmentid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSpecialRequestReady", placeIdParameter, collectionDateParameter, collectionStatusParameter, ro_idParameter, departmentidParameter);
         }
     
         public virtual ObjectResult<getUserTokenByUsername_Result> getUserTokenByUsername(string username)

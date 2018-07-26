@@ -14,8 +14,6 @@ namespace Team3ADProject.Protected
 {
     public partial class DisbursementSorting : System.Web.UI.Page
     {
-        static List<CollectionListItem> allDptCollectionList;
-        static List<spGetFullCollectionROIDList_Result> roidList;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,20 +22,45 @@ namespace Team3ADProject.Protected
                 TextBox_Collect_Date.Visible = false;
                 Calendar_Collect_Date.Visible = false;
                 btn_ReadyForCollection.Visible = false;
-
-                roidList = new List<spGetFullCollectionROIDList_Result>();
-                roidList = BusinessLogic.GetFullCollectionROIDList();
+                Label2.Visible = false;
 
                 BindRadioButtonList();
-                allDptCollectionList = new List<CollectionListItem>();
 
-
-                if (Session["allDptCollectionList"] != null)
-                {
-                    allDptCollectionList = (List<CollectionListItem>)Session["allDptCollectionList"];
-                }
             }
         }
+
+        protected void BindRadioButtonList()
+        {
+            //DISPLAY ONLY DEPARTMENTS WITH ITEMS TO COLLECT
+            List<string> dptList = new List<string>();
+            dptList = BusinessLogic.DisplayListofDepartmentsForCollection();
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("DepartmentName", typeof(string));
+            //DataRow dr;
+
+            for (int i = 0; i < dptList.Count; i++)
+            {
+                string dptName = dptList[i].ToString();
+                dt.Rows.Add(dptName);
+            }
+
+            RadioButtonList_Dpt.DataSource = dt;
+            RadioButtonList_Dpt.DataTextField = "DepartmentName";
+            RadioButtonList_Dpt.DataValueField = "DepartmentName";
+            RadioButtonList_Dpt.DataBind();
+            if (dptList.Count > 0)
+            {
+                RadioButtonList_Dpt.Items[0].Selected = true;
+            }
+
+            if (dptList.Count <= 0)
+            {
+                Label_noDptWarning.Visible = true;
+                btn_SortingSearch.Enabled = false;
+            }
+        }
+
 
         protected void btn_SortingSearch_Click(object sender, EventArgs e)
         {
@@ -45,89 +68,21 @@ namespace Team3ADProject.Protected
             NoRowDetail();
         }
 
-        protected void BindRadioButtonList()
-        {
-            //DISPLAY ONLY DEPARTMENTS WITH ITEMS TO COLLECT
-            //List<string> dptList = new List<string>();
-            //if (roidList.Count > 0)
-            //{
-            //    dptList.Add(roidList[0].department_name.ToString().Trim());
-            //}
-
-            //int counter = 0;
-            //foreach (spGetFullCollectionROIDList_Result q in roidList)
-            //{
-            //    foreach (string dept in dptList.ToList())
-            //    {
-            //        if (dept.Contains(q.department_name.Trim()))
-            //        {
-            //            counter++;
-            //        }
-            //    }
-            //    if (counter == 0)
-            //    {
-            //        dptList.Add(q.department_name.ToString().Trim());
-            //    }
-
-
-            //}
-
-            //DataTable dt = new DataTable();
-            //DataRow dr;
-
-            //dt.Columns.Add(new DataColumn("DepartmentName", typeof(string)));
-
-            //for (int i = 0; i < dptList.Count; i++)
-            //{
-            //    string dptName = roidList[i].department_name.ToString().Trim();
-            //    dr = dt.NewRow();
-            //    dr[0] = dptName;
-            //}
-
-            //RadioButtonList_Dpt.DataSource = dt;
-            //RadioButtonList_Dpt.DataTextField = "DepartmentName";
-            //RadioButtonList_Dpt.DataValueField = "DepartmentName";
-            //RadioButtonList_Dpt.DataBind();
-            ////RadioButtonList_Dpt.Items[0].Selected = true;
-            //if (dptList.Count <= 0)
-            //{
-            //    Label_noDptWarning.Visible = true;
-            //    btn_SortingSearch.Enabled = false;
-
-            //}
-
-            RadioButtonList_Dpt.DataSource = BusinessLogic.GetDepartmentList();
-            RadioButtonList_Dpt.DataTextField = "department_name";
-            RadioButtonList_Dpt.DataValueField = "department_name";
-            RadioButtonList_Dpt.DataBind();
-            RadioButtonList_Dpt.Items[0].Selected = true;
-            if (BusinessLogic.GetDepartmentList() == null)
-            {
-                Label_noDptWarning.Visible = true;
-                Label_noDptWarning.Text = "There are no departments for disbursement";
-                btn_SortingSearch.Enabled = false;
-            }
-        }
-
         protected void btn_ReadyForCollection_Click(object sender, EventArgs e)
         {
+            //(1) recommended distribution qty must be smaller than required qty or collected qty available(from session), whichever is smaller (validator - front end)
             if (ValidatePreparedQty() < 0)
             {
                 return;
             }
 
-            //(1) recommended distribution qty must be smaller than required qty or collected qty available(from session), whichever is smaller (validator - front end)
-
+            //(2) create new collection_detail table row. 
             string dpt_Id = GetDepartmentId();
 
-
-            //(2) create new collection_detail table row. 
             int placeId = BusinessLogic.GetPlaceIdFromDptId(dpt_Id);
             DateTime collectionDate = DateTime.Parse(TextBox_Collect_Date.Text);
-            string collectionStatus = "Pending";
 
-            BusinessLogic.InsertCollectionDetailsRow(placeId, collectionDate, collectionStatus);
-
+            BusinessLogic.InsertCollectionDetailsRow(placeId, collectionDate, dpt_Id);
 
             //(3) add RO IDs to requisition_disbursement_detail table w/ newest collection list id
             BusinessLogic.InsertDisbursementListROId(dpt_Id);
@@ -156,20 +111,6 @@ namespace Team3ADProject.Protected
             gridview_DptSort.DataBind();
         }
 
-        protected int ReturnIndex(string item_code)
-        {
-            int value = -1;
-            for (int i = 0; i < allDptCollectionList.Count; i++)
-            {
-                if (allDptCollectionList[i].itemNum.Trim().ToLower() == item_code.Trim().ToLower())
-                {
-                    value = i;
-                }
-            }
-
-            return value;
-        }
-
         protected void gridview_DptSort_DataBound(object sender, EventArgs e)
         {
             foreach (GridViewRow gvr in gridview_DptSort.Rows)
@@ -177,11 +118,11 @@ namespace Team3ADProject.Protected
                 Label lb = (Label)gvr.FindControl("Label1");
                 string itemcode = gvr.Cells[0].Text;
                 int qty = 0;
-                foreach (CollectionListItem a in allDptCollectionList)
+                foreach (spGetFullCollectionROIDList_Result a in BusinessLogic.GetFullCollectionROIDList())
                 {
-                    if (a.itemNum.Trim().ToLower() == itemcode.Trim().ToLower())
+                    if (a.item_number.Trim().ToLower() == itemcode.Trim().ToLower())
                     {
-                        qty = a.qtyPrepared;
+                        qty += a.item_distributed_quantity;
                     }
                 }
                 lb.Text = qty.ToString();
@@ -220,13 +161,14 @@ namespace Team3ADProject.Protected
                 TextBox_Collect_Date.Visible = false;
                 Calendar_Collect_Date.Visible = false;
                 btn_ReadyForCollection.Visible = false;
-
+                Label2.Visible = false;
             }
             else
             {
                 TextBox_Collect_Date.Visible = true;
                 Calendar_Collect_Date.Visible = true;
                 btn_ReadyForCollection.Visible = true;
+                Label2.Visible = true;
             }
         }
 
@@ -270,3 +212,43 @@ namespace Team3ADProject.Protected
 
     }
 }
+
+
+
+//OLD METHOD TO GET FULL LIST OF DPTS
+//RadioButtonList_Dpt.DataSource = BusinessLogic.GetDepartmentList();
+//RadioButtonList_Dpt.DataTextField = "department_name";
+//RadioButtonList_Dpt.DataValueField = "department_name";
+//RadioButtonList_Dpt.DataBind();
+//RadioButtonList_Dpt.Items[0].Selected = true;
+//if (BusinessLogic.GetDepartmentList() == null)
+//{
+//    Label_noDptWarning.Visible = true;
+//    Label_noDptWarning.Text = "There are no departments for disbursement";
+//    btn_SortingSearch.Enabled = false;
+//}
+
+
+//protected int ReturnIndex(string item_code)
+//{
+//    int value = -1;
+//    for (int i = 0; i < allDptCollectionList.Count; i++)
+//    {
+//        if (allDptCollectionList[i].itemNum.Trim().ToLower() == item_code.Trim().ToLower())
+//        {
+//            value = i;
+//        }
+//    }
+
+//    return value;
+//}
+
+
+//TO UNPACK LIST<COLLECTIONLISTITEM> FROM SESSION VARIABLE
+//static List<CollectionListItem> allDptCollectionList;
+//allDptCollectionList = new List<CollectionListItem>();
+
+//if (Session["allDptCollectionList"] != null)
+//{
+//    allDptCollectionList = (List<CollectionListItem>)Session["allDptCollectionList"];
+//}

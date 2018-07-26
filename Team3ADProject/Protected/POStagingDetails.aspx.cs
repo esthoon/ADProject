@@ -62,24 +62,18 @@ namespace Team3ADProject.Protected
             TextBox tb = (TextBox)sender;
             HiddenField hf1 = (HiddenField)tb.FindControl("HiddenField1");
             int index = Int32.Parse(hf1.Value);
-            polist[index].OrderedQty = Int32.Parse(tb.Text);
-            Session["StagingList"] = polist;
-            loadGrid();
+            int qty = 0;
+            if (tb.Text.Trim() != null && Int32.TryParse(tb.Text,out qty))
+            {
+                polist[index].OrderedQty = qty;
+                Session["StagingList"] = polist;
+                loadGrid();
+            }
         }
 
         protected void GridViewPODetails_DataBound(object sender, EventArgs e)
         {
             UpdateTotalCostGrid();
-            foreach(GridViewRow gvr in GridViewPODetails.Rows)
-            {
-                Button btn1 = (Button)gvr.FindControl("Button1");
-                Button btn2 = (Button)gvr.FindControl("Button2");
-                if (!Page.IsValid)
-                {
-                    btn1.Enabled = false;
-                    btn2.Enabled = false;
-                }
-            }
         }
 
         protected void UpdateTotalCostGrid()
@@ -140,7 +134,6 @@ namespace Team3ADProject.Protected
             polist.RemoveAt(index);
             Session["StagingList"] = polist;
             loadGrid();
-
         }
 
         protected void Button3_Click(object sender, EventArgs e)
@@ -244,6 +237,29 @@ namespace Team3ADProject.Protected
             Response.Redirect("POStagingSummary.aspx");
         }
 
-       
+        protected void GridViewPODetails_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                TextBox tb = (TextBox)e.Row.FindControl("txtSelectDate");
+                HiddenField hf = (HiddenField)tb.FindControl("HiddenField5");
+                DateTime rqdate = DateTime.Parse(hf.Value);
+                tb.Text = rqdate.ToString("yyyy-MM-dd");
+            }
+        }
+
+        protected void txtSelectDate_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            DateTime date;
+            if (tb.Text != null && DateTime.TryParse(tb.Text,out date))
+            {
+                HiddenField hf1 = (HiddenField)tb.FindControl("HiddenField1");
+                int index = Int32.Parse(hf1.Value);
+                polist[index].DateRequired = DateTime.ParseExact(tb.Text, "yyyy-MM-dd", null);
+                Session["StagingList"] = polist;
+                loadGrid();
+            }
+        }
     }
 }
