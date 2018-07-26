@@ -140,5 +140,19 @@ namespace Team3ADProject.Services
 
             return "done";
         }
+
+        public List<WCF_CollectionItem> getCollectionList()
+        {
+            List<WCF_CollectionItem> wcfList = new List<WCF_CollectionItem>();
+
+            var result = BusinessLogic.GetCollectionList();
+
+            foreach (var i in result)
+            {
+                wcfList.Add(new WCF_CollectionItem(i.item_number.Trim(), (int)i.quantity_ordered, i.description.Trim(), i.current_quantity, i.unit_of_measurement.Trim()));
+            }
+
+            return wcfList;
+        }
     }
 }
