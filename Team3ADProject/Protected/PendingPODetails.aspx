@@ -36,6 +36,7 @@
         <asp:Label ID="Label7" runat="server" Text="Label" Font-Italic="True" />
     </div>
     <br />
+    <asp:Label ID="Label14" runat="server" Text="Label" ForeColor="Red"></asp:Label>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound" CssClass="table table-hover">
         <Columns>
             <asp:BoundField DataField="item_number" HeaderText="Item Code">
@@ -61,8 +62,11 @@
             <asp:TemplateField HeaderText="PO Received Quantity">
                 <ItemTemplate>
                     <asp:TextBox ID="TextBox1" runat="server" BackColor="White" Text='<%# Bind("item_accept_quantity") %>'></asp:TextBox>
-                    <asp:RegularExpressionValidator ID="Q" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please enter quantity"
-                        ValidationExpression="(^([1-9]*\d*\d{1}?\d*)$)" Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>
+                    <%--                    <asp:RegularExpressionValidator ID="Q" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please enter quantity"
+                        ValidationExpression="(^([1-9]*\d*\d{1}?\d*)$)" Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>--%>
+                   <asp:CompareValidator runat="server" id="cmpNumbers" controltovalidate="TextBox1" valuetocompare='<%# Eval("item_purchase_order_quantity") %>' ValidationGroup = '<%# "Group_" + Container.DataItemIndex %>' operator="LessThanEqual" type="Integer" errormessage="Received quantity cannot be greater than PO quantity" ForeColor="Red" />
+                  <%--  <asp:CompareValidator ID="CompareValidator1" runat="server" controltovalidate="TextBox1" valuetocompare="0" operator="GreaterThan" type="Integer" errormessage="Received quantity should be greater than 0" ForeColor="Red"></asp:CompareValidator>--%>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="TextBox1" runat="server"  ValidationGroup = '<%# "Group_" + Container.DataItemIndex %>' ErrorMessage="Quantity should be entered" ForeColor="Red"></asp:RequiredFieldValidator>
                     <asp:HiddenField ID="HiddenField3" runat="server" Value='<%# Eval("item_purchase_order_quantity") %>' />
                 </ItemTemplate>
             </asp:TemplateField>

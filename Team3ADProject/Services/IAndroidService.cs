@@ -49,6 +49,35 @@ namespace Team3ADProject.Services
         //DisplayListofDepartmentsForCollection()
 
 
+        //Tharrani - Start
+
+        //Return active inventory
+        [OperationContract]
+        [WebGet(UriTemplate = "/NewRequest/AllItems/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Inventory> GetActiveInventory(string token);
+
+        //Return inventory matching search
+        [OperationContract]
+        [WebGet(UriTemplate = "/NewRequest/SearchItems/{search}/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Inventory> SearchInventory(string token, string search);
+
+        //Return invenotry by ID
+        [OperationContract]
+        [WebGet(UriTemplate = "/NewRequest/Items/{id}/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        WCF_Inventory GetSelectedInventory(string token, string id);
+
+        //Add new request
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/NewRequest/Addrequest", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        string AddNewRequest();
+
+        //Add new request detail
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/NewRequest/Addrequestdetail", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        void AddNewRequestDetail(WCF_ReqCart r);
+
+        //Tharrani -End
+
     }
 
 
@@ -226,5 +255,78 @@ namespace Team3ADProject.Services
         }
 
     }
+
+    //Tharrani- Start
+    [DataContract]
+    public class WCF_Inventory
+    {
+        [DataMember]
+        public string item_number;
+        [DataMember]
+        public string description;
+        [DataMember]
+        public string category;
+        [DataMember]
+        public string unit_of_measurement;
+        [DataMember]
+        public string current_quantity;
+        [DataMember]
+        public string reorder_level;
+        [DataMember]
+        public string reorder_quantity;
+        [DataMember]
+        public string item_bin;
+        [DataMember]
+        public string item_status;
+
+        public WCF_Inventory(string item, string desc, string cat, string UOM, string cq, string reol, string req, string bin, string status)
+        {
+            item_number = item.Trim();
+            description = desc;
+            category = cat;
+            unit_of_measurement = UOM;
+            current_quantity = cq;
+            reorder_level = reol;
+            reorder_quantity = req;
+            item_bin = bin;
+            item_status = status;
+        }
+
+        public WCF_Inventory(string UOM, string cat, string desc, string item)
+        {
+            item_number = item.Trim();
+            description = desc;
+            category = cat;
+            unit_of_measurement = UOM;
+        }
+    }
+
+    [DataContract]
+    public class WCF_ReqCart
+    {
+        [DataMember]
+        string inventory;
+
+        [DataMember]
+        int cart_quantity;
+
+        [DataMember]
+        string id;
+
+        public WCF_ReqCart(string inventory, int cart_quantity, string id)
+        {
+            this.inventory = inventory;
+            this.cart_quantity = q;
+            this.id = id;
+        }
+
+        public string getI => inventory;
+        public int q => cart_quantity;
+        public string Id => id;
+
+    }
+
+    //Tharrani – End
+
 
 }
