@@ -10,10 +10,16 @@
         <br />
         <asp:Label ID="Label1" runat="server" Text="No items in the list"></asp:Label>
     </p>
-        <asp:GridView ID="GridViewPODetails" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPODetails_DataBound" CssClass="table table-hover">
+        <asp:GridView ID="GridViewPODetails" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPODetails_DataBound" CssClass="table table-hover" OnRowDataBound="GridViewPODetails_RowDataBound">
             <Columns>
                 <asp:BoundField HeaderText="Index" />
-                <asp:BoundField DataField="DateRequired" HeaderText="Date Required" DataFormatString="{0:dd-MM-yyyy}" />
+                <asp:TemplateField HeaderText="Date Required">
+                    <ItemTemplate>
+                        <asp:TextBox ID="txtSelectDate" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtSelectDate_TextChanged"></asp:TextBox>
+                        <asp:HiddenField ID="HiddenField5" runat="server" Value='<%# Eval("DateRequired") %>'/>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtSelectDate" ErrorMessage="Select a date" ForeColor="Red"></asp:RequiredFieldValidator>
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item" />
                 <asp:BoundField DataField="Inventory.item_number" HeaderText="Item Code" />
                 <asp:BoundField DataField="UnitPrice" HeaderText="Unit Price" DataFormatString="{0:c2}" />
@@ -26,7 +32,7 @@
 						<asp:HiddenField ID="HiddenField1" runat="server"/>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField HeaderText="Total Cost"/>
+                <asp:BoundField HeaderText="Total Cost" />
                 <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
                             <asp:Button ID="Button1" runat="server" CommandName="" Text="Update" OnClick="Button1_Click" CausesValidation="true" UseSubmitBehavior="false" CssClass="btn btn-success"/>
