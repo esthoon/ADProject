@@ -32,7 +32,7 @@
 		<Columns>
 			<asp:BoundField DataField="employee_name" HeaderText="Name" />
 			<asp:BoundField DataField="representative_status" HeaderText="Status" />
-			<asp:BoundField DataField="appointed_date" HeaderText="Appointed Date" DataFormatString="{0:dd/MM/yyyy}" />
+			<asp:BoundField DataField="appointed_date" HeaderText="Appointed Date" DataFormatString="{0:dd-MM-yyyy}" />
 		</Columns>
 	</asp:GridView>
 	<br />

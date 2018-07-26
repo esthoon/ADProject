@@ -6,7 +6,7 @@
         <div>
             <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
             <br />
-            <asp:Label ID="Label2" runat="server" Text="Search by Date (DD-MM-YYYY)"></asp:Label>
+            <asp:Label ID="Label2" runat="server" Text="Search by Date (dd-MM-yyyy)"></asp:Label>
             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         </div>
     <%--<asp:ImageButton ID="ImageButton1" runat="server" OnClick="ImageButton1_Click" />  --%>
