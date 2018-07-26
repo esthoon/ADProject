@@ -33,6 +33,22 @@ namespace Team3ADProject.Services
         [OperationContract]
         [WebGet(UriTemplate = "/Employee/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee GetEmployeeByToken(String token);
+
+        // Collection List - Outputs weekly collection list - Web Clerk [Joel]
+        [OperationContract]
+        [WebGet(UriTemplate = "/WarehouseCollection/List", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_CollectionItem> getCollectionList();
+
+        // Collection List - Takes input to sort & update ROD table - Web Clerk [Joel]
+
+
+        // Disbursement Sorting - displays list opf departments that need collection - Web Clerk [Joel]
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/WarehouseCollection/List", ResponseFormat = WebMessageFormat.Json)]
+        //List<WCF_CollectionItem> getCollectionList();
+        //DisplayListofDepartmentsForCollection()
+
+
     }
 
 
@@ -180,6 +196,35 @@ namespace Team3ADProject.Services
             this.RequisitionDate = requisition_date.ToString("yyyy-MM-dd");
             this.HeadComment = head_comment;
         }
+    }
+
+    [DataContract]
+    public class WCF_CollectionItem
+    {
+        [DataMember]
+        public string ItemNumber;
+
+        [DataMember]
+        public int QuantityOrdered;
+
+        [DataMember]
+        public string Description;
+
+        [DataMember]
+        public int CurrentQuantity;
+
+        [DataMember]
+        public string UnitOfMeasurement;
+
+        public WCF_CollectionItem(string itemNumber, int quantityOrdered, string description, int currentQuantity, string unitOfMeasurement)
+        {
+            ItemNumber = itemNumber;
+            Description = description;
+            CurrentQuantity = currentQuantity;
+            QuantityOrdered = quantityOrdered;
+            UnitOfMeasurement = unitOfMeasurement;
+        }
+
     }
 
 }

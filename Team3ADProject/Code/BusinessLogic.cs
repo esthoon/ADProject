@@ -348,7 +348,7 @@ department.department_id.Equals(dept)
 
 
 
-            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price <= 250 ).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price <= 250 && x.adjustment_price >= -250).ToList();
 
 
         }
@@ -356,7 +356,7 @@ department.department_id.Equals(dept)
         {
 
 
-            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250 ).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250 || x.adjustment_price <= -250).ToList();
 
         }
 

@@ -3,10 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>View Pending Requisition Orders</h1>
     <div>
-        <asp:Label ID="Label2" runat="server" Text="Search by Date (YYYY/MM/DD)"></asp:Label>
+        <asp:Label ID="Label2" runat="server" Text="Search by Date (dd-MM-yyyy)"></asp:Label>
         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-        <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please Enter a valid date in the format (yyyy/mm/dd)" ForeColor="Red" ValidationExpression="^((19|20)\d\d)[\/](0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])$"></asp:RegularExpressionValidator>
-        <!-- ^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$ (mm/dd/yyyy) -->
+        <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please Enter a valid date in the format (dd-mm-yyyy)" ForeColor="Red" ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[\-](0[1-9]|1[012])[\-]((19|20)\d\d)$"></asp:RegularExpressionValidator>
+        <!-- ^(0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])[- -.](19|20)\d\d$ (mm/dd/yyyy) -->
         <asp:Calendar ID="Calendar1" runat="server" OnDayRender="Calendar1_DayRender" OnSelectionChanged="Calendar1_SelectionChanged"
             BackColor="White" BorderColor="#666666" CellPadding="1" DayNameFormat="Shortest" Font-Names="Fantasy" Height="200px" Width="250px">
             <TodayDayStyle BackColor="#99CCCC" ForeColor="White" Font-Names="Fantasy"/>
@@ -28,7 +28,7 @@
                     <HeaderStyle VerticalAlign="Middle" />
                     <ItemStyle VerticalAlign="Middle" />
                 </asp:BoundField>
-                <asp:BoundField DataField="requisition_date" HeaderText="Requisition Date" HtmlEncode="false" DataFormatString="{0:yyyy/MM/dd}">
+                <asp:BoundField DataField="requisition_date" HeaderText="Requisition Date" HtmlEncode="false" DataFormatString="{0:dd-MM-yyyy}">
                     <HeaderStyle VerticalAlign="Middle" />
                     <ItemStyle VerticalAlign="Middle" />
                 </asp:BoundField>

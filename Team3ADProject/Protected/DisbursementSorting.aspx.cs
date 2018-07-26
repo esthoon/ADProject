@@ -141,7 +141,7 @@ namespace Team3ADProject.Protected
 
         protected void Calendar_Collect_Date_SelectionChanged(object sender, EventArgs e)
         {
-            TextBox_Collect_Date.Text = Calendar_Collect_Date.SelectedDate.ToString("dd/MM/yyyy");
+            TextBox_Collect_Date.Text = Calendar_Collect_Date.SelectedDate.ToString("dd-MM-yyyy");
         }
 
         protected void btn_reallocate_Click(object sender, EventArgs e)

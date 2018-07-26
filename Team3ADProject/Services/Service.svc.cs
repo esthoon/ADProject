@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using Team3ADProject.Model;
+using Team3ADProject.Code;
 
 namespace Team3ADProject.Services
 {
@@ -199,5 +200,6 @@ namespace Team3ADProject.Services
 
             return wcfList;
         }
+
     }
 }

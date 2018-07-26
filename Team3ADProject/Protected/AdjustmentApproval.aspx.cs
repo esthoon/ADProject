@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.Ajax.Utilities;
 using Team3ADProject.Code;
+using Team3ADProject.Model;
 
 namespace Team3ADProject.Protected
 {
@@ -49,13 +50,13 @@ namespace Team3ADProject.Protected
         private void BindGrid()
         {
             // need to modify base on session in user role
-            if ((string)Session["role"] == "12")
+            if ((string)Session["role"] == "storemanager")
             {
                 GridView1.DataSource = BusinessLogic.StoreManagerGetAdj();
 
             }
 
-            else if ((string)Session["role"] == "13")
+            else if ((string)Session["role"] == "storesup")
             {
                 GridView1.DataSource = BusinessLogic.StoreSupGetAdj();
             }
@@ -88,7 +89,7 @@ namespace Team3ADProject.Protected
         {
             if (GridView1.Rows.Count <= 0)
             {
-                LinkButton1.Visible = false;
+                LinkButton4.Visible = false;
                 LinkButton3.Visible = false;
                 TextBox2.Enabled = false;
                 Button1.Enabled = false;
@@ -100,7 +101,7 @@ namespace Team3ADProject.Protected
            
             else
             {
-                LinkButton1.Visible = true;
+                LinkButton4.Visible = true;
                 LinkButton3.Visible = true;
                 TextBox2.Enabled = true;
                 Button1.Enabled = true;
@@ -124,7 +125,7 @@ namespace Team3ADProject.Protected
             BindGrid();
         }
 
-        protected void LinkButton1_Click(object sender, EventArgs e)
+        protected void LinkButton4_Click(object sender, EventArgs e)
         {
             foreach (GridViewRow row in GridView1.Rows)
             {
@@ -189,13 +190,13 @@ namespace Team3ADProject.Protected
                 String x = dt.ToString("yyyy-MMMM-dd");
                 DateTime search = Convert.ToDateTime(x);
 
-                if ((string) Session["role"] == "12")
+                if ((string) Session["role"] == "storemanager")
                 {
 
                     GridView1.DataSource = BusinessLogic.StoreManagerSearchAdj(search);
 
                 }
-                else if ((string) Session["role"] == "13")
+                else if ((string) Session["role"] == "storesup")
                 {
 
                     GridView1.DataSource = BusinessLogic.StoreSupSearchAdj(search);
@@ -213,8 +214,56 @@ namespace Team3ADProject.Protected
             TextBox2.Text = string.Empty;
             BindGrid();
         }
+//new code
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            List<inventory> ilist = BusinessLogic.GetActiveInventory().ToList();
+            int r = GridView1.Rows.Count;
 
-        
+            for (int i = 0; i < r; i++)
+            {
+                Label l = (Label)GridView1.Rows[i].FindControl("Label2");
+                HiddenField hd = (HiddenField)GridView1.Rows[i].FindControl("HiddenFielditem");
+                HiddenField hd2 = (HiddenField)GridView1.Rows[i].FindControl("HiddenFieldqty");
+                LinkButton btn1 = (LinkButton)GridView1.Rows[i].FindControl("LinkButton1");
+                CheckBox chk1 = (CheckBox)GridView1.Rows[i].FindControl("chkSelect");
+
+                int xistingqty = Convert.ToInt32(hd2.Value);
+
+                string item = hd.Value;
+
+                for (int j = 0; j < ilist.Count; j++)
+                {
+                    if (item.Trim().Equals(ilist[j].item_number.Trim()))
+                    {
+                        l.Text = ilist[j].current_quantity.ToString().Trim();
+
+
+                    }
+
+                }
+
+
+                if (xistingqty < 0)
+                {
+                    if (Math.Abs(xistingqty) >= Convert.ToInt32(l.Text))
+                    {
+                        btn1.CssClass = "btn btn-default";
+
+                        btn1.Enabled = false;
+                        chk1.Visible = false;
+                    }
+
+                }
+
+
+            }
+
+        }
+
+
+//end-newcode
+
 
         //protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
         //{

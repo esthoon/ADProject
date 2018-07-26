@@ -201,7 +201,7 @@ namespace Team3ADProject.Protected
             {
                 adjustment a = new adjustment()
                 {
-                    adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
+                    adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null ),
                     employee_id = user.employee_id,
                     item_number = item.item_number,
                     adjustment_quantity = ReturnQuantity(),
