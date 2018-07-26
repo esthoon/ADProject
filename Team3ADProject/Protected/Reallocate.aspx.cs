@@ -12,11 +12,10 @@ namespace Team3ADProject.Protected
 {
     public partial class Reallocate : System.Web.UI.Page
     {
-
         string itemNum;
         string description;
+        int collectedItemCount;
         static List<spReallocateQty_Result> list;
-        static List<spGetFullCollectionROIDList_Result> roidList;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,7 +32,6 @@ namespace Team3ADProject.Protected
             if (!IsPostBack)
             {
                 list = BusinessLogic.GetReallocateList(itemNum);
-                roidList = BusinessLogic.GetFullCollectionROIDList();
 
                 gridview_Reallocate.DataSource = list;
                 gridview_Reallocate.DataBind();
@@ -42,14 +40,8 @@ namespace Team3ADProject.Protected
                 Label_Description.Text = description;
                 Label_warning.Visible = false;
 
-
-                int itemCount = 0;
-                foreach (var q in list)
-                {
-                    itemCount += (int)q.item_distributed_quantity;
-                }
-                Label_collectedAmount.Text = itemCount.ToString();
-
+                collectedItemCount = BusinessLogic.GetTotalCollectedVolumeForChosenItem(itemNum);
+                Label_collectedAmount.Text = collectedItemCount.ToString();
             }
         }
 
@@ -95,6 +87,7 @@ namespace Team3ADProject.Protected
             if (totalEnterQty > collectedQty)
             {
                 Label_warning.Visible = true;
+                Label_warning.Text = "You entered more quantity than collected";
                 return;
             }
 
@@ -112,7 +105,7 @@ namespace Team3ADProject.Protected
                 {
                     ReallocateItems();
                     int returnBalance = collectedQty - totalEnterQty;
-                    ReturnToInventory(returnBalance);
+                    BusinessLogic.ReturnToInventory(returnBalance, itemNum);
                     Response.Redirect("~/Protected/DisbursementSorting.aspx");
                 }
             }
@@ -124,36 +117,15 @@ namespace Team3ADProject.Protected
             }
         }
 
-        protected void ReturnToInventory(int returnBalance)
-        {
-            CollectionListItem item = new CollectionListItem();
-            item.itemNum = itemNum;
-            item.qtyPrepared = returnBalance;
-
-            BusinessLogic.AddtoInventory(item);
-        }
-
         protected void ReallocateItems()
         {
             //Reset ROD Values
-            foreach (spGetFullCollectionROIDList_Result q in roidList)
-            {
-                foreach (GridViewRow gvr in gridview_Reallocate.Rows)
-                {
-                    string dpt_id = gvr.Cells[0].Text;
-                    if ((dpt_id.ToUpper().Trim() == q.requisition_id.Substring(0, 4).ToUpper().Trim()) && (itemNum.ToUpper().Trim() == q.item_number.ToUpper().Trim()))
-                    {
-                        q.item_distributed_quantity = 0;
-                        q.item_pending_quantity = q.item_requisition_quantity;
 
-                        requisition_order_detail rod = new requisition_order_detail();
-                        rod.requisition_id = q.requisition_id;
-                        rod.item_number = q.item_number;
-                        rod.item_distributed_quantity = q.item_distributed_quantity;
-                        rod.item_pending_quantity = q.item_pending_quantity;
-                        BusinessLogic.UpdateRODetails(rod);
-                    }
-                }
+            foreach (GridViewRow gvr in gridview_Reallocate.Rows)
+            {
+                string dpt_id = gvr.Cells[0].Text;
+
+                BusinessLogic.ResetRODTable(dpt_id, itemNum);
             }
 
             foreach (GridViewRow gvr in gridview_Reallocate.Rows)
@@ -162,38 +134,7 @@ namespace Team3ADProject.Protected
                 System.Web.UI.WebControls.TextBox textbox = (System.Web.UI.WebControls.TextBox)gvr.FindControl("txt_distribution_qty");
                 int distriQty = Convert.ToInt32(textbox.Text);
 
-                foreach (spGetFullCollectionROIDList_Result q in roidList)
-                {
-                    if ((dpt_id.ToUpper().Trim() == q.requisition_id.Substring(0, 4).ToUpper().Trim()) && (itemNum.ToUpper().Trim() == q.item_number.ToUpper().Trim()))
-                    {
-                        if (distriQty >= q.item_pending_quantity)
-                        {
-                            q.item_distributed_quantity += q.item_pending_quantity;
-                            distriQty -= q.item_pending_quantity;
-                            q.item_pending_quantity = 0;
-
-                            requisition_order_detail rod = new requisition_order_detail();
-                            rod.requisition_id = q.requisition_id;
-                            rod.item_number = q.item_number;
-                            rod.item_distributed_quantity = q.item_distributed_quantity;
-                            rod.item_pending_quantity = q.item_pending_quantity;
-                            BusinessLogic.UpdateRODetails(rod);
-                        }
-                        else
-                        {
-                            q.item_distributed_quantity += distriQty;
-                            q.item_pending_quantity -= distriQty;
-                            distriQty = 0;
-
-                            requisition_order_detail rod = new requisition_order_detail();
-                            rod.requisition_id = q.requisition_id;
-                            rod.item_number = q.item_number;
-                            rod.item_distributed_quantity = q.item_distributed_quantity;
-                            rod.item_pending_quantity = q.item_pending_quantity;
-                            BusinessLogic.UpdateRODetails(rod);
-                        }
-                    }
-                }
+                BusinessLogic.UpdateRODTableOnReallocate(dpt_id, itemNum, distriQty);
             }
         }
 

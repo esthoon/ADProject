@@ -29,10 +29,7 @@ namespace Team3ADProject.Protected
                 }
                 else
                 {
-                    //hardcoded
-                    Session["Employee"] = 10;
-                    user = BusinessLogic.GetEmployeeById(10);
-                    //redirect to login homepage
+                    Response.Redirect("ClerkInventory.aspx");
                 }
                 loadGrid();
             }
@@ -65,9 +62,13 @@ namespace Team3ADProject.Protected
             TextBox tb = (TextBox)sender;
             HiddenField hf1 = (HiddenField)tb.FindControl("HiddenField1");
             int index = Int32.Parse(hf1.Value);
-            polist[index].OrderedQty = Int32.Parse(tb.Text);
-            Session["StagingList"] = polist;
-            loadGrid();
+            int qty = 0;
+            if (tb.Text.Trim() != null && Int32.TryParse(tb.Text,out qty))
+            {
+                polist[index].OrderedQty = qty;
+                Session["StagingList"] = polist;
+                loadGrid();
+            }
         }
 
         protected void GridViewPODetails_DataBound(object sender, EventArgs e)
@@ -133,7 +134,6 @@ namespace Team3ADProject.Protected
             polist.RemoveAt(index);
             Session["StagingList"] = polist;
             loadGrid();
-
         }
 
         protected void Button3_Click(object sender, EventArgs e)
@@ -141,6 +141,8 @@ namespace Team3ADProject.Protected
             Button3.Enabled = false;
             if (user != null && supplierid != null)
             {
+                string email;
+                int? id = user.supervisor_id;
                 string date = DateTime.Now.ToString("yyyy-MM-dd");
                 List<int> indexes = new List<int>();
                 for (int i = 0; i < polist.Count; i++)
@@ -200,7 +202,12 @@ namespace Team3ADProject.Protected
                                 {
                                     polist.RemoveAt(indexes[k]);
                                 }
-
+                                if (id != null)
+                                {
+                                    int supid = (int)id;
+                                    email = BusinessLogic.RetrieveEmailByEmployeeID(supid);
+                                    BusinessLogic.sendMail(email, "New PO awaiting for approval", user.employee_name + " has submitted a new PO for approval.");
+                                }
                                 BusinessLogic.sendMail("e0283990@u.nus.edu", "New PO awaiting for approval", user.employee_name + " has submitted a new PO for approval.");
                                 tx.Complete();
                                 Session["StagingList"] = polist;

@@ -33,10 +33,6 @@ namespace Team3ADProject.Services
         [OperationContract]
         [WebGet(UriTemplate = "/Employee/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee GetEmployeeByToken(String token);
-
-        [OperationContract]
-        [WebGet(UriTemplate = "/RequisitionOrder/{id}/{token}", ResponseFormat = WebMessageFormat.Json)]
-        List<WCF_Requisition_Order> GetAllRequisitionByEmployee(string id);
     }
 
 

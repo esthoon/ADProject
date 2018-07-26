@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="DisbursementSorting.aspx.cs" Inherits="Team3ADProject.Protected.DisbursementSorting" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-  <h1>Disbursement Sorting</h1>
+    <h1>Item Sorting</h1>
     <div>
         <div>
             <span>Select department: </span>

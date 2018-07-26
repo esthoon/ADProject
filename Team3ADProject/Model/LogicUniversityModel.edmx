@@ -1828,19 +1828,6 @@
           <Property Type="String" Name="department_id" Nullable="true" MaxLength="5" />
           <Property Type="Int32" Name="total_required_qty" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="spGetFullCollectionROIDList_Result">
-          <Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
-          <Property Type="Int32" Name="item_requisition_quantity" Nullable="false" />
-          <Property Type="Int32" Name="item_distributed_quantity" Nullable="false" />
-          <Property Type="Int32" Name="item_pending_quantity" Nullable="false" />
-          <Property Type="Int32" Name="employee_id" Nullable="true" />
-          <Property Type="String" Name="requisition_status" Nullable="true" MaxLength="8" />
-          <Property Type="DateTime" Name="requisition_date" Nullable="true" />
-          <Property Type="Int32" Name="collection_id" Nullable="true" />
-          <Property Type="String" Name="description" Nullable="true" MaxLength="150" />
-          <Property Type="String" Name="unit_of_measurement" Nullable="true" MaxLength="20" />
-        </ComplexType>
         <ComplexType Name="spGetRODListForSorting_Result">
           <Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
@@ -1881,6 +1868,21 @@
           <Property Type="String" Name="collection_place" Nullable="false" MaxLength="30" />
           <Property Type="Time" Name="collection_time" Nullable="false" />
           <Property Type="Int32" Name="collection_id" Nullable="false" />
+        </ComplexType>
+<ComplexType Name="spGetFullCollectionROIDList_Result">
+<Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="item_requisition_quantity" Nullable="false" />
+          <Property Type="Int32" Name="item_distributed_quantity" Nullable="false" />
+          <Property Type="Int32" Name="item_pending_quantity" Nullable="false" />
+          <Property Type="Int32" Name="employee_id" Nullable="true" />
+          <Property Type="String" Name="requisition_status" Nullable="true" MaxLength="8" />
+          <Property Type="DateTime" Name="requisition_date" Nullable="true" />
+          <Property Type="Int32" Name="collection_id" Nullable="true" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="unit_of_measurement" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="current_quantity" Nullable="true" />
+          <Property Type="String" Name="department_name" Nullable="true" MaxLength="30" />
         </ComplexType>
         <Association Name="FK_collection_detail_department">
           <End Type="LogicUniversityModel.department" Role="department" Multiplicity="1" />
@@ -2602,6 +2604,8 @@
                 <ScalarProperty Name="collection_id" ColumnName="collection_id" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="unit_of_measurement" ColumnName="unit_of_measurement" />
+                <ScalarProperty Name="current_quantity" ColumnName="current_quantity" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

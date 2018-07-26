@@ -14,8 +14,8 @@
  */
 $(document).ready(function () {
 
-
-
+    // var hostname = window.location.host;
+    var hostname = window.location.host + "/LogicUniversity";
 
     // A test chart to show that the javascript is running
     if ($("#testChart").length == 1) {
@@ -54,7 +54,7 @@ $(document).ready(function () {
     if ($("#requisitionOrderStatusChart").length == 1) {
 
         // Fetch a list of requisition orders
-        $.getJSON("http://" + window.location.host + "/Services/Service.svc/RequisitionOrder/List", {},
+        $.getJSON("http://" + hostname + "/Services/Service.svc/RequisitionOrder/List", {},
             function (data) {
 
                 var approvedCount = 0;
@@ -101,7 +101,7 @@ $(document).ready(function () {
      * Generates a scatter plot that shows the date when requisition orders are made.
      */
     if ($("#requisitionOrderDateChart").length == 1) {
-        $.getJSON("http://" + window.location.host + "/Services/Service.svc/RequisitionOrder/List", {},
+        $.getJSON("http://" + hostname + "/Services/Service.svc/RequisitionOrder/List", {},
             function (data) {
                 console.log(data[0].RequisitionDate);
                 console.log(ConvertToDatetime(data[0].RequisitionDate));
@@ -159,7 +159,7 @@ $(document).ready(function () {
         }
 
         // Fetch current month data
-        $.getJSON("http://" + window.location.host + "/Services/Service.svc/Chart/PurchaseQuantityByItemCategory/" + startDate + "/" + endDate, {},
+        $.getJSON("http://" + hostname + "/Services/Service.svc/Chart/PurchaseQuantityByItemCategory/" + startDate + "/" + endDate, {},
             function (data) {
                 // Place data on the chart
                 $.each(data, function (key, value) {
@@ -208,7 +208,7 @@ $(document).ready(function () {
             endDate = "12-31-3000";
         }
 
-        $.getJSON("http://" + window.location.host + "/Services/Service.svc/Chart/getRequisitionQuantityByDepartmentWithinTime/" + startDate + "/" + endDate, {},
+        $.getJSON("http://" + hostname + "/Services/Service.svc/Chart/getRequisitionQuantityByDepartmentWithinTime/" + startDate + "/" + endDate, {},
             function (data) {
                 // Place data on the chart
                 $.each(data, function (key, value) {
@@ -247,7 +247,7 @@ $(document).ready(function () {
         // Prepare data
         var dataPoints = [];
 
-        $.getJSON("http://" + window.location.host + "/Services/Service.svc/Chart/getPendingPurchaseOrderCountBySupplier", {},
+        $.getJSON("http://" + hostname + "/Services/Service.svc/Chart/getPendingPurchaseOrderCountBySupplier", {},
             function (data) {
                 // Place data on the chart
                 $.each(data, function (key, value) {

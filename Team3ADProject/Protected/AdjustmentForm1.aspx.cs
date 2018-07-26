@@ -27,30 +27,17 @@ namespace Team3ADProject.Protected
                     int employeeid = (int)Session["Employee"];
                     user = BusinessLogic.GetEmployeeById(employeeid);
                 }
-                else
-                {
-                    //hardcoded
-                    Session["Employee"] = 10;
-                    user = BusinessLogic.GetEmployeeById(10);
-                    //redirect to login homepage
-                }
                 //retrieve headid
-                if (Session["Head_id"] != null)
+                headid = BusinessLogic.DepartmentHeadID(user);
+
+                //retrieve supid
+                if (user.supervisor_id != null)
                 {
-                    headid = (int)Session["Head_id"];
+                    supid = (int)user.supervisor_id;
                 }
                 else
                 {
-                    headid = 12;
-                }
-                //retrieve headid
-                if (Session["Sup_id"] != null)
-                {
-                    supid = (int)Session["Head_id"];
-                }
-                else
-                {
-                    supid = 13;
+                    supid = headid;
                 }
                 LabelDate.Text = DateTime.Now.ToString("dd-MM-yyyy");
                 LabelName.Text = user.employee_name;
@@ -190,13 +177,11 @@ namespace Team3ADProject.Protected
         {
             if (price > 250)
             {
-                //return BusinessLogic.RetrieveEmailByEmployeeID(headid);
-                return "e0283390@u.nus.edu";
+                return BusinessLogic.RetrieveEmailByEmployeeID(headid);
             }
             else
             {
-                //return BusinessLogic.RetrieveEmailByEmployeeID(supid);
-                return "e0283390@u.nus.edu";
+                return BusinessLogic.RetrieveEmailByEmployeeID(supid);
             }
         }
 

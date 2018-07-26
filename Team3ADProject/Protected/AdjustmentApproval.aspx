@@ -35,7 +35,7 @@
     
     Date:<asp:TextBox ID="TextBox2" runat="server" CssClass="datepicker"></asp:TextBox> 
     <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
-    <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="true"></asp:RegularExpressionValidator>
+    <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please enter a valid date of the form: dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="true"></asp:RegularExpressionValidator>
 
         <div>
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="All" CssClass="btn btn-default" />
@@ -65,6 +65,10 @@
             <asp:BoundField DataField="adjustment_quantity" HeaderText="Adj Qty" SortExpression="adjustment_quantity" />
             <asp:BoundField DataField="adjustment_price" HeaderText="Adj Price" SortExpression="adjustment_price" DataFormatString="{0:c2}" />
             <asp:BoundField DataField="adjustment_status" HeaderText="Adj Status" SortExpression="adjustment_status" />
+
+       
+
+
             <asp:BoundField DataField="employee_remark" HeaderText="Employee Remark" SortExpression="employee_remark" />
 
 
@@ -83,8 +87,7 @@
                 </ItemTemplate>
 
             </asp:TemplateField>
-           
-           
+
         </Columns>
 
         <RowStyle HorizontalAlign="Center" VerticalAlign="Middle" />
