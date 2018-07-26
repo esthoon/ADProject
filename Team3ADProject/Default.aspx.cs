@@ -23,7 +23,9 @@ namespace Team3ADProject
             Session["username"] = Login1.UserName.ToString();
             employee emp = BusinessLogic.GetEmployeeByUserID((string)Session["username"]);
             Session["Employee"] = emp.employee_id;
-            Session["Department"] = emp.department_id.Trim();
+
+
+            Session["Department"] = BusinessLogic.getdepartment((string)Session["username"]);
             Session["role"] = Roles.GetRolesForUser((string)Session["username"]).FirstOrDefault();
             department dep = BusinessLogic.GetDepartmenthead(emp.department_id.Trim());
             Session["Head_id"] = dep.head_id;

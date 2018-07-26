@@ -48,7 +48,7 @@
 
     <h4>Search results: </h4>
     <asp:Label ID="Label1" runat="server" Text="Label" Visible="False"></asp:Label>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Height="99px" Width="1094px" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnPageIndexChanging="GridView1_PageIndexChanging" AllowPaging="True" PageSize="5" >
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Height="99px" Width="1094px" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnPageIndexChanging="GridView1_PageIndexChanging" AllowPaging="True" PageSize="5" OnRowDataBound="GridView1_RowDataBound" >
         <Columns>
             <asp:TemplateField>
                 <HeaderTemplate>
@@ -63,13 +63,19 @@
             <asp:BoundField DataField="employee_id" HeaderText="Employee Id" SortExpression="employee_id" />
             <asp:BoundField DataField="item_number" HeaderText="Item No." SortExpression="item_number" />
             <asp:BoundField DataField="adjustment_quantity" HeaderText="Adj Qty" SortExpression="adjustment_quantity" />
+             <%--newly added--%>
+            <asp:TemplateField HeaderText="Currenty Qty">
+                <ItemTemplate>
+                    <asp:Label ID="Label2" runat="server" Text="Current qty"></asp:Label>
+                    <asp:HiddenField ID="HiddenFielditem" runat="server" Value ='<%# Eval("item_number") %>' />
+                    <asp:HiddenField ID="HiddenFieldqty" runat="server" Value ='<%# Eval("adjustment_quantity") %>' />
+
+                </ItemTemplate>            
+            </asp:TemplateField>
+ <%--newly added end--%>
             <asp:BoundField DataField="adjustment_price" HeaderText="Adj Price" SortExpression="adjustment_price" DataFormatString="{0:c2}" />
             <asp:BoundField DataField="adjustment_status" HeaderText="Adj Status" SortExpression="adjustment_status" />
-
-       
-
-
-            <asp:BoundField DataField="employee_remark" HeaderText="Employee Remark" SortExpression="employee_remark" />
+           <asp:BoundField DataField="employee_remark" HeaderText="Employee Remark" SortExpression="employee_remark" />
 
 
             <asp:TemplateField HeaderText="Manager Remark" SortExpression="manager_remark">
@@ -95,9 +101,10 @@
     </asp:GridView>
 
     <br />
-    <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" CssClass="btn btn-success">Approve Selected</asp:LinkButton>
-    <asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click" CssClass="btn btn-warning">Reject Selected</asp:LinkButton>
-
+  <%--change in code including validation--%>
+    <asp:LinkButton ID="LinkButton4" runat="server" CausesValidation="False"    OnClick="LinkButton4_Click" CssClass="btn btn-success">Approve Selected</asp:LinkButton>
+    <asp:LinkButton ID="LinkButton3" runat="server" CausesValidation="False"   OnClick="LinkButton3_Click" CssClass="btn btn-warning">Reject Selected</asp:LinkButton>
+<%--change in code including validation--%>
 
 </asp:Content>
 
