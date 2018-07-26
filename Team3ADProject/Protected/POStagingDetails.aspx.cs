@@ -237,6 +237,29 @@ namespace Team3ADProject.Protected
             Response.Redirect("POStagingSummary.aspx");
         }
 
-       
+        protected void GridViewPODetails_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                TextBox tb = (TextBox)e.Row.FindControl("txtSelectDate");
+                HiddenField hf = (HiddenField)tb.FindControl("HiddenField5");
+                DateTime rqdate = DateTime.Parse(hf.Value);
+                tb.Text = rqdate.ToString("yyyy-MM-dd");
+            }
+        }
+
+        protected void txtSelectDate_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            DateTime date;
+            if (tb.Text != null && DateTime.TryParse(tb.Text,out date))
+            {
+                HiddenField hf1 = (HiddenField)tb.FindControl("HiddenField1");
+                int index = Int32.Parse(hf1.Value);
+                polist[index].DateRequired = DateTime.ParseExact(tb.Text, "yyyy-MM-dd", null);
+                Session["StagingList"] = polist;
+                loadGrid();
+            }
+        }
     }
 }

@@ -94,7 +94,7 @@ namespace Team3ADProject.Services
         }
 
         // Takes username and password in
-        // Returns a token if there is one for the user, null if there is none.
+        // Returns a token and employee data if there is one for the user, null if there is none.
         public WCF_Employee Login(string username, string password)
         {
             WCF_Employee wcfEmployee = null;
@@ -114,11 +114,12 @@ namespace Team3ADProject.Services
                     String token = GenerateToken();
 
                     // Store token in database
-                    result.First().token = token;
+                    var first = result.First();
+                    first.token = token;
                     System.Diagnostics.Debug.WriteLine(context.SaveChanges());
 
                     // Pass the token to the service consumer
-                    wcfEmployee = new WCF_Employee(0, "", "", username, "", 0, token, "");
+                    wcfEmployee = new WCF_Employee(first.employee_id, first.employee_name, first.email_id, username, first.department_id, first.supervisor_id, token, Roles.GetRolesForUser(username).FirstOrDefault());
                 }
             }
 
