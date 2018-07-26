@@ -34,9 +34,7 @@ namespace Team3ADProject.Protected
                 return;
             }
 
-
-
-            //(1) tracking qty collected per item for all dpts
+            //(1) tracking qty collected per item for all dpts, store in a list of Collection objs
             List<CollectionListItem> allDptCollectionList = new List<CollectionListItem>();
 
             foreach (GridViewRow gvr in gv_CollectionList.Rows)
@@ -50,78 +48,16 @@ namespace Team3ADProject.Protected
                 allDptCollectionList.Add(c);
             }
 
-
             //(2) sort goods according to req_date - write to the distri / pending
-            List<spGetFullCollectionROIDList_Result> list = BusinessLogic.GetFullCollectionROIDList();
-
-            foreach (var collectedItem in allDptCollectionList)
-            {
-                int store = collectedItem.qtyPrepared;
-                foreach (var roidListItem in list)
-                {
-                    {
-                        if (collectedItem.itemNum.Trim() == roidListItem.item_number.Trim())
-                        {
-                            if (collectedItem.qtyPrepared >= roidListItem.item_pending_quantity)
-                            {
-                                roidListItem.item_distributed_quantity += roidListItem.item_pending_quantity;
-                                collectedItem.qtyPrepared -= roidListItem.item_pending_quantity;
-                                roidListItem.item_pending_quantity = 0;
-
-                                requisition_order_detail rod = new requisition_order_detail();
-                                rod.requisition_id = roidListItem.requisition_id;
-                                rod.item_number = roidListItem.item_number;
-                                rod.item_distributed_quantity = roidListItem.item_distributed_quantity;
-                                rod.item_pending_quantity = roidListItem.item_pending_quantity;
-                                BusinessLogic.UpdateRODetails(rod);
-                            }
-                            else
-                            {
-                                roidListItem.item_distributed_quantity += collectedItem.qtyPrepared;
-                                roidListItem.item_pending_quantity -= collectedItem.qtyPrepared;
-                                collectedItem.qtyPrepared = 0;
-
-                                requisition_order_detail rod = new requisition_order_detail();
-                                rod.requisition_id = roidListItem.requisition_id;
-                                rod.item_number = roidListItem.item_number;
-                                rod.item_distributed_quantity = roidListItem.item_distributed_quantity;
-                                rod.item_pending_quantity = roidListItem.item_pending_quantity;
-                                BusinessLogic.UpdateRODetails(rod);
-                                BusinessLogic.UpdateRODetails(rod);
-                            }
-                        }
-                    }
-                }
-
-                collectedItem.qtyPrepared = store;
-            }
-
-
+            BusinessLogic.SortCollectedGoods(allDptCollectionList);
 
             //(3) deduct from inventory
             BusinessLogic.DeductFromInventory(allDptCollectionList);
-
-            // store in session, pass to next page.
-            Session["allDptCollectionList"] = allDptCollectionList;
 
             //(4) Redirect to Sorting Page
             Response.Redirect("~/Protected/DisbursementSorting.aspx");
         }
 
-        protected void gv_CollectionList_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gv_CollectionList.PageIndex = e.NewPageIndex;
-            this.LoadCollectionList();
-        }
-        protected void btn_Adjustment_Click(object sender, EventArgs e)
-        {
-            Button lb = (Button)sender;
-            HiddenField hd = (HiddenField)lb.FindControl("HiddenField1");
-            string itemcode = hd.Value;
-            Session["itemcode"] = itemcode;
-            string url = "AdjustmentForm1.aspx?itemcode=" + itemcode;
-            Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
-        }
 
         protected int ValidatePreparedQty()
         {
@@ -157,6 +93,23 @@ namespace Team3ADProject.Protected
 
             else
                 return 1;
+        }
+
+
+        protected void gv_CollectionList_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gv_CollectionList.PageIndex = e.NewPageIndex;
+            this.LoadCollectionList();
+        }
+
+        protected void btn_Adjustment_Click(object sender, EventArgs e)
+        {
+            Button lb = (Button)sender;
+            HiddenField hd = (HiddenField)lb.FindControl("HiddenField1");
+            string itemcode = hd.Value;
+            Session["itemcode"] = itemcode;
+            string url = "AdjustmentForm1.aspx?itemcode=" + itemcode;
+            Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
         }
     }
 }

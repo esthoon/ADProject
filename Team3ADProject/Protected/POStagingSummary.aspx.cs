@@ -112,6 +112,8 @@ namespace Team3ADProject.Protected
             ButtonPOApproval.Enabled = false;
             List<supplier> supplierlist = GetSupplierList();
             string date = DateTime.Now.ToString("yyyy-MM-dd");
+            int? id = user.supervisor_id;
+            string email;
             try
             {
                 using (TransactionScope tx = new TransactionScope())
@@ -151,7 +153,12 @@ namespace Team3ADProject.Protected
                         }
                     }
                     list.Clear();
-                    BusinessLogic.sendMail("e0283990@u.nus.edu", "New PO awaiting for approval", user.employee_name + " has submitted a new PO for approval.");
+                    if (id != null)
+                    {
+                        int supid = (int)id;
+                        email = BusinessLogic.RetrieveEmailByEmployeeID(supid);
+                        BusinessLogic.sendMail(email, "New PO awaiting for approval", user.employee_name + " has submitted a new PO for approval.");
+                    }
                     tx.Complete();
                     Session["StagingList"] = list;
                     loadGrid();

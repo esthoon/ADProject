@@ -23,7 +23,6 @@ namespace Team3ADProject.Protected
                 Label1.Visible = false;
                 RequiredFieldValidator1.Visible = false;
                 Label2.Visible = false;
-
             }
         }
 
@@ -55,34 +54,22 @@ namespace Team3ADProject.Protected
                 clList.Add(c);
             }
 
-
             // (1) insert collection_details + (2) add RO Ids & their collection_id to requisition_disbursement_detail [table]
             string dptId = (Label_ViewRO.Text).Substring(0, 4);
             int placeId = BusinessLogic.GetPlaceIdFromDptId(dptId);
             DateTime collectionDate = DateTime.Parse(TextBox_Collect_Date.Text);
-            string collectionStatus = "Pending";
             string ro_id = Label_ViewRO.Text.ToUpper();
-            BusinessLogic.SpecialRequestReadyUpdates(placeId, collectionDate, collectionStatus, ro_id);
-
+            BusinessLogic.SpecialRequestReadyUpdatesCDRDD(placeId, collectionDate, ro_id, dptId);
 
             // (3) change amounts in requisition_order_detail table
-            foreach (var item in clList)
-            {
-                requisition_order_detail rodFromDB = BusinessLogic.GetRODetailByROIdAndItemNum(ro_id, item.itemNum);
 
-                if (rodFromDB != null)
-                {
-                    rodFromDB.item_distributed_quantity += item.qtyPrepared;
-                    rodFromDB.item_pending_quantity -= item.qtyPrepared;
-                    BusinessLogic.UpdateRODetails(rodFromDB);
-                }
-            }
+            BusinessLogic.ViewROSpecialRequestUpdateRODTable(clList, ro_id);
+           
 
             // (4) deduct from inventory
             BusinessLogic.DeductFromInventory(clList);
 
             // (5) send email
-            //(4) send email to dpt rep
             string emailAdd = "joelfong@gmail.com";            //NEED TO UPDATE TO DPT REP EMAIL
             string subj = "Your ordered stationery is ready for collection";
             string body = "Dear Department Rep, your stationery order is ready for collection. Please procede to your usual collection point at the correct time.";

@@ -35,7 +35,7 @@
                     </asp:TemplateField>
                     <asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
-                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="Remove" OnClick="Button2_Click" CssClass="btn btn-warning"/>
+                            <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="Remove" OnClick="Button2_Click" CssClass="btn btn-warning" UseSubmitBehavior="false"/>
                         <asp:HiddenField ID="HiddenField4" runat="server"/>
                         </ItemTemplate>
                     </asp:TemplateField>

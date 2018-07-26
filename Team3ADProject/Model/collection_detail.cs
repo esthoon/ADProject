@@ -24,11 +24,13 @@ namespace Team3ADProject.Model
         public int place_id { get; set; }
         public System.DateTime collection_date { get; set; }
         public string collection_status { get; set; }
+        public string department_id { get; set; }
     
         public virtual collection collection { get; set; }
         public virtual collection_detail collection_detail1 { get; set; }
         public virtual collection_detail collection_detail2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<requisition_order> requisition_order { get; set; }
+        public virtual department department { get; set; }
     }
 }
