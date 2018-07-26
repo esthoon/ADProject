@@ -13,40 +13,22 @@ namespace Team3ADProject.Protected {
     public partial class DisbursementSorting {
         
         /// <summary>
-        /// radBtn_searchByRO control.
+        /// RadioButtonList_Dpt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radBtn_searchByRO;
+        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList_Dpt;
         
         /// <summary>
-        /// txt_searchByRO control.
+        /// Label_noDptWarning control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_searchByRO;
-        
-        /// <summary>
-        /// radBtn_searchByDpt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radBtn_searchByDpt;
-        
-        /// <summary>
-        /// dropList_searchByDpt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dropList_searchByDpt;
+        protected global::System.Web.UI.WebControls.Label Label_noDptWarning;
         
         /// <summary>
         /// btn_SortingSearch control.
@@ -58,12 +40,57 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Button btn_SortingSearch;
         
         /// <summary>
-        /// gv_SortingTable control.
+        /// gridview_DptSort control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gv_SortingTable;
+        protected global::System.Web.UI.WebControls.GridView gridview_DptSort;
+        
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// TextBox_Collect_Date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox_Collect_Date;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
+        /// Calendar_Collect_Date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar Calendar_Collect_Date;
+        
+        /// <summary>
+        /// btn_ReadyForCollection control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_ReadyForCollection;
     }
 }

@@ -11,7 +11,7 @@
         <Columns>
             <asp:BoundField DataField="purchase_order_number" HeaderText="PO No." />
             <asp:BoundField DataField="supplier_name" HeaderText="Supplier Name" />
-            <asp:BoundField DataField="purchase_order_date" HeaderText="PO Date" DataFormatString="{0:MM/dd/yyyy}"/>
+            <asp:BoundField DataField="purchase_order_date" HeaderText="PO Date" DataFormatString="{0:dd-MM-yyyy}"/>
             <asp:BoundField DataField="employee_name" HeaderText="Employee Name" />
             <asp:BoundField DataField="total_price" HeaderText="Total Price" DataFormatString="{0:c2}" />
 

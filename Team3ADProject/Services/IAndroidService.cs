@@ -34,33 +34,21 @@ namespace Team3ADProject.Services
         [WebGet(UriTemplate = "/Employee/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee GetEmployeeByToken(String token);
 
-
-        //Tharrani - Start
-
-        //Return active inventory
+        // Collection List - Outputs weekly collection list - Web Clerk [Joel]
         [OperationContract]
-        [WebGet(UriTemplate = "/NewRequest/AllItems/{*token}", ResponseFormat = WebMessageFormat.Json)]
-        List<WCF_Inventory> GetActiveInventory(string token);
+        [WebGet(UriTemplate = "/WarehouseCollection/List", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_CollectionItem> getCollectionList();
 
-        //Retrun inventory matching search
-        [OperationContract]
-        [WebGet(UriTemplate = "/NewRequest/SearchItems/{search}/{*token}", ResponseFormat = WebMessageFormat.Json)]
-        List<WCF_Inventory> SearchInventory(string token, string search);
+        // Collection List - Takes input to sort & update ROD table - Web Clerk [Joel]
 
-        //Add new request
-        [OperationContract]
-        [WebGet(UriTemplate = "/NewRequest/Addrequest/{*token}", ResponseFormat = WebMessageFormat.Json)]
-        string AddNewRequest(string token);
 
-        //Add new request detail
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/NewRequest/Addrequestdetail/{*token}", Method = "POST", BodyStyle = WebMessageBodyStyle.WrappedRequest, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        void AddNewRequestDetail(string token, WCF_Inventory i, string quantity, string id);
-        //Tharrani -End
+        // Disbursement Sorting - displays list opf departments that need collection - Web Clerk [Joel]
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/WarehouseCollection/List", ResponseFormat = WebMessageFormat.Json)]
+        //List<WCF_CollectionItem> getCollectionList();
+        //DisplayListofDepartmentsForCollection()
 
-        [OperationContract]
-        [WebGet(UriTemplate = "/RequisitionOrder/{id}/{token}", ResponseFormat = WebMessageFormat.Json)]
-        List<WCF_Requisition_Order> GetAllRequisitionByEmployee(string id);
+
     }
 
 
@@ -102,42 +90,6 @@ namespace Team3ADProject.Services
             else { SupervisorId = (int)supervisorId; };
             Token = token;
             Role = role;
-        }
-    }
-
-    [DataContract]
-    public class WCF_Inventory
-    {
-        [DataMember]
-        public string item_number;
-        [DataMember]
-        public string description;
-        [DataMember]
-        public string category;
-        [DataMember]
-        public string unit_of_measurement;
-        [DataMember]
-        public int current_quantity;
-        [DataMember]
-        public int reorder_level;
-        [DataMember]
-        public int reorder_quantity;
-        [DataMember]
-        public string item_bin;
-        [DataMember]
-        public string item_status;
-
-        public WCF_Inventory(string item, string desc, string category, string UOM, int cq, int reol, int req, string bin, string status)
-        {
-            item_number = item.Trim();
-            description = desc;
-            category = category.Trim();
-            unit_of_measurement = UOM;
-            current_quantity = cq;
-            reorder_level = reol;
-            reorder_quantity = req;
-            item_bin = bin;
-            item_status = status;
         }
     }
 
@@ -244,6 +196,35 @@ namespace Team3ADProject.Services
             this.RequisitionDate = requisition_date.ToString("yyyy-MM-dd");
             this.HeadComment = head_comment;
         }
+    }
+
+    [DataContract]
+    public class WCF_CollectionItem
+    {
+        [DataMember]
+        public string ItemNumber;
+
+        [DataMember]
+        public int QuantityOrdered;
+
+        [DataMember]
+        public string Description;
+
+        [DataMember]
+        public int CurrentQuantity;
+
+        [DataMember]
+        public string UnitOfMeasurement;
+
+        public WCF_CollectionItem(string itemNumber, int quantityOrdered, string description, int currentQuantity, string unitOfMeasurement)
+        {
+            ItemNumber = itemNumber;
+            Description = description;
+            CurrentQuantity = currentQuantity;
+            QuantityOrdered = quantityOrdered;
+            UnitOfMeasurement = unitOfMeasurement;
+        }
+
     }
 
 }

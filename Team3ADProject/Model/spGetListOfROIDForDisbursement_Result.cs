@@ -11,13 +11,8 @@ namespace Team3ADProject.Model
 {
     using System;
     
-    public partial class spViewCollectionListNew_Result
+    public partial class spGetListOfROIDForDisbursement_Result
     {
-        public string employee_name { get; set; }
-        public string department_name { get; set; }
-        public System.DateTime collection_date { get; set; }
-        public string collection_place { get; set; }
-        public System.TimeSpan collection_time { get; set; }
-        public int collection_id { get; set; }
+        public string requisition_id { get; set; }
     }
 }

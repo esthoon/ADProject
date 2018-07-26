@@ -15,8 +15,10 @@ namespace Team3ADProject.Protected
         static employee user;
         static inventory item;
         static int headid, supid;
+        static int minusqty=0;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ButtonSubmit.Enabled = true;
             if (!IsPostBack)
             {
                 //retrieve user
@@ -27,30 +29,21 @@ namespace Team3ADProject.Protected
                 }
                 else
                 {
-                    //hardcoded
-                    Session["Employee"] = 10;
-                    user = BusinessLogic.GetEmployeeById(10);
-                    //redirect to login homepage
+                    Response.Redirect("ClerkInventory.aspx");
                 }
                 //retrieve headid
-                if (Session["Head_id"] != null)
+                headid = BusinessLogic.DepartmentHeadID(user);
+
+                //retrieve supid
+                if (user.supervisor_id != null)
                 {
-                    headid =(int)Session["Head_id"];
+                    supid = (int)user.supervisor_id;
                 }
                 else
                 {
-                    headid = 12;
+                    supid = headid;
                 }
-                //retrieve headid
-                if (Session["Sup_id"] != null)
-                {
-                    supid = (int)Session["Head_id"];
-                }
-                else
-                {
-                    supid = 13;
-                }
-                LabelDate.Text = DateTime.Now.ToString("dd-MMM-yyyy");
+                LabelDate.Text = DateTime.Now.ToString("dd-MM-yyyy");
                 LabelName.Text = user.employee_name;
                 UpdatePage();
             }
@@ -65,10 +58,45 @@ namespace Team3ADProject.Protected
             {
                 string itemcode = param_itemcode;
                 item = BusinessLogic.GetInventory(itemcode);
+                List<adjustment> adjlist = BusinessLogic.GetPendingAdjustmentsByItemCode(itemcode);
                 LabelUnitPrice.Text = BusinessLogic.Adjprice(itemcode).ToString();
                 LabelStock.Text = item.current_quantity.ToString();
                 LabelItemNum.Text = item.item_number.ToString();
                 LabelItem.Text = item.description;
+                minusqty = BusinessLogic.ReturnPendingMinusAdjustmentQty(itemcode);
+                int plusqty = BusinessLogic.ReturnPendingPlusAdjustmentQty(itemcode);
+                GridViewAdjMinus.DataSource = adjlist.Where(x=>x.adjustment_quantity<0);
+                GridViewAdjMinus.DataBind();
+                GridViewAdjPlus.DataSource = adjlist.Where(x => x.adjustment_quantity > 0);
+                GridViewAdjPlus.DataBind();
+                if (adjlist.Count > 0)
+                {
+                    LabelGrid.Visible = false;
+                    if (minusqty != 0)
+                    {
+                        LabelGridMinus.Text = "Pending adjustment qty to be removed raised: "+minusqty;
+                    }
+                    else
+                    {
+                        LabelGridMinus.Text = "No pending adjustment qty to be removed.";
+                    }
+                    if (plusqty != 0)
+                    {
+                        LabelGridPlus.Text = "Pending adjustment qty to be added raised: " + plusqty;
+                    }
+                    else
+                    {
+                        LabelGridPlus.Text = "No pending adjustment qty to be removed.";
+                    }
+
+                }
+                else
+                {
+                    LabelGrid.Text = "No pending adjustments for this item.";
+                    LabelGridMinus.Visible = false;
+                    LabelGridPlus.Visible = false;
+                }
+
 
             }
 
@@ -103,52 +131,41 @@ namespace Team3ADProject.Protected
             }
         }
 
+        protected int ReturnQuantity()
+        {
+            int qty = 0;
+            if (TextBoxAdjustment.Text.Trim() != null && Int32.TryParse(TextBoxAdjustment.Text, out qty))
+            {
+                string symbol = DropDownList1.SelectedItem.Value;
+                if (symbol == "-")
+                {
+                    qty = (-qty);
+                }
+            }
+            return qty;
+        }
+
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
-            String today = DateTime.Now.ToString("yyyy-MM-dd");
+            ButtonSubmit.Enabled = false;
             int qty = Int32.Parse(TextBoxAdjustment.Text);
-            string email = RetrieveEmail(TotalPrice());
+            int submitqty = ReturnQuantity();
             if (qty != 0)
             {
-                try
+                if (submitqty < 0)
                 {
-                    adjustment a = new adjustment()
+                    if (Math.Abs(submitqty) > (item.current_quantity+minusqty))
                     {
-                        adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
-                        employee_id = user.employee_id,
-                        item_number = item.item_number,
-                        adjustment_quantity = qty,
-                        adjustment_price = TotalPrice(),
-                        adjustment_status = "Pending",
-                        employee_remark = TextBoxRemarks.Text,
-                        manager_remark = "",
-                    };
-
-                    try
-                    {
-                        using (TransactionScope tx = new TransactionScope())
-                        {
-                            BusinessLogic.CreateAdjustment(a);
-                            tx.Complete();
-                            Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
-                            BusinessLogic.sendMail("e0283990@u.nus.edu", "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
-                        }
-                        Response.Redirect("ClerkInventory.aspx");
-                        //Response.Write("<script language='javascript'> { window.close();}</script>");
+                        LabelError.Text = "The quantity entered has exceed the outstanding pending quantity to be removed. Please review.";
                     }
-                    catch (System.Transactions.TransactionException ex)
+                    else
                     {
-                        Response.Write(BusinessLogic.MsgBox(ex.Message));
-                    }
-                    catch (Exception ex)
-                    {
-                        Response.Write(BusinessLogic.MsgBox(ex.Message));
+                        CreateAdjustment();
                     }
                 }
-
-                catch (Exception ex)
+                else
                 {
-                    Response.Write(BusinessLogic.MsgBox(ex.Message));
+                    CreateAdjustment();
                 }
             }
         }
@@ -166,13 +183,59 @@ namespace Team3ADProject.Protected
         {
             if (price > 250)
             {
-                //return BusinessLogic.RetrieveEmailByEmployeeID(headid);
-                return "e0283390@u.nus.edu";
+                return BusinessLogic.RetrieveEmailByEmployeeID(headid);
+                //return "e0283390@u.nus.edu";
             }
             else
             {
-                //return BusinessLogic.RetrieveEmailByEmployeeID(supid);
-                return "e0283390@u.nus.edu"; 
+                return BusinessLogic.RetrieveEmailByEmployeeID(supid);
+                //return "e0283390@u.nus.edu";
+            }
+        }
+
+        protected void CreateAdjustment()
+        {
+            string email = RetrieveEmail(TotalPrice());
+            String today = DateTime.Now.ToString("yyyy-MM-dd");
+            try
+            {
+                adjustment a = new adjustment()
+                {
+                    adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
+                    employee_id = user.employee_id,
+                    item_number = item.item_number,
+                    adjustment_quantity = ReturnQuantity(),
+                    adjustment_price = TotalPrice(),
+                    adjustment_status = "Pending",
+                    employee_remark = TextBoxRemarks.Text,
+                    manager_remark = null,
+                };
+
+                try
+                {
+                    using (TransactionScope tx = new TransactionScope())
+                    {
+                        BusinessLogic.CreateAdjustment(a);
+                        tx.Complete();
+                        Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
+                        BusinessLogic.sendMail(email, "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
+                    }
+                    Response.Redirect("ClerkInventory.aspx");
+                    //Response.Write("<script language='javascript'> { window.close();}</script>");
+                }
+                catch (System.Transactions.TransactionException ex)
+                {
+                    Response.Write(BusinessLogic.MsgBox(ex.Message));
+                }
+                catch (Exception ex)
+                {
+                    Response.Write(BusinessLogic.MsgBox(ex.Message));
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Response.Write(BusinessLogic.MsgBox(ex.Message));
             }
         }
     }

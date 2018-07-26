@@ -3,11 +3,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <link rel="stylesheet" href="<%=ResolveUrl("~/Content/Sites/Dashboard.css")%>" />
-
+    <%@ Import Namespace="Team3ADProject.Code" %>
 
     <h1>Dashboard</h1>
 
     <!-- If user is a store clerk, display dashboard information -->
+    <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK))
+        { %>
     <div class="dashboard-flexbox-container-outer">
         <!--Flex item 1: Table for low stock items -->
         <div class="dashboard-flexbox-item">
@@ -32,17 +34,15 @@
 
         </div>
 
-        <!-- Flex item 3: shortcuts -->
-        <div class="dashboard-flexbox-item">
-            <div class="flexbox-column dashboard-flex-shortcut"></div>
-        </div>
-
     </div>
-    <%-- 
+    <%} %>
+
+    <%else
+        { %>
     <!-- If user is an employee, show them pointers-->
     <div class="flexbox-column dashboard-flexbox-user">
         <h1>Welcome!</h1>
         <div>Please start through the navigation bar above</div>
     </div>
-    --%>
+    <% }%>
 </asp:Content>

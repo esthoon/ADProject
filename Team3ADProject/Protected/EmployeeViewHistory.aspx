@@ -6,11 +6,11 @@
         <div>
             <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
             <br />
-            <asp:Label ID="Label2" runat="server" Text="Search by Date (YYYY/MM/DD)"></asp:Label>
+            <asp:Label ID="Label2" runat="server" Text="Search by Date (dd-MM-yyyy)"></asp:Label>
             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         </div>
     <%--<asp:ImageButton ID="ImageButton1" runat="server" OnClick="ImageButton1_Click" />  --%>
-    <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please Enter a valid date in the format (yyyy/mm/dd)" ForeColor="Red" ValidationExpression="^((19|20)\d\d)[\/](0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])$"></asp:RegularExpressionValidator>
+    <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please Enter a valid date in the format (dd-MM-yyyy)" ForeColor="Red" ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\d\d$"></asp:RegularExpressionValidator>
 
         <asp:Calendar ID="Calendar1" runat="server" OnDayRender="Calendar1_DayRender" OnSelectionChanged="Calendar1_SelectionChanged"
             BackColor="White" BorderColor="#666666" CellPadding="1" DayNameFormat="Shortest" Font-Names="Fantasy" Height="200px" Width="250px">
@@ -33,7 +33,7 @@
                     <HeaderStyle VerticalAlign="Middle" />
                     <ItemStyle VerticalAlign="Middle" />
                 </asp:BoundField>
-                <asp:BoundField DataField="requisition_date" DataFormatString="{0:yyyy/MM/dd}" HeaderText="Requisition Date">
+                <asp:BoundField DataField="requisition_date" DataFormatString="{0:dd-MM-yyyy}" HeaderText="Requisition Date">
                     <HeaderStyle VerticalAlign="Middle" />
                     <ItemStyle VerticalAlign="Middle" />
                 </asp:BoundField>

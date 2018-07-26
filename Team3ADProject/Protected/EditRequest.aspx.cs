@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Security.Principal;
 using Team3ADProject.Code;
 using Team3ADProject.Model;
+using System.Globalization;
 
 namespace Team3ADProject.Protected
 {
@@ -27,7 +28,9 @@ namespace Team3ADProject.Protected
             UpdatePage();
             requisition_order r =BusinessLogic.GetRequisitionOrderById(param_id);
                 Label4.Text = r.requisition_id;
-                Label5.Text = r.requisition_date.ToShortDateString();
+                String DateTemp = r.requisition_date.ToShortDateString().ToString();
+                DateTime dt = DateTime.ParseExact(DateTemp, "d/M/yyyy", CultureInfo.InvariantCulture);
+                Label5.Text = dt.ToString("dd-MM-yyyy");
                 Label6.Text = r.requisition_status;
             }
         }

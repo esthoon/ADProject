@@ -400,7 +400,7 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUndisbursedROList_Result>("spGetUndisbursedROList");
         }
     
-        public virtual int spInsertCollectionDetail(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus)
+        public virtual int spInsertCollectionDetail(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus, string departmentId)
         {
             var placeIdParameter = placeId.HasValue ?
                 new ObjectParameter("placeId", placeId) :
@@ -414,10 +414,14 @@ namespace Team3ADProject.Model
                 new ObjectParameter("collectionStatus", collectionStatus) :
                 new ObjectParameter("collectionStatus", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertCollectionDetail", placeIdParameter, collectionDateParameter, collectionStatusParameter);
+            var departmentIdParameter = departmentId != null ?
+                new ObjectParameter("departmentId", departmentId) :
+                new ObjectParameter("departmentId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertCollectionDetail", placeIdParameter, collectionDateParameter, collectionStatusParameter, departmentIdParameter);
         }
     
-        public virtual int spSpecialRequestReady(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus, string ro_id)
+        public virtual int spSpecialRequestReady(Nullable<int> placeId, Nullable<System.DateTime> collectionDate, string collectionStatus, string ro_id, string departmentid)
         {
             var placeIdParameter = placeId.HasValue ?
                 new ObjectParameter("placeId", placeId) :
@@ -435,12 +439,11 @@ namespace Team3ADProject.Model
                 new ObjectParameter("ro_id", ro_id) :
                 new ObjectParameter("ro_id", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSpecialRequestReady", placeIdParameter, collectionDateParameter, collectionStatusParameter, ro_idParameter);
-        }
+            var departmentidParameter = departmentid != null ?
+                new ObjectParameter("departmentid", departmentid) :
+                new ObjectParameter("departmentid", typeof(string));
     
-        public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSpecialRequestReady", placeIdParameter, collectionDateParameter, collectionStatusParameter, ro_idParameter, departmentidParameter);
         }
     
         public virtual ObjectResult<getUserTokenByUsername_Result> getUserTokenByUsername(string username)
@@ -535,11 +538,6 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUpdateItemDistributedQuantity", itemNumberParameter, requisitionIDParameter, itemDistributedQuantityParameter);
         }
     
-        public virtual ObjectResult<spViewCollectionListNew_Result> spViewCollectionListNew()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionListNew_Result>("spViewCollectionListNew");
-        }
-    
         public virtual int updatecollectiondepartment(string departmentid, Nullable<int> placeid)
         {
             var departmentidParameter = departmentid != null ?
@@ -571,9 +569,90 @@ namespace Team3ADProject.Model
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getUserTokenByUsername1_Result>("getUserTokenByUsername1", usernameParameter);
         }
     
-        public virtual ObjectResult<spViewCollectionList1_Result> spViewCollectionList1()
+        public virtual ObjectResult<spFindAllDptRequiredQtyByItem_Result> spFindAllDptRequiredQtyByItem(string itemnum)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList1_Result>("spViewCollectionList1");
+            var itemnumParameter = itemnum != null ?
+                new ObjectParameter("itemnum", itemnum) :
+                new ObjectParameter("itemnum", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFindAllDptRequiredQtyByItem_Result>("spFindAllDptRequiredQtyByItem", itemnumParameter);
+        }
+    
+        public virtual ObjectResult<spFindDptIdAndRequiredQtyByItem_Result> spFindDptIdAndRequiredQtyByItem(string itemnum)
+        {
+            var itemnumParameter = itemnum != null ?
+                new ObjectParameter("itemnum", itemnum) :
+                new ObjectParameter("itemnum", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spFindDptIdAndRequiredQtyByItem_Result>("spFindDptIdAndRequiredQtyByItem", itemnumParameter);
+        }
+    
+        public virtual ObjectResult<spGetFullCollectionROIDList_Result> spGetFullCollectionROIDList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetFullCollectionROIDList_Result>("spGetFullCollectionROIDList");
+        }
+    
+        public virtual ObjectResult<spGetLatestCollectionDetailId_Result> spGetLatestCollectionDetailId()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetLatestCollectionDetailId_Result>("spGetLatestCollectionDetailId");
+        }
+    
+        public virtual ObjectResult<spGetListOfROIDForDisbursement_Result> spGetListOfROIDForDisbursement(string dpt_Id)
+        {
+            var dpt_IdParameter = dpt_Id != null ?
+                new ObjectParameter("dpt_Id", dpt_Id) :
+                new ObjectParameter("dpt_Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetListOfROIDForDisbursement_Result>("spGetListOfROIDForDisbursement", dpt_IdParameter);
+        }
+    
+        public virtual ObjectResult<spGetRODListForSorting_Result> spGetRODListForSorting(string dpt_id, string item_num)
+        {
+            var dpt_idParameter = dpt_id != null ?
+                new ObjectParameter("dpt_id", dpt_id) :
+                new ObjectParameter("dpt_id", typeof(string));
+    
+            var item_numParameter = item_num != null ?
+                new ObjectParameter("item_num", item_num) :
+                new ObjectParameter("item_num", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetRODListForSorting_Result>("spGetRODListForSorting", dpt_idParameter, item_numParameter);
+        }
+    
+        public virtual ObjectResult<spGetSortingTableByDpt_Result> spGetSortingTableByDpt(string dpt_Id)
+        {
+            var dpt_IdParameter = dpt_Id != null ?
+                new ObjectParameter("dpt_Id", dpt_Id) :
+                new ObjectParameter("dpt_Id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetSortingTableByDpt_Result>("spGetSortingTableByDpt", dpt_IdParameter);
+        }
+    
+        public virtual int spInsertDisbursementListROId(string ro_id, Nullable<int> collection_id)
+        {
+            var ro_idParameter = ro_id != null ?
+                new ObjectParameter("ro_id", ro_id) :
+                new ObjectParameter("ro_id", typeof(string));
+    
+            var collection_idParameter = collection_id.HasValue ?
+                new ObjectParameter("collection_id", collection_id) :
+                new ObjectParameter("collection_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spInsertDisbursementListROId", ro_idParameter, collection_idParameter);
+        }
+    
+        public virtual ObjectResult<spReallocateQty_Result> spReallocateQty(string itemNum)
+        {
+            var itemNumParameter = itemNum != null ?
+                new ObjectParameter("itemNum", itemNum) :
+                new ObjectParameter("itemNum", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spReallocateQty_Result>("spReallocateQty", itemNumParameter);
+        }
+    
+        public virtual ObjectResult<spViewCollectionList_Result> spViewCollectionList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
         }
     }
 }

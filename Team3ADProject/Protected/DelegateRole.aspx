@@ -6,17 +6,17 @@
 			</br>
 			<asp:Label ID="Label1" runat="server" Text="Name"></asp:Label>
 			<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-			<asp:Button ID="Button1" runat="server" Text="Search" OnClick="Button1_Click" />
+			<asp:Button ID="Button1" runat="server" Text="Search" OnClick="Button1_Click" CssClass="btn btn-default" />
 			<br />
 			<asp:Label ID="Label5" runat="server" Text="No Results available" Visible="false"></asp:Label>
 			<br />
 			<br />
-			<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
+			<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-hover" Width="600px">
 				<Columns>
 					<asp:BoundField DataField="employee_name" HeaderText="Name" />
 					<asp:TemplateField>
 					<ItemTemplate>
-						<asp:Button Id="button" Text="Select" BackColor="LightGreen" runat="server" OnClick="button_click"/>
+						<asp:Button Id="button" Text="Select" runat="server" OnClick="button_click" CssClass="btn btn-info"/>
 						<asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("employee_name")%>' />
 					</ItemTemplate>
 				</asp:TemplateField>
@@ -26,7 +26,7 @@
 			<br />
 			<asp:Label ID="Label2" runat="server" Text="Employee Selected"></asp:Label>			
 			<asp:TextBox runat="server" ID="TextBox" ReadOnly="true"></asp:TextBox>
-			<asp:Button ID="Button2" runat="server" Text="Delegate Role" OnClick="Button2_Click" />
+			<asp:Button ID="Button2" runat="server" Text="Delegate Role" OnClick="Button2_Click" CssClass="btn btn-primary" />
 
 			</body>
 		</html>

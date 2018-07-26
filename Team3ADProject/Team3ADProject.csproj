@@ -151,7 +151,13 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Image\report-cover.jpg" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\Master.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Sites\Dashboard.css" />
@@ -222,7 +228,6 @@
     <Content Include="Model\LogicUniversityModel.edmx.diagram">
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
     </Content>
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Model\LogicUniversityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
@@ -233,6 +238,7 @@
       <DependentUpon>LogicUniversityModel.edmx</DependentUpon>
       <LastGenOutput>LogicUniversityModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Protected\AdjustmentForm1.aspx" />
     <Content Include="Protected\budget.aspx" />
     <Content Include="Protected\Change Collection Point.aspx" />
     <Content Include="Protected\CollectionList.aspx" />
@@ -255,6 +261,7 @@
     <Content Include="Protected\POStagingDetails.aspx" />
     <Content Include="Protected\POStagingSummary.aspx" />
     <Content Include="Protected\PurchaseOrderApprovalDetails.aspx" />
+    <Content Include="Protected\Reallocate.aspx" />
     <Content Include="Protected\RequestCart.aspx" />
     <Content Include="Protected\RequestConfirm.aspx" />
     <Content Include="Protected\ViewCollectionInformation.aspx" />
@@ -272,10 +279,6 @@
     <Content Include="Scripts\canvasjs.min.js" />
     <Content Include="Scripts\Custom\Charts.js" />
     <Content Include="Scripts\jquery-1.12.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.canvasjs.min.js" />
@@ -308,6 +311,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -517,10 +521,25 @@
     <Compile Include="Model\spAcknowledgeDistributionList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\spFindAllDptRequiredQtyByItem_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spFindDptIdAndRequiredQtyByItem_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\spGetCollectionList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetDepartmentList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetFullCollectionROIDList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetLatestCollectionDetailId_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spGetListOfROIDForDisbursement_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetPlaceIdFromDptId_Result.cs">
@@ -532,16 +551,19 @@
     <Compile Include="Model\spGetRODetailsByROId_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\spViewCollectionList1_Result.cs">
+    <Compile Include="Model\spGetRODListForSorting_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\spViewCollectionListNew_Result.cs">
+    <Compile Include="Model\spGetSortingTableByDpt_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\spViewCollectionList_Result.cs">
+    <Compile Include="Model\spReallocateQty_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\spGetUndisbursedROList_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\spViewCollectionList_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\sp_geteachPendingPOList_Result.cs">
@@ -563,6 +585,13 @@
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protected\AdjustmentForm1.aspx.cs">
+      <DependentUpon>AdjustmentForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\AdjustmentForm1.aspx.designer.cs">
+      <DependentUpon>AdjustmentForm1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Protected\budget.aspx.cs">
       <DependentUpon>budget.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -667,6 +696,13 @@
     </Compile>
     <Compile Include="Protected\PurchaseOrderApprovalDetails.aspx.designer.cs">
       <DependentUpon>PurchaseOrderApprovalDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\Reallocate.aspx.cs">
+      <DependentUpon>Reallocate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\Reallocate.aspx.designer.cs">
+      <DependentUpon>Reallocate.aspx</DependentUpon>
     </Compile>
     <Compile Include="Protected\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
@@ -822,8 +858,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

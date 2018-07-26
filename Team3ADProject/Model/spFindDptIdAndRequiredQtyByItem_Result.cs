@@ -11,13 +11,9 @@ namespace Team3ADProject.Model
 {
     using System;
     
-    public partial class spViewCollectionList1_Result
+    public partial class spFindDptIdAndRequiredQtyByItem_Result
     {
-        public string employee_name { get; set; }
-        public string department_name { get; set; }
-        public System.DateTime collection_date { get; set; }
-        public string collection_place { get; set; }
-        public System.TimeSpan collection_time { get; set; }
-        public int collection_id { get; set; }
+        public string department_id { get; set; }
+        public Nullable<int> total_required_qty { get; set; }
     }
 }
