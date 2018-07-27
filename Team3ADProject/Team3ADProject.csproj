@@ -334,13 +334,11 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Code\BusinessLogic.cs" />
     <Compile Include="Code\cart.cs" />
     <Compile Include="Code\CollectionListItem.cs" />
     <Compile Include="Code\Constants.cs" />
     <Compile Include="Code\POStaging.cs" />
-    <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
