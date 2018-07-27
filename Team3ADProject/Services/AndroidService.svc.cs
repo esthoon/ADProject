@@ -387,9 +387,23 @@ namespace Team3ADProject.Services
         }
         //Tharrani – End
 
-
-
-
+        //Esther
+        public string CreateAdjustment(WCF_Adjustment adj)
+        {
+            String now = DateTime.Now.ToString("yyyy-MM-dd");
+            adjustment a = new adjustment()
+            {
+                adjustment_date = DateTime.ParseExact(now, "yyyy-MM-dd", null),
+                employee_id = 14,
+                item_number = adj.ItemNumber.Trim(),
+                adjustment_quantity = Int32.Parse(adj.AdjustmentQty.Trim()),
+                adjustment_price = BusinessLogic.Adjprice(adj.ItemNumber) * Int32.Parse(adj.AdjustmentQty.Trim()),
+                adjustment_status = "Pending",
+                employee_remark = adj.EmployeeRemark,
+                manager_remark = null,
+            };
+            return BusinessLogic.CreateAdjustment(a);
+        }
     }
 }
 

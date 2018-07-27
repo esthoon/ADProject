@@ -857,9 +857,16 @@ department.department_id.Equals(dept)
         //create new adjustment
         public static string CreateAdjustment(adjustment a)
         {
-            context.adjustments.Add(a);
-            context.SaveChanges();
-            return ("success");
+            try
+            {
+                context.adjustments.Add(a);
+                context.SaveChanges();
+                return "success";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
         public static employee GetEmployeeById(int id)
         {
