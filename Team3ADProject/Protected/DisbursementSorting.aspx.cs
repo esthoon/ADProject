@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -80,7 +81,10 @@ namespace Team3ADProject.Protected
             string dpt_Id = GetDepartmentId();
 
             int placeId = BusinessLogic.GetPlaceIdFromDptId(dpt_Id);
-            DateTime collectionDate = DateTime.Parse(TextBox_Collect_Date.Text);
+            string s = TextBox_Collect_Date.Text;
+            DateTime dt = DateTime.ParseExact(s, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            String x = dt.ToString("yyyy-MMMM-dd");
+            DateTime collectionDate = Convert.ToDateTime(x);
 
             BusinessLogic.InsertCollectionDetailsRow(placeId, collectionDate, dpt_Id);
 

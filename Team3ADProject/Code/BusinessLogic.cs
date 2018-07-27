@@ -345,11 +345,11 @@ department.department_id.Equals(dept)
         //List all adjustment form
         public static List<adjustment> StoreSupGetAdj()
         {
-            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price <= 250 && x.adjustment_price >= -250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) <= 250).ToList();
         }
         public static List<adjustment> StoreManagerGetAdj()
         {
-            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250 || x.adjustment_price <= -250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) >= 250).ToList();
         }
 
 
@@ -420,12 +420,33 @@ department.department_id.Equals(dept)
         //approval of PO
         public static void UpdateUponPOApproval(int id, string mremark, string email)
         {
+            //change email format
             purchase_order po = context.purchase_order.Where(x => x.purchase_order_number == id).FirstOrDefault<purchase_order>();
             po.purchase_order_status = "Pending";
             po.manager_remark = mremark;
             int pono = po.purchase_order_number;
-            //needs to be modfied
-            sendMail(email, "Email for Purchase Order " + pono, "Dear Supplier,/n This is an email to notified you on the purchase order " + pono + ".");
+
+            List<purchase_order_detail> pod = context.purchase_order_detail.Where(x => x.purchase_order_number == id).ToList();
+
+            List<string> xxx = new List<string>();
+            for (int i = 0; i < pod.Count; i++)
+            {
+                var xx = pod[i].item_number.ToString();
+                var yy = pod[i].item_purchase_order_quantity.ToString();
+
+
+                xxx.Add(xx);
+                xxx.Add(yy);
+                xxx.Add(Environment.NewLine);
+            }
+
+            string ot = string.Join("\t", xxx.ToArray());
+            string pt = string.Join("\n", ot);
+
+            sendMail(email, $"Email for Purchase Order {pono}",
+                $"Dear Supplier,\n This is an email to notify you on the purchase order  {pono} from Logic University." +
+                $"\nItem No. \tCurrent Qty\n\t {pt}\n\n " +
+                $"\nThis is a system generated message.");
 
             context.SaveChanges();
         }
@@ -989,7 +1010,10 @@ department.department_id.Equals(dept)
 
         public static void updateInventory(string itemCode, int difference)
         {
-            context.spUpdateInventory(itemCode, difference);
+            //rohit's sp context.spUpdateInventory(itemCode, difference);
+            inventory i = context.inventories.Where(x => x.item_number.Trim().ToLower() == itemCode.Trim().ToLower()).FirstOrDefault();
+            i.current_quantity = i.current_quantity + difference;
+            context.SaveChanges();
         }
 
         public static void updateCollectionStatus(int collectionID)
