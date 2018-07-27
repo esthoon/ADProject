@@ -31,7 +31,7 @@
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 </asp:BoundField>
-                <asp:BoundField DataField="purchase_order_date" HeaderText="Purchase Date" DataFormatString="{0:yyyy/MM/dd}">
+                <asp:BoundField DataField="purchase_order_date" HeaderText="Purchase Date" DataFormatString="{0:dd-MM-yyyy}">
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 </asp:BoundField>
