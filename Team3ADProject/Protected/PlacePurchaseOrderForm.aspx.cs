@@ -63,7 +63,7 @@ namespace Team3ADProject.Protected
                 LabelRequiredDate.Text = dateAndTime.AddDays(28).ToString("dd-MM-yyyy");
 
                 //When dropdownlist change, change the unit price and change the total price based on the quantity
-                CalculationForUnitCostAndTotalCost((itemSelected.reorder_quantity - itemSelected.current_quantity));
+                CalculationForUnitCostAndTotalCost(Convert.ToInt32(TextBoxOrderQuantity.Text));
             }
         }
 

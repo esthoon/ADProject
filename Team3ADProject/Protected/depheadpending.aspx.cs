@@ -60,6 +60,7 @@ namespace Team3ADProject.Protected
             Series series = Chart1.Series["Series1"];
             series.Points.AddXY("", budget);
             series.Points.AddXY("Consumed", spent);
+            //Session["session"] = series;
 
         }
     }

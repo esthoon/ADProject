@@ -159,7 +159,7 @@ namespace Team3ADProject.Code
         public static List<employee> getemployeenames(string dept)
         {
             //var q=from employee in context.employees where employee.department_id.Equals(dept) select employee.employee_name;
-            return context.employees.Where(x => x.department_id == dept).ToList();
+            return context.employees.Where(x => x.department_id == dept && x.supervisor_id != null  ).ToList();
 
         }
 
