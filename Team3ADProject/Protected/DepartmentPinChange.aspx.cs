@@ -38,17 +38,17 @@ namespace Team3ADProject.Protected
 				{
 					int password = Convert.ToInt32(password1);
 					BusinessLogic.updatepassword(dept, password);
-					Label3.Text = "password changed";
+					ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Password updated successfully')", true);
 				}
 				catch (Exception x)
 				{
-                    Exception ex = x;
-					Response.Write("This password is already used. Please select others");
+					Exception ex = x;
+					
 				}
 			}
 			else
 			{
-				Label3.Visible = true;
+				ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Entered pins do not match')", true);
 			}
 		}
 	}

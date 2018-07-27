@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2a9142ab4bc44ccf96acb50617e14f99" Name="Diagram1" ZoomLevel="90">
+      <Diagram DiagramId="2a9142ab4bc44ccf96acb50617e14f99" Name="Diagram1" ZoomLevel="75">
         <EntityTypeShape EntityType="LogicUniversityModel.adjustment" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="LogicUniversityModel.budget" Width="1.5" PointX="8.25" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LogicUniversityModel.collection" Width="1.5" PointX="3.75" PointY="17.5" IsExpanded="true" />

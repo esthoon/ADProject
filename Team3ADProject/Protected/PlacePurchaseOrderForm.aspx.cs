@@ -48,8 +48,14 @@ namespace Team3ADProject.Protected
                 itemNumber.Text = itemSelected.item_number;
                 itemDescription.Text = itemSelected.description;
                 itemCurrentStock.Text = itemSelected.current_quantity.ToString();
-                TextBoxOrderQuantity.Text = (itemSelected.reorder_level - itemSelected.current_quantity).ToString();
-
+                if ((itemSelected.reorder_level - itemSelected.current_quantity) < 0)
+                {
+                    TextBoxOrderQuantity.Text = itemSelected.reorder_level.ToString();
+                }
+                else
+                {
+                    TextBoxOrderQuantity.Text = (itemSelected.reorder_level - itemSelected.current_quantity).ToString();
+                }
                 //Getting the user from the session and the current time to be posted on the webpage 
                 createByWho.Text = user.employee_name;
                 DateTime dateAndTime = DateTime.Now;

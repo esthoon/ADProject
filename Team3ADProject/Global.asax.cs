@@ -42,7 +42,7 @@ namespace Team3ADProject
 
             //alan--start
 
-            Session["role"] = "13";
+           // Session["role"] = "13";
 
 
 

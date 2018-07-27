@@ -141,6 +141,8 @@ namespace Team3ADProject.Services
             return "done";
         }
 
+
+
         //JOEL START
 
         //CollectionList
@@ -264,6 +266,94 @@ namespace Team3ADProject.Services
 
 
         //JOEL END
+
+
+
+        //Tharrani - start
+        //return active inventory list
+        public List<WCF_Inventory> GetActiveInventory(string token)
+        {
+            //if (AuthenticateToken(token))
+            //{
+            List<inventory> i = BusinessLogic.GetActiveInventory();
+            List<WCF_Inventory> list = new List<WCF_Inventory>();
+            foreach (inventory x in i)
+            {
+                list.Add(new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim()));
+            }
+            return list;
+            //}
+            //else
+            //{
+            //   return null;
+            //}
+        }
+
+        //return inventory matching search criteria
+        public List<WCF_Inventory> SearchInventory(string token, string search)
+        {
+            //if (AuthenticateToken(token))
+            //{
+            List<WCF_Inventory> list = new List<WCF_Inventory>();
+            List<inventory> i = BusinessLogic.SearchActiveInventory(search);
+            foreach (inventory x in i)
+            {
+                list.Add(new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim()));
+            }
+            return list;
+            //}
+            //else
+            //{
+            //  return null;
+            // }
+        }
+
+        public WCF_Inventory GetSelectedInventory(string token, string id)
+        {
+            //if (AuthenticateToken(token))
+            //{
+            inventory x = BusinessLogic.GetInventoryById(id);
+            return new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim());
+            //}
+            //else
+            //{
+            //  return null;
+            // }
+        }
+
+        //Add new requisition order
+        public string AddNewRequest()
+        {
+            //if (AuthenticateToken(token))
+            //{
+            //WCF_Employee emp = GetEmployeeByToken(token);
+            int emp_id = 16; //Convert.ToInt32(emp.EmployeeId);
+            string Depid = "ENGL"; //emp.DepartmentId;
+            DateTime d = DateTime.Now.Date;
+            unique_id u = BusinessLogic.getlastrequestid(Depid);
+            int i = (int)u.req_id + 1;
+            string id = Depid + "/" + DateTime.Now.Year.ToString() + "/" + i;
+            BusinessLogic.AddNewRequisitionOrder(id, emp_id, d);
+            BusinessLogic.updatelastrequestid(Depid, i);
+            return id;
+            // }
+
+            //else
+            //   return null;
+        }
+
+        //Add new requisition order detail
+        public void AddNewRequestDetail(WCF_ReqCart r)
+        {
+            int q = r.q;
+            string id = r.Id.Replace(@"\", "");
+            inventory inv = BusinessLogic.GetInventoryById(r.getI.Trim()); ;
+            cart c = new cart(inv, q);
+            BusinessLogic.AddRequisitionOrderDetail(c, id);
+        }
+
+        //Tharrani – End
+
 
     }
 }

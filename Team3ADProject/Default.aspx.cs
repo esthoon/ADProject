@@ -22,6 +22,7 @@ namespace Team3ADProject
             // Setup the session variables
             Session["username"] = Login1.UserName.ToString();
             employee emp = BusinessLogic.GetEmployeeByUserID((string)Session["username"]);
+
                 Session["Employee"] = emp.employee_id;
                 Session["Department"] = emp.department_id.Trim();
                 Session["role"] = Roles.GetRolesForUser((string)Session["username"]).FirstOrDefault();

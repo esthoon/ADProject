@@ -1869,8 +1869,8 @@
           <Property Type="Time" Name="collection_time" Nullable="false" />
           <Property Type="Int32" Name="collection_id" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="spGetFullCollectionROIDList_Result">
-          <Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
+<ComplexType Name="spGetFullCollectionROIDList_Result">
+<Property Type="String" Name="requisition_id" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
           <Property Type="Int32" Name="item_requisition_quantity" Nullable="false" />
           <Property Type="Int32" Name="item_distributed_quantity" Nullable="false" />

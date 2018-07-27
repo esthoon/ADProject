@@ -27,9 +27,7 @@ namespace Team3ADProject.Protected
                 Label1.Text = x[0].employee_name;
                 Label2.Text = (x[0].purchase_order_number).ToString();
                 Label3.Text = String.Format("{0:c2}", x[0].total_price);
-                string DateTemp = x[0].purchase_order_date.ToShortDateString().ToString();
-                DateTime dt = DateTime.ParseExact(DateTemp,"d/M/yyyy",CultureInfo.InvariantCulture);
-                Label4.Text = dt.ToString("dd-MM-yyyy");
+                Label4.Text = x[0].purchase_order_date.ToString("dd-MM-yyyy");
 
 
 

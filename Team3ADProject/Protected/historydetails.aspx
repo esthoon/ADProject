@@ -9,20 +9,57 @@
 
         <a href="<%=ResolveUrl("~/Protected/depheadviewhistory")%>" class="btn btn-default">&lt;&lt; Requisition Order History</a>
         <br />
-        <asp:Label ID="Label2" runat="server" Text="Requisition Number: "></asp:Label>
-        <asp:Label ID="Label8" runat="server" Text="Label"></asp:Label>
         <br />
-            <asp:Label ID="Label3" runat="server" Text="Date Requisition order was raised: "></asp:Label>
-            <asp:Label ID="Label9" runat="server" Text="Label"></asp:Label>
         <br />
-            <asp:Label ID="Label4" runat="server" Text="Requisition Status: "></asp:Label>
-            <asp:Label ID="Label10" runat="server" Text="Label"></asp:Label>
-        <br />
-            <asp:Label ID="Label7" runat="server" Text="Employee: "></asp:Label>
-            <asp:Label ID="Label11" runat="server" Text="Label"></asp:Label>
-        <br />
-            <asp:Label ID="Label6" runat="server" Text="Request Price: "></asp:Label>
-            <asp:Label ID="Label12" runat="server" Text="Label"></asp:Label>
+        <table>
+            <tr>
+                <td>
+                    <asp:Label ID="Label2" runat="server" Text="Requisition Number: "></asp:Label>
+                </td>
+                <td>&nbsp;&nbsp;
+                    <asp:Label ID="Label8" runat="server" Text="Label"></asp:Label>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <asp:Label ID="Label3" runat="server" Text="Requisition order Date: "></asp:Label>
+                </td>
+                <td>&nbsp;&nbsp;
+                    <asp:Label ID="Label9" runat="server" Text="Label"></asp:Label>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <asp:Label ID="Label4" runat="server" Text="Requisition Status: "></asp:Label>
+                </td>
+                <td>&nbsp;&nbsp;
+                    <asp:Label ID="Label10" runat="server" Text="Label"></asp:Label>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <asp:Label ID="Label7" runat="server" Text="Employee: "></asp:Label>
+                </td>
+                <td>&nbsp;&nbsp;
+                    <asp:Label ID="Label11" runat="server" Text="Label"></asp:Label>
+                </td>
+            </tr>
+     
+            
+            <tr>
+                <td>
+                    <asp:Label ID="Label6" runat="server" Text="Request Price: "></asp:Label>
+                </td>
+                <td>&nbsp;&nbsp;
+                    <asp:Label ID="Label12" runat="server" Text="Label"></asp:Label>
+                </td>
+            </tr>
+        </table>
+        
+    
         <br />
         <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">

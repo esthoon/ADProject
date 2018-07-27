@@ -24,7 +24,7 @@
 			<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover">
 				<Columns>
 					<asp:BoundField DataField="id" HeaderText="Request Number" />
-					<asp:BoundField DataField="Date" HeaderText="Request Date" />
+					<asp:BoundField DataField="Date" HeaderText="Request Date" DataFormatString="{0:dd-MM-yyyy}"/>
 					<asp:BoundField DataField="Name" HeaderText="Name" />
 					<asp:BoundField DataField="sum" HeaderText="Request Amount" />
 					<asp:BoundField DataField="status" HeaderText="Request Status" />

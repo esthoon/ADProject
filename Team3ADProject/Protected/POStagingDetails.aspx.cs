@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Team3ADProject.Model;
 using Team3ADProject.Code;
 using System.Transactions;
+using System.Globalization;
 
 //esther
 namespace Team3ADProject.Protected
@@ -159,7 +160,7 @@ namespace Team3ADProject.Protected
                         //create purchase order
                         purchase_order po = new purchase_order()
                         {
-                            purchase_order_date = DateTime.ParseExact(date, "yyyy-MM-dd", null),
+                            purchase_order_date = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                             suppler_id = supplierid,
                             employee_id = user.employee_id,
                             purchase_order_status = "Awaiting approval",
@@ -187,7 +188,7 @@ namespace Team3ADProject.Protected
                                         purchase_order_item_remark = null,
                                         item_purchase_order_status = "Pending",
                                         item_accept_date = null,
-                                        item_required_date = DateTime.ParseExact(DateRequired, "yyyy-MM-dd", null),
+                                        item_required_date = DateTime.ParseExact(DateRequired, "yyyy-MM-dd", CultureInfo.InvariantCulture),
                                     };
                                     BusinessLogic.CreatePOdetails(poDetails);
                                 }
@@ -256,7 +257,7 @@ namespace Team3ADProject.Protected
             {
                 HiddenField hf1 = (HiddenField)tb.FindControl("HiddenField1");
                 int index = Int32.Parse(hf1.Value);
-                polist[index].DateRequired = DateTime.ParseExact(tb.Text, "yyyy-MM-dd", null);
+                polist[index].DateRequired = DateTime.ParseExact(tb.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 Session["StagingList"] = polist;
                 loadGrid();
             }
