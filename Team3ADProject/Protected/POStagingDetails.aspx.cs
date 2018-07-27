@@ -112,20 +112,20 @@ namespace Team3ADProject.Protected
             return value;
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                Button btn = (Button)sender;
-                TextBox tb = (TextBox)btn.FindControl("TextBox1");
-                HiddenField hf = (HiddenField)btn.FindControl("HiddenField1");
-                int qty = Int32.Parse(tb.Text);
-                int index = Int32.Parse(hf.Value);
-                polist[index].OrderedQty = qty;
-                Session["StagingList"] = polist;
-                loadGrid();
-            }
-        }
+        //protected void Button1_Click(object sender, EventArgs e)
+        //{
+        //    if (Page.IsValid)
+        //    {
+        //        Button btn = (Button)sender;
+        //        TextBox tb = (TextBox)btn.FindControl("TextBox1");
+        //        HiddenField hf = (HiddenField)btn.FindControl("HiddenField1");
+        //        int qty = Int32.Parse(tb.Text);
+        //        int index = Int32.Parse(hf.Value);
+        //        polist[index].OrderedQty = qty;
+        //        Session["StagingList"] = polist;
+        //        loadGrid();
+        //    }
+        //}
 
         protected void Button2_Click(object sender, EventArgs e)
         {

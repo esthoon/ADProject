@@ -30,16 +30,18 @@
                         <asp:RangeValidator ID="Value1RangeValidator" ControlToValidate="TextBox1" Type="Integer" MinimumValue="1" MaximumValue="1000000" Display="Dynamic" ErrorMessage="Please enter an integer between than 1 and 1,000,000." runat="server"/>
 						<asp:RequiredFieldValidator ID="Value2RangeValidator" ControlToValidate="TextBox1" Display = "Static" Width = "100%" ErrorMessage="Please enter an integer between than 1 and 1,000,000." runat="server"/>
 						<asp:HiddenField ID="HiddenField1" runat="server"/>
+						<asp:HiddenField ID="HiddenField3" Value='<%# Eval("UnitPrice") %>' runat="server"/>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField HeaderText="Total Cost" />
-                <asp:TemplateField ShowHeader="False">
+
+                <%--<asp:TemplateField ShowHeader="False">
                         <ItemTemplate>
                             <asp:Button ID="Button1" runat="server" CommandName="" Text="Update" OnClick="Button1_Click" CausesValidation="true" UseSubmitBehavior="false" CssClass="btn btn-success"/>
                             <asp:HiddenField ID="HiddenField3" Value='<%# Eval("UnitPrice") %>' runat="server"/>
                         </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField ShowHeader="False">
+                    </asp:TemplateField>--%>
+                    <asp:TemplateField ShowHeader="False" HeaderText ="Remove">
                         <ItemTemplate>
                             <asp:Button ID="Button2" runat="server" CausesValidation="false" CommandName="" Text="Remove" OnClick="Button2_Click" CssClass="btn btn-warning" UseSubmitBehavior="false"/>
                         <asp:HiddenField ID="HiddenField4" runat="server"/>

@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="POStagingSummary.aspx.cs" Inherits="Team3ADProject.Protected.POStagingSummaryaspx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <p>
+	<p>
         &nbsp;</p>
     <p>
         <asp:Label ID="Label2" runat="server" Text="Purchase Order Staging Summary" Font-Bold="True" Font-Size="XX-Large"></asp:Label>
@@ -9,7 +9,7 @@
         <asp:Label ID="LabelNoResult" runat="server" Text="No items"></asp:Label>
         <asp:Label ID="Label1" runat="server"></asp:Label>
         <br />
-        <asp:GridView ID="GridViewPOStagingSummary" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPOStagingSummary_DataBound" CssClass="table table-hover">
+        <asp:GridView ID="GridViewPOStagingSummary" runat="server" AutoGenerateColumns="False" OnDataBound="GridViewPOStagingSummary_DataBound" CssClass="table table-hover" >
             <Columns>
                 <asp:BoundField HeaderText="Index" />
                 <asp:BoundField DataField="SupplierID" HeaderText="Supplier" />
@@ -30,6 +30,6 @@
         <br />
         <asp:Button ID="Button4" runat="server" Text="&lt;&lt;Inventory" style="position:relative; float:left; top: 1px; left: 0px;" UseSubmitBehavior="false" OnClick="Button4_Click" CssClass="btn btn-default"/>
         <asp:Button ID="ButtonPOApproval" runat="server" Text="Submit all for approval" style="position:relative; float:left; top: 1px; left: 0px;" UseSubmitBehavior="false" OnClick="ButtonPOApproval_Click" CssClass="btn btn-primary" OnClientClick="this.disabled=true;"/>
-        <asp:Button ID="ButtonClear" runat="server" Text="Remove all" style="position:relative; float:left; top: 1px; left: 0px;" UseSubmitBehavior="false" OnClick="ButtonClear_Click" CssClass="btn btn-danger"/>
+        <asp:Button ID="ButtonClear" runat="server" Text="Remove all" style="position:relative; float:left; top: 1px; left: 1px;" UseSubmitBehavior="false" OnClick="ButtonClear_Click" CssClass="btn btn-danger"/>
     </p>
 </asp:Content>
