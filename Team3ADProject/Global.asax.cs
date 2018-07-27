@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+//using Team3ADProject.App_Start; // added jo
 using Team3ADProject.Code;
 using Team3ADProject.Model;
 
@@ -18,6 +20,7 @@ namespace Team3ADProject
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //GlobalConfiguration.Configure(WebApiConfig.Register);//added jo
             // Application["RequestID"] = 247;
         }
 
