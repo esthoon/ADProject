@@ -141,6 +141,9 @@ namespace Team3ADProject.Services
             return "done";
         }
 
+        //JOEL START
+
+        //CollectionList
         public List<WCF_CollectionItem> getCollectionList()
         {
             List<WCF_CollectionItem> wcfList = new List<WCF_CollectionItem>();
@@ -149,10 +152,120 @@ namespace Team3ADProject.Services
 
             foreach (var i in result)
             {
-                wcfList.Add(new WCF_CollectionItem(i.item_number.Trim(), (int)i.quantity_ordered, i.description.Trim(), i.current_quantity, i.unit_of_measurement.Trim()));
+                wcfList.Add(new WCF_CollectionItem(i.item_number.Trim(), i.description.Trim(), (int)i.quantity_ordered, i.current_quantity, i.unit_of_measurement.Trim()));
             }
 
             return wcfList;
         }
+
+        //CollectionList
+        public void SortCollectedGoods(WCF_CollectionItem ci)
+        {
+            List<CollectionListItem> allDptCollectionList = new List<CollectionListItem>();
+            allDptCollectionList.Add(new CollectionListItem(ci.ItemNumber.Trim(), ci.Description.Trim(), ci.UnitOfMeasurement.Trim(), ci.QuantityOrdered, ci.CurrentInventoryQty, ci.CollectedQty));
+
+            BusinessLogic.SortCollectedGoods(allDptCollectionList);
+        }
+
+        //CollectionList
+        public void DeductFromInventory(WCF_CollectionItem ci)
+        {
+            List<CollectionListItem> allDptCollectionList = new List<CollectionListItem>();
+            allDptCollectionList.Add(new CollectionListItem(ci.ItemNumber.Trim(), ci.Description.Trim(), ci.UnitOfMeasurement.Trim(), ci.QuantityOrdered, ci.CurrentInventoryQty, ci.CollectedQty));
+
+            BusinessLogic.DeductFromInventory(allDptCollectionList);
+        }
+
+
+
+        //Disbursement Sorting
+        public List<WCF_DepartmentList> DisplayListofDepartmentsForCollection()
+        {
+            List<WCF_DepartmentList> wcfList = new List<WCF_DepartmentList>();
+            var result = BusinessLogic.DisplayListofDepartmentsForCollection();
+
+            foreach (var i in result)
+            {
+                wcfList.Add(new WCF_DepartmentList(i.ToString().Trim()));
+            }
+            return wcfList;
+        }
+
+        //Disbursement Sorting
+        public string GetDptIdFromDptName(string dptName)
+        {
+            string dptID;
+            return dptID = BusinessLogic.GetDptIdFromDptName(dptName.Trim()).Trim();
+        }
+
+        //Disbursement Sorting
+        public List<WCF_SortingItem> GetSortingListByDepartment(string dpt_Id)
+        {
+            List<WCF_SortingItem> wcfList = new List<WCF_SortingItem>();
+            var result = BusinessLogic.GetSortingListByDepartment(dpt_Id);
+
+            foreach (var i in result)
+            {
+                wcfList.Add(new WCF_SortingItem(i.item_number.Trim(), i.description.Trim(), (int)i.required_qty, (int)i.supply_qty, (int)i.item_pending_quantity));
+            }
+
+            return wcfList;
+        }
+
+        //Disbursement Sorting
+        public int GetPlaceIdFromDptId(string dptId)
+        {
+            int placeId;
+            return placeId = BusinessLogic.GetPlaceIdFromDptId(dptId);
+        }
+
+        //Disbursement Sorting
+        public void InsertCollectionDetailsRow(WCF_CollectionDetail cd)
+        {
+            BusinessLogic.InsertCollectionDetailsRow(cd.PlaceId, DateTime.Parse(cd.CollectionDate), cd.DepartmentId);
+        }
+
+        //Disbursement Sorting
+        public void InsertDisbursementListROId(string dptId)
+        {
+            BusinessLogic.InsertDisbursementListROId(dptId);
+        }
+
+        //ViewRO
+        public List<WCF_CollectionItem> GetRODetailsByROId(string roId)
+        {
+            List<WCF_CollectionItem> wcfList = new List<WCF_CollectionItem>();
+
+            var result = BusinessLogic.GetRODetailsByROId(roId);
+            foreach (var i in result)
+            {
+                wcfList.Add(new WCF_CollectionItem(i.requisition_id.Trim(), i.item_number.Trim(), i.description.Trim(), i.unit_of_measurement.Trim(), (int)i.item_requisition_quantity, (int)i.current_quantity, (int)i.item_pending_quantity));
+            }
+
+            return wcfList;
+        }
+
+        //ViewRO
+        public void SpecialRequestReadyUpdatesCDRDD(WCF_CollectionDetail cd)
+        {
+            BusinessLogic.SpecialRequestReadyUpdatesCDRDD(cd.PlaceId, DateTime.Parse(cd.CollectionDate), cd.RoId.Trim(), cd.DepartmentId.Trim());
+        }
+
+        //ViewRO
+        public void ViewROSpecialRequestUpdateRODTable(WCF_CollectionItem ci)
+        {
+            List<CollectionListItem> clList = new List<CollectionListItem>();
+            clList.Add(new CollectionListItem(ci.ItemNumber.Trim(), ci.Description.Trim(), ci.UnitOfMeasurement.Trim(), ci.QuantityOrdered, ci.CurrentInventoryQty, ci.CollectedQty));
+            string roid = ci.RequisitionId.Trim();
+
+            BusinessLogic.ViewROSpecialRequestUpdateRODTable(clList, roid);
+
+        }
+
+
+        //JOEL END
+
     }
 }
+
+
