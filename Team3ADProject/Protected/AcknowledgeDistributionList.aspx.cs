@@ -158,6 +158,7 @@ namespace Team3ADProject.Protected
                     }
                     //update status as collected
                     BusinessLogic.updateCollectionStatus(collection_id);
+                    Response.Redirect("ViewCollectionInformation.aspx");
                 }
             }
 
