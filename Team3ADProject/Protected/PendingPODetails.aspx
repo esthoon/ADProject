@@ -15,7 +15,7 @@
         <asp:Label ID="Label5" runat="server" Text="Label" Font-Italic="True" />
     </div>
     <div>
-        <asp:Label ID="Label8" runat="server" Text="Purchase Order Date (YYYY/MM/DD) :" Font-Bold="True" />
+        <asp:Label ID="Label8" runat="server" Text="Purchase Order Date (dd-MM-yyyy) :" Font-Bold="True" />
         <asp:Label ID="Label9" runat="server" Text="Label" Font-Italic="True" />
     </div>
     <div>
@@ -51,7 +51,7 @@
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             </asp:BoundField>
-            <asp:BoundField DataField="item_required_date" HeaderText="Item Required Date" DataFormatString="{0:yyyy/MM/dd}">
+            <asp:BoundField DataField="item_required_date" HeaderText="Item Required Date" DataFormatString="{0:dd-MM-yyyy}">
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             </asp:BoundField>
@@ -70,7 +70,7 @@
                     <asp:HiddenField ID="HiddenField3" runat="server" Value='<%# Eval("item_purchase_order_quantity") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:BoundField DataField="item_accept_date" HeaderText="Item Receipt Date" DataFormatString="{0:yyyy/MM/dd}">
+            <asp:BoundField DataField="item_accept_date" HeaderText="Item Receipt Date" DataFormatString="{0:dd-MM-yyyy}">
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             </asp:BoundField>

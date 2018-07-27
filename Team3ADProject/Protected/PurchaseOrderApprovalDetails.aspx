@@ -46,7 +46,7 @@
         </Columns>
     </asp:GridView>
     <br />
-    <b>Manager Comment</b>
+    <b>Supervisor Comment</b>
     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
     <br />
     <br />

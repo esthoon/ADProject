@@ -50,7 +50,7 @@ namespace Team3ADProject.Protected
                 itemCurrentStock.Text = itemSelected.current_quantity.ToString();
                 if ((itemSelected.reorder_level - itemSelected.current_quantity) < 0)
                 {
-                    TextBoxOrderQuantity.Text = itemSelected.reorder_level.ToString();
+                    TextBoxOrderQuantity.Text = itemSelected.reorder_quantity.ToString();
                 }
                 else
                 {
