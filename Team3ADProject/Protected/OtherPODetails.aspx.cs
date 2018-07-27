@@ -24,7 +24,7 @@ namespace Team3ADProject.Protected
                 Label5.Text = id.ToString();
                 Label4.Text = s.supplier_name;
                 Label7.Text = s.supplier_id;
-                Label9.Text = p.purchase_order_date.ToString("yyyy/MM/dd");
+                Label9.Text = p.purchase_order_date.ToString("dd-MM-yyyy");
                 Label11.Text = p.purchase_order_status;
                 Label13.Text = d.employee_name;    
             }

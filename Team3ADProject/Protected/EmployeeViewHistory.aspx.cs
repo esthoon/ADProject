@@ -28,7 +28,7 @@ namespace Team3ADProject.Protected
             if (list.Count > 0)
             {
                 TextBox1.Visible = true;
-                Label2.Text = "Select Date (YYYY/MM/DD)";
+                Label2.Text = "Select Date (dd-MM-yyyy)";
                 Button1.Visible = true;
                 // ImageButton1.Visible = true;
                 // Calendar1.Visible = false;
