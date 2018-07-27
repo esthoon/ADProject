@@ -26,7 +26,7 @@ namespace Team3ADProject.Protected
                 int b4 = BusinessLogic.getspentbudgetbydept(dept);
                 TextBox2.Text = b4.ToString();
                 Session["budgetspent"] = b4;
-                Label3.Text = (Convert.ToDouble(b4) / Convert.ToDouble(b3)).ToString() + "%";
+                Label3.Text = (Convert.ToDouble(b4) / Convert.ToDouble(b3)*100).ToString() + "%";
                 generatechartdata(b3, b4);
             }
             catch (Exception x)
@@ -60,7 +60,7 @@ namespace Team3ADProject.Protected
             Series series = Chart1.Series["Series1"];
             series.Points.AddXY("", budget);
             series.Points.AddXY("Consumed", spent);
-            //Session["session"] = series;
+
 
         }
     }

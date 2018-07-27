@@ -38,7 +38,7 @@ namespace Team3ADProject.Protected
 				{
 					int password = Convert.ToInt32(password1);
 					BusinessLogic.updatepassword(dept, password);
-					ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Password updated successfully')", true);
+					ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Pin updated successfully')", true);
 				}
 				catch (Exception x)
 				{

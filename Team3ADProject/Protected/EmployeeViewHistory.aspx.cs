@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -27,7 +28,7 @@ namespace Team3ADProject.Protected
             if (list.Count > 0)
             {
                 TextBox1.Visible = true;
-                Label2.Text = "Select Date (dd-MM-yyyy)";
+                Label2.Text = "Select Date (YYYY/MM/DD)";
                 Button1.Visible = true;
                 // ImageButton1.Visible = true;
                 // Calendar1.Visible = false;
@@ -63,7 +64,16 @@ namespace Team3ADProject.Protected
             //Selected all status with date
             if (flag == true && s == "All")
             {
-                d = DateTime.Parse(TextBox1.Text);
+                //
+                String ss = TextBox1.Text;
+                DateTime dt = DateTime.ParseExact(ss, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                String x = dt.ToString("yyyy-MMMM-dd");
+                d = Convert.ToDateTime(x);
+
+
+                //
+
+                //d = DateTime.Parse(TextBox1.Text);
                 GridView1.DataSource = BusinessLogic.GetRequisitionByEmployeeSearchDateAllStatus(i, d);
                 GridView1.DataBind();
             }
@@ -82,7 +92,11 @@ namespace Team3ADProject.Protected
             //Both date and status
             else
             {
-                d = DateTime.Parse(TextBox1.Text);
+                String ss = TextBox1.Text;
+                DateTime dt = DateTime.ParseExact(ss, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                String x = dt.ToString("yyyy-MMMM-dd");
+                d = Convert.ToDateTime(x);
+                //d = DateTime.Parse(TextBox1.Text);
                 GridView1.DataSource = BusinessLogic.GetRequisitionByEmployeeSearchDate(i, d, s);
                 GridView1.DataBind();
             }

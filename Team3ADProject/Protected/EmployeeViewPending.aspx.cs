@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Team3ADProject.Code;
 using System.Security.Principal;
 using Team3ADProject.Model;
+using System.Globalization;
 
 namespace Team3ADProject.Protected
 {
@@ -69,7 +70,12 @@ namespace Team3ADProject.Protected
             else
             {
                 int i = (int)Session["Employee"];
-                DateTime d = DateTime.Parse(TextBox1.Text);
+                //DateTime d = DateTime.ParseExact(TextBox1.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                String ss = TextBox1.Text;
+                DateTime dt = DateTime.ParseExact(ss, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                String x = dt.ToString("yyyy-MMMM-dd");
+                DateTime d = Convert.ToDateTime(x);
+
                 string s = "Pending";
                 GridView1.DataSource = BusinessLogic.GetRequisitionByEmployeeSearchDate(i, d, s);
                 GridView1.DataBind();

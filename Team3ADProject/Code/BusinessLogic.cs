@@ -318,7 +318,7 @@ department.department_id.Equals(dept)
                               orderby (sid.priority)
                               select new { s.supplier_name, sid.unit_price, s.supplier_id };
             return nestedQuery.ToList();
-            
+
         }
         // Returns a suggested reorder quantity when give an item code
         // Returns zero if there are no purchase order in the past.
@@ -345,19 +345,11 @@ department.department_id.Equals(dept)
         //List all adjustment form
         public static List<adjustment> StoreSupGetAdj()
         {
-
-
-
             return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price <= 250 && x.adjustment_price >= -250).ToList();
-
-
         }
         public static List<adjustment> StoreManagerGetAdj()
         {
-
-
             return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250 || x.adjustment_price <= -250).ToList();
-
         }
 
 
@@ -385,7 +377,7 @@ department.department_id.Equals(dept)
 
         }
 
-      
+
 
 
         //searchdateforstoremanager
@@ -757,7 +749,7 @@ department.department_id.Equals(dept)
         //return employee based on userid
         public static employee GetEmployeeByUserID(string userid)
         {
-            return context.employees.Where(x =>x.user_id.Trim()==userid.Trim()).FirstOrDefault();
+            return context.employees.Where(x => x.user_id.Trim() == userid.Trim()).FirstOrDefault();
         }
 
         public static department GetDepartmenthead(string dept)
@@ -819,11 +811,11 @@ department.department_id.Equals(dept)
         //return pendingadjqty for cInventory
         public static int ReturnPendingMinusAdjustmentQty(string item)
         {
-            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending" && x.adjustment_quantity<0);
+            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending" && x.adjustment_quantity < 0);
             int qty = 0;
             foreach (var a in q)
             {
-                if (a.item_number.ToLower().Trim().Equals(item.ToLower().Trim())&&a.adjustment_quantity<0)
+                if (a.item_number.ToLower().Trim().Equals(item.ToLower().Trim()) && a.adjustment_quantity < 0)
                 {
                     qty += a.adjustment_quantity;
                 }
@@ -832,7 +824,7 @@ department.department_id.Equals(dept)
         }
         public static int ReturnPendingPlusAdjustmentQty(string item)
         {
-            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending" && x.adjustment_quantity>0);
+            var q = context.adjustments.Where(x => x.adjustment_status.ToLower().Trim() == "pending" && x.adjustment_quantity > 0);
             int qty = 0;
             foreach (var a in q)
             {
@@ -1143,7 +1135,6 @@ department.department_id.Equals(dept)
                                 rod.item_number = roidListItem.item_number;
                                 rod.item_distributed_quantity = roidListItem.item_distributed_quantity;
                                 rod.item_pending_quantity = roidListItem.item_pending_quantity;
-                                BusinessLogic.UpdateRODetails(rod);
                                 BusinessLogic.UpdateRODetails(rod);
                             }
                         }
