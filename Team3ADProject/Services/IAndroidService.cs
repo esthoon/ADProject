@@ -116,6 +116,8 @@ namespace Team3ADProject.Services
         ResponseFormat = WebMessageFormat.Json)]
         void ViewROSpecialRequestUpdateRODTable(WCF_CollectionItem ci);
 
+        // ViewRO SpecialRequest - Deduct from Inventory - USE ABOVE METHOD
+
         //JOEL - END
 
         //Tharrani - Start
