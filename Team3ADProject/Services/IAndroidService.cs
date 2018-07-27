@@ -140,14 +140,23 @@ namespace Team3ADProject.Services
         //Add new request
         [OperationContract]
         [WebInvoke(UriTemplate = "/NewRequest/Addrequest", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string AddNewRequest();
+        string AddNewRequest(WCF_Token token);
 
         //Add new request detail
         [OperationContract]
         [WebInvoke(UriTemplate = "/NewRequest/Addrequestdetail", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         void AddNewRequestDetail(WCF_ReqCart r);
 
+        //GetRequestOrder
+        [OperationContract]
+        [WebGet(UriTemplate = "/NewRequest/Confirm?id={id}&token={token}", ResponseFormat = WebMessageFormat.Json)]
+        WCF_Requisition_Order GetRequestOrder(string token, string id);
+
+        //GetRequestOrderDetails
+        [WebGet(UriTemplate = "/NewRequest/Confirm/orderdetail?id={id}&token={token}", ResponseFormat = WebMessageFormat.Json)]
+        List<Employee_Request_order_Detail> GetRequestDetail(string token, string id);
         //Tharrani -End
+
 
     }
 
@@ -511,6 +520,9 @@ namespace Team3ADProject.Services
         [DataMember]
         string id;
 
+        [DataMember]
+        string token;
+
         public WCF_ReqCart(string inventory, int cart_quantity, string id)
         {
             this.inventory = inventory;
@@ -518,10 +530,55 @@ namespace Team3ADProject.Services
             this.id = id;
         }
 
+        public WCF_ReqCart(string inventory, int cart_quantity, string id, string token)
+        {
+            this.inventory = inventory;
+            this.cart_quantity = q;
+            this.id = id;
+            this.token = token;
+        }
+
         public string getI => inventory;
         public int q => cart_quantity;
         public string Id => id;
+        public string gettoken => token;
 
+    }
+
+    [DataContract]
+    public class Employee_Request_order_Detail
+    {
+        [DataMember]
+        string category;
+
+        [DataMember]
+        string description;
+
+        [DataMember]
+        string unit_of_measurement;
+
+        [DataMember]
+        string quantity;
+
+        public Employee_Request_order_Detail(string category, string description, string unit_of_measurement, string quantity)
+        {
+            this.category = category;
+            this.description = description;
+            this.unit_of_measurement = unit_of_measurement;
+            this.quantity = quantity;
+        }
+    }
+
+    [DataContract]
+    public class WCF_Token
+    {
+        [DataMember]
+        string token;
+
+        public WCF_Token(string token)
+        { this.token = token; }
+
+        public string gettoken => token;
     }
 
     //Tharrani – End
