@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Web;
 using Team3ADProject.Model;
 using System.Transactions;
+using System.Web.Security;
 
 namespace Team3ADProject.Code
 {
@@ -224,6 +225,9 @@ namespace Team3ADProject.Code
                         department_rep.representative_status.Equals("Active")
                         select department_rep;
                 department_rep d = q.FirstOrDefault();
+                //find the active user first and remove active           
+                Roles.AddUserToRole(d.employee.user_id, "employee");
+                Roles.RemoveUserFromRole(d.employee.user_id, "deprep");
                 d.representative_status = "InActive";
                 context.SaveChanges();
                 string today = DateTime.Now.ToString("yyyy-MM-dd");

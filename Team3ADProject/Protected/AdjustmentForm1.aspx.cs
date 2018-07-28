@@ -27,6 +27,10 @@ namespace Team3ADProject.Protected
                     int employeeid = (int)Session["Employee"];
                     user = BusinessLogic.GetEmployeeById(employeeid);
                 }
+                else
+                {
+                    Response.Redirect(ResolveUrl("~"));
+                }
                 //retrieve headid
                 headid = BusinessLogic.DepartmentHeadID(user);
 

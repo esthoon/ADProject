@@ -83,8 +83,8 @@
                                 <li><a href="<%=ResolveUrl("~/Protected/POStagingSummary")%>">Purchase Order Staging</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>">Purchase Order List</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/CollectionList")%>">Warehouse Collection List</a></li>
-                                <%-- %><li><a href="<%=ResolveUrl("~/Protected/ViewCollection")%>">Distribution List</a></li> --%>
+                                <li><a href="<%=ResolveUrl("~/Protected/CollectionList")%>">Collection List</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/ViewROSpecialRequest")%>">Special Requistion List</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewCollectionInformation")%>">Collecion Point Disbursement</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/DisbursementSorting")%>">Item Sorting</a></li>
                                 <%}%>

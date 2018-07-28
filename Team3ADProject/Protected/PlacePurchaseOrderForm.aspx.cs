@@ -28,10 +28,7 @@ namespace Team3ADProject.Protected
             }
             else
             {
-                //hardcoded
-                Session["Employee"] = 10;
-                user = BusinessLogic.GetEmployeeById(10);
-                //redirect to login homepage
+                Response.Redirect(ResolveUrl("~"));
             }
 
             if (!IsPostBack)

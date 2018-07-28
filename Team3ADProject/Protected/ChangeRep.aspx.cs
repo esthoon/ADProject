@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Team3ADProject.Code;
-
+using System.Web.Security;
+using Team3ADProject.Model;
 
 namespace Team3ADProject.Protected
 {
@@ -46,11 +47,6 @@ namespace Team3ADProject.Protected
             TextBox2.Text = hd.Value;
         }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         protected void Button2_Click(object sender, EventArgs e)
         {
             string name = TextBox2.Text;
@@ -65,10 +61,12 @@ namespace Team3ADProject.Protected
                 BusinessLogic.sendMail("pssruthi123@gmail.com", "Department Representative Change", messagebody);
                 string messagebody1 = "Congratulations,\n You have been appointed as the department representative for the collection of items ";
                 BusinessLogic.sendMail("pssruthi123@gmail.com", "Department Representative Change", messagebody1);
-                //if (!Page.IsPostBack)
-                //{
                 updategrid();
-                //}
+
+                //adding the person as rep
+                employee getName = BusinessLogic.GetEmployee(id);
+                Roles.AddUserToRole(getName.user_id, "deprep");
+                Roles.RemoveUserFromRole(getName.user_id, "employee");
             }
             else
             {
