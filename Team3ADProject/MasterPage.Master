@@ -133,7 +133,7 @@
                         <%} %>
 
                         <%-- Approve dropdown --%>
-                        <% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR) || Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD))
+                        <% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR) || Roles.IsUserInRole("depheadtemp"))
                             {%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Approve <span class="caret"></span></a>
@@ -154,7 +154,7 @@
                                 <%}%>
 
 
-                                <%else if (Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD))
+                                <%else if (Roles.IsUserInRole("depheadtemp"))
                                     {
                                 %>
                                 <li><a href="<%=ResolveUrl("~/Protected/depheadpending")%>">Requisition Orders</a></li>

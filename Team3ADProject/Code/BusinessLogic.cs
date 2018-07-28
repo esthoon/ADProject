@@ -176,6 +176,8 @@ namespace Team3ADProject.Code
             department d = q.FirstOrDefault();
             d.temp_head_id = id;
             context.SaveChanges();
+            employee y = context.employees.Where(x => x.employee_id == id).FirstOrDefault();
+            Roles.AddUserToRole(y.user_id, "depheadtemp");
         }
 
         public static string gettemporaryheadname(string dept)
@@ -193,6 +195,8 @@ namespace Team3ADProject.Code
         {
             var q = from department in context.departments where department.department_id == dept select department;
             department d = q.FirstOrDefault();
+            employee y = context.employees.Where(x => x.employee_id == d.temp_head_id).FirstOrDefault();
+            Roles.RemoveUserFromRole(y.user_id, "depheadtemp");
             d.temp_head_id = null;
             context.SaveChanges();
 
