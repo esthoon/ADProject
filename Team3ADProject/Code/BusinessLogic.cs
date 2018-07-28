@@ -882,9 +882,16 @@ department.department_id.Equals(dept)
         //create new adjustment
         public static string CreateAdjustment(adjustment a)
         {
-            context.adjustments.Add(a);
-            context.SaveChanges();
-            return ("success");
+            try
+            {
+                context.adjustments.Add(a);
+                context.SaveChanges();
+                return "success";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
         public static employee GetEmployeeById(int id)
         {
@@ -1043,7 +1050,7 @@ department.department_id.Equals(dept)
 
         public static List<budget> getbudget(string dept)
         {
-            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) select b;
+            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) & b.department_id.Equals(dept) select b;
             List<budget> list = q.ToList();
             list = (List<budget>)list.OrderBy(x => DateTime.ParseExact(x.month, "MMM", System.Globalization.CultureInfo.InvariantCulture).Month).ToList();
             return list;

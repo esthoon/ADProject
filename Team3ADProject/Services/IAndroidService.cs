@@ -157,6 +157,13 @@ namespace Team3ADProject.Services
         List<Employee_Request_order_Detail> GetRequestDetail(string token, string id);
         //Tharrani -End
 
+        //Esther
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/Adjustment/Create/", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+        string CreateAdjustment(WCF_Adjustment adj);
+
 
     }
 
@@ -271,15 +278,21 @@ namespace Team3ADProject.Services
 
         public WCF_Adjustment(int adjustment_id, DateTime adjustment_date, int employee_id, string item_number, int adjustment_quantity, double adjustment_price, string adjustment_status, string employee_remark, string manager_remark)
         {
-            this.AdjustmentId = adjustment_id.ToString();
-            this.AdjustmentDate = adjustment_date.ToString("yyyy-MM-dd");
-            this.EmployeeId = employee_id.ToString();
-            this.ItemNumber = item_number;
-            this.AdjustmentQty = adjustment_quantity.ToString();
-            this.AdjustmentPrice = adjustment_price.ToString();
-            this.AdjustmentStatus = adjustment_status;
-            this.EmployeeRemark = employee_remark;
-            this.ManagerRemark = manager_remark;
+            this.AdjustmentId = adjustment_id.ToString().Trim();
+            this.AdjustmentDate = adjustment_date.ToString("yyyy-MM-dd").Trim();
+            this.EmployeeId = employee_id.ToString().Trim();
+            this.ItemNumber = item_number.Trim();
+            this.AdjustmentQty = adjustment_quantity.ToString().Trim();
+            this.AdjustmentPrice = adjustment_price.ToString().Trim();
+            this.AdjustmentStatus = adjustment_status.Trim();
+            this.EmployeeRemark = employee_remark.Trim();
+            this.ManagerRemark = manager_remark.Trim();
+        }
+        public WCF_Adjustment(string item_number, int adjustment_quantity, string employee_remark)
+        {
+            this.ItemNumber = item_number.Trim();
+            this.AdjustmentQty = adjustment_quantity.ToString().Trim();
+            this.EmployeeRemark = employee_remark.Trim();
         }
     }
 
