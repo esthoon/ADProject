@@ -96,7 +96,7 @@
                             <asp:Label ID="Label1" runat="server" Text="Remarks: "></asp:Label>
                         </td>
                         <td>
-                            <asp:TextBox ID="TextBoxRemarks" runat="server" Height="184px" Width="745px" TextMode="MultiLine"></asp:TextBox>
+                            <asp:TextBox ID="TextBoxRemarks" runat="server" Height="184px" Width="745px" TextMode="MultiLine" MaxLength="290"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>

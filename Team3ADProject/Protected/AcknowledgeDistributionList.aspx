@@ -46,7 +46,7 @@
     </table>
         <br /><br /><br />
     Enter Department Pin :
-    <asp:TextBox ID="PinTextBox" runat="server"></asp:TextBox>
+    <asp:TextBox ID="PinTextBox" runat="server" MaxLength="10"></asp:TextBox>
     <asp:Button ID="VerifyPasswordButton" runat="server" Text="Verify Pin" OnClick="VerifyPasswordButtonClick" CssClass="btn btn-default"/>
     <br /><br /><br />
         
