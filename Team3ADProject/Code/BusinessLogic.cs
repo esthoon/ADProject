@@ -384,7 +384,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) >= 250).ToList<adjustment>();
 
 
         }
@@ -392,7 +392,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreSupSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) < 250).ToList<adjustment>();
 
 
         }
@@ -445,7 +445,7 @@ department.department_id.Equals(dept)
 
             sendMail(email, $"Email for Purchase Order {pono}",
                 $"Dear Supplier,\n This is an email to notify you on the purchase order  {pono} from Logic University." +
-                $"\nItem No. \tCurrent Qty\n\t {pt}\n\n " +
+                $"\nItem No. \tOrdered Qty\n\t {pt}\n\n " +
                 $"\nThis is a system generated message.");
 
             context.SaveChanges();

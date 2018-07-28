@@ -48,7 +48,7 @@ namespace Team3ADProject.Protected
                 itemNumber.Text = itemSelected.item_number;
                 itemDescription.Text = itemSelected.description;
                 itemCurrentStock.Text = itemSelected.current_quantity.ToString();
-                if ((itemSelected.reorder_level - itemSelected.current_quantity) < 0)
+                if ((itemSelected.reorder_level - itemSelected.current_quantity) <= 0)
                 {
                     TextBoxOrderQuantity.Text = itemSelected.reorder_quantity.ToString();
                 }
@@ -67,21 +67,28 @@ namespace Team3ADProject.Protected
             }
         }
 
-        protected void DropDownListSupplier_SelectedIndexChanged(object sender, EventArgs e)
+        protected int validationOnTextBoxOrderQuantity()
         {
             int qty;
+            if (Int32.TryParse(TextBoxOrderQuantity.Text, out qty))
+            {
+                return qty;
+            }
+            else
+            {
+                ErrorText.Text = "Please input a Whole Number between 1 and 1,000,000";
+                Submit.Enabled = false;
+                return 0;
 
-                if (Int32.TryParse(TextBoxOrderQuantity.Text, out qty))
-                {
-                    //When dropdownlist change, change the unit price and change the total price based on the quantity
-                    CalculationForUnitCostAndTotalCost(qty);
-                }
-                else
-                {
-                    ErrorText.Text = "Please input a Whole Number between 1 and 1,000,000";
-                    Submit.Enabled = false;
-                }
-            
+            }
+
+
+
+        }
+
+        protected void DropDownListSupplier_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CalculationForUnitCostAndTotalCost(validationOnTextBoxOrderQuantity());
         }
 
         public void CalculationForUnitCostAndTotalCost(int qty)
@@ -102,42 +109,36 @@ namespace Team3ADProject.Protected
            
         }
 
-
-        protected void CalendarSelected(object sender, DayRenderEventArgs e)
-        {
-            if (e.Day.Date <= DateTime.Now)
-            {
-                e.Cell.BackColor = ColorTranslator.FromHtml("#a9a9a9");
-
-                e.Day.IsSelectable = false;
-            }
-        }
-
         //esther-adding POitem to cart
         protected void Submit_Click(object sender, EventArgs e)
         {
-            List<POStaging> alist = new List<POStaging>();
-            if (Session["StagingList"] != null)
+            if (validationOnTextBoxOrderQuantity() > 0)
             {
-                alist = (List<POStaging>)Session["StagingList"];
-            }
-            inventory item = BusinessLogic.GetInventory(itemid);
-            string suppliername = DropDownListSupplier.SelectedItem.Text;
-            string supplierid = BusinessLogic.GetSupplierID(suppliername);
-            int orderqty = Int32.Parse(TextBoxOrderQuantity.Text);
-            double unitprice = Double.Parse(unitCost.Text);
-            string requiredDate = DateTime.Now.AddDays(28).ToString("yyyy-MM-dd");
-            try
-            {
-                POStaging poItem = new POStaging(item, supplierid, orderqty, unitprice, DateTime.ParseExact(requiredDate, "yyyy-MM-dd", null), user);
-                Session["StagingList"] = BusinessLogic.AddToStaging(alist, poItem);
 
+
+                List<POStaging> alist = new List<POStaging>();
+                if (Session["StagingList"] != null)
+                {
+                    alist = (List<POStaging>)Session["StagingList"];
+                }
+                inventory item = BusinessLogic.GetInventory(itemid);
+                string suppliername = DropDownListSupplier.SelectedItem.Text;
+                string supplierid = BusinessLogic.GetSupplierID(suppliername);
+                int orderqty = Int32.Parse(TextBoxOrderQuantity.Text);
+                double unitprice = Double.Parse(unitCost.Text);
+                string requiredDate = DateTime.Now.AddDays(28).ToString("yyyy-MM-dd");
+                try
+                {
+                    POStaging poItem = new POStaging(item, supplierid, orderqty, unitprice, DateTime.ParseExact(requiredDate, "yyyy-MM-dd", null), user);
+                    Session["StagingList"] = BusinessLogic.AddToStaging(alist, poItem);
+
+                }
+                catch (Exception ex)
+                {
+                    Label1.Text = ex.Message;
+                }
+                Response.Redirect("POStagingSummary.aspx");
             }
-            catch (Exception ex)
-            {
-                Label1.Text = ex.Message;
-            }
-            Response.Redirect("POStagingSummary.aspx");
 
         }
 
