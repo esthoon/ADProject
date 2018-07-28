@@ -80,7 +80,7 @@
 
             <asp:TemplateField HeaderText="Manager Remark" SortExpression="manager_remark">
                 <ItemTemplate>
-                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("manager_remark") %>'></asp:TextBox>
+                    <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("manager_remark") %>' MaxLength="290"></asp:TextBox>
                 </ItemTemplate>
 
 

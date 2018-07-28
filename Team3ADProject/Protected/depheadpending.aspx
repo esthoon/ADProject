@@ -21,11 +21,11 @@
 		<br />
 		<br />
 		<asp:Label ID="Label1" runat="server" Text="Allocated Budget"></asp:Label>&emsp;&emsp;
-		<asp:TextBox ID="TextBox1" runat="server" ReadOnly="true"></asp:TextBox>
+		<asp:Label ID="Label5" runat="server"></asp:Label>
 		<br />
 		<br />
 		<asp:Label ID="Label2" runat="server" Text="Approved Budget"></asp:Label>&emsp;&emsp;
-		<asp:TextBox ID="TextBox2" runat="server" ReadOnly="true"></asp:TextBox>
+		<asp:Label ID="Label6" runat="server"></asp:Label>
 		<br />
 		<br />
 		<asp:Label ID="Label4" runat="server" Text="Percentage of Budget Spent" style="width: 191px; height: 147px;"></asp:Label>&emsp;&emsp;

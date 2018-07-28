@@ -44,7 +44,7 @@
             Total Cost :
 	<asp:Label ID="totalCost" runat="server"></asp:Label>
 			<br />
-			Remarks :<asp:TextBox ID="remarks" runat="server" Height="144px" TextMode="MultiLine" Width="910px"></asp:TextBox>
+			Remarks :<asp:TextBox ID="remarks" runat="server" Height="144px" TextMode="MultiLine" Width="910px" MaxLength="250"></asp:TextBox>
 			<br />
 			<asp:Button ID="Submit" runat="server" Text="Submit" OnClick="Submit_Click" CssClass="btn btn-primary" />
 			<asp:Button ID="Cancel" runat="server" Text="Cancel" OnClick="Cancel_Click" CssClass="btn btn-warning"/>

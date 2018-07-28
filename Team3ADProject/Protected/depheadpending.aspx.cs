@@ -9,8 +9,8 @@ using System.Web.UI.DataVisualization.Charting;
 
 namespace Team3ADProject.Protected
 {
-	public partial class depheadpendingm : System.Web.UI.Page
-	{
+    public partial class depheadpendingm : System.Web.UI.Page
+    {
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -21,12 +21,12 @@ namespace Team3ADProject.Protected
                 GridView1.DataSource = q.ToList();
                 GridView1.DataBind();
                 int b3 = BusinessLogic.getbudgetbydept(dept);
-                TextBox1.Text = b3.ToString();
+                Label5.Text = b3.ToString();
                 Session["budgetallocated"] = b3;
                 int b4 = BusinessLogic.getspentbudgetbydept(dept);
-                TextBox2.Text = b4.ToString();
+                Label6.Text = b4.ToString();
                 Session["budgetspent"] = b4;
-                Label3.Text = (Convert.ToDouble(b4) / Convert.ToDouble(b3)*100).ToString() + "%";
+                Label3.Text = (Convert.ToDouble(b4) / Convert.ToDouble(b3) * 100).ToString() + "%";
                 generatechartdata(b3, b4);
             }
             catch (Exception x)
@@ -57,11 +57,18 @@ namespace Team3ADProject.Protected
 
         public void generatechartdata(int budget, int spent)
         {
-            Series series = Chart1.Series["Series1"];
-            series.Points.AddXY("", budget);
-            series.Points.AddXY("Consumed", spent);
-
-
+            if(spent > budget)
+            {
+                Series series = Chart1.Series["Series1"];
+                series.Points.AddXY("Consumed", spent);
+            }
+            else
+            {
+                Series series = Chart1.Series["Series1"];
+                series.Points.AddXY("Consumed", spent);
+                series.Points.AddXY("Remaining", budget - spent);
+            }
+           
         }
     }
 }
