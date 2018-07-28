@@ -990,6 +990,36 @@ department.department_id.Equals(dept)
         {
             return context.departments.Where(x => x.department_id.Trim().ToLower() == employee.department_id.Trim().ToLower()).Select(x => x.head_id).First();
         }
+
+        public static inventory GetInventoryByItemCode(string ItemCode)
+        {
+            return context.inventories.Where(x => x.item_number.ToLower().Trim() == ItemCode.ToLower().Trim()).FirstOrDefault();
+        }
+
+        public static string SendEmailAdjustmentApproval(adjustment a)
+        {
+            string email;
+            if (a.adjustment_price > 250)
+            {
+                int id = DepartmentHeadID(a.employee);
+                email = RetrieveEmailByEmployeeID(id);
+            }
+            else
+            {
+                int? id = GetSupervisorID(a.employee_id);
+                if (id != null)
+                {
+                    int supid = (int)id;
+                    email = RetrieveEmailByEmployeeID(supid);
+                }
+                else
+                {
+                    int headid = DepartmentHeadID(a.employee);
+                    email = RetrieveEmailByEmployeeID(headid);
+                }
+            }
+            return email;
+        }
         //Esther end
 
         //Rohit - start
