@@ -177,7 +177,7 @@ namespace Team3ADProject.Code
             d.temp_head_id = id;
             context.SaveChanges();
             employee y = context.employees.Where(x => x.employee_id == id).FirstOrDefault();
-            Roles.AddUserToRole(y.user_id, "depheadtemp");
+            Roles.AddUserToRole(y.user_id, Constants.ROLES_DEPARTMENT_HEAD_TEMP);
         }
 
         public static string gettemporaryheadname(string dept)
@@ -196,7 +196,7 @@ namespace Team3ADProject.Code
             var q = from department in context.departments where department.department_id == dept select department;
             department d = q.FirstOrDefault();
             employee y = context.employees.Where(x => x.employee_id == d.temp_head_id).FirstOrDefault();
-            Roles.RemoveUserFromRole(y.user_id, "depheadtemp");
+            Roles.RemoveUserFromRole(y.user_id, Constants.ROLES_DEPARTMENT_HEAD_TEMP);
             d.temp_head_id = null;
             context.SaveChanges();
 
@@ -230,8 +230,8 @@ namespace Team3ADProject.Code
                         select department_rep;
                 department_rep d = q.FirstOrDefault();
                 //find the active user first and remove active           
-                Roles.AddUserToRole(d.employee.user_id, "employee");
-                Roles.RemoveUserFromRole(d.employee.user_id, "deprep");
+                Roles.AddUserToRole(d.employee.user_id, Constants.ROLES_EMPLOYEE);
+                Roles.RemoveUserFromRole(d.employee.user_id, Constants.ROLES_DEPARTMENT_REPRESENTATIVE);
                 d.representative_status = "InActive";
                 context.SaveChanges();
                 string today = DateTime.Now.ToString("yyyy-MM-dd");

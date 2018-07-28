@@ -65,8 +65,8 @@ namespace Team3ADProject.Protected
 
                 //adding the person as rep
                 employee getName = BusinessLogic.GetEmployee(id);
-                Roles.AddUserToRole(getName.user_id, "deprep");
-                Roles.RemoveUserFromRole(getName.user_id, "employee");
+                Roles.AddUserToRole(getName.user_id, Constants.ROLES_DEPARTMENT_REPRESENTATIVE);
+                Roles.RemoveUserFromRole(getName.user_id, Constants.ROLES_EMPLOYEE);
             }
             else
             {
