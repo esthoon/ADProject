@@ -23,10 +23,12 @@
                 <asp:BoundField DataField="item_number" HeaderText="Item Number" ReadOnly="True" SortExpression="item_number" />
                 <asp:BoundField DataField="description" HeaderText="Description" ReadOnly="True" SortExpression="description" />
                 <asp:BoundField DataField="required_qty" HeaderText="Ordered Quantity" ReadOnly="True" SortExpression="required_qty" />
+                <asp:BoundField DataField="supply_qty" HeaderText="Recommended Distribution Quantity" ReadOnly="True" SortExpression="supply_qty" />
 
-                <asp:TemplateField HeaderText="Recommended Distribution Quantity">
+<%--                <asp:TemplateField HeaderText="Recommended Distribution Quantity">
                     <ItemTemplate>
-                        <asp:TextBox ID="txt_QtyToSupply" runat="server" Text='<%#Eval("supply_qty") %>'></asp:TextBox>
+                        <asp:Label ID="txt_QtyToSupply" runat="server" Text='<%#Eval("supply_qty") %>'></asp:Label>
+
                         <asp:Label ID="Label2" runat="server" ForeColor="Red"></asp:Label>
 
                         <asp:CompareValidator ID="CompareValidator_txt_QtyPrepared" runat="server" ValidationGroup='valGroup1'
@@ -37,9 +39,8 @@
                         <asp:RequiredFieldValidator runat="server" ControlToValidate="txt_QtyToSupply" ValidationGroup='valGroup1' ID="RequiredValidator_txt_QtyPrepared" ErrorMessage="Enter a number." ForeColor="Red" />
 
                         <asp:RegularExpressionValidator ID="RegularExpressionValidator_txt_QtyPrepared" runat="server" ControlToValidate="txt_QtyToSupply" ErrorMessage="Enter only numbers." ForeColor="Red" ValidationExpression="^\d+$" ValidationGroup='valGroup1'></asp:RegularExpressionValidator>
-
                     </ItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField>--%>
 
                 <asp:TemplateField HeaderText="Collected Quantity Available">
                     <ItemTemplate>

@@ -82,7 +82,7 @@ namespace Team3ADProject.Protected
             BusinessLogic.DeductFromInventory(clList);
 
             // (5) send email
-            string emailAdd = "joelfong@gmail.com";            //NEED TO UPDATE TO DPT REP EMAIL
+            string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dptId); ;            //NEED TO UPDATE TO DPT REP EMAIL
             string subj = "Your ordered stationery is ready for collection";
             string body = "Dear Department Rep, your stationery order is ready for collection. Please procede to your usual collection point at the correct time.";
 

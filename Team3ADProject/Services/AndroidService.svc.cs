@@ -233,6 +233,13 @@ namespace Team3ADProject.Services
             BusinessLogic.InsertDisbursementListROId(dptId);
         }
 
+        //Disbursement Sorting
+        public String GetDptRepEmailAddFromDptID(string dptId)
+        {
+            return BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
+        }
+
+
         //ViewRO
         public List<WCF_CollectionItem> GetRODetailsByROId(string roId)
         {

@@ -159,7 +159,7 @@ namespace Team3ADProject.Code
         public static List<employee> getemployeenames(string dept)
         {
             //var q=from employee in context.employees where employee.department_id.Equals(dept) select employee.employee_name;
-            return context.employees.Where(x => x.department_id == dept && x.supervisor_id != null  ).ToList();
+            return context.employees.Where(x => x.department_id == dept && x.supervisor_id != null).ToList();
 
         }
 
@@ -1097,9 +1097,11 @@ department.department_id.Equals(dept)
 
         //Sruthi - End
 
+
+
         //JOEL - START
 
-        //CollectionList - REFACTORED
+        //CollectionList
         public static List<spGetCollectionList_Result> GetCollectionList()
         {
             List<spGetCollectionList_Result> list = new List<spGetCollectionList_Result>();
@@ -1129,7 +1131,7 @@ department.department_id.Equals(dept)
             return list = context.spGetFullCollectionROIDList().ToList();
         }
 
-        //CollectionList - REFACTORED
+        //CollectionList
         public static void SortCollectedGoods(List<CollectionListItem> allDptCollectionList)
         {
             List<spGetFullCollectionROIDList_Result> list = BusinessLogic.GetFullCollectionROIDList();
@@ -1235,7 +1237,7 @@ department.department_id.Equals(dept)
             return sList;
         }
 
-        //DisbursementSorting - REFACTORED
+        //DisbursementSorting
         public static List<string> DisplayListofDepartmentsForCollection()
         {
             List<spGetFullCollectionROIDList_Result> roidList = new List<spGetFullCollectionROIDList_Result>();
@@ -1254,7 +1256,7 @@ department.department_id.Equals(dept)
             return dptList;
         }
 
-        //DisbursementSorting - REFACTORED
+        //DisbursementSorting
         public static int isExisting(string department_name, List<string> dptList)
         {
             foreach (string dptName in dptList)
@@ -1279,6 +1281,21 @@ department.department_id.Equals(dept)
             }
         }
 
+        // Shared svc - Get rep email from dpt ID to send email for Ready for Collection - DisbursementSorting & ViewROSpecialRequest
+        public static string GetDptRepEmailAddFromDptID(string dptId)
+        {
+            department_rep dRep = context.department_rep.Where(x => x.department_id == dptId).FirstOrDefault(); //.Select(x => x.representative_id).FirstOrDefault();
+
+            int repID = dRep.representative_id;
+
+            employee e = context.employees.Where(x => x.employee_id == repID).FirstOrDefault();
+
+            return e.email_id;
+        }
+
+
+
+
         //ViewROSpecialRequest
         public static int GetPlaceIdFromDptId(string dptId)
         {
@@ -1286,7 +1303,7 @@ department.department_id.Equals(dept)
             return (int)result.place_id;
         }
 
-        //ViewROSpecialRequest - REFACTORED
+        //ViewROSpecialRequest
         public static void SpecialRequestReadyUpdatesCDRDD(int placeId, DateTime collectionDate, string ro_id, string dpt_id)
         {
             string collectionStatus = "Pending";
@@ -1294,7 +1311,7 @@ department.department_id.Equals(dept)
             context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id, dpt_id);
         }
 
-        //ViewROSpecialRequest - REFACTORED
+        //ViewROSpecialRequest
         public static void ViewROSpecialRequestUpdateRODTable(List<CollectionListItem> clList, string ro_id)
         {
             foreach (var item in clList)
@@ -1351,6 +1368,7 @@ department.department_id.Equals(dept)
             }
         }
 
+        //Reallocate
         public static void UpdateRODTableOnReallocate(string dpt_id, string itemNum, int distriQty)
         {
             List<spGetFullCollectionROIDList_Result> roidList = BusinessLogic.GetFullCollectionROIDList();
@@ -1407,13 +1425,10 @@ department.department_id.Equals(dept)
             context.SaveChanges();
         }
 
-        //Refactored
+
+        //JOEL - END
 
 
-        //Refactored
-
-
-        //Joel - end
 
         public static double getUnitPrice(string supplier_id, string item_number)
         {

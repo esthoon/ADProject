@@ -93,6 +93,10 @@ namespace Team3ADProject.Services
         [WebGet(UriTemplate = "/Department/Sorting/InsertDisbursementDetail/{dptId}", ResponseFormat = WebMessageFormat.Json)]
         void InsertDisbursementListROId(string dptId);
 
+        //Disbursement Sorting - after ready for collection, system need to send email. Method gets dpt rep email - Web Clerk [Joel]
+        [OperationContract]
+        [WebGet(UriTemplate = "/Department/Sorting/DptRepEmail/{dptId}", ResponseFormat = WebMessageFormat.Json)]
+        string GetDptRepEmailAddFromDptID(string dptId);
 
 
         // ViewRO SpecialRequest - input ROID, Get RO Details - Web Clerk [Joel]
