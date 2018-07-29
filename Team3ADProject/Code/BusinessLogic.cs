@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Web;
 using Team3ADProject.Model;
 using System.Transactions;
+using System.Web.Security;
 
 namespace Team3ADProject.Code
 {
@@ -175,6 +176,8 @@ namespace Team3ADProject.Code
             department d = q.FirstOrDefault();
             d.temp_head_id = id;
             context.SaveChanges();
+            employee y = context.employees.Where(x => x.employee_id == id).FirstOrDefault();
+            Roles.AddUserToRole(y.user_id, Constants.ROLES_DEPARTMENT_HEAD_TEMP);
         }
 
         public static string gettemporaryheadname(string dept)
@@ -192,6 +195,8 @@ namespace Team3ADProject.Code
         {
             var q = from department in context.departments where department.department_id == dept select department;
             department d = q.FirstOrDefault();
+            employee y = context.employees.Where(x => x.employee_id == d.temp_head_id).FirstOrDefault();
+            Roles.RemoveUserFromRole(y.user_id, Constants.ROLES_DEPARTMENT_HEAD_TEMP);
             d.temp_head_id = null;
             context.SaveChanges();
 
@@ -224,6 +229,9 @@ namespace Team3ADProject.Code
                         department_rep.representative_status.Equals("Active")
                         select department_rep;
                 department_rep d = q.FirstOrDefault();
+                //find the active user first and remove active           
+                Roles.AddUserToRole(d.employee.user_id, Constants.ROLES_EMPLOYEE);
+                Roles.RemoveUserFromRole(d.employee.user_id, Constants.ROLES_DEPARTMENT_REPRESENTATIVE);
                 d.representative_status = "InActive";
                 context.SaveChanges();
                 string today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -384,7 +392,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) >= 250).ToList<adjustment>();
 
 
         }
@@ -392,7 +400,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreSupSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) < 250).ToList<adjustment>();
 
 
         }
@@ -445,7 +453,7 @@ department.department_id.Equals(dept)
 
             sendMail(email, $"Email for Purchase Order {pono}",
                 $"Dear Supplier,\n This is an email to notify you on the purchase order  {pono} from Logic University." +
-                $"\nItem No. \tCurrent Qty\n\t {pt}\n\n " +
+                $"\nItem No. \tOrdered Qty\n\t {pt}\n\n " +
                 $"\nThis is a system generated message.");
 
             context.SaveChanges();
@@ -990,6 +998,36 @@ department.department_id.Equals(dept)
         {
             return context.departments.Where(x => x.department_id.Trim().ToLower() == employee.department_id.Trim().ToLower()).Select(x => x.head_id).First();
         }
+
+        public static inventory GetInventoryByItemCode(string ItemCode)
+        {
+            return context.inventories.Where(x => x.item_number.ToLower().Trim() == ItemCode.ToLower().Trim()).FirstOrDefault();
+        }
+
+        public static string SendEmailAdjustmentApproval(adjustment a)
+        {
+            string email;
+            if (a.adjustment_price > 250)
+            {
+                int id = DepartmentHeadID(a.employee);
+                email = RetrieveEmailByEmployeeID(id);
+            }
+            else
+            {
+                int? id = GetSupervisorID(a.employee_id);
+                if (id != null)
+                {
+                    int supid = (int)id;
+                    email = RetrieveEmailByEmployeeID(supid);
+                }
+                else
+                {
+                    int headid = DepartmentHeadID(a.employee);
+                    email = RetrieveEmailByEmployeeID(headid);
+                }
+            }
+            return email;
+        }
         //Esther end
 
         //Rohit - start
@@ -1046,7 +1084,7 @@ department.department_id.Equals(dept)
 
         public static List<budget> getbudget(string dept)
         {
-            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) select b;
+            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) & b.department_id.Equals(dept) select b;
             List<budget> list = q.ToList();
             list = (List<budget>)list.OrderBy(x => DateTime.ParseExact(x.month, "MMM", System.Globalization.CultureInfo.InvariantCulture).Month).ToList();
             return list;

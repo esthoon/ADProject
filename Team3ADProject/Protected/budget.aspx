@@ -16,12 +16,13 @@
 	<br />
 	<br />
 	<asp:Label ID="Label2" runat="server" Text="Enter budget here"></asp:Label>&emsp;
-	<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+	<asp:TextBox ID="TextBox1" runat="server" OnTextChanged="TextBox1_TextChanged"></asp:TextBox>
+    <br />
+    <asp:RequiredFieldValidator ID="requiredfieldValidator1" runat="server" ControlToValidate="TextBox1" ErrorMessage="Enter whole number between 0 and 2 Billion only" ForeColor="Red"></asp:RequiredFieldValidator>
+    <br />
+    <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Enter whole number between 0 and 2 Billion only" ControlToValidate="TextBox1" ForeColor="Red" Type="Integer" MinimumValue="0" MaximumValue="2000000000">Enter whole number between 0 and 2 Billion only</asp:RangeValidator>
 	<br />
 	<br />
 	<asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Button1_Click" CssClass="btn btn-primary"/>
-	<asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Please enter a valid value" 
-	ControlToValidate="TextBox1" ValidationExpression="^(?!0+$)[0-9]+$">
-
-	</asp:RegularExpressionValidator>
+	
 </asp:Content>
