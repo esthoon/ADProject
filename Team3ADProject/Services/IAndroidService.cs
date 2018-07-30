@@ -159,6 +159,19 @@ namespace Team3ADProject.Services
         //GetRequestOrderDetails
         [WebGet(UriTemplate = "/NewRequest/Confirm/orderdetail?id={id}&token={token}", ResponseFormat = WebMessageFormat.Json)]
         List<Employee_Request_order_Detail> GetRequestDetail(string token, string id);
+
+        //GetdisbursementList
+        [WebGet(UriTemplate = "/Disbursement/Alllist/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Disbursement_List> GetDisbursement_Lists(string token);
+
+        //GetdisbursementDetail
+        [WebGet(UriTemplate = "/Disbursement/Detail/{id}/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Disbursement_Detail> GetDisbursement_Detail(string id, string token);
+
+        //AcknowledgedisbursementDetail
+        [WebInvoke(UriTemplate = "/Disbursement/Acknowledge", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        void AcknowledgeDisbursement_Detail(WCF_Disbursement_Detail DL);
+
         //Tharrani -End
 
         //Esther
@@ -623,6 +636,79 @@ namespace Team3ADProject.Services
         { this.token = token; }
 
         public string gettoken => token;
+    }
+
+
+    [DataContract]
+    public class WCF_Disbursement_List
+    {
+        [DataMember]
+        string collection_date;
+        [DataMember]
+        string collection_location;
+        [DataMember]
+        string collection_time;
+        [DataMember]
+        string department_name;
+        [DataMember]
+        string representative_name;
+        [DataMember]
+        string collection_id;
+        [DataMember]
+        string department_pin;
+
+        public WCF_Disbursement_List(string collection_date, string collection_location, string collection_time, string department_name, string representative_name, string collection_id, string department_pin)
+        {
+            this.collection_date = collection_date;
+            this.collection_location = collection_location;
+            this.collection_time = collection_time;
+            this.department_name = department_name;
+            this.representative_name = representative_name;
+            this.collection_id = collection_id;
+            this.department_pin = department_pin;
+        }
+    }
+
+    [DataContract]
+    public class WCF_Disbursement_Detail
+    {
+
+        [DataMember]
+        string collection_id;
+
+        [DataMember]
+        string item_number;
+
+        [DataMember]
+        string description;
+
+        [DataMember]
+        string order_quantity;
+
+        [DataMember]
+        string receive_quantity;
+
+        [DataMember]
+        string altered_quantity;
+
+        [DataMember]
+        string token;
+
+
+        public WCF_Disbursement_Detail(string collection_id, string item_number, string description, string order_quantity, string receive_quantity, string altered_quantity)
+        {
+            this.collection_id = collection_id;
+            this.item_number = item_number;
+            this.description = description;
+            this.order_quantity = order_quantity;
+            this.receive_quantity = receive_quantity;
+            this.altered_quantity = altered_quantity;
+        }
+
+        public WCF_Disbursement_Detail(string collection_id, string item_number, string description, string order_quantity, string receive_quantity, string altered_quantity, string token) : this(collection_id, item_number, description, order_quantity, receive_quantity, altered_quantity)
+        {
+            this.token = token;
+        }
     }
 
     //Tharrani – End

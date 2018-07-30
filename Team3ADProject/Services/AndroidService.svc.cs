@@ -341,6 +341,13 @@ namespace Team3ADProject.Services
                 string id = Depid + "/" + DateTime.Now.Year.ToString() + "/" + i;
                 BusinessLogic.AddNewRequisitionOrder(id, emp_id, d);
                 BusinessLogic.updatelastrequestid(Depid, i);
+                int head_id = Convert.ToInt32(BusinessLogic.GetDepartmenthead(Depid).head_id);
+                string to = BusinessLogic.GetEmployee(head_id).email_id;
+                //string to = "tharrani2192@gmail.com";
+                string ename = BusinessLogic.GetEmployee(emp_id).employee_name;
+                string sub = "Stationery System: New request raised for your approval";
+                string body = "New Request ID" + id + "has been placed by" + ename + "for your approval";
+                BusinessLogic.sendMail(to, sub, body);
                 return id;
             }
             else
@@ -392,6 +399,49 @@ namespace Team3ADProject.Services
             else
             { return null; }
         }
+
+        public List<WCF_Disbursement_List> GetDisbursement_Lists(string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                List<spViewCollectionList_Result> l = BusinessLogic.ViewCollectionListNew();
+                List<WCF_Disbursement_List> m = new List<WCF_Disbursement_List>();
+                string pin;
+                for (int i = 0; i < l.Count; i++)
+                {
+                    pin = Convert.ToString(BusinessLogic.GetDepartmentPin(l[i].department_name.Trim()));
+                    m.Add(new WCF_Disbursement_List(l[i].collection_date.ToString("dd-MM-yyyy"), l[i].collection_place, l[i].collection_time.ToString(), l[i].department_name, l[i].employee_name, Convert.ToString(l[i].collection_id), pin));
+                }
+                return m;
+            }
+            else { return null; }
+        }
+
+        public List<WCF_Disbursement_Detail> GetDisbursement_Detail(string id, string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                int collection_id = Convert.ToInt32(id.Trim());
+
+                List<spAcknowledgeDistributionList_Result> list = BusinessLogic.ViewAcknowledgementList(collection_id);
+                List<WCF_Disbursement_Detail> m = new List<WCF_Disbursement_Detail>();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    m.Add(new WCF_Disbursement_Detail(id.Trim(), list[i].item_number.Trim(), list[i].description.Trim(), Convert.ToString(list[i].ordered_quantity), Convert.ToString(list[i].supply_quantity), Convert.ToString(list[i].supply_quantity)));
+                }
+                return m;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void AcknowledgeDisbursement_Detail(WCF_Disbursement_Detail DL)
+        {
+
+        }
+
         //Tharrani – End
 
         //Esther
