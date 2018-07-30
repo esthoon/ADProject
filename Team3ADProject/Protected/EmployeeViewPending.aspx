@@ -7,7 +7,8 @@
         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please Enter a valid date in the format (dd-mm-yyyy)" ForeColor="Red" ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[\-](0[1-9]|1[012])[\-]((19|20)\d\d)$"></asp:RegularExpressionValidator>
         <!-- ^(0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])[- -.](19|20)\d\d$ (mm/dd/yyyy) -->
-
+		<br />
+		<br />
         <asp:Calendar ID="Calendar1" runat="server" OnDayRender="Calendar1_DayRender" OnSelectionChanged="Calendar1_SelectionChanged" Height="200px" Width="300px">
             <TodayDayStyle Font-Names="Fantasy"/>
             <TitleStyle Font-Names="Fantasy"/>

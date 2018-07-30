@@ -180,7 +180,13 @@ namespace Team3ADProject.Code
             Roles.AddUserToRole(y.user_id, Constants.ROLES_DEPARTMENT_HEAD_TEMP);
             string messagebody = "The following person has been appointed as the temporary head for the approval of requisition order \n \n" + y.employee_name.ToString();
             string messagebody1 = "Congratulations \n \n You have been appointed as the temporary head for the approval \n \n";
-            BusinessLogic.sendMail(y.email_id, "Temporary head", messagebody);
+            var allemployees = context.employees.Where(x => x.department_id == dept && x.employee_id != id && x.employee_id != d.head_id).ToList<employee>();
+            List<string> allemails = new List<string>();
+            foreach (employee email in allemployees)
+            {
+                allemails.Add(email.email_id);
+            }
+            BusinessLogic.sendMail(allemails, "Temporary head", messagebody);
             BusinessLogic.sendMail(y.email_id, "Temporary head", messagebody1);
         }
 
@@ -1473,7 +1479,10 @@ namespace Team3ADProject.Code
         public static void SpecialRequestReadyUpdatesCDRDD(int placeId, DateTime collectionDate, string ro_id, string dpt_id)
         {
             string collectionStatus = "Pending";
-
+            string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dpt_id);
+            string subj = "Your ordered stationery is ready for collection";
+            string body = "Dear Department Rep, your stationery order is ready for collection. Please procede to your usual collection point at the correct time.";
+            BusinessLogic.sendMail(emailAdd, subj, body);
             context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id, dpt_id);
         }
 

@@ -20,7 +20,7 @@ namespace Team3ADProject.Protected
             Label9.Text = request.Date.ToString("dd-MM-yyyy");
             Label10.Text = request.status.ToString();
             Label11.Text = request.Name.ToString();
-            Label12.Text = request.Sum.ToString();
+            Label12.Text = String.Format($"{request.Sum:c2}");
             var q = BusinessLogic.pendinggetitemdetails(id);
             GridView1.DataSource = q;
             GridView1.DataBind();
