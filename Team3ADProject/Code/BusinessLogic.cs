@@ -178,6 +178,10 @@ namespace Team3ADProject.Code
             context.SaveChanges();
             employee y = context.employees.Where(x => x.employee_id == id).FirstOrDefault();
             Roles.AddUserToRole(y.user_id, Constants.ROLES_DEPARTMENT_HEAD_TEMP);
+            string messagebody = "The following person has been appointed as the temporary head for the approval of requisition order \n \n" + y.employee_name.ToString();
+            string messagebody1 = "Congratulations \n \n You have been appointed as the temporary head for the approval \n \n";
+            BusinessLogic.sendMail(y.email_id, "Temporary head", messagebody);
+            BusinessLogic.sendMail(y.email_id, "Temporary head", messagebody1);
         }
 
         public static string gettemporaryheadname(string dept)
