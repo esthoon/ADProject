@@ -92,12 +92,12 @@ namespace Team3ADProject.Protected
             BusinessLogic.InsertDisbursementListROId(dpt_Id);
 
 
-            //(4) send email to dpt rep
-            string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dpt_Id);
-            string subj = "Your ordered stationery is ready for collection";
-            string body = "Your order is ready for collection. Please procede to your usual collection point at the correct time.";
+            ////(4) send email to dpt rep
+            //string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dpt_Id);
+            //string subj = "Your ordered stationery is ready for collection";
+            //string body = "Your order is ready for collection. Please procede to your usual collection point at the correct time.";
 
-            BusinessLogic.sendMail(emailAdd, subj, body);
+            //BusinessLogic.sendMail(emailAdd, subj, body);
 
             Response.Redirect(Request.RawUrl);
         }
