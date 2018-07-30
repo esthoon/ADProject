@@ -93,7 +93,7 @@ namespace Team3ADProject.Protected
 
 
             //(4) send email to dpt rep
-            string emailAdd = "joelfong@gmail.com";            //NEED TO UPDATE TO DPT REP EMAIL
+            string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dpt_Id);
             string subj = "Your ordered stationery is ready for collection";
             string body = "Your order is ready for collection. Please procede to your usual collection point at the correct time.";
 

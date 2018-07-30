@@ -27,8 +27,8 @@ namespace Team3ADProject.Protected
             var q = BusinessLogic.pendinggetitemdetails(id);
             GridView1.DataSource = q;
             GridView1.DataBind();
-            Label5.Text = Session["budgetallocated"].ToString();
-            Label15.Text = Session["budgetspent"].ToString();
+            Label5.Text = BusinessLogic.getbudgetbydept(dept).ToString();
+            Label15.Text = BusinessLogic.getspentbudgetbydept(dept).ToString();
 
         }
         public string getmethoddepartment()

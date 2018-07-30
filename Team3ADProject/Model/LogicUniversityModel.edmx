@@ -509,6 +509,9 @@
         </Function>
         <Function Name="getAllViewPOHistorytotalcount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getApprovedRequisitionsWithNoDisbursementIdByDepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getcollectiondetailsbydepartment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="departmentid" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="getitemdetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="requisitionnumber" Type="varchar" Mode="In" />
         </Function>
@@ -1512,6 +1515,9 @@
             <End Role="department" EntitySet="departments" />
             <End Role="collection_detail" EntitySet="collection_detail" />
           </AssociationSet>
+          <FunctionImport Name="getcollectiondetailsbydepartment" ReturnType="Collection(LogicUniversityModel.getcollectiondetailsbydepartment_Result)">
+            <Parameter Name="departmentid" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getAllViewPOHistorypendingcount_Result">
           <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
@@ -1896,6 +1902,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="getcollectiondetailsbydepartment_Result">
+          <Property Type="DateTime" Name="collection_date" Nullable="false" />
+          <Property Type="String" Name="collection_place" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="collection_status" Nullable="false" MaxLength="10" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2669,6 +2680,15 @@
                 <ScalarProperty Name="collection_place" ColumnName="collection_place" />
                 <ScalarProperty Name="collection_time" ColumnName="collection_time" />
                 <ScalarProperty Name="collection_id" ColumnName="collection_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getcollectiondetailsbydepartment" FunctionName="LogicUniversityModel.Store.getcollectiondetailsbydepartment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.getcollectiondetailsbydepartment_Result">
+                <ScalarProperty Name="collection_date" ColumnName="collection_date" />
+                <ScalarProperty Name="collection_place" ColumnName="collection_place" />
+                <ScalarProperty Name="collection_status" ColumnName="collection_status" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

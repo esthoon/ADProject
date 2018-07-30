@@ -159,8 +159,8 @@ namespace Team3ADProject.Protected
             }
             //Application["RequestID"] = i;
             Session["RequestCart"] = null;
-            // string to = BusinessLogic.GetEmployee((int)Session["Head_id"]).email_id;
-            string to = "tharrani2192@gmail.com";
+            string to = BusinessLogic.GetEmployee((int)Session["Head_id"]).email_id.Trim(); //to department head 
+            //string to = "tharrani2192@gmail.com";
             string ename = BusinessLogic.GetEmployee(Empid).employee_name;
             string sub = "Stationery System: New request raised for your approval";
             string body = "New Request ID" + i + "has been placed by" + ename + "for your approval";

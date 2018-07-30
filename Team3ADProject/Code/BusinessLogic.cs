@@ -252,8 +252,7 @@ namespace Team3ADProject.Code
         public static void updatepassword(string dept, int password)
         {
             var q = from department in context.departments
-                    where
-department.department_id.Equals(dept)
+                    where department.department_id.Equals(dept)
                     select department;
             department d = q.FirstOrDefault();
             d.department_pin = password;
@@ -484,6 +483,15 @@ department.department_id.Equals(dept)
             SmtpServer.EnableSsl = true;
 
             SmtpServer.Send(mail);
+
+        }
+
+        public static void sendMail(List<string> to, string sub, string body)
+        {
+            foreach(string email in to)
+            {
+                sendMail(email, sub, body);
+            }           
 
         }
 
@@ -1054,7 +1062,7 @@ department.department_id.Equals(dept)
 
         public static List<budget> getbudget(string dept)
         {
-            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) & b.department_id.Equals(dept) select b;
+            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) && b.department_id.Equals(dept) select b;
             List<budget> list = q.ToList();
             list = (List<budget>)list.OrderBy(x => DateTime.ParseExact(x.month, "MMM", System.Globalization.CultureInfo.InvariantCulture).Month).ToList();
             return list;
@@ -1101,6 +1109,31 @@ department.department_id.Equals(dept)
             return context.employees.Where(x => x.employee_id == employee_id).Select(x => x.user_id).FirstOrDefault();
         }
 
+        public static List<string> getEmployeesEmailFromDept(string dept)
+        {
+            var query = context.employees.Where(x => x.department_id == dept).ToList<employee>();
+
+            var query1 = context.department_rep.Where(x => x.representative_status == "Active" && x.department_id == dept).FirstOrDefault();
+
+            var query2 = context.departments.Where(x => x.department_id == dept).FirstOrDefault();
+
+            var nestedQuery = query.Where(x => x.employee_id != query1.representative_id && x.employee_id != query2.head_id).ToList<employee>();
+
+            List<string> listOfEmail = new List<string>();
+
+            foreach(employee userid in nestedQuery)
+            {
+                MembershipUser mu = Membership.GetUser(userid.user_id);
+                listOfEmail.Add(mu.Email);
+            }
+
+            return listOfEmail;
+        }
+
+        public static List<getcollectiondetailsbydepartment_Result> getdepartmentcollection(string dept)
+        {
+            return context.getcollectiondetailsbydepartment(dept).ToList();
+        }
 
 
         //Sruthi - End
@@ -1285,6 +1318,18 @@ department.department_id.Equals(dept)
             {
                 context.spInsertDisbursementListROId(v, latestCollectionId);
             }
+        }
+
+        public static string GetDptRepEmailAddFromDptID(string dptId)
+        {
+            //get the ID of the representative of the Department from department rep table
+            department_rep dRep = context.department_rep.Where(x => x.department_id == dptId && x.representative_status =="Active").FirstOrDefault();
+            //get the user_id of the representative of the Department
+            employee e = context.employees.Where(x => x.employee_id == dRep.representative_id).FirstOrDefault();
+            //get the user in aspnet db via user_id
+            MembershipUser mu = Membership.GetUser(e.user_id);
+            //sent the user's email back to the calling method
+            return mu.Email;
         }
 
         //ViewROSpecialRequest
