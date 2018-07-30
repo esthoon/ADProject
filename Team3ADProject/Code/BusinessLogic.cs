@@ -160,7 +160,7 @@ namespace Team3ADProject.Code
         public static List<employee> getemployeenames(string dept)
         {
             //var q=from employee in context.employees where employee.department_id.Equals(dept) select employee.employee_name;
-            return context.employees.Where(x => x.department_id == dept && x.supervisor_id != null  ).ToList();
+            return context.employees.Where(x => x.department_id == dept && x.supervisor_id != null).ToList();
 
         }
 
@@ -1006,6 +1006,36 @@ namespace Team3ADProject.Code
         {
             return context.departments.Where(x => x.department_id.Trim().ToLower() == employee.department_id.Trim().ToLower()).Select(x => x.head_id).First();
         }
+
+        public static inventory GetInventoryByItemCode(string ItemCode)
+        {
+            return context.inventories.Where(x => x.item_number.ToLower().Trim() == ItemCode.ToLower().Trim()).FirstOrDefault();
+        }
+
+        public static string SendEmailAdjustmentApproval(adjustment a)
+        {
+            string email;
+            if (a.adjustment_price > 250)
+            {
+                int id = DepartmentHeadID(a.employee);
+                email = RetrieveEmailByEmployeeID(id);
+            }
+            else
+            {
+                int? id = GetSupervisorID(a.employee_id);
+                if (id != null)
+                {
+                    int supid = (int)id;
+                    email = RetrieveEmailByEmployeeID(supid);
+                }
+                else
+                {
+                    int headid = DepartmentHeadID(a.employee);
+                    email = RetrieveEmailByEmployeeID(headid);
+                }
+            }
+            return email;
+        }
         //Esther end
 
         //Rohit - start
@@ -1138,9 +1168,11 @@ namespace Team3ADProject.Code
 
         //Sruthi - End
 
+
+
         //JOEL - START
 
-        //CollectionList - REFACTORED
+        //CollectionList
         public static List<spGetCollectionList_Result> GetCollectionList()
         {
             List<spGetCollectionList_Result> list = new List<spGetCollectionList_Result>();
@@ -1170,7 +1202,7 @@ namespace Team3ADProject.Code
             return list = context.spGetFullCollectionROIDList().ToList();
         }
 
-        //CollectionList - REFACTORED
+        //CollectionList
         public static void SortCollectedGoods(List<CollectionListItem> allDptCollectionList)
         {
             List<spGetFullCollectionROIDList_Result> list = BusinessLogic.GetFullCollectionROIDList();
@@ -1276,7 +1308,7 @@ namespace Team3ADProject.Code
             return sList;
         }
 
-        //DisbursementSorting - REFACTORED
+        //DisbursementSorting
         public static List<string> DisplayListofDepartmentsForCollection()
         {
             List<spGetFullCollectionROIDList_Result> roidList = new List<spGetFullCollectionROIDList_Result>();
@@ -1295,7 +1327,7 @@ namespace Team3ADProject.Code
             return dptList;
         }
 
-        //DisbursementSorting - REFACTORED
+        //DisbursementSorting
         public static int isExisting(string department_name, List<string> dptList)
         {
             foreach (string dptName in dptList)
@@ -1339,7 +1371,7 @@ namespace Team3ADProject.Code
             return (int)result.place_id;
         }
 
-        //ViewROSpecialRequest - REFACTORED
+        //ViewROSpecialRequest
         public static void SpecialRequestReadyUpdatesCDRDD(int placeId, DateTime collectionDate, string ro_id, string dpt_id)
         {
             string collectionStatus = "Pending";
@@ -1347,7 +1379,7 @@ namespace Team3ADProject.Code
             context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id, dpt_id);
         }
 
-        //ViewROSpecialRequest - REFACTORED
+        //ViewROSpecialRequest
         public static void ViewROSpecialRequestUpdateRODTable(List<CollectionListItem> clList, string ro_id)
         {
             foreach (var item in clList)
@@ -1404,6 +1436,7 @@ namespace Team3ADProject.Code
             }
         }
 
+        //Reallocate
         public static void UpdateRODTableOnReallocate(string dpt_id, string itemNum, int distriQty)
         {
             List<spGetFullCollectionROIDList_Result> roidList = BusinessLogic.GetFullCollectionROIDList();
@@ -1460,13 +1493,10 @@ namespace Team3ADProject.Code
             context.SaveChanges();
         }
 
-        //Refactored
+
+        //JOEL - END
 
 
-        //Refactored
-
-
-        //Joel - end
 
         public static double getUnitPrice(string supplier_id, string item_number)
         {

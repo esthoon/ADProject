@@ -82,6 +82,7 @@ namespace Team3ADProject.Protected
             BusinessLogic.DeductFromInventory(clList);
 
             // (5) send email
+
             string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
             string subj = "Your ordered stationery is ready for collection";
             string body = "Dear Department Rep, your stationery order is ready for collection. Please procede to your usual collection point at the correct time.";

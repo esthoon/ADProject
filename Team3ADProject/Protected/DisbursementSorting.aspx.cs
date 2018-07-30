@@ -72,10 +72,10 @@ namespace Team3ADProject.Protected
         protected void btn_ReadyForCollection_Click(object sender, EventArgs e)
         {
             //(1) recommended distribution qty must be smaller than required qty or collected qty available(from session), whichever is smaller (validator - front end)
-            if (ValidatePreparedQty() < 0)
-            {
-                return;
-            }
+            //if (ValidatePreparedQty() < 0)
+            //{
+            //    return;
+            //}
 
             //(2) create new collection_detail table row. 
             string dpt_Id = GetDepartmentId();
@@ -176,43 +176,43 @@ namespace Team3ADProject.Protected
             }
         }
 
-        protected int ValidatePreparedQty()
-        {
-            bool flag = false;
-            foreach (GridViewRow gvr in gridview_DptSort.Rows)
-            {
-                Label lb = (Label)gvr.FindControl("Label1");
+        //protected int ValidatePreparedQty()
+        //{
+        //    bool flag = false;
+        //    foreach (GridViewRow gvr in gridview_DptSort.Rows)
+        //    {
+        //        Label lb = (Label)gvr.FindControl("Label1");
 
-                int qtyOrder = Convert.ToInt32(gvr.Cells[2].Text);
-                int qtyAvail = Convert.ToInt32(lb.Text);
+        //        int qtyOrder = Convert.ToInt32(gvr.Cells[2].Text);
+        //        int qtyAvail = Convert.ToInt32(lb.Text);
 
-                TextBox tb = (TextBox)gvr.FindControl("txt_QtyToSupply");
-                int qtyToPrep = Convert.ToInt32(tb.Text);
+        //        TextBox tb = (TextBox)gvr.FindControl("txt_QtyToSupply");
+        //        int qtyToPrep = Convert.ToInt32(tb.Text);
 
-                Label validator = (Label)gvr.FindControl("Label2");
-                validator.Visible = false;
+        //        Label validator = (Label)gvr.FindControl("Label2");
+        //        validator.Visible = false;
 
-                if (qtyToPrep > qtyOrder)
-                {
-                    validator.Visible = true;
-                    validator.Text = "Amount is more than Ordered Qty";
-                    flag = true;
-                    break;
-                }
-                if (qtyToPrep > qtyAvail)
-                {
-                    validator.Visible = true;
-                    validator.Text = "Insufficient inventory";
-                    flag = true;
-                    break;
-                }
-            }
-            if (flag == true)
-                return -1;
+        //        if (qtyToPrep > qtyOrder)
+        //        {
+        //            validator.Visible = true;
+        //            validator.Text = "Amount is more than Ordered Qty";
+        //            flag = true;
+        //            break;
+        //        }
+        //        if (qtyToPrep > qtyAvail)
+        //        {
+        //            validator.Visible = true;
+        //            validator.Text = "Insufficient inventory";
+        //            flag = true;
+        //            break;
+        //        }
+        //    }
+        //    if (flag == true)
+        //        return -1;
 
-            else
-                return 1;
-        }
+        //    else
+        //        return 1;
+        //}
 
     }
 }

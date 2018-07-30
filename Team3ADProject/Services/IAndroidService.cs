@@ -93,6 +93,10 @@ namespace Team3ADProject.Services
         [WebGet(UriTemplate = "/Department/Sorting/InsertDisbursementDetail/{dptId}", ResponseFormat = WebMessageFormat.Json)]
         void InsertDisbursementListROId(string dptId);
 
+        //Disbursement Sorting - after ready for collection, system need to send email. Method gets dpt rep email - Web Clerk [Joel]
+        [OperationContract]
+        [WebGet(UriTemplate = "/Department/Sorting/DptRepEmail/{dptId}", ResponseFormat = WebMessageFormat.Json)]
+        string GetDptRepEmailAddFromDptID(string dptId);
 
 
         // ViewRO SpecialRequest - input ROID, Get RO Details - Web Clerk [Joel]
@@ -159,12 +163,22 @@ namespace Team3ADProject.Services
 
         //Esther
         [OperationContract]
-        [WebInvoke(UriTemplate = "/Adjustment/Create/", Method = "POST",
+        [WebInvoke(UriTemplate = "/Adjustment/Create/{token}", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json)]
-        string CreateAdjustment(WCF_Adjustment adj);
+        string CreateAdjustment(String token, WCF_Adjustment adj);
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/Inventory/Active/{token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Inventory> GetActiveInventories(String token);
 
+        [OperationContract]
+        [WebGet(UriTemplate = "/Inventory/{search}/{token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Inventory> GetInventorySearchResult(String search, String token);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/Inventory/ItemCode/{itemcode}/{token}", ResponseFormat = WebMessageFormat.Json)]
+        WCF_Inventory GetInventoryByItemCode(String itemcode, String token);
     }
 
 
@@ -498,6 +512,8 @@ namespace Team3ADProject.Services
         public string item_bin;
         [DataMember]
         public string item_status;
+        [DataMember]
+        public string pending_adj_remove;
 
         public WCF_Inventory(string item, string desc, string cat, string UOM, string cq, string reol, string req, string bin, string status)
         {
@@ -518,6 +534,21 @@ namespace Team3ADProject.Services
             description = desc;
             category = cat;
             unit_of_measurement = UOM;
+        }
+
+        //Esther
+        public WCF_Inventory(string item, string desc, string cat, string UOM, string cq, string reol, string req, string bin, string status, string pending_adj_remove)
+        {
+            item_number = item.Trim();
+            description = desc;
+            category = cat;
+            unit_of_measurement = UOM;
+            current_quantity = cq;
+            reorder_level = reol;
+            reorder_quantity = req;
+            item_bin = bin;
+            item_status = status;
+            this.pending_adj_remove = pending_adj_remove;
         }
     }
 
