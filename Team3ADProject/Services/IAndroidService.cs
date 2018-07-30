@@ -192,6 +192,13 @@ namespace Team3ADProject.Services
         [OperationContract]
         [WebGet(UriTemplate = "/Inventory/ItemCode/{itemcode}/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Inventory GetInventoryByItemCode(String itemcode, String token);
+        // Yang
+        //Add new request detail
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/Inventory/{ItemNumber}", Method = "GET", ResponseFormat = WebMessageFormat.Json)]
+        WCF_Inventory GetInventoryByItemNumber(String ItemNumber);
+        // Yang end
+
     }
 
 

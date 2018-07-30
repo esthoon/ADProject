@@ -442,6 +442,14 @@ namespace Team3ADProject.Services
 
         }
 
+        public WCF_Inventory GetInventoryByItemNumber(string ItemNumber)
+        {
+
+            inventory inv = BusinessLogic.GetInventoryById(ItemNumber);
+            return new WCF_Inventory(inv.item_number, inv.description, inv.category, inv.unit_of_measurement, inv.current_quantity.ToString(), inv.reorder_level.ToString(), inv.requisition_order_detail.ToString(), inv.item_bin, inv.item_status);
+
+        }
+
         //Tharrani – End
 
         //Esther
