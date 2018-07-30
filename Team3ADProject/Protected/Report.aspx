@@ -1,19 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="Team3ADProject.Protected.Report1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+	 <%@ Import Namespace="Team3ADProject.Code" %>
     <h1>Generate Report</h1>
     <div>
         <div>
             Chart to generate:
+			<% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER)){%>
             <asp:DropDownList ID="ChartList" runat="server" OnSelectedIndexChanged="ChartList_SelectedIndexChanged">
                 <asp:ListItem Value="placeholder">Select an item..</asp:ListItem>
-                <asp:ListItem Value="requisitionOrderStatusChart">Requisition Order Status Percentage</asp:ListItem>
                 <asp:ListItem Value="requisitionOrderDateChart">Requisition Order By Date</asp:ListItem>
                 <asp:ListItem Value="requisitionQuantityByDepartmentChart">Requisition Item Quantity by Department</asp:ListItem>
                 <asp:ListItem Value="purchaseQuantityByItemCategoryBarChart">Stationaries purchased ordered by Item Category</asp:ListItem>
                 <asp:ListItem Value="pendingPurchaseOrderCountBySupplierChart">Pending Purchase Orders By Suppliers</asp:ListItem>
-
             </asp:DropDownList>
+			<%}%>
+			<%else if (Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD)){%>
+			<asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="ChartList_SelectedIndexChanged">
+                <asp:ListItem Value="placeholder">Select an item..</asp:ListItem>
+                <asp:ListItem Value="requisitionOrderStatusChart">Requisition Order Status Percentage</asp:ListItem>
+            </asp:DropDownList>
+			<%}%>
         </div>
         <div>Start Date</div>
         <input type="text" id="startDate" runat="server" ClientIDMode="static" class="datePicker" disabled value="-"/><asp:RequiredFieldValidator ID="StartDateRequiredValidator" runat="server" ControlToValidate="startDate" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
