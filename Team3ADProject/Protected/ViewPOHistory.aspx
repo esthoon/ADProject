@@ -2,22 +2,26 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>View Purchase Order History</h1>
     
-    <div>
-    <asp:Label ID="Label1" runat="server" Text="Supplier"></asp:Label>
-    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-    </div>
-    
-    <div>
-    <asp:Label ID="Label2" runat="server" Text="PO Number"></asp:Label>
-    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+
+
+    <table>
+        <tr>
+            <td><asp:Label ID="Label1" runat="server" Text="Supplier"></asp:Label> </td>
+            <td><asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList> </td>
+        </tr>
+        <tr>
+            <td><asp:Label ID="Label2" runat="server" Text="PO Number"></asp:Label> </td>
+            <td><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
     <asp:RegularExpressionValidator ID="Q" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please enter number"
-    ValidationExpression="(^([0-9]*\d*\d{1}?\d*)$)" Display="Dynamic" ForeColor ="Red"></asp:RegularExpressionValidator>
-    </div>
-    
-    <div>
-    <asp:Label ID="Label3" runat="server" Text="PO Status"></asp:Label>
-    <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
-    </div>
+    ValidationExpression="(^([0-9]*\d*\d{1}?\d*)$)" Display="Dynamic" ForeColor ="Red"></asp:RegularExpressionValidator> </td>
+        </tr>
+        <tr>
+            <td><asp:Label ID="Label3" runat="server" Text="PO Status"></asp:Label> </td>
+            <td><asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList> </td>
+        </tr>
+    </table>
+
+
     <asp:Button ID="Button1" runat="server" Text="Search" CssClass="btn btn-primary" OnClick="Button1_Click" />
 
     <div>

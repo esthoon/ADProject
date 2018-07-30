@@ -1516,7 +1516,7 @@
             <End Role="collection_detail" EntitySet="collection_detail" />
           </AssociationSet>
           <FunctionImport Name="getcollectiondetailsbydepartment" ReturnType="Collection(LogicUniversityModel.getcollectiondetailsbydepartment_Result)">
-            <Parameter Name="departmentid" Mode="In" Type="String" />
+          <Parameter Name="departmentid" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getAllViewPOHistorypendingcount_Result">
