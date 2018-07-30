@@ -1350,6 +1350,13 @@ namespace Team3ADProject.Code
             {
                 context.spInsertDisbursementListROId(v, latestCollectionId);
             }
+
+            //(4) send email to dpt rep
+            string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dpt_Id);
+            string subj = "Your ordered stationery is ready for collection";
+            string body = "Your order is ready for collection. Please procede to your usual collection point at the correct time.";
+
+            BusinessLogic.sendMail(emailAdd, subj, body);
         }
 
         public static string GetDptRepEmailAddFromDptID(string dptId)
