@@ -1035,6 +1035,81 @@ department.department_id.Equals(dept)
         }
 
 
+        public static void AcknowledgeDL(int collection_id, string ItemCode, int ActualSupplyQuantityValue, int UserInput)
+        {
+            if (UserInput == ActualSupplyQuantityValue)
+            {
+                //logic for equal
+            }
+            else
+            {
+                //logic for lesser in else block
+
+
+
+                //Getting data into lists of their datatypes.
+                List<Team3ADProject.Model.spGetRequisitionIDAndItemQuantity_Result> mylist = getRequisitionIDandItemQuantity(collection_id, ItemCode);
+                List<int> myIntegerList = new List<int>(mylist.Count);
+                List<string> myRequsitionIDList = new List<string>(mylist.Count);
+                for (int j = 0; j < mylist.Count; j++)
+                {
+                    myIntegerList.Add(Convert.ToInt32(mylist[j].item_distributed_quantity));
+                    myRequsitionIDList.Add(mylist[j].requisition_id.ToString());
+                }
+
+                //Actual logic 23/07/2018 Monday
+                int counter = UserInput;
+                int myIntegerListSize = myIntegerList.Count;
+                int minimum = counter / myIntegerListSize;
+
+                int adder = 0, k = -1;
+                while (true)
+                {
+                    k++;
+                    if (adder < UserInput)
+                    {
+                        adder = adder + myIntegerList[k];
+                    }
+                    if (adder >= UserInput)
+                    {
+                        break;
+                    }
+                }
+
+
+                int temp = adder - UserInput;
+                myIntegerList[k] = myIntegerList[k] - temp;
+                k++;
+
+                for (; k < myIntegerListSize; k++)
+                {
+                    myIntegerList[k] = 0;
+                }
+
+
+
+
+
+                //update back with itemcode, requisitonID(myRequsitionIDList) and [itemdistributed quantity(myIntegerList)]
+                for (int j = 0; j < myRequsitionIDList.Count; j++)
+                {
+                    string requisitionID = myRequsitionIDList[j];
+                    int itemDistributedQuantity = myIntegerList[j];
+
+                    UpdateItemDistributedQuantity(ItemCode, requisitionID, itemDistributedQuantity);
+                }
+
+
+
+
+                //update back the difference(UserInput - ActualSupplyQuantityValue) in inventory
+                int difference = ActualSupplyQuantityValue - UserInput;
+                updateInventory(ItemCode, difference);
+
+            }
+        }
+
+
         //Rohit -end
 
 
