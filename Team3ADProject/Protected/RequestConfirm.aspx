@@ -2,15 +2,26 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Request Confirmation</h1>
     <asp:Button ID="Button1" runat="server" Text="Add New request" CssClass="btn btn-info" OnClick="Button1_Click"/>
-    <br />
-    <div>
-         <asp:Label ID="Label1" runat="server" Text="Requisition Number :" /><asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-    <br/>
-    <asp:Label ID="Label2" runat="server" Text="Requisition Date :" /><asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
-    <br/>
-    <asp:Label ID="Label3" runat="server" Text="Requisition Status :" /><asp:Label ID="Label6" runat="server" Text="Label"></asp:Label>
-    <br/>
-    </div>
+    <br /><br />
+
+
+    <table>
+        <tr>
+            <td><asp:Label ID="Label1" runat="server" Text="Requisition Number :" /></td>
+            <td> <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label></td>
+        </tr>
+        <tr>
+            <td> <asp:Label ID="Label2" runat="server" Text="Requisition Date :" /></td>
+            <td> <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label></td>
+        </tr>
+        <tr>
+            <td><asp:Label ID="Label3" runat="server" Text="Requisition Status :" /></td>
+            <td><asp:Label ID="Label6" runat="server" Text="Label"></asp:Label></td>
+        </tr>
+    </table>
+
+
+   <br />
     <br />
     <div>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-hover">

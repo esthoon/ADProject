@@ -10,10 +10,11 @@
 	<br />
 	<asp:Label ID="Label2" runat="server" Visible="false"></asp:Label>
 	<br />
+	<h3>History of Collection Locations</h3>
 	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
 		<Columns>
 			<asp:BoundField DataField="collection_place" HeaderText="Collection Place" />
-			<asp:BoundField DataField="collection_date" HeaderText="Collection Date" />			
+			<asp:BoundField DataField="collection_date" HeaderText="Collection Date" DataFormatString="{0:dd-MM-yyyy}" />			
 			</Columns>
 	</asp:GridView>
 	<br />
