@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Team3ADProject.Model;
 using Team3ADProject.Code;
 using System.Drawing;
+using System.Globalization;
 
 namespace Team3ADProject.Protected
 {
@@ -57,7 +58,18 @@ namespace Team3ADProject.Protected
             // (1) insert collection_details + (2) add RO Ids & their collection_id to requisition_disbursement_detail [table]
             string dptId = (Label_ViewRO.Text).Substring(0, 4);
             int placeId = BusinessLogic.GetPlaceIdFromDptId(dptId);
-            DateTime collectionDate = DateTime.Parse(TextBox_Collect_Date.Text);
+
+            /**
+              String s = TextBox2.Text;
+                DateTime dt = DateTime.ParseExact(s, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                String x = dt.ToString("yyyy-MMMM-dd");
+                DateTime search = Convert.ToDateTime(x);
+             */
+            string s = TextBox_Collect_Date.Text;
+            DateTime dt = DateTime.ParseExact(s, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            String x = dt.ToString("yyyy-MMMM-dd");
+            DateTime collectionDate = Convert.ToDateTime(x);
+            //DateTime collectionDate = DateTime.Parse(TextBox_Collect_Date.Text); //joel
             string ro_id = Label_ViewRO.Text.ToUpper();
             BusinessLogic.SpecialRequestReadyUpdatesCDRDD(placeId, collectionDate, ro_id, dptId);
 
@@ -70,7 +82,8 @@ namespace Team3ADProject.Protected
             BusinessLogic.DeductFromInventory(clList);
 
             // (5) send email
-            string emailAdd = "joelfong@gmail.com";            //NEED TO UPDATE TO DPT REP EMAIL
+
+            string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
             string subj = "Your ordered stationery is ready for collection";
             string body = "Dear Department Rep, your stationery order is ready for collection. Please procede to your usual collection point at the correct time.";
 

@@ -29,7 +29,7 @@ namespace Team3ADProject.Protected
                 }
                 else
                 {
-                    Response.Redirect("ClerkInventory.aspx");
+                    Response.Redirect(ResolveUrl("~"));
                 }
                 //retrieve headid
                 headid = BusinessLogic.DepartmentHeadID(user);

@@ -233,6 +233,13 @@ namespace Team3ADProject.Services
             BusinessLogic.InsertDisbursementListROId(dptId);
         }
 
+        //Disbursement Sorting
+        public String GetDptRepEmailAddFromDptID(string dptId)
+        {
+            return BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
+        }
+
+
         //ViewRO
         public List<WCF_CollectionItem> GetRODetailsByROId(string roId)
         {
@@ -267,89 +274,172 @@ namespace Team3ADProject.Services
 
         //JOEL END
 
-
-
         //Tharrani - start
         //return active inventory list
         public List<WCF_Inventory> GetActiveInventory(string token)
         {
-            //if (AuthenticateToken(token))
-            //{
-            List<inventory> i = BusinessLogic.GetActiveInventory();
-            List<WCF_Inventory> list = new List<WCF_Inventory>();
-            foreach (inventory x in i)
+            if (AuthenticateToken(token))
             {
-                list.Add(new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim()));
+                List<inventory> i = BusinessLogic.GetActiveInventory();
+                List<WCF_Inventory> list = new List<WCF_Inventory>();
+                foreach (inventory x in i)
+                {
+                    list.Add(new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim()));
+                }
+                return list;
             }
-            return list;
-            //}
-            //else
-            //{
-            //   return null;
-            //}
+            else
+            {
+                return null;
+            }
         }
 
         //return inventory matching search criteria
         public List<WCF_Inventory> SearchInventory(string token, string search)
         {
-            //if (AuthenticateToken(token))
-            //{
-            List<WCF_Inventory> list = new List<WCF_Inventory>();
-            List<inventory> i = BusinessLogic.SearchActiveInventory(search);
-            foreach (inventory x in i)
+            if (AuthenticateToken(token))
             {
-                list.Add(new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim()));
+                List<WCF_Inventory> list = new List<WCF_Inventory>();
+                List<inventory> i = BusinessLogic.SearchActiveInventory(search);
+                foreach (inventory x in i)
+                {
+                    list.Add(new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim()));
+                }
+                return list;
             }
-            return list;
-            //}
-            //else
-            //{
-            //  return null;
-            // }
+            else
+            {
+                return null;
+            }
         }
 
         public WCF_Inventory GetSelectedInventory(string token, string id)
         {
-            //if (AuthenticateToken(token))
-            //{
-            inventory x = BusinessLogic.GetInventoryById(id);
-            return new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim());
-            //}
-            //else
-            //{
-            //  return null;
-            // }
+            if (AuthenticateToken(token))
+            {
+                inventory x = BusinessLogic.GetInventoryById(id);
+                return new WCF_Inventory(x.item_number.Trim(), x.description.Trim(), x.category.Trim(), x.unit_of_measurement.Trim(), x.current_quantity.ToString(), x.reorder_level.ToString(), x.reorder_quantity.ToString(), x.item_bin.Trim(), x.item_status.Trim());
+            }
+            else
+            {
+                return null;
+            }
         }
 
         //Add new requisition order
-        public string AddNewRequest()
+        public string AddNewRequest(WCF_Token token)
         {
-            //if (AuthenticateToken(token))
-            //{
-            //WCF_Employee emp = GetEmployeeByToken(token);
-            int emp_id = 16; //Convert.ToInt32(emp.EmployeeId);
-            string Depid = "ENGL"; //emp.DepartmentId;
-            DateTime d = DateTime.Now.Date;
-            unique_id u = BusinessLogic.getlastrequestid(Depid);
-            int i = (int)u.req_id + 1;
-            string id = Depid + "/" + DateTime.Now.Year.ToString() + "/" + i;
-            BusinessLogic.AddNewRequisitionOrder(id, emp_id, d);
-            BusinessLogic.updatelastrequestid(Depid, i);
-            return id;
-            // }
-
-            //else
-            //   return null;
+            string x = token.gettoken.Replace(@"\", "").Trim();
+            if (AuthenticateToken(x))
+            {
+                WCF_Employee emp = GetEmployeeByToken(x);
+                int emp_id = Convert.ToInt32(emp.EmployeeId); //16;
+                string Depid = emp.DepartmentId.Trim(); //ENGL;
+                DateTime d = DateTime.Now.Date;
+                unique_id u = BusinessLogic.getlastrequestid(Depid);
+                int i = (int)u.req_id + 1;
+                string id = Depid + "/" + DateTime.Now.Year.ToString() + "/" + i;
+                BusinessLogic.AddNewRequisitionOrder(id, emp_id, d);
+                BusinessLogic.updatelastrequestid(Depid, i);
+                int head_id = Convert.ToInt32(BusinessLogic.GetDepartmenthead(Depid).head_id);
+                string to = BusinessLogic.GetEmployee(head_id).email_id;
+                //string to = "tharrani2192@gmail.com";
+                string ename = BusinessLogic.GetEmployee(emp_id).employee_name;
+                string sub = "Stationery System: New request raised for your approval";
+                string body = "New Request ID" + id + "has been placed by" + ename + "for your approval";
+                BusinessLogic.sendMail(to, sub, body);
+                return id;
+            }
+            else
+                return null;
         }
 
         //Add new requisition order detail
         public void AddNewRequestDetail(WCF_ReqCart r)
         {
-            int q = r.q;
-            string id = r.Id.Replace(@"\", "");
-            inventory inv = BusinessLogic.GetInventoryById(r.getI.Trim()); ;
-            cart c = new cart(inv, q);
-            BusinessLogic.AddRequisitionOrderDetail(c, id);
+            string token = r.gettoken.Replace(@"\", "").Trim();
+            if (AuthenticateToken(token))
+            {
+                int q = r.q;
+                string id = r.Id.Replace(@"\", "");
+                inventory inv = BusinessLogic.GetInventoryById(r.getI.Trim()); ;
+                cart c = new cart(inv, q);
+                BusinessLogic.AddRequisitionOrderDetail(c, id.Trim());
+            }
+        }
+
+        public WCF_Requisition_Order GetRequestOrder(string token, string id)
+        {
+            if (AuthenticateToken(token))
+            {
+                //string request = id.Substring(0, 5) + "/" + id.Substring(6, 10) + "/" + id.Substring(11);
+                string requestid = id.Replace(@"\", "");
+                requisition_order r = BusinessLogic.GetRequisitionOrderById(requestid.Trim());
+                WCF_Requisition_Order ro = new WCF_Requisition_Order(r.requisition_id, r.employee_id, r.requisition_status, r.requisition_date, r.head_comment);
+                return ro;
+            }
+
+            else
+                return null;
+        }
+
+        public List<Employee_Request_order_Detail> GetRequestDetail(string token, string id)
+        {
+            if (AuthenticateToken(token))
+            {
+                string requestid = id.Replace(@"\", "");
+                List<getRequisitionOrderDetails_Result> rd = BusinessLogic.GetRequisitionorderDetail(requestid);
+                List<Employee_Request_order_Detail> rod = new List<Employee_Request_order_Detail>();
+                for (int i = 0; i < rd.Count; i++)
+                {
+                    rod.Add(new Employee_Request_order_Detail(rd[i].category.Trim(), rd[i].description.Trim(), rd[i].unit_of_measurement.Trim(), Convert.ToString(rd[i].item_requisition_quantity).Trim()));
+                }
+                return rod;
+            }
+            else
+            { return null; }
+        }
+
+        public List<WCF_Disbursement_List> GetDisbursement_Lists(string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                List<spViewCollectionList_Result> l = BusinessLogic.ViewCollectionListNew();
+                List<WCF_Disbursement_List> m = new List<WCF_Disbursement_List>();
+                string pin;
+                for (int i = 0; i < l.Count; i++)
+                {
+                    pin = Convert.ToString(BusinessLogic.GetDepartmentPin(l[i].department_name.Trim()));
+                    m.Add(new WCF_Disbursement_List(l[i].collection_date.ToString("dd-MM-yyyy"), l[i].collection_place, l[i].collection_time.ToString(), l[i].department_name, l[i].employee_name, Convert.ToString(l[i].collection_id), pin));
+                }
+                return m;
+            }
+            else { return null; }
+        }
+
+        public List<WCF_Disbursement_Detail> GetDisbursement_Detail(string id, string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                int collection_id = Convert.ToInt32(id.Trim());
+
+                List<spAcknowledgeDistributionList_Result> list = BusinessLogic.ViewAcknowledgementList(collection_id);
+                List<WCF_Disbursement_Detail> m = new List<WCF_Disbursement_Detail>();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    m.Add(new WCF_Disbursement_Detail(id.Trim(), list[i].item_number.Trim(), list[i].description.Trim(), Convert.ToString(list[i].ordered_quantity), Convert.ToString(list[i].supply_quantity), Convert.ToString(list[i].supply_quantity)));
+                }
+                return m;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void AcknowledgeDisbursement_Detail(WCF_Disbursement_Detail DL)
+        {
+
         }
 
         public WCF_Inventory GetInventoryByItemNumber(string ItemNumber)
@@ -362,7 +452,96 @@ namespace Team3ADProject.Services
 
         //Tharrani – End
 
+        //Esther
+        public string CreateAdjustment(String token, WCF_Adjustment adj)
+        {
+            if (AuthenticateToken(token))
+            {
 
+                String now = DateTime.Now.ToString("yyyy-MM-dd");
+                WCF_Employee employee = GetEmployeeByToken(token);
+                adjustment a = new adjustment()
+                {
+                    adjustment_date = DateTime.ParseExact(now, "yyyy-MM-dd", null),
+                    employee_id = employee.EmployeeId,
+                    item_number = adj.ItemNumber.Trim(),
+                    adjustment_quantity = Int32.Parse(adj.AdjustmentQty.Trim()),
+                    adjustment_price = BusinessLogic.Adjprice(adj.ItemNumber) * Int32.Parse(adj.AdjustmentQty.Trim()),
+                    adjustment_status = "Pending",
+                    employee_remark = adj.EmployeeRemark,
+                    manager_remark = null,
+                };
+                String result1= BusinessLogic.CreateAdjustment(a);
+                String email = BusinessLogic.SendEmailAdjustmentApproval(a);
+                try
+                {
+                    BusinessLogic.sendMail(email, "New Adjustment Request", employee.EmployeeName+" raised new adjustment request.");
+                }
+                catch(Exception ex)
+                {
+                    return "email exception "+ex.Message;   
+                }
+                return result1;
+            }
+            else
+            {
+                return "invalid token";
+            }
+        }
+
+        public List<WCF_Inventory> GetActiveInventories(String token)
+        {
+            if (AuthenticateToken(token))
+            {
+                List<inventory> list = BusinessLogic.GetActiveInventories();
+                List<WCF_Inventory> returnlist = new List<WCF_Inventory>();
+                foreach (inventory a in list)
+                {
+                    int pqty = BusinessLogic.ReturnPendingMinusAdjustmentQty(a.item_number);
+                    returnlist.Add(new WCF_Inventory(a.item_number.Trim(), a.description.Trim(), a.category.Trim(), a.unit_of_measurement.Trim(), a.current_quantity.ToString(), a.reorder_level.ToString(), a.reorder_quantity.ToString(), a.item_bin, a.item_status, pqty.ToString()));
+                }
+                return returnlist;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<WCF_Inventory> GetInventorySearchResult(String search, String token)
+        {
+            if (AuthenticateToken(token))
+            {
+                List<inventory> list = BusinessLogic.GetActiveInventories().Where(x => x.description.ToLower().Contains(search.ToLower())).ToList();
+                List<WCF_Inventory> returnlist = new List<WCF_Inventory>();
+                foreach (inventory a in list)
+                {
+                    int pqty = BusinessLogic.ReturnPendingMinusAdjustmentQty(a.item_number);
+                    returnlist.Add(new WCF_Inventory(a.item_number.Trim(), a.description.Trim(), a.category.Trim(), a.unit_of_measurement.Trim(), a.current_quantity.ToString(), a.reorder_level.ToString(), a.reorder_quantity.ToString(), a.item_bin, a.item_status, pqty.ToString()));
+                }
+                return returnlist;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public WCF_Inventory GetInventoryByItemCode(String itemcode, String token)
+        {
+            if (AuthenticateToken(token))
+            {
+                inventory a = BusinessLogic.GetInventoryByItemCode(itemcode);
+                int pqty = BusinessLogic.ReturnPendingMinusAdjustmentQty(itemcode);
+                WCF_Inventory wcfinv = new WCF_Inventory(a.item_number.Trim(), a.description.Trim(), a.category.Trim(), a.unit_of_measurement.Trim(), a.current_quantity.ToString(), a.reorder_level.ToString(), a.reorder_quantity.ToString(), a.item_bin, a.item_status, pqty.ToString());
+                return wcfinv;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        //Esther end
     }
 }
 

@@ -93,6 +93,10 @@ namespace Team3ADProject.Services
         [WebGet(UriTemplate = "/Department/Sorting/InsertDisbursementDetail/{dptId}", ResponseFormat = WebMessageFormat.Json)]
         void InsertDisbursementListROId(string dptId);
 
+        //Disbursement Sorting - after ready for collection, system need to send email. Method gets dpt rep email - Web Clerk [Joel]
+        [OperationContract]
+        [WebGet(UriTemplate = "/Department/Sorting/DptRepEmail/{dptId}", ResponseFormat = WebMessageFormat.Json)]
+        string GetDptRepEmailAddFromDptID(string dptId);
 
 
         // ViewRO SpecialRequest - input ROID, Get RO Details - Web Clerk [Joel]
@@ -140,15 +144,54 @@ namespace Team3ADProject.Services
         //Add new request
         [OperationContract]
         [WebInvoke(UriTemplate = "/NewRequest/Addrequest", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        string AddNewRequest();
+        string AddNewRequest(WCF_Token token);
 
         //Add new request detail
         [OperationContract]
         [WebInvoke(UriTemplate = "/NewRequest/Addrequestdetail", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         void AddNewRequestDetail(WCF_ReqCart r);
 
+        //GetRequestOrder
+        [OperationContract]
+        [WebGet(UriTemplate = "/NewRequest/Confirm?id={id}&token={token}", ResponseFormat = WebMessageFormat.Json)]
+        WCF_Requisition_Order GetRequestOrder(string token, string id);
+
+        //GetRequestOrderDetails
+        [WebGet(UriTemplate = "/NewRequest/Confirm/orderdetail?id={id}&token={token}", ResponseFormat = WebMessageFormat.Json)]
+        List<Employee_Request_order_Detail> GetRequestDetail(string token, string id);
+
+        //GetdisbursementList
+        [WebGet(UriTemplate = "/Disbursement/Alllist/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Disbursement_List> GetDisbursement_Lists(string token);
+
+        //GetdisbursementDetail
+        [WebGet(UriTemplate = "/Disbursement/Detail/{id}/{*token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Disbursement_Detail> GetDisbursement_Detail(string id, string token);
+
+        //AcknowledgedisbursementDetail
+        [WebInvoke(UriTemplate = "/Disbursement/Acknowledge", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        void AcknowledgeDisbursement_Detail(WCF_Disbursement_Detail DL);
+
         //Tharrani -End
 
+        //Esther
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/Adjustment/Create/{token}", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+        string CreateAdjustment(String token, WCF_Adjustment adj);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/Inventory/Active/{token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Inventory> GetActiveInventories(String token);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/Inventory/{search}/{token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_Inventory> GetInventorySearchResult(String search, String token);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/Inventory/ItemCode/{itemcode}/{token}", ResponseFormat = WebMessageFormat.Json)]
+        WCF_Inventory GetInventoryByItemCode(String itemcode, String token);
         // Yang
         //Add new request detail
         [OperationContract]
@@ -269,15 +312,21 @@ namespace Team3ADProject.Services
 
         public WCF_Adjustment(int adjustment_id, DateTime adjustment_date, int employee_id, string item_number, int adjustment_quantity, double adjustment_price, string adjustment_status, string employee_remark, string manager_remark)
         {
-            this.AdjustmentId = adjustment_id.ToString();
-            this.AdjustmentDate = adjustment_date.ToString("yyyy-MM-dd");
-            this.EmployeeId = employee_id.ToString();
-            this.ItemNumber = item_number;
-            this.AdjustmentQty = adjustment_quantity.ToString();
-            this.AdjustmentPrice = adjustment_price.ToString();
-            this.AdjustmentStatus = adjustment_status;
-            this.EmployeeRemark = employee_remark;
-            this.ManagerRemark = manager_remark;
+            this.AdjustmentId = adjustment_id.ToString().Trim();
+            this.AdjustmentDate = adjustment_date.ToString("yyyy-MM-dd").Trim();
+            this.EmployeeId = employee_id.ToString().Trim();
+            this.ItemNumber = item_number.Trim();
+            this.AdjustmentQty = adjustment_quantity.ToString().Trim();
+            this.AdjustmentPrice = adjustment_price.ToString().Trim();
+            this.AdjustmentStatus = adjustment_status.Trim();
+            this.EmployeeRemark = employee_remark.Trim();
+            this.ManagerRemark = manager_remark.Trim();
+        }
+        public WCF_Adjustment(string item_number, int adjustment_quantity, string employee_remark)
+        {
+            this.ItemNumber = item_number.Trim();
+            this.AdjustmentQty = adjustment_quantity.ToString().Trim();
+            this.EmployeeRemark = employee_remark.Trim();
         }
     }
 
@@ -483,6 +532,8 @@ namespace Team3ADProject.Services
         public string item_bin;
         [DataMember]
         public string item_status;
+        [DataMember]
+        public string pending_adj_remove;
 
         public WCF_Inventory(string item, string desc, string cat, string UOM, string cq, string reol, string req, string bin, string status)
         {
@@ -504,6 +555,21 @@ namespace Team3ADProject.Services
             category = cat;
             unit_of_measurement = UOM;
         }
+
+        //Esther
+        public WCF_Inventory(string item, string desc, string cat, string UOM, string cq, string reol, string req, string bin, string status, string pending_adj_remove)
+        {
+            item_number = item.Trim();
+            description = desc;
+            category = cat;
+            unit_of_measurement = UOM;
+            current_quantity = cq;
+            reorder_level = reol;
+            reorder_quantity = req;
+            item_bin = bin;
+            item_status = status;
+            this.pending_adj_remove = pending_adj_remove;
+        }
     }
 
     [DataContract]
@@ -518,6 +584,9 @@ namespace Team3ADProject.Services
         [DataMember]
         string id;
 
+        [DataMember]
+        string token;
+
         public WCF_ReqCart(string inventory, int cart_quantity, string id)
         {
             this.inventory = inventory;
@@ -525,10 +594,128 @@ namespace Team3ADProject.Services
             this.id = id;
         }
 
+        public WCF_ReqCart(string inventory, int cart_quantity, string id, string token)
+        {
+            this.inventory = inventory;
+            this.cart_quantity = q;
+            this.id = id;
+            this.token = token;
+        }
+
         public string getI => inventory;
         public int q => cart_quantity;
         public string Id => id;
+        public string gettoken => token;
 
+    }
+
+    [DataContract]
+    public class Employee_Request_order_Detail
+    {
+        [DataMember]
+        string category;
+
+        [DataMember]
+        string description;
+
+        [DataMember]
+        string unit_of_measurement;
+
+        [DataMember]
+        string quantity;
+
+        public Employee_Request_order_Detail(string category, string description, string unit_of_measurement, string quantity)
+        {
+            this.category = category;
+            this.description = description;
+            this.unit_of_measurement = unit_of_measurement;
+            this.quantity = quantity;
+        }
+    }
+
+    [DataContract]
+    public class WCF_Token
+    {
+        [DataMember]
+        string token;
+
+        public WCF_Token(string token)
+        { this.token = token; }
+
+        public string gettoken => token;
+    }
+
+
+    [DataContract]
+    public class WCF_Disbursement_List
+    {
+        [DataMember]
+        string collection_date;
+        [DataMember]
+        string collection_location;
+        [DataMember]
+        string collection_time;
+        [DataMember]
+        string department_name;
+        [DataMember]
+        string representative_name;
+        [DataMember]
+        string collection_id;
+        [DataMember]
+        string department_pin;
+
+        public WCF_Disbursement_List(string collection_date, string collection_location, string collection_time, string department_name, string representative_name, string collection_id, string department_pin)
+        {
+            this.collection_date = collection_date;
+            this.collection_location = collection_location;
+            this.collection_time = collection_time;
+            this.department_name = department_name;
+            this.representative_name = representative_name;
+            this.collection_id = collection_id;
+            this.department_pin = department_pin;
+        }
+    }
+
+    [DataContract]
+    public class WCF_Disbursement_Detail
+    {
+
+        [DataMember]
+        string collection_id;
+
+        [DataMember]
+        string item_number;
+
+        [DataMember]
+        string description;
+
+        [DataMember]
+        string order_quantity;
+
+        [DataMember]
+        string receive_quantity;
+
+        [DataMember]
+        string altered_quantity;
+
+        [DataMember]
+        string token;
+
+
+        public WCF_Disbursement_Detail(string collection_id, string item_number, string description, string order_quantity, string receive_quantity, string altered_quantity)
+        {
+            this.collection_id = collection_id;
+            this.item_number = item_number;
+            this.description = description;
+            this.order_quantity = order_quantity;
+            this.receive_quantity = receive_quantity;
+            this.altered_quantity = altered_quantity;
+        }
+
+        public WCF_Disbursement_Detail(string collection_id, string item_number, string description, string order_quantity, string receive_quantity, string altered_quantity, string token) : this(collection_id, item_number, description, order_quantity, receive_quantity, altered_quantity)
+        {
+            this.token = token;
+        }
     }
 
     //Tharrani – End

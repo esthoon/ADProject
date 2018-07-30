@@ -32,7 +32,7 @@
 		<p></p>
 		<p>
 			<asp:Label ID="Label13" runat="server" Text="Comments"></asp:Label>
-			<asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+			<asp:TextBox ID="TextBox1" runat="server" MaxLength="250"></asp:TextBox>
 		</p>
 		<br />
 		<br />

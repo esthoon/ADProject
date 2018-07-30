@@ -46,8 +46,8 @@
         </Columns>
     </asp:GridView>
     <br />
-    <b>Manager Comment</b>
-    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+    <b>Supervisor Comment</b>
+    <asp:TextBox ID="TextBox1" runat="server" MaxLength="90"></asp:TextBox>
     <br />
     <br />
     <asp:Button ID="Button1" runat="server" Text="Approve" OnClick="Button1_Click" CssClass="btn btn-success" />

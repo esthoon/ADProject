@@ -29,7 +29,8 @@ namespace Team3ADProject.Protected
 
         public void refreshgrid()
         {
-            GridView1.DataSource = BusinessLogic.getbudget("COMM");
+            string dept = Session["Department"].ToString();
+            GridView1.DataSource = BusinessLogic.getbudget(dept);
             GridView1.DataBind();
         }
 
@@ -54,16 +55,40 @@ namespace Team3ADProject.Protected
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            int budget = Convert.ToInt32(TextBox1.Text);
-            int employeeid = Convert.ToInt32(Session["Employee"]);
-            string user = BusinessLogic.GetUserID(employeeid);
-            string dept = BusinessLogic.getdepartment(user);//to get the department
-            string month = DropDownList1.SelectedValue.ToString();
-            BusinessLogic.updatebudget("COMM", month, budget);
-            refreshgrid();
-            DropDownList1.DataSource = months;
-            DropDownList1.DataBind();
-            disablemonths();
+            try
+            {
+                int budget = Convert.ToInt32(TextBox1.Text);
+                int employeeid = Convert.ToInt32(Session["Employee"]);
+                string user = BusinessLogic.GetUserID(employeeid);
+                string dept = Session["Department"].ToString();
+                string month = DropDownList1.SelectedValue.ToString();
+                BusinessLogic.updatebudget(dept, month, budget);
+                refreshgrid();
+                DropDownList1.DataSource = months;
+                DropDownList1.DataBind();
+                disablemonths();
+            }
+
+            catch(Exception ee)
+            {
+                Exception ex = ee;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Oops ! Something Went wrong. Please try again.')", true);
+            }
+            
+        }
+
+        protected void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            int qty;
+
+            if(Int32.TryParse(TextBox1.Text,out qty))
+            {
+                Button1.Enabled = true;
+            }
+            else
+            {
+                Button1.Enabled = false;
+            }
         }
     }
 }

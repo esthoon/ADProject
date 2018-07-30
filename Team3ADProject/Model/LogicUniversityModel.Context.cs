@@ -654,5 +654,14 @@ namespace Team3ADProject.Model
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spViewCollectionList_Result>("spViewCollectionList");
         }
+    
+        public virtual ObjectResult<getcollectiondetailsbydepartment_Result> getcollectiondetailsbydepartment(string departmentid)
+        {
+            var departmentidParameter = departmentid != null ?
+                new ObjectParameter("departmentid", departmentid) :
+                new ObjectParameter("departmentid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getcollectiondetailsbydepartment_Result>("getcollectiondetailsbydepartment", departmentidParameter);
+        }
     }
 }

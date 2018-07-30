@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Web;
 using Team3ADProject.Model;
 using System.Transactions;
+using System.Web.Security;
 
 namespace Team3ADProject.Code
 {
@@ -159,7 +160,7 @@ namespace Team3ADProject.Code
         public static List<employee> getemployeenames(string dept)
         {
             //var q=from employee in context.employees where employee.department_id.Equals(dept) select employee.employee_name;
-            return context.employees.Where(x => x.department_id == dept && x.supervisor_id != null  ).ToList();
+            return context.employees.Where(x => x.department_id == dept && x.supervisor_id != null).ToList();
 
         }
 
@@ -175,6 +176,8 @@ namespace Team3ADProject.Code
             department d = q.FirstOrDefault();
             d.temp_head_id = id;
             context.SaveChanges();
+            employee y = context.employees.Where(x => x.employee_id == id).FirstOrDefault();
+            Roles.AddUserToRole(y.user_id, Constants.ROLES_DEPARTMENT_HEAD_TEMP);
         }
 
         public static string gettemporaryheadname(string dept)
@@ -192,6 +195,8 @@ namespace Team3ADProject.Code
         {
             var q = from department in context.departments where department.department_id == dept select department;
             department d = q.FirstOrDefault();
+            employee y = context.employees.Where(x => x.employee_id == d.temp_head_id).FirstOrDefault();
+            Roles.RemoveUserFromRole(y.user_id, Constants.ROLES_DEPARTMENT_HEAD_TEMP);
             d.temp_head_id = null;
             context.SaveChanges();
 
@@ -224,6 +229,9 @@ namespace Team3ADProject.Code
                         department_rep.representative_status.Equals("Active")
                         select department_rep;
                 department_rep d = q.FirstOrDefault();
+                //find the active user first and remove active           
+                Roles.AddUserToRole(d.employee.user_id, Constants.ROLES_EMPLOYEE);
+                Roles.RemoveUserFromRole(d.employee.user_id, Constants.ROLES_DEPARTMENT_REPRESENTATIVE);
                 d.representative_status = "InActive";
                 context.SaveChanges();
                 string today = DateTime.Now.ToString("yyyy-MM-dd");
@@ -244,8 +252,7 @@ namespace Team3ADProject.Code
         public static void updatepassword(string dept, int password)
         {
             var q = from department in context.departments
-                    where
-department.department_id.Equals(dept)
+                    where department.department_id.Equals(dept)
                     select department;
             department d = q.FirstOrDefault();
             d.department_pin = password;
@@ -345,11 +352,11 @@ department.department_id.Equals(dept)
         //List all adjustment form
         public static List<adjustment> StoreSupGetAdj()
         {
-            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price <= 250 && x.adjustment_price >= -250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) <= 250).ToList();
         }
         public static List<adjustment> StoreManagerGetAdj()
         {
-            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250 || x.adjustment_price <= -250).ToList();
+            return context.adjustments.Where(x => x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) >= 250).ToList();
         }
 
 
@@ -384,7 +391,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreManagerSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price >= 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) >= 250).ToList<adjustment>();
 
 
         }
@@ -392,7 +399,7 @@ department.department_id.Equals(dept)
         public static List<adjustment> StoreSupSearchAdj(DateTime date)
         {
 
-            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && x.adjustment_price < 250).ToList<adjustment>();
+            return context.adjustments.Where(x => x.adjustment_date == date && x.adjustment_status.Trim().ToLower() == "pending" && Math.Abs(x.adjustment_price) < 250).ToList<adjustment>();
 
 
         }
@@ -420,12 +427,33 @@ department.department_id.Equals(dept)
         //approval of PO
         public static void UpdateUponPOApproval(int id, string mremark, string email)
         {
+            //change email format
             purchase_order po = context.purchase_order.Where(x => x.purchase_order_number == id).FirstOrDefault<purchase_order>();
             po.purchase_order_status = "Pending";
             po.manager_remark = mremark;
             int pono = po.purchase_order_number;
-            //needs to be modfied
-            sendMail(email, "Email for Purchase Order " + pono, "Dear Supplier,/n This is an email to notified you on the purchase order " + pono + ".");
+
+            List<purchase_order_detail> pod = context.purchase_order_detail.Where(x => x.purchase_order_number == id).ToList();
+
+            List<string> xxx = new List<string>();
+            for (int i = 0; i < pod.Count; i++)
+            {
+                var xx = pod[i].item_number.ToString();
+                var yy = pod[i].item_purchase_order_quantity.ToString();
+
+
+                xxx.Add(xx);
+                xxx.Add(yy);
+                xxx.Add(Environment.NewLine);
+            }
+
+            string ot = string.Join("\t", xxx.ToArray());
+            string pt = string.Join("\n", ot);
+
+            sendMail(email, $"Email for Purchase Order {pono}",
+                $"Dear Supplier,\n This is an email to notify you on the purchase order  {pono} from Logic University." +
+                $"\nItem No. \tOrdered Qty\n\t {pt}\n\n " +
+                $"\nThis is a system generated message.");
 
             context.SaveChanges();
         }
@@ -455,6 +483,15 @@ department.department_id.Equals(dept)
             SmtpServer.EnableSsl = true;
 
             SmtpServer.Send(mail);
+
+        }
+
+        public static void sendMail(List<string> to, string sub, string body)
+        {
+            foreach(string email in to)
+            {
+                sendMail(email, sub, body);
+            }           
 
         }
 
@@ -857,9 +894,16 @@ department.department_id.Equals(dept)
         //create new adjustment
         public static string CreateAdjustment(adjustment a)
         {
-            context.adjustments.Add(a);
-            context.SaveChanges();
-            return ("success");
+            try
+            {
+                context.adjustments.Add(a);
+                context.SaveChanges();
+                return "success";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
         public static employee GetEmployeeById(int id)
         {
@@ -962,6 +1006,36 @@ department.department_id.Equals(dept)
         {
             return context.departments.Where(x => x.department_id.Trim().ToLower() == employee.department_id.Trim().ToLower()).Select(x => x.head_id).First();
         }
+
+        public static inventory GetInventoryByItemCode(string ItemCode)
+        {
+            return context.inventories.Where(x => x.item_number.ToLower().Trim() == ItemCode.ToLower().Trim()).FirstOrDefault();
+        }
+
+        public static string SendEmailAdjustmentApproval(adjustment a)
+        {
+            string email;
+            if (a.adjustment_price > 250)
+            {
+                int id = DepartmentHeadID(a.employee);
+                email = RetrieveEmailByEmployeeID(id);
+            }
+            else
+            {
+                int? id = GetSupervisorID(a.employee_id);
+                if (id != null)
+                {
+                    int supid = (int)id;
+                    email = RetrieveEmailByEmployeeID(supid);
+                }
+                else
+                {
+                    int headid = DepartmentHeadID(a.employee);
+                    email = RetrieveEmailByEmployeeID(headid);
+                }
+            }
+            return email;
+        }
         //Esther end
 
         //Rohit - start
@@ -989,7 +1063,10 @@ department.department_id.Equals(dept)
 
         public static void updateInventory(string itemCode, int difference)
         {
-            context.spUpdateInventory(itemCode, difference);
+            //rohit's sp context.spUpdateInventory(itemCode, difference);
+            inventory i = context.inventories.Where(x => x.item_number.Trim().ToLower() == itemCode.Trim().ToLower()).FirstOrDefault();
+            i.current_quantity = i.current_quantity + difference;
+            context.SaveChanges();
         }
 
         public static void updateCollectionStatus(int collectionID)
@@ -1004,6 +1081,81 @@ department.department_id.Equals(dept)
         }
 
 
+        public static void AcknowledgeDL(int collection_id, string ItemCode, int ActualSupplyQuantityValue, int UserInput)
+        {
+            if (UserInput == ActualSupplyQuantityValue)
+            {
+                //logic for equal
+            }
+            else
+            {
+                //logic for lesser in else block
+
+
+
+                //Getting data into lists of their datatypes.
+                List<Team3ADProject.Model.spGetRequisitionIDAndItemQuantity_Result> mylist = getRequisitionIDandItemQuantity(collection_id, ItemCode);
+                List<int> myIntegerList = new List<int>(mylist.Count);
+                List<string> myRequsitionIDList = new List<string>(mylist.Count);
+                for (int j = 0; j < mylist.Count; j++)
+                {
+                    myIntegerList.Add(Convert.ToInt32(mylist[j].item_distributed_quantity));
+                    myRequsitionIDList.Add(mylist[j].requisition_id.ToString());
+                }
+
+                //Actual logic 23/07/2018 Monday
+                int counter = UserInput;
+                int myIntegerListSize = myIntegerList.Count;
+                int minimum = counter / myIntegerListSize;
+
+                int adder = 0, k = -1;
+                while (true)
+                {
+                    k++;
+                    if (adder < UserInput)
+                    {
+                        adder = adder + myIntegerList[k];
+                    }
+                    if (adder >= UserInput)
+                    {
+                        break;
+                    }
+                }
+
+
+                int temp = adder - UserInput;
+                myIntegerList[k] = myIntegerList[k] - temp;
+                k++;
+
+                for (; k < myIntegerListSize; k++)
+                {
+                    myIntegerList[k] = 0;
+                }
+
+
+
+
+
+                //update back with itemcode, requisitonID(myRequsitionIDList) and [itemdistributed quantity(myIntegerList)]
+                for (int j = 0; j < myRequsitionIDList.Count; j++)
+                {
+                    string requisitionID = myRequsitionIDList[j];
+                    int itemDistributedQuantity = myIntegerList[j];
+
+                    UpdateItemDistributedQuantity(ItemCode, requisitionID, itemDistributedQuantity);
+                }
+
+
+
+
+                //update back the difference(UserInput - ActualSupplyQuantityValue) in inventory
+                int difference = ActualSupplyQuantityValue - UserInput;
+                updateInventory(ItemCode, difference);
+
+            }
+        }
+
+
         //Rohit -end
 
 
@@ -1011,11 +1163,23 @@ department.department_id.Equals(dept)
         public static void updatecollectionlocation(string dept, int id)
         {
             context.updatecollectiondepartment(dept, id);
+            string location = context.collections.Where(x => x.place_id == id).FirstOrDefault<collection>().collection_place.ToString();
+            string department = context.departments.Where(x => x.department_id == dept).FirstOrDefault<department>().department_name.ToString();
+            string messagebody = "The following location for" + department + "has been selected as new location for collection of stationery \n \n" + location;
+            //sending the email to store on location change
+            var query =context.employees.Where(x => x.department_id == "STOR" && x.supervisor_id == 13).ToList();
+
+            List<string> emailList = new List<string>();
+            foreach(employee email in query)
+            {
+                emailList.Add(email.email_id);
+            }
+            BusinessLogic.sendMail(emailList, "Location Change", messagebody);
         }
 
         public static List<budget> getbudget(string dept)
         {
-            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) select b;
+            var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) && b.department_id.Equals(dept) select b;
             List<budget> list = q.ToList();
             list = (List<budget>)list.OrderBy(x => DateTime.ParseExact(x.month, "MMM", System.Globalization.CultureInfo.InvariantCulture).Month).ToList();
             return list;
@@ -1062,13 +1226,40 @@ department.department_id.Equals(dept)
             return context.employees.Where(x => x.employee_id == employee_id).Select(x => x.user_id).FirstOrDefault();
         }
 
+        public static List<string> getEmployeesEmailFromDept(string dept)
+        {
+            var query = context.employees.Where(x => x.department_id == dept).ToList<employee>();
+
+            var query1 = context.department_rep.Where(x => x.representative_status == "Active" && x.department_id == dept).FirstOrDefault();
+
+            var query2 = context.departments.Where(x => x.department_id == dept).FirstOrDefault();
+
+            var nestedQuery = query.Where(x => x.employee_id != query1.representative_id && x.employee_id != query2.head_id).ToList<employee>();
+
+            List<string> listOfEmail = new List<string>();
+
+            foreach(employee userid in nestedQuery)
+            {
+                MembershipUser mu = Membership.GetUser(userid.user_id);
+                listOfEmail.Add(mu.Email);
+            }
+
+            return listOfEmail;
+        }
+
+        public static List<getcollectiondetailsbydepartment_Result> getdepartmentcollection(string dept)
+        {
+            return context.getcollectiondetailsbydepartment(dept).ToList();
+        }
 
 
         //Sruthi - End
 
+
+
         //JOEL - START
 
-        //CollectionList - REFACTORED
+        //CollectionList
         public static List<spGetCollectionList_Result> GetCollectionList()
         {
             List<spGetCollectionList_Result> list = new List<spGetCollectionList_Result>();
@@ -1098,7 +1289,7 @@ department.department_id.Equals(dept)
             return list = context.spGetFullCollectionROIDList().ToList();
         }
 
-        //CollectionList - REFACTORED
+        //CollectionList
         public static void SortCollectedGoods(List<CollectionListItem> allDptCollectionList)
         {
             List<spGetFullCollectionROIDList_Result> list = BusinessLogic.GetFullCollectionROIDList();
@@ -1204,7 +1395,7 @@ department.department_id.Equals(dept)
             return sList;
         }
 
-        //DisbursementSorting - REFACTORED
+        //DisbursementSorting
         public static List<string> DisplayListofDepartmentsForCollection()
         {
             List<spGetFullCollectionROIDList_Result> roidList = new List<spGetFullCollectionROIDList_Result>();
@@ -1223,7 +1414,7 @@ department.department_id.Equals(dept)
             return dptList;
         }
 
-        //DisbursementSorting - REFACTORED
+        //DisbursementSorting
         public static int isExisting(string department_name, List<string> dptList)
         {
             foreach (string dptName in dptList)
@@ -1246,6 +1437,25 @@ department.department_id.Equals(dept)
             {
                 context.spInsertDisbursementListROId(v, latestCollectionId);
             }
+
+            //(4) send email to dpt rep
+            string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dpt_Id);
+            string subj = "Your ordered stationery is ready for collection";
+            string body = "Your order is ready for collection. Please procede to your usual collection point at the correct time.";
+
+            BusinessLogic.sendMail(emailAdd, subj, body);
+        }
+
+        public static string GetDptRepEmailAddFromDptID(string dptId)
+        {
+            //get the ID of the representative of the Department from department rep table
+            department_rep dRep = context.department_rep.Where(x => x.department_id == dptId && x.representative_status =="Active").FirstOrDefault();
+            //get the user_id of the representative of the Department
+            employee e = context.employees.Where(x => x.employee_id == dRep.representative_id).FirstOrDefault();
+            //get the user in aspnet db via user_id
+            MembershipUser mu = Membership.GetUser(e.user_id);
+            //sent the user's email back to the calling method
+            return mu.Email;
         }
 
         //ViewROSpecialRequest
@@ -1255,7 +1465,7 @@ department.department_id.Equals(dept)
             return (int)result.place_id;
         }
 
-        //ViewROSpecialRequest - REFACTORED
+        //ViewROSpecialRequest
         public static void SpecialRequestReadyUpdatesCDRDD(int placeId, DateTime collectionDate, string ro_id, string dpt_id)
         {
             string collectionStatus = "Pending";
@@ -1263,7 +1473,7 @@ department.department_id.Equals(dept)
             context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id, dpt_id);
         }
 
-        //ViewROSpecialRequest - REFACTORED
+        //ViewROSpecialRequest
         public static void ViewROSpecialRequestUpdateRODTable(List<CollectionListItem> clList, string ro_id)
         {
             foreach (var item in clList)
@@ -1320,6 +1530,7 @@ department.department_id.Equals(dept)
             }
         }
 
+        //Reallocate
         public static void UpdateRODTableOnReallocate(string dpt_id, string itemNum, int distriQty)
         {
             List<spGetFullCollectionROIDList_Result> roidList = BusinessLogic.GetFullCollectionROIDList();
@@ -1376,13 +1587,10 @@ department.department_id.Equals(dept)
             context.SaveChanges();
         }
 
-        //Refactored
+
+        //JOEL - END
 
 
-        //Refactored
-
-
-        //Joel - end
 
         public static double getUnitPrice(string supplier_id, string item_number)
         {

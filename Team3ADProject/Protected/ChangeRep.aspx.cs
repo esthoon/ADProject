@@ -5,7 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Team3ADProject.Code;
-
+using System.Web.Security;
+using Team3ADProject.Model;
 
 namespace Team3ADProject.Protected
 {
@@ -46,11 +47,6 @@ namespace Team3ADProject.Protected
             TextBox2.Text = hd.Value;
         }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         protected void Button2_Click(object sender, EventArgs e)
         {
             string name = TextBox2.Text;
@@ -60,15 +56,23 @@ namespace Team3ADProject.Protected
                 int id = BusinessLogic.getemployeeid(name);
                 string dept = getmethoddepartment();
                 BusinessLogic.saverepdetails(dept, id);
-                //sending the email to the department employees,store clerk on the Representative change.
-                string messagebody = "The following person has been appointed as the representative for the collection of items \n \n" + name;
-                BusinessLogic.sendMail("pssruthi123@gmail.com", "Department Representative Change", messagebody);
+                //sending the email to the department employees,store clerk on the Representative change.             
+
+                //adding the person as rep
+                employee getName = BusinessLogic.GetEmployee(id);
+                Roles.AddUserToRole(getName.user_id, Constants.ROLES_DEPARTMENT_REPRESENTATIVE);
+                Roles.RemoveUserFromRole(getName.user_id, Constants.ROLES_EMPLOYEE);
+
+                //Send the new rep an email.
+                string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dept);
                 string messagebody1 = "Congratulations,\n You have been appointed as the department representative for the collection of items ";
-                BusinessLogic.sendMail("pssruthi123@gmail.com", "Department Representative Change", messagebody1);
-                //if (!Page.IsPostBack)
-                //{
+                BusinessLogic.sendMail(emailAdd, "Department Representative Change", messagebody1);
                 updategrid();
-                //}
+
+                //Send email to all inform about the new Rep
+                List<string> email = BusinessLogic.getEmployeesEmailFromDept(dept);
+                string messagebody = "The following person has been appointed as the representative for the collection of items \n \n" + name;
+                BusinessLogic.sendMail(email, "Department Representative Change", messagebody);
             }
             else
             {
