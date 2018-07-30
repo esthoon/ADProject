@@ -172,6 +172,11 @@ namespace Team3ADProject.Services
         [WebInvoke(UriTemplate = "/Disbursement/Acknowledge", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         void AcknowledgeDisbursement_Detail(WCF_Disbursement_Detail DL);
 
+        //ChangeCollectionStatus after Disbursement
+        [WebInvoke(UriTemplate = "/Disbursement/ChangeStatus", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
+        void Changecollectionstatus(WCF_Disbursement_Detail DL);
+
+
         //Tharrani -End
 
         //Esther
@@ -716,6 +721,12 @@ namespace Team3ADProject.Services
         {
             this.token = token;
         }
+
+        public string Collection_id { get => collection_id; set => collection_id = value; }
+        public string Item_number { get => item_number; set => item_number = value; }
+        public string Receive_quantity { get => receive_quantity; set => receive_quantity = value; }
+        public string Altered_quantity { get => altered_quantity; set => altered_quantity = value; }
+        public string Token { get => token; set => token = value; }
     }
 
     //Tharrani – End
