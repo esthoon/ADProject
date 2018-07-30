@@ -8,7 +8,7 @@
 	<asp:Button ID="Button1" runat="server" Text="Submit" OnClick="Button1_Click" CssClass="btn btn-primary" />
 	<br />
 	<br />
-	<asp:Label ID="Label2" runat="server" Text="Location is Changed" Visible="false"></asp:Label>
+	<asp:Label ID="Label2" runat="server" Visible="false"></asp:Label>
 	<br />
 	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
 		<Columns>

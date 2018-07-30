@@ -1163,6 +1163,18 @@ namespace Team3ADProject.Code
         public static void updatecollectionlocation(string dept, int id)
         {
             context.updatecollectiondepartment(dept, id);
+            string location = context.collections.Where(x => x.place_id == id).FirstOrDefault<collection>().collection_place.ToString();
+            string department = context.departments.Where(x => x.department_id == dept).FirstOrDefault<department>().department_name.ToString();
+            string messagebody = "The following location for" + department + "has been selected as new location for collection of stationery \n \n" + location;
+            //sending the email to store on location change
+            var query =context.employees.Where(x => x.department_id == "STOR" && x.supervisor_id == 13).ToList();
+
+            List<string> emailList = new List<string>();
+            foreach(employee email in query)
+            {
+                emailList.Add(email.email_id);
+            }
+            BusinessLogic.sendMail(emailList, "Location Change", messagebody);
         }
 
         public static List<budget> getbudget(string dept)

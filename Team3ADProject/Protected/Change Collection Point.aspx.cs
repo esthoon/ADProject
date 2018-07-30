@@ -36,10 +36,8 @@ namespace Team3ADProject.Protected
             string dept = BusinessLogic.getdepartment(user);//to get the department
             int i = Convert.ToInt32(DropDownList1.SelectedValue);
             BusinessLogic.updatecollectionlocation(dept, i);
+            Label2.Text = "Location is changed to " + DropDownList1.SelectedItem.ToString();
             Label2.Visible = true;
-            string messagebody = "The following location has been selected as new location for collection of stationery \n \n" + DropDownList1.SelectedItem.Text.ToString();
-            //sending the email to store on location change
-            BusinessLogic.sendMail("pssruthi123@gmail.com", "Location Change", messagebody);
 
         }
     }
