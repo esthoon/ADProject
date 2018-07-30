@@ -5,9 +5,20 @@
 
     <body>
 
+
+         <%@ Import Namespace="Team3ADProject.Code" %>
+
         <h2>Requisition Order Details</h2>
 
-        <a href="<%=ResolveUrl("~/Protected/depheadviewhistory")%>" class="btn btn-default">&lt;&lt; Requisition Order History</a>
+        <a href="
+            <%if (Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD)){ %>
+            <%=ResolveUrl("~/Protected/depheadviewhistory")%>
+            <%} %>
+            
+            <%else{ %>
+            <%=ResolveUrl("~/Protected/EmployeeViewHistory")%>
+            <%} %>
+            " class="btn btn-default">&lt;&lt; Requisition Order History</a>
         <br />
         <br />
         <br />

@@ -149,6 +149,13 @@ namespace Team3ADProject.Services
 
         //Tharrani -End
 
+        // Yang
+        //Add new request detail
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/Inventory/{ItemNumber}", Method = "GET", ResponseFormat = WebMessageFormat.Json)]
+        WCF_Inventory GetInventoryByItemNumber(String ItemNumber);
+        // Yang end
+
     }
 
 
