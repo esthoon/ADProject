@@ -35,8 +35,7 @@
                 <asp:TemplateField HeaderText="Quantity">
                     <ItemTemplate>
                         <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("Quantity") %>' OnTextChanged="TextBox1_TextChanged" ToolTip="Enter quantity to order"></asp:TextBox>
-                        <asp:RegularExpressionValidator ID="Q" runat="server" ControlToValidate="TextBox2" ErrorMessage="Only numbers allowed"
-                            ValidationExpression="(^([0-9]*\d*\d{1}?\d*)$)" Display="Dynamic" ForeColor ="Red"></asp:RegularExpressionValidator>
+						<asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="TextBox2" ErrorMessage="Enter value between 1 and 100,000" Type="Integer" MinimumValue ="1" MaximumValue="100000" ForeColor ="Red"></asp:RangeValidator>
                         <asp:HiddenField ID="HiddenField2" runat="server" Value='<%# Eval("Inventory.item_number") %>'/>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
@@ -64,6 +63,6 @@
             </Columns>           
         </asp:GridView>
     </div>
-    <asp:Button ID="Button2" runat="server" Text="Confirm Request" OnClick="Button2_Click1" CssClass="btn btn-success" />
+    <asp:Button ID="Button2" runat="server" Text="Confirm Request" OnClick="Button2_Click1" CausesValidation ="true" CssClass="btn btn-success" />
 
 </asp:Content>

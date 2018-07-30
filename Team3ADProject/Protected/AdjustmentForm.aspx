@@ -20,11 +20,11 @@
             <div>
                 <asp:Label ID="Label2" runat="server" Text="Adjustment Form" Font-Bold="True" Font-Size="XX-Large"></asp:Label>
             </div>
-            <div>
+            
                 <table>
                     <tr>
                         <td>
-                            <asp:Label ID="Label4" runat="server" Text="Created on: "></asp:Label>
+                            <asp:Label ID="Label4" runat="server" Text="Created On"></asp:Label>
                         </td>
                         <td>
                             <asp:Label ID="LabelDate" runat="server" Text="date"></asp:Label>
@@ -38,15 +38,9 @@
                             <asp:Label ID="LabelName" runat="server" Text="name"></asp:Label>
                         </td>
                     </tr>
-                </table>
-            </div>
-            <asp:Label ID="LabelError" runat="server" ForeColor="Red"></asp:Label>
-            <br />
-            <div>
-                <table>
-                    <tr>
+                 <tr>
                         <td>
-                            <asp:Label ID="lbinum" runat="server" Text="Item no. "></asp:Label>
+                            <asp:Label ID="lbinum" runat="server" Text="Item Number"></asp:Label>
                         </td>
                         <td>
                             <asp:Label ID="LabelItemNum" runat="server" Text="Label"></asp:Label>
@@ -85,10 +79,15 @@
                                 <asp:ListItem Selected="True">-</asp:ListItem>
                             </asp:DropDownList>
                             <asp:TextBox ID="TextBoxAdjustment" runat="server" CausesValidation="True" AutoPostBack="true" OnTextChanged="TextBoxAdjustment_TextChanged"></asp:TextBox>
-                            <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="TextBoxAdjustment" ErrorMessage="Quantity must be more than 0" ForeColor="Red" Operator="GreaterThan" Type="Integer" ValueToCompare="0"></asp:CompareValidator>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxAdjustment" ErrorMessage="No quantity stated" ForeColor="Red"></asp:RequiredFieldValidator>
+							<asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="TextBoxAdjustment" ErrorMessage="Enter value between 1 and 100,000" Type="Integer" MinimumValue ="1" MaximumValue="100000" ForeColor ="Red"></asp:RangeValidator>
+<%--                            <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="TextBoxAdjustment" ErrorMessage="Quantity must be more than 0" ForeColor="Red" Operator="GreaterThan" Type="Integer" ValueToCompare="0"></asp:CompareValidator>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="TextBoxAdjustment" ErrorMessage="No quantity stated" ForeColor="Red"></asp:RequiredFieldValidator>--%>
                         </td>
                     </tr>
+					<tr>
+						<td></td>
+						<td><asp:Label ID="LabelError" runat="server" ForeColor="Red"></asp:Label></td>
+					</tr>
                     <tr>
                         <td>
                             <asp:Label ID="lbtcost" runat="server" Text="Total cost: "></asp:Label>
@@ -109,7 +108,7 @@
                         <td></td>
                         <td>
                             <asp:Button ID="ButtonCancel" runat="server" Text="Cancel" Style="position: relative; float: right; top: 0px; margin-left: 0.5vw;" CssClass="btn btn-warning" CausesValidation="false" OnClick="ButtonCancel_Click" />
-                            <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" Style="position: relative; float: right; top: 0px;" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" OnClientClick="this.disabled=true;" UseSubmitBehavior="false" />
+                            <asp:Button ID="ButtonSubmit" runat="server" Text="Submit" Style="position: relative; float: right; top: 0px;" CssClass="btn btn-primary" OnClick="ButtonSubmit_Click" CausesValidation="true" OnClientClick="this.disabled=true;" UseSubmitBehavior="false" />
                         </td>
                     </tr>
                 </table>
@@ -146,7 +145,6 @@
                         </asp:GridView>
                     </div>
                 </div>
-            </div>
         </div>
     </form>
     <!--

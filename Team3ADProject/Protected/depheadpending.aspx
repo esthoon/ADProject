@@ -9,7 +9,7 @@
 				<asp:BoundField DataField="Date" HeaderText="Request Date" DataFormatString="{0:dd-MM-yyyy}" /> 
 				<asp:BoundField DataField="Name" HeaderText="Employee" />
 				<asp:BoundField DataField="status" HeaderText="Request Status" />
-				<asp:BoundField DataField="sum" HeaderText="Request Price" />
+				<asp:BoundField DataField="sum" HeaderText="Request Price ($)" DataFormatString="{0:N2}"/>
 				<asp:TemplateField>
 					<ItemTemplate>
 						<asp:Button Id="button" Text="View" runat="server" OnClick="button_click" CssClass="btn btn-info"/>
