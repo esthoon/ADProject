@@ -439,8 +439,28 @@ namespace Team3ADProject.Services
 
         public void AcknowledgeDisbursement_Detail(WCF_Disbursement_Detail DL)
         {
-
+            string token = DL.Token;
+            if (AuthenticateToken(token))
+            {
+                int collection_id = Convert.ToInt32(DL.Collection_id);
+                int ActualSupplyQuantityValue = Convert.ToInt32(DL.Receive_quantity);
+                int UserInput = Convert.ToInt32(DL.Altered_quantity);
+                string ItemCode = DL.Item_number;
+                BusinessLogic.AcknowledgeDL(collection_id, ItemCode, ActualSupplyQuantityValue, UserInput);
+            }
         }
+
+        public void Changecollectionstatus(WCF_Disbursement_Detail DL)
+        {
+            string token = DL.Token;
+            if (AuthenticateToken(token))
+            {
+                int collection_id = Convert.ToInt32(DL.Collection_id);
+                BusinessLogic.updateCollectionStatus(collection_id);
+            }
+        }
+
+        //Tharrani End
 
         public WCF_Inventory GetInventoryByItemNumber(string ItemNumber)
         {
