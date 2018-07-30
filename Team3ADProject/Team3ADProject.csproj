@@ -420,6 +420,9 @@
     <Compile Include="Model\getApprovedRequisitionsWithNoDisbursementIdByDepartment_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\getcollectiondetailsbydepartment_Result.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\getitemdetails_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>

@@ -9,4 +9,12 @@
 	<br />
 	<br />
 	<asp:Label ID="Label2" runat="server" Text="Location is Changed" Visible="false"></asp:Label>
+	<br />
+	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+		<Columns>
+			<asp:BoundField DataField="collection_place" HeaderText="Collection Place" />
+			<asp:BoundField DataField="collection_date" HeaderText="Collection Date" />			
+			</Columns>
+	</asp:GridView>
+	<br />
 </asp:Content>

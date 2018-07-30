@@ -3,7 +3,7 @@
 <%@ Import Namespace="Team3ADProject.Protected" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-   <%--checkbox select all function --%>
+	<%--checkbox select all function --%>
      <script>
          function SelectAllCheckboxes(chk) {
              $('#<%=GridView1.ClientID %>').find("input:checkbox").each(function () {
@@ -34,8 +34,8 @@
    --%>
     
     Date:<asp:TextBox ID="TextBox2" runat="server" CssClass="datepicker"></asp:TextBox> 
-    <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
-    <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please enter a valid date of the form: dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="true"></asp:RegularExpressionValidator>
+    <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="This field is required!" ForeColor ="red"></asp:RequiredFieldValidator>
+    <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="TextBox2" ErrorMessage="Please enter a valid date of the form: dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="true" ForeColor ="red"></asp:RegularExpressionValidator>
 
         <div>
         <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="All" CssClass="btn btn-default" />

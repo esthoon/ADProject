@@ -8,7 +8,7 @@
 	<br />
 			<asp:Label ID="Label5" runat="server" Text="Please try again." ForeColor="Red" Visible="false"></asp:Label>
 	<br />
-	<asp:GridView ID="GridView1" runat="server"  OnSelectedIndexChanged="GridView1_SelectedIndexChanged"  AutoGenerateColumns="false" CssClass="table table-hover" Width="600px">
+	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" Width="600px">
 			<columns>
 				<asp:BoundField DataField="employee_name" HeaderText="Name" />
 				<asp:TemplateField>

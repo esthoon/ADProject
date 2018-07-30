@@ -21,6 +21,12 @@ namespace Team3ADProject.Protected
                 DropDownList1.DataValueField = "place_id";
                 DropDownList1.DataBind();
             }
+            int employeeid = Convert.ToInt32(Session["Employee"]);
+            string user = BusinessLogic.GetUserID(employeeid);
+            string dept = BusinessLogic.getdepartment(user);
+            var q = BusinessLogic.getdepartmentcollection(dept).ToList();
+            GridView1.DataSource = q;
+            GridView1.DataBind();
         }
 
         protected void Button1_Click(object sender, EventArgs e)
