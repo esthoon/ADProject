@@ -121,11 +121,11 @@ $(document).ready(function () {
                             gridThickness: 2
                         },
                         axisY: {
-                            title: "Downloads"
+                            title: "Ordered"
                         },
                         data: [
                             {
-                                type: "area",
+                                type: "scatter",
                                 dataPoints: dataPoints
                             }
                         ]
@@ -219,7 +219,7 @@ $(document).ready(function () {
                 var chart = new CanvasJS.Chart("requisitionQuantityByDepartmentChart",
                     {
                         title: {
-                            text: "Total stationaries requested by each department from " + startDate + " to " + endDate
+                            text: "Total stationeries requested by each department from " + startDate + " to " + endDate
                         },
                         theme: "theme2",
                         animationEnabled: true,
@@ -258,7 +258,7 @@ $(document).ready(function () {
                 var chart = new CanvasJS.Chart("pendingPurchaseOrderCountBySupplierChart",
                     {
                         title: {
-                            text: "Count of Pending purchase orders by suppliers"
+                            text: "Number of Pending purchase orders by suppliers"
                         },
                         theme: "theme2",
                         animationEnabled: true,
@@ -267,7 +267,7 @@ $(document).ready(function () {
                             gridThickness: 2
                         },
                         axisY: {
-                            title: "Quantity"
+                            title: "Quantity",
                         },
                         data: [
                             {

@@ -54,8 +54,14 @@ namespace Team3ADProject.Protected
             //(3) deduct from inventory
             BusinessLogic.DeductFromInventory(allDptCollectionList);
 
-            //(4) Redirect to Sorting Page
-            Response.Redirect("~/Protected/DisbursementSorting.aspx");
+            LoadCollectionList();
+            if (gv_CollectionList.Rows.Count == 0)
+            {
+                //(4) Redirect to Sorting Page
+                Response.Redirect("~/Protected/DisbursementSorting.aspx");
+
+            }
+
         }
 
 

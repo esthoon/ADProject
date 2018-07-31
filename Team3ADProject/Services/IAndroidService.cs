@@ -122,7 +122,33 @@ namespace Team3ADProject.Services
 
         // ViewRO SpecialRequest - Deduct from Inventory - USE ABOVE METHOD
 
+        // Reallocate - get list of dpts tt ordered the item, for reallocation - Web Clerk [Joel]
+        [OperationContract]
+        [WebGet(UriTemplate = "/Department/Sorting/Reallocate/{itemNum}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_SortingItem> GetReallocateList(string itemNum);
+
+        // Reallocate - upon reallocate, reset ROD table - Web Clerk [Joel]
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/Department/Sorting/Reallocate/ResetROD", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+        void ResetRODTable(WCF_SortingItem ci);
+
+        // Reallocate - upon reallocate, update ROD table w/ new figures - Web Clerk [Joel]
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/Department/Sorting/Reallocate/UpdateROD", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+        void UpdateRODTable(WCF_SortingItem ci);
+
+        // Reallocate - if excess, return to inventory
+        [OperationContract]
+        [WebGet(UriTemplate = "/Department/Sorting/Reallocate/ReturnInventory/{balance}/{itemNum}", ResponseFormat = WebMessageFormat.Json)]
+        void ReturnToInventory(string balance, string itemNum);
+
         //JOEL - END
+
+
 
         //Tharrani - Start
 
@@ -197,6 +223,7 @@ namespace Team3ADProject.Services
         [OperationContract]
         [WebGet(UriTemplate = "/Inventory/ItemCode/{itemcode}/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Inventory GetInventoryByItemCode(String itemcode, String token);
+
         // Yang
         //Add new request detail
         [OperationContract]
@@ -204,6 +231,45 @@ namespace Team3ADProject.Services
         WCF_Inventory GetInventoryByItemNumber(String ItemNumber);
         // Yang end
 
+        //Sruthi start
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/pending/{token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_approvero> Findpendingros(String token);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/pending/{token}?id={id}", ResponseFormat = WebMessageFormat.Json)]
+        WCF_rodetails Findro(String token, String id);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/pending/", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        void Approvero(WCF_approvero ro);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/pending", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        void rejectro(WCF_approvero ro);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/changecollectionlocation/{token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_collectionpoint> getcollection(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/changecollectionlocation/{token}", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        void updatelocation(string token, WCF_collectionpoint cp);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/viewcollectionhistory/{token}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_collectionhistory> gethistory(string token);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/getitemdetails/{token}?id={id}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_itemdetails> getitemdetails(string token, string id);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/getbudget/{token}", ResponseFormat = WebMessageFormat.Json)]
+        WCF_Budget getbudget(string token);
+
+        //Sruthi end
     }
 
 
@@ -456,6 +522,10 @@ namespace Team3ADProject.Services
         [DataMember]
         public int PendingQty;
 
+        [DataMember]
+        public string DepartmentID;
+
+
         //used by GetSortingListByDepartment(string dpt_Id);
         public WCF_SortingItem(string itemNumber, string description, int quantityOrdered, int collectedQuantity, int pendingQuantity)
         {
@@ -465,7 +535,18 @@ namespace Team3ADProject.Services
             CollectedQty = collectedQuantity;
             PendingQty = pendingQuantity;
         }
+
+        public WCF_SortingItem(string itemNumber, string description, int quantityOrdered, int collectedQuantity, int pendingQuantity, string departmentID)
+        {
+            ItemNumber = itemNumber;
+            Description = description;
+            QuantityOrdered = quantityOrdered;
+            CollectedQty = collectedQuantity;
+            PendingQty = pendingQuantity;
+            DepartmentID = departmentID;
+        }
     }
+
 
     [DataContract]
     public class WCF_DepartmentList
@@ -731,5 +812,158 @@ namespace Team3ADProject.Services
 
     //Tharrani – End
 
+    //Sruthi - start
 
+    [DataContract]
+    public class WCF_approvero
+    {
+        [DataMember]
+        public string requisition_id;
+
+        [DataMember]
+        public string requisition_Date;
+
+        [DataMember]
+        public string name;
+
+        [DataMember]
+        public string status;
+
+        [DataMember]
+        public string sum;
+
+
+        public WCF_approvero(string id, string date, string name, string status, string sum)
+
+        {
+            requisition_id = id;
+            requisition_Date = date;
+            this.name = name;
+            this.status = status;
+            this.sum = sum;
+
+
+        }
+
+
+    }
+    [DataContract]
+    public class WCF_rodetails
+    {
+        [DataMember]
+        public string requisition_id;
+
+        [DataMember]
+        public string requisition_Date;
+
+        [DataMember]
+        public string name;
+
+        [DataMember]
+        public string status;
+
+        [DataMember]
+        public string sum;
+
+
+
+
+        public WCF_rodetails(string id, string date, string name, string status, string sum)
+
+        {
+            requisition_id = id;
+            requisition_Date = date;
+            this.name = name;
+            this.status = status;
+            this.sum = sum;
+
+
+        }
+    }
+    [DataContract]
+    public class WCF_collectionpoint
+    {
+        [DataMember]
+        public string id;
+
+        [DataMember]
+        public string collectionplace;
+
+
+        public WCF_collectionpoint(string id, string collectionplace)
+
+        {
+            this.id = id;
+            this.collectionplace = collectionplace;
+
+
+        }
+
+
+    }
+
+    [DataContract]
+    public class WCF_collectionhistory
+    {
+        [DataMember]
+        public string collectionplace;
+
+        [DataMember]
+        public string collectionDate;
+
+
+        public WCF_collectionhistory(string collectionplace, string collectionDate)
+
+        {
+            this.collectionplace = collectionplace;
+            this.collectionDate = collectionDate;
+
+
+        }
+
+
+    }
+
+    [DataContract]
+    public class WCF_itemdetails
+    {
+        [DataMember]
+        public string description;
+
+        [DataMember]
+        public string noofitems;
+
+
+        public WCF_itemdetails(string description, string noofitems)
+
+        {
+            this.description = description;
+            this.noofitems = noofitems;
+
+        }
+
+
+    }
+
+    [DataContract]
+    public class WCF_Budget
+    {
+        [DataMember]
+        public string budgetallocated;
+
+        [DataMember]
+        public string budgetspent;
+
+
+        public WCF_Budget(string budgetallocated, string budgetspent)
+
+        {
+            this.budgetallocated = budgetallocated;
+            this.budgetspent = budgetspent;
+
+        }
+
+        //Sruthi - end
+
+    }
 }
