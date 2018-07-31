@@ -4,18 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Team3ADProject.Model;
 using Team3ADProject.Code;
+using Team3ADProject.Model;
 using System.Transactions;
 
 namespace Team3ADProject.Protected
 {
-    public partial class AdjustmentForm : System.Web.UI.Page
+    public partial class WebForm2 : System.Web.UI.Page
     {
         static employee user;
         static inventory item;
         static int headid, supid;
-        static int minusqty = 0;
+        static int minusqty=0;
         protected void Page_Load(object sender, EventArgs e)
         {
             ButtonSubmit.Enabled = true;
@@ -65,7 +65,7 @@ namespace Team3ADProject.Protected
                 LabelItem.Text = item.description;
                 minusqty = BusinessLogic.ReturnPendingMinusAdjustmentQty(itemcode);
                 int plusqty = BusinessLogic.ReturnPendingPlusAdjustmentQty(itemcode);
-                GridViewAdjMinus.DataSource = adjlist.Where(x => x.adjustment_quantity < 0);
+                GridViewAdjMinus.DataSource = adjlist.Where(x=>x.adjustment_quantity<0);
                 GridViewAdjMinus.DataBind();
                 GridViewAdjPlus.DataSource = adjlist.Where(x => x.adjustment_quantity > 0);
                 GridViewAdjPlus.DataBind();
@@ -74,7 +74,7 @@ namespace Team3ADProject.Protected
                     LabelGrid.Visible = false;
                     if (minusqty != 0)
                     {
-                        LabelGridMinus.Text = "Pending adjustment qty to be removed raised: " + minusqty;
+                        LabelGridMinus.Text = "Pending adjustment qty to be removed raised: "+minusqty;
                     }
                     else
                     {
@@ -154,7 +154,7 @@ namespace Team3ADProject.Protected
             {
                 if (submitqty < 0)
                 {
-                    if (Math.Abs(submitqty) > (item.current_quantity + minusqty))
+                    if (Math.Abs(submitqty) > (item.current_quantity+minusqty))
                     {
                         LabelError.Text = "The quantity entered has exceed the outstanding pending quantity to be removed. Please review.";
                     }
@@ -201,7 +201,7 @@ namespace Team3ADProject.Protected
             {
                 adjustment a = new adjustment()
                 {
-                    adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null),
+                    adjustment_date = DateTime.ParseExact(today, "yyyy-MM-dd", null ),
                     employee_id = user.employee_id,
                     item_number = item.item_number,
                     adjustment_quantity = ReturnQuantity(),
@@ -220,8 +220,11 @@ namespace Team3ADProject.Protected
                         Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
                         BusinessLogic.sendMail(email, "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
                     }
-                    Response.Redirect("ClerkInventory.aspx");
-                    //Response.Write("<script language='javascript'> { window.close();}</script>");
+                    //Response.Redirect("ClerkInventory.aspx");
+                    String url = "ClerkInventory.aspx";
+                    Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
+                    Response.Write("<script language=JavaScript>  opener.location.replace('" + url + "'); </script>");
+                    Response.Write("<script language='javascript'> { window.close();}</script>");
                 }
                 catch (System.Transactions.TransactionException ex)
                 {

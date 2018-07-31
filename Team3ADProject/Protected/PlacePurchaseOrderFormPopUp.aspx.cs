@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Team3ADProject.Model;
 using Team3ADProject.Code;
+using Team3ADProject.Model;
 
 namespace Team3ADProject.Protected
 {
-    public partial class PlacePurchaseOrderForm1 : System.Web.UI.Page
+    public partial class PlacePurchaseOrderForm : System.Web.UI.Page
     {
         static string itemid;
         static employee user;
@@ -32,13 +33,13 @@ namespace Team3ADProject.Protected
 
             if (!IsPostBack)
             {
-
+                
                 //Binding the supplier to a dropdownlist to the item selected
                 DropDownListSupplier.DataSource = BusinessLogic.GetSupplier(itemid);
                 DropDownListSupplier.DataTextField = "supplier_name";
                 DropDownListSupplier.DataValueField = "supplier_id";
                 DropDownListSupplier.DataBind();
-
+                
                 //Getting an object of the item selected and passed it to the web
                 inventory itemSelected = BusinessLogic.GetInventory(itemid);
                 itemNumber.Text = itemSelected.item_number;
@@ -89,7 +90,7 @@ namespace Team3ADProject.Protected
 
         public void CalculationForUnitCostAndTotalCost(int qty)
         {
-            if (qty > 0 && qty <= 1000000)
+            if (qty > 0 && qty <=1000000)
             {
                 unitCost.Text = BusinessLogic.getUnitPrice(DropDownListSupplier.SelectedValue, itemid).ToString();
                 totalCost.Text = (qty * Convert.ToDouble(unitCost.Text)).ToString("C");
@@ -101,8 +102,8 @@ namespace Team3ADProject.Protected
                 ErrorText.Text = "Please input a Whole Number between 1 and 1,000,000";
                 Submit.Enabled = false;
             }
-
-
+                    
+           
         }
 
         //esther-adding POitem to cart
@@ -127,13 +128,17 @@ namespace Team3ADProject.Protected
                 {
                     POStaging poItem = new POStaging(item, supplierid, orderqty, unitprice, DateTime.ParseExact(requiredDate, "yyyy-MM-dd", null), user);
                     Session["StagingList"] = BusinessLogic.AddToStaging(alist, poItem);
+                    String url = "ClerkInventory.aspx";
+                    Response.Write(BusinessLogic.MsgBox("Success: Item added to Purchase Order Staging"));
+                    Response.Write("<script language=JavaScript>  opener.location.replace('" + url + "'); </script>");
+                    Response.Write("<script language='javascript'> { window.close();}</script>");
 
                 }
                 catch (Exception ex)
                 {
                     Label1.Text = ex.Message;
                 }
-                Response.Redirect("POStagingSummary.aspx");
+                //Response.Redirect("POStagingSummary.aspx");
             }
 
         }
