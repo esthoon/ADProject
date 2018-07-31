@@ -271,8 +271,44 @@ namespace Team3ADProject.Services
 
         }
 
+        // Reallocate
+        public List<WCF_SortingItem> GetReallocateList(string itemNum)
+        {
+            List<WCF_SortingItem> wcfList = new List<WCF_SortingItem>();
+            var result = BusinessLogic.GetReallocateList(itemNum);
+
+            foreach (var i in result)
+            {
+                wcfList.Add(new WCF_SortingItem(i.item_number.Trim(), i.description.Trim(), (int)i.item_requisition_quantity, (int)i.item_distributed_quantity, 0, i.department_id.Trim()));
+            }
+
+            return wcfList;
+        }
+
+        //Reallocate
+        public void ResetRODTable(WCF_SortingItem ci)
+        {
+            BusinessLogic.ResetRODTable(ci.DepartmentID, ci.ItemNumber);
+        }
+
+
+        //Reallocate
+        public void UpdateRODTable(WCF_SortingItem ci)
+        {
+            BusinessLogic.UpdateRODTableOnReallocate(ci.DepartmentID, ci.ItemNumber, ci.CollectedQty);
+        }
+
+        //Reallocate
+        public void ReturnToInventory(string balance, string itemNum)
+        {
+            BusinessLogic.ReturnToInventory(Convert.ToInt32(balance), itemNum);
+        }
+
 
         //JOEL END
+
+
+
 
         //Tharrani - start
         //return active inventory list
