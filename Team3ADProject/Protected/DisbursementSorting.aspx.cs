@@ -110,8 +110,9 @@ namespace Team3ADProject.Protected
 
         protected void DisplayDepartmentSortingTable()
         {
-            string dpt_Id = GetDepartmentId();
-            gridview_DptSort.DataSource = BusinessLogic.GetSortingListByDepartment(dpt_Id);
+            //string dpt_Id = GetDepartmentId();
+            string selectedDptName = RadioButtonList_Dpt.SelectedItem.Value;
+            gridview_DptSort.DataSource = BusinessLogic.GetSortingListByDepartment(selectedDptName);
             gridview_DptSort.DataBind();
         }
 
