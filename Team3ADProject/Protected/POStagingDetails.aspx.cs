@@ -75,6 +75,11 @@ namespace Team3ADProject.Protected
         protected void GridViewPODetails_DataBound(object sender, EventArgs e)
         {
             UpdateTotalCostGrid();
+            foreach(GridViewRow gvr in GridViewPODetails.Rows)
+            {
+                TextBox tb = (TextBox)gvr.FindControl("txtSelectDate");
+                tb.Attributes["min"] = DateTime.Now.ToString("yyyy-MM-dd");
+            }
         }
 
         protected void UpdateTotalCostGrid()
