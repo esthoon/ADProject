@@ -5,35 +5,42 @@
 	</div>
 	<br />
 	<br />
-	 <div>
-		<asp:Label ID="Label2" runat="server" Text="Purchase Order Number :" Font-Bold="True" />
-		<asp:Label ID="Label5" runat="server" Text="Label" Font-Italic="True" />
-	</div>
-	 <div>
-		<asp:Label ID="Label8" runat="server" Text="Purchase Order Date (dd-MM-yyyy) :" Font-Bold="True"/>
-		<asp:Label ID="Label9" runat="server" Text="Label" Font-Italic="True" />
-	</div>
-	<div>
-		<asp:Label ID="Label12" runat="server" Text="Purchase Order Placed By :" Font-Bold="True"/>
-		<asp:Label ID="Label13" runat="server" Text="Label" Font-Italic="True" />
-	</div>
-	 <div>
-		<asp:Label ID="Label10" runat="server" Text="Purchase Order Status :" Font-Bold="True" />
-		<asp:Label ID="Label11" runat="server" Text="Label" Font-Italic="True" />
-	</div>
-	<br />
-	 <div>
-		<asp:Label ID="Label3" runat="server" Text="Supplier Name :" Font-Bold="True"/>
-		<asp:Label ID="Label4" runat="server" Text="Label" Font-Italic="True" />
-	 </div>
-	<div>
-		<asp:Label ID="Label6" runat="server" Text="Supplier ID :" Font-Bold="True"/>
-		<asp:Label ID="Label7" runat="server" Text="Label" Font-Italic="True" />
-	 </div>
+	 
+
+	<table>
+		<tr>
+			<td><asp:Label ID="Label2" runat="server" Text="Purchase Order Number :" Font-Bold="True" /></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label5" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label8" runat="server" Text="Purchase Order Date (dd-MM-yyyy) :" Font-Bold="True"/></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label9" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label12" runat="server" Text="Purchase Order Placed By :" Font-Bold="True"/></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label13" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label10" runat="server" Text="Purchase Order Status :" Font-Bold="True" /></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label11" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label3" runat="server" Text="Supplier Name :" Font-Bold="True"/></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label4" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label6" runat="server" Text="Supplier ID :" Font-Bold="True"/></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label7" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+	</table>	
+
+<br />	
 <br />
 	 <div> 
 		 <a href="<%=ResolveUrl("~/Protected/ViewPOHistory")%>" class="btn btn-default"><< Purchase Order History</a>
 	 </div>
+	<br />	
+<br />
 	<div>
 		<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-hover">
 			<Columns>
