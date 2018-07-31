@@ -8,7 +8,7 @@
     <h1>Dashboard</h1>
 
     <!-- If user is a store clerk, display dashboard information -->
-    <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK))
+    <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK) || Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
         { %>
     <div class="dashboard-flexbox-container-outer">
         <!--Flex item 1: Table for low stock items -->
