@@ -96,7 +96,7 @@
     </asp:GridView>
     </div>
     <div>
-        <asp:Button ID="Button2" runat="server" Text="Cancel Request" CssClass="btn btn-danger" OnClick="Button2_Click" />
-        <asp:Button ID="Button3" runat="server" Text="Update Request" CssClass="btn btn-primary" OnClick="Button3_Click"/>
+        <asp:Button ID="Button2" runat="server" Text="Cancel Request" CssClass="btn btn-danger" OnClick="Button2_Click" UseSubmitBehavior ="false" OnClientClick ="this.disabled='true';this.value='Please wait...';" />
+        <asp:Button ID="Button3" runat="server" Text="Update Request" CssClass="btn btn-primary" OnClick="Button3_Click" UseSubmitBehavior ="false" OnClientClick ="this.disabled='true';this.value='Please wait...';"/>
     </div>
 </asp:Content>

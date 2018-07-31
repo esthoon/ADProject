@@ -18,6 +18,7 @@
                         <asp:TextBox ID="txtSelectDate" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtSelectDate_TextChanged"></asp:TextBox>
                         <asp:HiddenField ID="HiddenField5" runat="server" Value='<%# Eval("DateRequired") %>'/>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtSelectDate" ErrorMessage="Select a date" ForeColor="Red"></asp:RequiredFieldValidator>
+                        <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="txtSelectDate" ErrorMessage="Enter a valid date" ForeColor="Red" MinimumValue='<%# DateTime.Today.ToShortDateString() %>' MaximumValue='<%#DateTime.Today.AddMonths(1).ToShortDateString()%>' Type="Date"></asp:RangeValidator>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item" />

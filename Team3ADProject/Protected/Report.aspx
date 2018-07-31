@@ -9,7 +9,6 @@
 			<% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER)){%>
             <asp:DropDownList ID="ChartList" runat="server" OnSelectedIndexChanged="ChartList_SelectedIndexChanged">
                 <asp:ListItem Value="placeholder">Select an item..</asp:ListItem>
-                <!-- <asp:ListItem Value="requisitionOrderDateChart">Requisition Order By Date</asp:ListItem> -->
                 <asp:ListItem Value="requisitionQuantityByDepartmentChart">Requisition Item Quantity by Department</asp:ListItem>
                 <asp:ListItem Value="purchaseQuantityByItemCategoryBarChart">Stationeries purchased ordered by Item Category</asp:ListItem>
                 <asp:ListItem Value="pendingPurchaseOrderCountBySupplierChart">Pending Purchase Orders By Suppliers</asp:ListItem>

@@ -85,7 +85,7 @@
                                 <li class="divider"></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/CollectionList")%>">Collection List</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/ViewROSpecialRequest")%>">Special Requistion List</a></li>
-                                <li><a href="<%=ResolveUrl("~/Protected/ViewCollectionInformation")%>">Collecion Point Disbursement</a></li>
+                                <li><a href="<%=ResolveUrl("~/Protected/ViewCollectionInformation")%>">Disbursement Locations</a></li>
                                 <li><a href="<%=ResolveUrl("~/Protected/DisbursementSorting")%>">Item Sorting</a></li>
                                 <%}%>
 
