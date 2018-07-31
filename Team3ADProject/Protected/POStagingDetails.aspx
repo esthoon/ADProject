@@ -18,6 +18,7 @@
                         <asp:TextBox ID="txtSelectDate" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtSelectDate_TextChanged"></asp:TextBox>
                         <asp:HiddenField ID="HiddenField5" runat="server" Value='<%# Eval("DateRequired") %>'/>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtSelectDate" ErrorMessage="Select a date" ForeColor="Red"></asp:RequiredFieldValidator>
+						 <asp:RegularExpressionValidator ID="dateValRegex" runat="server" ControlToValidate="txtSelectDate" ErrorMessage="Please Enter a valid date in the format (dd-MM-yyyy)" ForeColor="Red" ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[-/.](0[1-9]|1[012])[-/.](19|20)\d\d$"></asp:RegularExpressionValidator>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:BoundField DataField="Inventory.description" HeaderText="Item" />

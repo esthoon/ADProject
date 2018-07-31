@@ -134,6 +134,8 @@ namespace Team3ADProject.Protected
 
         protected void Button3_Click(object sender, EventArgs e)
         {
+            Button3.CssClass = "btn btn-primary disabled";
+            Button3.Enabled = false;
             List<getRequisitionOrderDetails_Result> order = (List<getRequisitionOrderDetails_Result>)Session["OrderDetail"];
             string id = (string)Session["selectedrequestid"];
             BusinessLogic.UpdateRequisitionOrderDetail(id, order);
@@ -142,6 +144,8 @@ namespace Team3ADProject.Protected
 
         protected void Button2_Click(object sender, EventArgs e)
         {
+            Button2.CssClass = "btn btn-danger disabled";
+            Button2.Enabled = false;
             string id = (string)Session["selectedrequestid"];
             BusinessLogic.Cancelrequisition(id);
             Response.Redirect("~/Protected/EmployeeViewPending.aspx");

@@ -63,6 +63,6 @@
             </Columns>           
         </asp:GridView>
     </div>
-    <asp:Button ID="Button2" runat="server" Text="Confirm Request" OnClick="Button2_Click1" CausesValidation ="true" CssClass="btn btn-success" />
+    <asp:Button ID="Button2" runat="server" Text="Confirm Request" OnClick="Button2_Click1" CausesValidation ="true" CssClass="btn btn-success" UseSubmitBehavior ="false" OnClientClick ="this.disabled='true';this.value='Please wait...';"/>
 
 </asp:Content>
