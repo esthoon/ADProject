@@ -491,15 +491,15 @@ namespace Team3ADProject.Services
                     employee_remark = adj.EmployeeRemark,
                     manager_remark = null,
                 };
-                String result1= BusinessLogic.CreateAdjustment(a);
+                String result1 = BusinessLogic.CreateAdjustment(a);
                 String email = BusinessLogic.SendEmailAdjustmentApproval(a);
                 try
                 {
-                    BusinessLogic.sendMail(email, "New Adjustment Request", employee.EmployeeName+" raised new adjustment request.");
+                    BusinessLogic.sendMail(email, "New Adjustment Request", employee.EmployeeName + " raised new adjustment request.");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    return "email exception "+ex.Message;   
+                    return "email exception " + ex.Message;
                 }
                 return result1;
             }
@@ -562,6 +562,148 @@ namespace Team3ADProject.Services
             }
         }
         //Esther end
+
+        //Sruthi start
+
+        public List<WCF_approvero> Findpendingros(string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                WCF_Employee emp = GetEmployeeByToken(token);
+                string dept = emp.DepartmentId;
+                List<getpendingrequestsbydepartment_Result> pendingros = BusinessLogic.ViewPendingRequests(dept);
+                List<WCF_approvero> list = new List<WCF_approvero>();
+                foreach (getpendingrequestsbydepartment_Result ro in pendingros)
+                {
+                    double sum = (ro.Sum.HasValue ? ro.Sum.Value : 0);
+                    list.Add(new WCF_approvero(ro.id.TrimEnd(), ro.Date.ToString("dd-MM-yyyy"), ro.Name.TrimEnd(), ro.status, sum.ToString()));
+                }
+                return list;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public WCF_rodetails Findro(string token, string id)
+        {
+            //WCF_Employee emp = GetEmployeeByToken(token);
+            //string dept = emp.DepartmentId;
+            if (AuthenticateToken(token))
+            {
+                getpendingrequestdetails_Result result = BusinessLogic.getdetails(id);
+                double sum = result.Sum.HasValue ? result.Sum.Value : 0;
+                WCF_rodetails wcfrodet = new WCF_rodetails(result.id.TrimEnd(), result.Date.ToString("dd-MM-yyyy"), result.Name.TrimEnd(), result.status, sum.ToString());
+                return wcfrodet;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public void Approvero(WCF_approvero ro)
+        {
+            Double i = Convert.ToDouble(ro.sum);
+            int i1 = (int)Math.Round(i);
+            BusinessLogic.approvestatus(ro.requisition_id, ro.status, ro.requisition_id.Substring(0, 4), i1);
+        }
+        public void rejectro(WCF_approvero ro)
+        {
+            BusinessLogic.rejectstatus(ro.requisition_id, ro.status);
+        }
+        public List<WCF_collectionpoint> getcollection(string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                List<collection> res = BusinessLogic.GetCollection();
+                List<WCF_collectionpoint> list = new List<WCF_collectionpoint>();
+                foreach (collection c in res)
+                {
+                    string id = Convert.ToString(c.place_id);
+                    list.Add(new WCF_collectionpoint(id, c.collection_place.TrimEnd()));
+                }
+                return list;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public void updatelocation(string token, WCF_collectionpoint cp)
+        {
+            if (AuthenticateToken(token))
+            {
+                WCF_Employee emp = GetEmployeeByToken(token);
+                string dept = emp.DepartmentId;
+                BusinessLogic.updatecollectionlocation(dept, Convert.ToInt32(cp.id));
+            }
+            else
+            {
+
+            }
+        }
+
+        public List<WCF_collectionhistory> gethistory(string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                WCF_Employee emp = GetEmployeeByToken(token);
+                string dept = emp.DepartmentId;
+                List<getcollectiondetailsbydepartment_Result> list = BusinessLogic.getdepartmentcollection(dept);
+                List<WCF_collectionhistory> list1 = new List<WCF_collectionhistory>();
+                foreach (getcollectiondetailsbydepartment_Result r in list)
+                {
+                    list1.Add(new WCF_collectionhistory(r.collection_place.TrimEnd(), r.collection_date.ToString("dd-MM-yyyy")));
+                }
+                return list1;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        public List<WCF_itemdetails> getitemdetails(string token, string id)
+        {
+            if (AuthenticateToken(token))
+            {
+                WCF_Employee emp = GetEmployeeByToken(token);
+                List<getitemdetails_Result> list = BusinessLogic.pendinggetitemdetails(id);
+                List<WCF_itemdetails> list1 = new List<WCF_itemdetails>();
+                foreach (getitemdetails_Result r in list)
+                {
+                    list1.Add(new WCF_itemdetails(r.description.TrimEnd(), r.item_requisition_quantity.ToString()));
+                }
+                return list1;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        public WCF_Budget getbudget(string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                WCF_Employee emp = GetEmployeeByToken(token);
+                string dept = emp.DepartmentId;
+                int b1 = BusinessLogic.getbudgetbydept(dept);
+                int b2 = BusinessLogic.getspentbudgetbydept(dept);
+                WCF_Budget x = new WCF_Budget(b1.ToString(), b2.ToString());
+                return x;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        //Sruthi end
     }
 }
 

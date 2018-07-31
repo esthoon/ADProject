@@ -143,6 +143,8 @@ namespace Team3ADProject.Protected
 
         protected void Button2_Click1(object sender, EventArgs e)
         {
+            Button2.CssClass = "btn btn-success disabled";
+            Button2.Enabled = false;
             int Empid = (int)Session["Employee"];
             string Depid = (string)Session["Department"]; //19 belongs to ENGL dep
             DateTime d = DateTime.Now.Date;
