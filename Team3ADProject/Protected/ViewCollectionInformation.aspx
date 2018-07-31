@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="ViewCollectionInformation.aspx.cs" Inherits="Team3ADProject.Protected.ViewCollectionInformation" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>View Collection List</h2>
+    <h2>Disbursement Location</h2>
 
     <asp:GridView ID="gridview1" runat="server" AutoGenerateSelectButton="true" AutoGenerateColumns="false" OnSelectedIndexChanging="gridview1_SelectedIndexChanging" CssClass="table table-hover">
 
