@@ -9,14 +9,14 @@
 			<% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER)){%>
             <asp:DropDownList ID="ChartList" runat="server" OnSelectedIndexChanged="ChartList_SelectedIndexChanged">
                 <asp:ListItem Value="placeholder">Select an item..</asp:ListItem>
-                <asp:ListItem Value="requisitionOrderDateChart">Requisition Order By Date</asp:ListItem>
+                <!-- <asp:ListItem Value="requisitionOrderDateChart">Requisition Order By Date</asp:ListItem> -->
                 <asp:ListItem Value="requisitionQuantityByDepartmentChart">Requisition Item Quantity by Department</asp:ListItem>
-                <asp:ListItem Value="purchaseQuantityByItemCategoryBarChart">Stationaries purchased ordered by Item Category</asp:ListItem>
+                <asp:ListItem Value="purchaseQuantityByItemCategoryBarChart">Stationeries purchased ordered by Item Category</asp:ListItem>
                 <asp:ListItem Value="pendingPurchaseOrderCountBySupplierChart">Pending Purchase Orders By Suppliers</asp:ListItem>
             </asp:DropDownList>
 			<%}%>
 			<%else if (Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD)){%>
-			<asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="ChartList_SelectedIndexChanged">
+			<asp:DropDownList ID="ChartList_DeptHead" runat="server" OnSelectedIndexChanged="ChartList_SelectedIndexChanged">
                 <asp:ListItem Value="placeholder">Select an item..</asp:ListItem>
                 <asp:ListItem Value="requisitionOrderStatusChart">Requisition Order Status Percentage</asp:ListItem>
             </asp:DropDownList>
@@ -27,6 +27,9 @@
         <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="startDate" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="false"></asp:RegularExpressionValidator>
 &nbsp;<div>End Date</div>
         <input type="text" id="endDate" runat="server" ClientIDMode="static" class="datePicker" disabled value="-"/>
+
+
+
 
         <script>
             $(document).ready(function () {
@@ -45,8 +48,14 @@
         <asp:Button ID="submitButton" runat="server" Text="Submit" CssClass="btn btn-primary" />
 
         <div id="message" runat="server"></div>
+        
+			<% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER)){%>
+        <div id="<%=ChartList.SelectedValue%>" class="chart-container"/>
+			<%}%>
 
-        <div id="<%=ChartList.SelectedValue%>" class="chart-container">
+            <%else if (Roles.IsUserInRole(Constants.ROLES_DEPARTMENT_HEAD)){%>
+        <div id="<%=ChartList_DeptHead.SelectedValue%>" class="chart-container"/>
+			<%}%>
 
         </div>
 
