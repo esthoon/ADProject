@@ -122,7 +122,33 @@ namespace Team3ADProject.Services
 
         // ViewRO SpecialRequest - Deduct from Inventory - USE ABOVE METHOD
 
+        // Reallocate - get list of dpts tt ordered the item, for reallocation - Web Clerk [Joel]
+        [OperationContract]
+        [WebGet(UriTemplate = "/Department/Sorting/Reallocate/{itemNum}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_SortingItem> GetReallocateList(string itemNum);
+
+        // Reallocate - upon reallocate, reset ROD table - Web Clerk [Joel]
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/Department/Sorting/Reallocate/ResetROD", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+        void ResetRODTable(WCF_SortingItem ci);
+
+        // Reallocate - upon reallocate, update ROD table w/ new figures - Web Clerk [Joel]
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/Department/Sorting/Reallocate/UpdateROD", Method = "POST",
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json)]
+        void UpdateRODTable(WCF_SortingItem ci);
+
+        // Reallocate - if excess, return to inventory
+        [OperationContract]
+        [WebGet(UriTemplate = "/Department/Sorting/Reallocate/ReturnInventory/{balance}/{itemNum}", ResponseFormat = WebMessageFormat.Json)]
+        void ReturnToInventory(string balance, string itemNum);
+
         //JOEL - END
+
+
 
         //Tharrani - Start
 
@@ -496,6 +522,10 @@ namespace Team3ADProject.Services
         [DataMember]
         public int PendingQty;
 
+        [DataMember]
+        public string DepartmentID;
+
+
         //used by GetSortingListByDepartment(string dpt_Id);
         public WCF_SortingItem(string itemNumber, string description, int quantityOrdered, int collectedQuantity, int pendingQuantity)
         {
@@ -505,7 +535,18 @@ namespace Team3ADProject.Services
             CollectedQty = collectedQuantity;
             PendingQty = pendingQuantity;
         }
+
+        public WCF_SortingItem(string itemNumber, string description, int quantityOrdered, int collectedQuantity, int pendingQuantity, string departmentID)
+        {
+            ItemNumber = itemNumber;
+            Description = description;
+            QuantityOrdered = quantityOrdered;
+            CollectedQty = collectedQuantity;
+            PendingQty = pendingQuantity;
+            DepartmentID = departmentID;
+        }
     }
+
 
     [DataContract]
     public class WCF_DepartmentList

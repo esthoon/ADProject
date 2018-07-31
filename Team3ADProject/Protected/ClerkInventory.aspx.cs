@@ -255,7 +255,7 @@ namespace Team3ADProject.Protected
             HiddenField hd = (HiddenField)lb.FindControl("HiddenField1");
             string itemcode = hd.Value;
             Session["itemcode"] = itemcode;
-            //string url = "AdjustmentForm1.aspx?itemcode=" + itemcode;
+            //string url = "AdjustmentFormScriptPopUp.aspx?itemcode=" + itemcode;
             //Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
             Response.Redirect("AdjustmentForm.aspx?itemcode=" + itemcode);
         }
@@ -336,6 +336,8 @@ namespace Team3ADProject.Protected
             Session["itemid"] = itemid;
             string url = "PlacePurchaseOrderForm.aspx?itemid=" + itemid;
             Response.Redirect(url);
+            //string url = "PlacePurchaseOrderFormPopUp.aspx?itemcode=" + itemcode;
+            //Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
         }
 
         protected void gvInventoryList_PageIndexChanging(object sender, GridViewPageEventArgs e)

@@ -1,9 +1,18 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="PlacePurchaseOrderForm.aspx.cs" Inherits="Team3ADProject.Protected.PlacePurchaseOrderForm1" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container" style="margin-top: 5vh;">
-			<br />
-            <asp:Label ID="Label2" runat="server" Font-Bold="True" Font-Size="XX-Large" Text="Purchase Order Form"></asp:Label>
-            <br /><br />
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PlacePurchaseOrderFormPopUp.aspx.cs" Inherits="Team3ADProject.Protected.PlacePurchaseOrderForm" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<title></title>
+	<script src="<%=ResolveUrl("~/Scripts/jquery.canvasjs.min.js")%>"></script>
+	<link rel="stylesheet" href="<%=ResolveUrl("~/Content/bootstrap.css")%>" />
+	<link rel="stylesheet" href="<%=ResolveUrl("~/Content/bootstrap-theme.css")%>" />
+</head>
+<body>
+	<form id="form1" runat="server">
+		<div class="container" style="margin-top: 5vh;">
+			<br /><br /><br />
 		<table>
 			<tr>
 				<td>Created on:</td>
@@ -60,7 +69,7 @@
 					<td></td>
 					<td><asp:Button ID="Submit" runat="server" Text="Submit" OnClick="Submit_Click" CssClass="btn btn-primary" CausesValidation ="true" />
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<asp:Button ID="Cancel" runat="server" Text="Cancel" OnClick="Cancel_Click" CssClass="btn btn-warning"/>
+						<asp:Button ID="Cancel" runat="server" Text="Cancel" OnClientClick="javaScript:window.close(); return false;" CssClass="btn btn-warning"/>
 					</td>
 				</tr>
 			</table>		
@@ -69,4 +78,6 @@
 			
 			<asp:Label ID="Label1" runat="server"></asp:Label>
 		</div>
-</asp:Content>
+	</form>
+</body>
+</html>
