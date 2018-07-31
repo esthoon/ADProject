@@ -67,15 +67,6 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label LabelName;
         
         /// <summary>
-        /// LabelError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelError;
-        
-        /// <summary>
         /// lbinum control.
         /// </summary>
         /// <remarks>
@@ -175,22 +166,22 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.TextBox TextBoxAdjustment;
         
         /// <summary>
-        /// CompareValidator1 control.
+        /// RangeValidator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareValidator1;
+        protected global::System.Web.UI.WebControls.RangeValidator RangeValidator1;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// LabelError control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.Label LabelError;
         
         /// <summary>
         /// lbtcost control.

@@ -83,11 +83,11 @@ namespace Team3ADProject.Protected
 
             // (5) send email
 
-            string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
-            string subj = "Your ordered stationery is ready for collection";
-            string body = "Dear Department Rep, your stationery order is ready for collection. Please procede to your usual collection point at the correct time.";
+            //string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
+            //string subj = "Your ordered stationery is ready for collection";
+            //string body = "Dear Department Rep, your stationery order is ready for collection. Please procede to your usual collection point at the correct time.";
 
-            BusinessLogic.sendMail(emailAdd, subj, body);
+            //BusinessLogic.sendMail(emailAdd, subj, body);
 
             Response.Redirect("~/Protected/ViewROSpecialRequest.aspx");
 

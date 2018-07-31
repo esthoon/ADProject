@@ -120,11 +120,6 @@ namespace Team3ADProject.Protected
                 e.Day.IsSelectable = false;
                 e.Cell.ForeColor = System.Drawing.Color.Gray;
             }
-
-            else
-            {
-                e.Cell.ForeColor = System.Drawing.Color.GreenYellow;
-            }
         }
 
         protected void DropdonwAdd()

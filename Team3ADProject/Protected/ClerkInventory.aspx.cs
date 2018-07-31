@@ -88,6 +88,8 @@ namespace Team3ADProject.Protected
             }
             else if (RadioButtonList1.SelectedItem.Value.Equals("2"))
             {
+                CheckBox1.Enabled = false;
+                CheckBox1.Visible = false;
                 CheckBox2.Enabled = true;
                 CheckBox2.Visible = true;
                 btnAllPO.Visible = true;

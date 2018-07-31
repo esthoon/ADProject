@@ -4,8 +4,8 @@
 	<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-hover" Width="600px">
 		<Columns>
 					<asp:BoundField DataField="month" HeaderText="Month" />
-					 <asp:BoundField DataField="budget1" HeaderText="Budget" />			       
-					<asp:BoundField DataField="spent" HeaderText="Spent" />			
+					 <asp:BoundField DataField="budget1" HeaderText="Budget ($)" DataFormatString ="{0:N2}"/>			       
+					<asp:BoundField DataField="spent" HeaderText="Spent ($)" DataFormatString ="{0:N2}" />			
 			        
 			</Columns>
 	</asp:GridView>

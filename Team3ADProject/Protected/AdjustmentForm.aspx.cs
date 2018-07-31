@@ -86,7 +86,7 @@ namespace Team3ADProject.Protected
                     }
                     else
                     {
-                        LabelGridPlus.Text = "No pending adjustment qty to be removed.";
+                        LabelGridPlus.Text = "No pending adjustment qty to be added.";
                     }
 
                 }

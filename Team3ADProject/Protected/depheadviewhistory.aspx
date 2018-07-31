@@ -26,7 +26,7 @@
 					<asp:BoundField DataField="id" HeaderText="Request Number" />
 					<asp:BoundField DataField="Date" HeaderText="Request Date" DataFormatString="{0:dd-MM-yyyy}"/>
 					<asp:BoundField DataField="Name" HeaderText="Name" />
-					<asp:BoundField DataField="sum" HeaderText="Request Amount" />
+					<asp:BoundField DataField="sum" HeaderText="Request Amount ($)" DataFormatString="{0:N2}"/>
 					<asp:BoundField DataField="status" HeaderText="Request Status" />
 					<asp:TemplateField>
 					<ItemTemplate>

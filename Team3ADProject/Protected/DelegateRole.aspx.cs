@@ -63,12 +63,6 @@ namespace Team3ADProject.Protected
             Label4.Visible = true;
             TextBox2.Visible = true;
             var k = BusinessLogic.gettemporaryheadname(dept);
-            //sending the mail to department on temporary head change
-            string messagebody = "The following person has been appointed as the temporary head for the approval \n \n" + k.ToString();
-            BusinessLogic.sendMail("pssruthi123@gmail.com", "Temporary head", messagebody);
-            //sending the mail to the delegated person
-            string messagebody1 = "Congratulations \n \n You have been appointed as the temporary head for the approval \n \n";
-            BusinessLogic.sendMail("pssruthi123@gmail.com", "Temporary head", messagebody1);
             TextBox2.Text = k.ToString();
             Button3.Visible = true;
 

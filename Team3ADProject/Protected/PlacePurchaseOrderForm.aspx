@@ -12,42 +12,70 @@
 <body>
 	<form id="form1" runat="server">
 		<div class="container" style="margin-top: 5vh;">
-			Created on:
-	<asp:Label ID="createOnWhen" runat="server"></asp:Label>
-			<br />
-			Created by:
-	<asp:Label ID="createByWho" runat="server"></asp:Label>
-			<br />
-			Item no. :
-	<asp:Label ID="itemNumber" runat="server"></asp:Label>
-			<br />
-			Supplier :
-	<asp:DropDownList ID="DropDownListSupplier" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DropDownListSupplier_SelectedIndexChanged"></asp:DropDownList>
-			<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="DropDownListSupplier" ErrorMessage="Select a supplier" ForeColor="Red"></asp:RequiredFieldValidator>
-			<br />
-			Item Description :
-	<asp:Label ID="itemDescription" runat="server"></asp:Label>
-			<br />
-			Required Date :
-			<asp:Label ID="LabelRequiredDate" runat="server" Text="Label"></asp:Label>
-			<br />
-			Stock :
-	<asp:Label ID="itemCurrentStock" runat="server"></asp:Label>
-			<br />
-			Unit Cost :
-	$<asp:Label ID="unitCost" runat="server"></asp:Label>
-            <br />
-            Quantity :
-	<asp:TextBox ID="TextBoxOrderQuantity" runat="server" AutoPostBack="true" OnTextChanged="DropDownListSupplier_SelectedIndexChanged"></asp:TextBox>
-            <asp:Label ID="ErrorText" runat="server" ForeColor="Red"></asp:Label>
-            <br />
-            Total Cost :
-	<asp:Label ID="totalCost" runat="server"></asp:Label>
-			<br />
-			Remarks :<asp:TextBox ID="remarks" runat="server" Height="144px" TextMode="MultiLine" Width="910px" MaxLength="250"></asp:TextBox>
-			<br />
-			<asp:Button ID="Submit" runat="server" Text="Submit" OnClick="Submit_Click" CssClass="btn btn-primary" CausesValidation ="true" />
-			<asp:Button ID="Cancel" runat="server" Text="Cancel" OnClick="Cancel_Click" CssClass="btn btn-warning"/>
+			<br /><br /><br />
+		<table>
+			<tr>
+				<td>Created on:</td>
+				<td>&nbsp;&nbsp;<asp:Label ID="createOnWhen" runat="server"></asp:Label></td>
+			</tr>
+			<tr>
+				<td>Created by:</td>
+				<td>&nbsp;&nbsp;<asp:Label ID="createByWho" runat="server"></asp:Label></td>
+			</tr>
+			<tr>
+				<td>Item Number:</td>
+				<td>&nbsp;&nbsp;<asp:Label ID="itemNumber" runat="server"></asp:Label></td>
+			</tr>
+			<tr>
+				<td>Supplier:</td>
+				<td>&nbsp;&nbsp;<asp:DropDownList ID="DropDownListSupplier" AutoPostBack="True" runat="server" OnSelectedIndexChanged="DropDownListSupplier_SelectedIndexChanged"></asp:DropDownList>
+			<asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="DropDownListSupplier" ErrorMessage="Select a supplier" ForeColor="Red"></asp:RequiredFieldValidator></td>
+			</tr>
+			<tr>
+				<td>Item Description:</td>
+				<td>&nbsp;&nbsp;<asp:Label ID="itemDescription" runat="server"></asp:Label></td>
+			</tr>
+			<tr>
+				<td>Required Date:</td>
+				<td>&nbsp;&nbsp;<asp:Label ID="LabelRequiredDate" runat="server" Text="Label"></asp:Label></td>
+			</tr>
+			<tr>
+				<td>Stock:</td>
+				<td>&nbsp;&nbsp;<asp:Label ID="itemCurrentStock" runat="server"></asp:Label></td>
+			</tr>
+			<tr>
+				<td>Unit Cost:</td>
+				<td>&nbsp;&nbsp;$<asp:Label ID="unitCost" runat="server"></asp:Label></td>
+			</tr>
+			<tr>
+				<td>Quantity:</td>
+				<td>&nbsp;&nbsp;<asp:TextBox ID="TextBoxOrderQuantity" runat="server" AutoPostBack="true" OnTextChanged="DropDownListSupplier_SelectedIndexChanged"></asp:TextBox>
+            <asp:Label ID="ErrorText" runat="server" ForeColor="Red"></asp:Label></td>
+			</tr>
+			<tr>
+				<td>Total Cost:</td>
+				<td>&nbsp;&nbsp;<asp:Label ID="totalCost" runat="server"></asp:Label></td>
+			</tr>
+		</table>    
+			<br /><br />
+            
+
+			<table>
+				<tr>
+					<td>Remarks:</td>
+					<td><asp:TextBox ID="remarks" runat="server" Height="144px" TextMode="MultiLine" Width="910px" MaxLength="250"></asp:TextBox></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><asp:Button ID="Submit" runat="server" Text="Submit" OnClick="Submit_Click" CssClass="btn btn-primary" CausesValidation ="true" />
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<asp:Button ID="Cancel" runat="server" Text="Cancel" OnClick="Cancel_Click" CssClass="btn btn-warning"/>
+					</td>
+				</tr>
+			</table>		
+			
+			<br />		
+			
 			<asp:Label ID="Label1" runat="server"></asp:Label>
 		</div>
 	</form>

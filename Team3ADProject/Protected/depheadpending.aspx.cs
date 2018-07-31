@@ -22,10 +22,10 @@ namespace Team3ADProject.Protected
                 GridView1.DataSource = q.ToList();
                 GridView1.DataBind();
                 int b3 = BusinessLogic.getbudgetbydept(dept);
-                Label5.Text = b3.ToString();
+                Label5.Text = String.Format($"{b3:c2}");
                 Session["budgetallocated"] = b3;
                 int b4 = BusinessLogic.getspentbudgetbydept(dept);
-                Label6.Text = b4.ToString();
+                Label6.Text = String.Format($"{b4:c2}");
                 Session["budgetspent"] = b4;
                 Label3.Text = (Convert.ToDouble(b4) / Convert.ToDouble(b3) * 100).ToString() + "%";
                 generatechartdata(b3, b4);
