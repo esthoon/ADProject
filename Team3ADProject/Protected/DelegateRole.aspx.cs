@@ -23,6 +23,7 @@ namespace Team3ADProject.Protected
                 Label4.Visible = true;
                 TextBox2.Visible = true;
                 TextBox2.Text = k.ToString();
+                Button2.Enabled = false;
                 Button3.Visible = true;
 
             }
@@ -55,16 +56,50 @@ namespace Team3ADProject.Protected
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            string name = TextBox.Text;
-            string dept = getmethoddepartment();
-            int id = BusinessLogic.getemployeeid(name);
-            BusinessLogic.updatetemporaryhead(id, dept);
-            Label3.Visible = true;
-            Label4.Visible = true;
-            TextBox2.Visible = true;
-            var k = BusinessLogic.gettemporaryheadname(dept);
-            TextBox2.Text = k.ToString();
-            Button3.Visible = true;
+            try {
+                string name = TextBox.Text;
+                string dept = getmethoddepartment();
+                int id = BusinessLogic.getemployeeid(name);
+                BusinessLogic.updatetemporaryhead(id, dept);
+                Label3.Visible = true;
+                Label4.Visible = true;
+                TextBox2.Visible = true;
+                var k = BusinessLogic.gettemporaryheadname(dept);
+                TextBox2.Text = k.ToString();
+                Button3.Visible = true;
+            }
+                
+
+
+
+            catch (System.Configuration.Provider.ProviderException ex)
+            {
+                System.Configuration.Provider.ProviderException ee = ex;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('The selected employee has already been delegated')", true);
+                //Response.Write("<br/><br/>Exception:<br/>" + ee);
+            }
+
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                System.Data.SqlClient.SqlException ee = ex;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please ensure you have selected the correct data.')", true);
+                //Response.Write("<br/><br/>Exception:<br/>" + ee);
+            }
+
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                System.Data.Entity.Infrastructure.DbUpdateException ee = ex;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Please ensure you have selected an employee to delegate')", true);
+
+            }
+
+            catch (Exception ex)
+            {
+                Exception ee = ex;
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Oops ! Something went wrong. Please try again.')", true);
+   
+
+            }
 
         }
 
@@ -76,6 +111,7 @@ namespace Team3ADProject.Protected
             Label4.Visible = false;
             TextBox2.Visible = false;
             Button3.Visible = false;
+            Button2.Enabled = true;
 
         }
 

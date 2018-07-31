@@ -43,8 +43,9 @@ namespace Team3ADProject.Protected
 				catch (Exception x)
 				{
 					Exception ex = x;
-					
-				}
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('This pin is already in use by another department. Please try again.')", true);
+
+                }
 			}
 			else
 			{
