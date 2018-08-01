@@ -212,8 +212,6 @@ $(document).ready(function () {
             endDate = "12-31-3000";
         }
 
-        alert("http://" + hostname + "/Services/Service.svc/Chart/getRequisitionQuantityByDepartmentWithinTime/" + startDate + "/" + endDate);
-
         $.getJSON("http://" + hostname + "/Services/Service.svc/Chart/getRequisitionQuantityByDepartmentWithinTime/" + startDate + "/" + endDate, {},
             function (data) {
                 // Place data on the chart
