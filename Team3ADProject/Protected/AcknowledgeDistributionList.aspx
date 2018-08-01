@@ -7,7 +7,7 @@
                 Department Name : 
             </th>
             <td>
-                <asp:Label ID="DepartmentNameLabel" Text="Department Name" runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="DepartmentNameLabel" Text="Department Name" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -15,7 +15,7 @@
                 Department Representative :
             </th>
             <td>
-                <asp:Label ID="DepartmentRepresentativeLabel" Text="Department Representative" runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="DepartmentRepresentativeLabel" Text="Department Representative" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -23,7 +23,7 @@
                 Date : 
             </th>
             <td>
-                <asp:Label ID="DateLabel" Text="Date " runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="DateLabel" Text="Date " runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -31,7 +31,7 @@
                 Time :
             </th>
             <td>
-                <asp:Label ID="TimeLabel" Text="Time" runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="TimeLabel" Text="Time" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -39,12 +39,12 @@
                 Location :
             </th>
             <td>
-                <asp:Label ID="LocationLabel" Text="Location" runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="LocationLabel" Text="Location" runat="server"></asp:Label>
             </td>
         </tr>
          
     </table>
-        <br /><br /><br />
+        <br /><br />
     Enter Department Pin :
     <asp:TextBox ID="PinTextBox" runat="server" MaxLength="10"></asp:TextBox>
     <asp:Button ID="VerifyPasswordButton" runat="server" Text="Verify Pin" OnClick="VerifyPasswordButtonClick" CssClass="btn btn-default"/>
