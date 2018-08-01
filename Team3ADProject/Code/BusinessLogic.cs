@@ -908,7 +908,7 @@ namespace Team3ADProject.Code
             {
                 context.adjustments.Add(a);
                 context.SaveChanges();
-                return "success";
+                return (a.item_number.Trim() + " adj request submitted");
             }
             catch (Exception ex)
             {
