@@ -1365,8 +1365,9 @@ namespace Team3ADProject.Code
         }
 
         //DisbursementSorting
-        public static List<spGetSortingTableByDpt_Result> GetSortingListByDepartment(string dpt_Id)
+        public static List<spGetSortingTableByDpt_Result> GetSortingListByDepartment(string selectedDptName)
         {
+            string dpt_Id = context.departments.Where(x => x.department_name == selectedDptName).FirstOrDefault().department_id;
             List<spGetSortingTableByDpt_Result> list = new List<spGetSortingTableByDpt_Result>();
             return list = context.spGetSortingTableByDpt(dpt_Id).ToList();
         }
@@ -1374,7 +1375,8 @@ namespace Team3ADProject.Code
         //DisbursementSorting
         public static string GetDptIdFromDptName(string dptName)
         {
-            return context.departments.Where(x => x.department_name == dptName).FirstOrDefault().department_id;
+            string s = context.departments.Where(x => x.department_name == dptName).FirstOrDefault().department_id;
+            return s.Trim();
         }
 
         //DisbursementSorting

@@ -146,97 +146,142 @@ namespace Team3ADProject.Services
         //JOEL START
 
         //CollectionList
-        public List<WCF_CollectionItem> getCollectionList()
+        public List<WCF_CollectionItem> getCollectionList(string token)
         {
-            List<WCF_CollectionItem> wcfList = new List<WCF_CollectionItem>();
-
-            var result = BusinessLogic.GetCollectionList();
-
-            foreach (var i in result)
+            if (AuthenticateToken(token))
             {
-                wcfList.Add(new WCF_CollectionItem(i.item_number.Trim(), i.description.Trim(), (int)i.quantity_ordered, i.current_quantity, i.unit_of_measurement.Trim()));
-            }
+                List<WCF_CollectionItem> wcfList = new List<WCF_CollectionItem>();
 
-            return wcfList;
+                var result = BusinessLogic.GetCollectionList();
+
+                foreach (var i in result)
+                {
+                    wcfList.Add(new WCF_CollectionItem(i.item_number.Trim(), i.description.Trim(), (int)i.quantity_ordered, i.current_quantity, i.unit_of_measurement.Trim()));
+                }
+
+                return wcfList;
+            }
+            else return null;
+
         }
 
         //CollectionList
         public void SortCollectedGoods(WCF_CollectionItem ci)
         {
-            List<CollectionListItem> allDptCollectionList = new List<CollectionListItem>();
-            allDptCollectionList.Add(new CollectionListItem(ci.ItemNumber.Trim(), ci.Description.Trim(), ci.UnitOfMeasurement.Trim(), ci.QuantityOrdered, ci.CurrentInventoryQty, ci.CollectedQty));
+            string token = ci.Token.Trim();
+            if (AuthenticateToken(token))
+            {
+                List<CollectionListItem> allDptCollectionList = new List<CollectionListItem>();
+                allDptCollectionList.Add(new CollectionListItem(ci.ItemNumber.Trim(), ci.Description.Trim(), ci.UnitOfMeasurement.Trim(), ci.QuantityOrdered, ci.CurrentInventoryQty, ci.CollectedQty));
 
-            BusinessLogic.SortCollectedGoods(allDptCollectionList);
+                BusinessLogic.SortCollectedGoods(allDptCollectionList);
+            }
+
         }
 
         //CollectionList
         public void DeductFromInventory(WCF_CollectionItem ci)
         {
-            List<CollectionListItem> allDptCollectionList = new List<CollectionListItem>();
-            allDptCollectionList.Add(new CollectionListItem(ci.ItemNumber.Trim(), ci.Description.Trim(), ci.UnitOfMeasurement.Trim(), ci.QuantityOrdered, ci.CurrentInventoryQty, ci.CollectedQty));
-
-            BusinessLogic.DeductFromInventory(allDptCollectionList);
-        }
-
-
-
-        //Disbursement Sorting
-        public List<WCF_DepartmentList> DisplayListofDepartmentsForCollection()
-        {
-            List<WCF_DepartmentList> wcfList = new List<WCF_DepartmentList>();
-            var result = BusinessLogic.DisplayListofDepartmentsForCollection();
-
-            foreach (var i in result)
+            string token = ci.Token.Trim();
+            if (AuthenticateToken(token))
             {
-                wcfList.Add(new WCF_DepartmentList(i.ToString().Trim()));
+                List<CollectionListItem> allDptCollectionList = new List<CollectionListItem>();
+                allDptCollectionList.Add(new CollectionListItem(ci.ItemNumber.Trim(), ci.Description.Trim(), ci.UnitOfMeasurement.Trim(), ci.QuantityOrdered, ci.CurrentInventoryQty, ci.CollectedQty));
+
+                BusinessLogic.DeductFromInventory(allDptCollectionList);
             }
-            return wcfList;
         }
 
-        //Disbursement Sorting
-        public string GetDptIdFromDptName(string dptName)
-        {
-            string dptID;
-            return dptID = BusinessLogic.GetDptIdFromDptName(dptName.Trim()).Trim();
-        }
+
 
         //Disbursement Sorting
-        public List<WCF_SortingItem> GetSortingListByDepartment(string dpt_Id)
+        public List<WCF_DepartmentList> DisplayListofDepartmentsForCollection(string token)
         {
-            List<WCF_SortingItem> wcfList = new List<WCF_SortingItem>();
-            var result = BusinessLogic.GetSortingListByDepartment(dpt_Id);
-
-            foreach (var i in result)
+            if (AuthenticateToken(token))
             {
-                wcfList.Add(new WCF_SortingItem(i.item_number.Trim(), i.description.Trim(), (int)i.required_qty, (int)i.supply_qty, (int)i.item_pending_quantity));
-            }
+                List<WCF_DepartmentList> wcfList = new List<WCF_DepartmentList>();
+                var result = BusinessLogic.DisplayListofDepartmentsForCollection();
 
-            return wcfList;
+                foreach (var i in result)
+                {
+                    wcfList.Add(new WCF_DepartmentList(i.ToString().Trim()));
+                }
+                return wcfList;
+            }
+            return null;
         }
 
         //Disbursement Sorting
-        public int GetPlaceIdFromDptId(string dptId)
+        public string GetDptIdFromDptName(string dptName, string token)
         {
-            int placeId;
-            return placeId = BusinessLogic.GetPlaceIdFromDptId(dptId);
+            if (AuthenticateToken(token))
+            {
+                string dptID;
+                return dptID = BusinessLogic.GetDptIdFromDptName(dptName.Trim()).Trim();
+            }
+            return null;
+
+        }
+
+        //Disbursement Sorting
+        public List<WCF_SortingItem> GetSortingListByDepartment(string dptName, string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                List<WCF_SortingItem> wcfList = new List<WCF_SortingItem>();
+                var result = BusinessLogic.GetSortingListByDepartment(dptName);
+
+                foreach (var i in result)
+                {
+                    wcfList.Add(new WCF_SortingItem(i.item_number.Trim(), i.description.Trim(), (int)i.required_qty, (int)i.supply_qty, (int)i.item_pending_quantity));
+                }
+
+                return wcfList;
+            }
+            return null;
+
+
+        }
+
+        //Disbursement Sorting
+        public int GetPlaceIdFromDptId(string dptId, string token)
+        {
+            if (AuthenticateToken(token))
+            {
+                int placeId;
+                return placeId = BusinessLogic.GetPlaceIdFromDptId(dptId);
+            }
+            return 0;
+
         }
 
         //Disbursement Sorting
         public void InsertCollectionDetailsRow(WCF_CollectionDetail cd)
         {
-            BusinessLogic.InsertCollectionDetailsRow(cd.PlaceId, DateTime.Parse(cd.CollectionDate), cd.DepartmentId);
+            string token = cd.Token.Trim();
+            if (AuthenticateToken(token))
+            {
+                BusinessLogic.InsertCollectionDetailsRow(cd.PlaceId, DateTime.Parse(cd.CollectionDate), cd.DepartmentId);
+            }
         }
 
         //Disbursement Sorting
-        public void InsertDisbursementListROId(string dptId)
+        public void InsertDisbursementListROId(string dptId, string token)
         {
-            BusinessLogic.InsertDisbursementListROId(dptId);
+            if (AuthenticateToken(token))
+            {
+                BusinessLogic.InsertDisbursementListROId(dptId);
+            }
         }
 
         //Disbursement Sorting
-        public String GetDptRepEmailAddFromDptID(string dptId)
+        public String GetDptRepEmailAddFromDptID(string dptId, string token)
         {
-            return BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
+            if (AuthenticateToken(token))
+            {
+                return BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
+            }
+            return null;
         }
 
 
@@ -250,9 +295,9 @@ namespace Team3ADProject.Services
             {
                 wcfList.Add(new WCF_CollectionItem(i.requisition_id.Trim(), i.item_number.Trim(), i.description.Trim(), i.unit_of_measurement.Trim(), (int)i.item_requisition_quantity, (int)i.current_quantity, (int)i.item_pending_quantity));
             }
-
             return wcfList;
         }
+
 
         //ViewRO
         public void SpecialRequestReadyUpdatesCDRDD(WCF_CollectionDetail cd)
@@ -272,36 +317,50 @@ namespace Team3ADProject.Services
         }
 
         // Reallocate
-        public List<WCF_SortingItem> GetReallocateList(string itemNum)
+        public List<WCF_SortingItem> GetReallocateList(string itemNum, string token)
         {
-            List<WCF_SortingItem> wcfList = new List<WCF_SortingItem>();
-            var result = BusinessLogic.GetReallocateList(itemNum);
-
-            foreach (var i in result)
+            if (AuthenticateToken(token))
             {
-                wcfList.Add(new WCF_SortingItem(i.item_number.Trim(), i.description.Trim(), (int)i.item_requisition_quantity, (int)i.item_distributed_quantity, 0, i.department_id.Trim()));
-            }
+                List<WCF_SortingItem> wcfList = new List<WCF_SortingItem>();
+                var result = BusinessLogic.GetReallocateList(itemNum);
 
-            return wcfList;
+                foreach (var i in result)
+                {
+                    wcfList.Add(new WCF_SortingItem(i.item_number.Trim(), i.description.Trim(), (int)i.item_requisition_quantity, (int)i.item_distributed_quantity, 0, i.department_id.Trim()));
+                }
+                return wcfList;
+            }
+            return null;
         }
 
         //Reallocate
         public void ResetRODTable(WCF_SortingItem ci)
         {
-            BusinessLogic.ResetRODTable(ci.DepartmentID, ci.ItemNumber);
+            string token = ci.Token.Trim();
+            if (AuthenticateToken(token))
+            {
+                BusinessLogic.ResetRODTable(ci.DepartmentID, ci.ItemNumber);
+            }
         }
 
 
         //Reallocate
         public void UpdateRODTable(WCF_SortingItem ci)
         {
-            BusinessLogic.UpdateRODTableOnReallocate(ci.DepartmentID, ci.ItemNumber, ci.CollectedQty);
+            string token = ci.Token.Trim();
+            if (AuthenticateToken(token))
+            {
+                BusinessLogic.UpdateRODTableOnReallocate(ci.DepartmentID, ci.ItemNumber, ci.CollectedQty);
+            }
         }
 
         //Reallocate
-        public void ReturnToInventory(string balance, string itemNum)
+        public void ReturnToInventory(string balance, string itemNum, string token)
         {
-            BusinessLogic.ReturnToInventory(Convert.ToInt32(balance), itemNum);
+            if (AuthenticateToken(token))
+            {
+                BusinessLogic.ReturnToInventory(Convert.ToInt32(balance), itemNum);
+            }
         }
 
 
