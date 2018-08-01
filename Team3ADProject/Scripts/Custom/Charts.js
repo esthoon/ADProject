@@ -81,7 +81,7 @@ $(document).ready(function () {
                     animationEnabled: true,
                     theme: "theme2",
                     title: {
-                        text: "Chart of percentage between Approved, Pending, and Rejected requisition orders in department " + department
+                        text: "Chart of percentage of Approved, Pending, and Rejected requisition orders in department"
                     },
                     data: [
                         {
