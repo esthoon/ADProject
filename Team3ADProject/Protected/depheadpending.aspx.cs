@@ -58,7 +58,12 @@ namespace Team3ADProject.Protected
 
         public void generatechartdata(int budget, int spent)
         {
-            if(spent > budget)
+            if(spent == 0)
+            {
+                Series series = Chart1.Series["Series1"];
+                series.Points.AddXY("Remaining",budget);
+            }
+            else if(spent > budget)
             {
                 Series series = Chart1.Series["Series1"];
                 series.Points.AddXY("Consumed", spent);
