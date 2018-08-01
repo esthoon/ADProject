@@ -10,31 +10,34 @@
     </div>
     <br />
     <br />
-    <div>
-        <asp:Label ID="Label2" runat="server" Text="Purchase Order Number :" Font-Bold="True" />
-        <asp:Label ID="Label5" runat="server" Text="Label" Font-Italic="True" />
-    </div>
-    <div>
-        <asp:Label ID="Label8" runat="server" Text="Purchase Order Date (dd-MM-yyyy) :" Font-Bold="True" />
-        <asp:Label ID="Label9" runat="server" Text="Label" Font-Italic="True" />
-    </div>
-    <div>
-        <asp:Label ID="Label12" runat="server" Text="Purchase Order Placed By :" Font-Bold="True" />
-        <asp:Label ID="Label13" runat="server" Text="Label" Font-Italic="True" />
-    </div>
-    <div>
-        <asp:Label ID="Label10" runat="server" Text="Purchase Order Status :" Font-Bold="True" />
-        <asp:Label ID="Label11" runat="server" Text="Label" Font-Italic="True" />
-    </div>
-    <br />
-    <div>
-        <asp:Label ID="Label3" runat="server" Text="Supplier Name :" Font-Bold="True" />
-        <asp:Label ID="Label4" runat="server" Text="Label" Font-Italic="True" />
-    </div>
-    <div>
-        <asp:Label ID="Label6" runat="server" Text="Supplier ID :" Font-Bold="True" />
-        <asp:Label ID="Label7" runat="server" Text="Label" Font-Italic="True" />
-    </div>
+
+		<table>
+		<tr>
+			<td><asp:Label ID="Label2" runat="server" Text="Purchase Order Number :" Font-Bold="True" /></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label5" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label17" runat="server" Text="Purchase Order Date (dd-MM-yyyy) :" Font-Bold="True"/></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label9" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label19" runat="server" Text="Purchase Order Placed By :" Font-Bold="True"/></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label13" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label21" runat="server" Text="Purchase Order Status :" Font-Bold="True" /></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label11" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label23" runat="server" Text="Supplier Name :" Font-Bold="True"/></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label4" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+		<tr>
+			<td><asp:Label ID="Label25" runat="server" Text="Supplier ID :" Font-Bold="True"/></td>
+			<td>&nbsp;&nbsp;<asp:Label ID="Label7" runat="server" Text="Label" Font-Italic="True" /></td>
+		</tr>
+	</table>
+
     <br />
     <asp:Label ID="Label14" runat="server" Text="Label" ForeColor="Red"></asp:Label>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound" CssClass="table table-hover">
@@ -43,11 +46,11 @@
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             </asp:BoundField>
-            <asp:BoundField DataField="item_purchase_order_quantity" HeaderText="PO Quantity">
+            <asp:BoundField DataField="item_purchase_order_quantity" HeaderText="PO Quantity" >
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             </asp:BoundField>
-            <asp:BoundField DataField="item_purchase_order_price" HeaderText="PO Price">
+            <asp:BoundField DataField="item_purchase_order_price" HeaderText="PO Price ($)" DataFormatString="{0:n2}">
                 <HeaderStyle HorizontalAlign="Center" VerticalAlign="Middle" />
                 <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" />
             </asp:BoundField>
@@ -64,8 +67,9 @@
                     <asp:TextBox ID="TextBox1" runat="server" BackColor="White" Text='<%# Bind("item_accept_quantity") %>'></asp:TextBox>
                     <%--                    <asp:RegularExpressionValidator ID="Q" runat="server" ControlToValidate="TextBox1" ErrorMessage="Please enter quantity"
                         ValidationExpression="(^([1-9]*\d*\d{1}?\d*)$)" Display="Dynamic" ForeColor="Red"></asp:RegularExpressionValidator>--%>
-                   <asp:CompareValidator runat="server" id="cmpNumbers" controltovalidate="TextBox1" valuetocompare='<%# Eval("item_purchase_order_quantity") %>' ValidationGroup = '<%# "Group_" + Container.DataItemIndex %>' operator="LessThanEqual" type="Integer" errormessage="Received quantity cannot be greater than PO quantity" ForeColor="Red" />
+                   <asp:CompareValidator runat="server" id="cmpNumbers" controltovalidate="TextBox1" valuetocompare='<%# Eval("item_purchase_order_quantity") %>' ValidationGroup = '<%# "Group_" + Container.DataItemIndex %>' operator="LessThanEqual" type="Integer" errormessage="Received quantity cannot be greater than PO quantity" ForeColor="Red"/>
                   <%--  <asp:CompareValidator ID="CompareValidator1" runat="server" controltovalidate="TextBox1" valuetocompare="0" operator="GreaterThan" type="Integer" errormessage="Received quantity should be greater than 0" ForeColor="Red"></asp:CompareValidator>--%>
+					<asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="TextBox1" ErrorMessage="Positive Quantity should be entered" ForeColor="Red" Type="Integer" MinimumValue ="1" MaximumValue="100000" ValidationGroup = '<%# "Group_" + Container.DataItemIndex %>'></asp:RangeValidator>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="TextBox1" runat="server"  ValidationGroup = '<%# "Group_" + Container.DataItemIndex %>' ErrorMessage="Quantity should be entered" ForeColor="Red"></asp:RequiredFieldValidator>
                     <asp:HiddenField ID="HiddenField3" runat="server" Value='<%# Eval("item_purchase_order_quantity") %>' />
                 </ItemTemplate>
@@ -84,7 +88,7 @@
             </asp:TemplateField>
             <asp:TemplateField>
                 <ItemTemplate>
-                    <asp:Button ID="AcceptItem" runat="server" Text="Accept Item" Enabled='<%# ((string)Eval("item_purchase_order_status") != "Accepted") ? true : false  %>' OnClick="AcceptItem_Click" />
+                    <asp:Button ID="AcceptItem" runat="server" Text="Accept Item" Enabled='<%# ((string)Eval("item_purchase_order_status") != "Accepted") ? true : false  %>' OnClick="AcceptItem_Click" ValidationGroup = '<%# "Group_" + Container.DataItemIndex %>'/>
                     <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("item_number") %>' />
                     <asp:HiddenField ID="HiddenField2" runat="server" Value='<%# Eval("item_purchase_order_status") %>' />
                 </ItemTemplate>

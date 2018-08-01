@@ -49,13 +49,13 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// Label8 control.
+        /// Label17 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
+        protected global::System.Web.UI.WebControls.Label Label17;
         
         /// <summary>
         /// Label9 control.
@@ -67,13 +67,13 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label Label9;
         
         /// <summary>
-        /// Label12 control.
+        /// Label19 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.Label Label19;
         
         /// <summary>
         /// Label13 control.
@@ -85,13 +85,13 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label Label13;
         
         /// <summary>
-        /// Label10 control.
+        /// Label21 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
+        protected global::System.Web.UI.WebControls.Label Label21;
         
         /// <summary>
         /// Label11 control.
@@ -103,13 +103,13 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label Label11;
         
         /// <summary>
-        /// Label3 control.
+        /// Label23 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label Label23;
         
         /// <summary>
         /// Label4 control.
@@ -121,13 +121,13 @@ namespace Team3ADProject.Protected {
         protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
-        /// Label6 control.
+        /// Label25 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label Label25;
         
         /// <summary>
         /// Label7 control.
