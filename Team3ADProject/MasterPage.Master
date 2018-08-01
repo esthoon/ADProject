@@ -57,6 +57,13 @@
         <script src="<%=ResolveUrl("~/Scripts/jquery.canvasjs.min.js")%>"></script>
         <script src="<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>"></script>
 
+        <%-- Setup session variables for javascript use --%>
+        <script>
+            // Department variable as required by Charts.js
+            var department = '<%= Session["Department"] %>';
+        </script>
+
+
 
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">

@@ -51,16 +51,16 @@ $(document).ready(function () {
     /* requisitionOrderStatusChart
      * Generates a doughnut chart that compares between status of requisition orders.
      */
-	if ($("#requisitionOrderStatusChart").length == 1) {
+    if ($("#requisitionOrderStatusChart").length == 1) {
 
+        // Wait for the webpage script to finish loading the variables.
+        alert(department);
 		
 
         // Fetch a list of requisition orders
 		$.getJSON("http://" + hostname + "/Services/Service.svc/RequisitionOrder/List/" + department, {},
 			function (data) {
 
-				var department = '<%= Session["Department"]';
-				alert(department);
                 var approvedCount = 0;
                 var pendingCount = 0;
                 var rejectedCount = 0;
@@ -84,7 +84,7 @@ $(document).ready(function () {
                     animationEnabled: true,
                     theme: "theme2",
                     title: {
-                        text: "Chart of percentage between Approved, Pending, and Rejected requisition orders"
+                        text: "Chart of percentage between Approved, Pending, and Rejected requisition orders in department " + department
                     },
                     data: [
                         {
