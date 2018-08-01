@@ -51,12 +51,16 @@ $(document).ready(function () {
     /* requisitionOrderStatusChart
      * Generates a doughnut chart that compares between status of requisition orders.
      */
-    if ($("#requisitionOrderStatusChart").length == 1) {
+	if ($("#requisitionOrderStatusChart").length == 1) {
+
+		
 
         // Fetch a list of requisition orders
-        $.getJSON("http://" + hostname + "/Services/Service.svc/RequisitionOrder/List", {},
-            function (data) {
+		$.getJSON("http://" + hostname + "/Services/Service.svc/RequisitionOrder/List/" + department, {},
+			function (data) {
 
+				var department = '<%= Session["Department"]';
+				alert(department);
                 var approvedCount = 0;
                 var pendingCount = 0;
                 var rejectedCount = 0;

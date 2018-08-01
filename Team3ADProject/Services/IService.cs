@@ -15,8 +15,8 @@ namespace Team3ADProject.Services
 
         // Outputs a list of requisition orders
         [OperationContract]
-        [WebGet(UriTemplate = "/RequisitionOrder/List", ResponseFormat = WebMessageFormat.Json)]
-        List<WCF_RequisitionOrder> GetRequisitionOrders();
+        [WebGet(UriTemplate = "/RequisitionOrder/List/{dept}", ResponseFormat = WebMessageFormat.Json)]
+        List<WCF_RequisitionOrder> GetRequisitionOrders(string dept);
 
         // Outputs a list of departments
         [OperationContract]

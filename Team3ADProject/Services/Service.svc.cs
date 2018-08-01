@@ -15,10 +15,10 @@ namespace Team3ADProject.Services
     public class Service : IService
     {
 
-        public List<WCF_RequisitionOrder> GetRequisitionOrders()
+        public List<WCF_RequisitionOrder> GetRequisitionOrders(string dept)
         {
             var context = new LogicUniversityEntities();
-            var query = from x in context.requisition_order select x;
+            var query = from x in context.requisition_order where x.requisition_id.Substring(0,4) == dept select x;
             List<requisition_order> requisitionOrders = query.ToList();
             List<WCF_RequisitionOrder> wcf_requisitionOrders = new List<WCF_RequisitionOrder>();
 

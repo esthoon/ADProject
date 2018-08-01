@@ -14,6 +14,7 @@ namespace Team3ADProject.Protected
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Label1.Text = (string)Session["Department"];
         
         }
 
