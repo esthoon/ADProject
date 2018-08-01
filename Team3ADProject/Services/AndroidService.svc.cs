@@ -505,7 +505,7 @@ namespace Team3ADProject.Services
                 for (int i = 0; i < l.Count; i++)
                 {
                     pin = Convert.ToString(BusinessLogic.GetDepartmentPin(l[i].department_name.Trim()));
-                    m.Add(new WCF_Disbursement_List(l[i].collection_date.ToString("dd-MM-yyyy"), l[i].collection_place, l[i].collection_time.ToString(), l[i].department_name, l[i].employee_name, Convert.ToString(l[i].collection_id), pin));
+                    m.Add(new WCF_Disbursement_List(l[i].collection_date.ToString("dd-MM-yyyy").Trim(), l[i].collection_place.Trim(), l[i].collection_time.ToString().Trim(), l[i].department_name.Trim(), l[i].employee_name.Trim(), Convert.ToString(l[i].collection_id).Trim(), pin.Trim()));
                 }
                 return m;
             }
