@@ -31,11 +31,11 @@
                 <asp:BoundField DataField="item_number" HeaderText="Item Number" ReadOnly="True" SortExpression="item_number" />
                 <asp:BoundField DataField="description" HeaderText="Description" ReadOnly="True" SortExpression="description" />
                 <asp:BoundField DataField="unit_of_measurement" HeaderText="UOM" ReadOnly="True" SortExpression="unit_of_measurement" />
-                <asp:BoundField DataField="item_pending_quantity" HeaderText="Qty Ordered" ReadOnly="True" SortExpression="item_pending_quantity" />
+                <asp:BoundField DataField="item_pending_quantity" HeaderText="Ordered Qty" ReadOnly="True" SortExpression="item_pending_quantity" />
 
-                <asp:BoundField DataField="current_quantity" HeaderText="Qty Available" ReadOnly="True" SortExpression="current_quantity" />
+                <asp:BoundField DataField="current_quantity" HeaderText="Current Qty" ReadOnly="True" SortExpression="current_quantity" />
 
-                <asp:TemplateField HeaderText="Qty Prepared">
+                <asp:TemplateField HeaderText="Collect Qty">
                     <ItemTemplate>
                         <asp:TextBox ID="txt_QtyPrepared" runat="server" Text='<%# (Convert.ToInt32(Eval("item_pending_quantity")) <= Convert.ToInt32(Eval("current_quantity")) ? Eval("item_pending_quantity") : Eval("current_quantity")) %>'></asp:TextBox>
                         <asp:Label ID="Label1" runat="server" ForeColor="Red"></asp:Label>

@@ -10,10 +10,10 @@
             <asp:BoundField DataField="item_number" HeaderText="Item Number" ReadOnly="True" SortExpression="item_number" />
             <asp:BoundField DataField="description" HeaderText="Description" ReadOnly="True" SortExpression="description" />
             <asp:BoundField DataField="unit_of_measurement" HeaderText="UOM" ReadOnly="True" SortExpression="unit_of_measurement" />
-            <asp:BoundField DataField="quantity_ordered" HeaderText="Qty Ordered" ReadOnly="True" SortExpression="quantity_ordered" />
-            <asp:BoundField DataField="current_quantity" HeaderText="Qty Available" ReadOnly="True" SortExpression="current_quantity" />
+            <asp:BoundField DataField="quantity_ordered" HeaderText="Ordered Qty" ReadOnly="True" SortExpression="quantity_ordered" />
+            <asp:BoundField DataField="current_quantity" HeaderText="Current Qty" ReadOnly="True" SortExpression="current_quantity" />
 
-            <asp:TemplateField HeaderText="Qty Prepared">
+            <asp:TemplateField HeaderText="Collect Qty">
                 <ItemTemplate>
                     <asp:TextBox ID="txt_QtyPrepared" runat="server" Text='<%# (Convert.ToInt32(Eval("quantity_ordered")) <= Convert.ToInt32(Eval("current_quantity")) ? Eval("quantity_ordered") : Eval("current_quantity")) %>'></asp:TextBox>
 

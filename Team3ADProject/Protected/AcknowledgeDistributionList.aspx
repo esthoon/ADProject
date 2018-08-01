@@ -54,9 +54,9 @@
                 <Columns>
                     <asp:BoundField DataField="item_number" ReadOnly="true" HeaderText="Item Number" SortExpression="item_number"/>
                     <asp:BoundField DataField="description" ReadOnly="true" HeaderText="Description" SortExpression="description"/>
-                    <asp:BoundField DataField="ordered_quantity" ReadOnly="true" HeaderText="Ordered Quantity" SortExpression="item_requisition_quantity"/>
+                    <asp:BoundField DataField="ordered_quantity" ReadOnly="true" HeaderText="Ordered Qty" SortExpression="item_requisition_quantity"/>
                    
-                    <asp:TemplateField HeaderText="Supply Quantity">
+                    <asp:TemplateField HeaderText="Collected Qty">
                         <ItemTemplate>
                             <asp:TextBox ID="TextBox1" runat="server" AutoPostBack="false" Text='<%#Eval("supply_quantity") %>'></asp:TextBox>
                         </ItemTemplate>

@@ -22,8 +22,8 @@
             <Columns>
                 <asp:BoundField DataField="item_number" HeaderText="Item Number" ReadOnly="True" SortExpression="item_number" />
                 <asp:BoundField DataField="description" HeaderText="Description" ReadOnly="True" SortExpression="description" />
-                <asp:BoundField DataField="required_qty" HeaderText="Ordered Quantity" ReadOnly="True" SortExpression="required_qty" />
-                <asp:BoundField DataField="supply_qty" HeaderText="Recommended Distribution Quantity" ReadOnly="True" SortExpression="supply_qty" />
+                <asp:BoundField DataField="required_qty" HeaderText="Ordered Qty" ReadOnly="True" SortExpression="required_qty" />
+                <asp:BoundField DataField="supply_qty" HeaderText="Recommended Distribution Qty" ReadOnly="True" SortExpression="supply_qty" />
 
 <%--                <asp:TemplateField HeaderText="Recommended Distribution Quantity">
                     <ItemTemplate>
@@ -42,7 +42,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>--%>
 
-                <asp:TemplateField HeaderText="Collected Quantity Available">
+                <asp:TemplateField HeaderText="Collected Qty Available">
                     <ItemTemplate>
                         <asp:Label ID="Label1" runat="server"></asp:Label>
                     </ItemTemplate>
