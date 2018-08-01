@@ -53,9 +53,6 @@ $(document).ready(function () {
      */
     if ($("#requisitionOrderStatusChart").length == 1) {
 
-        // Wait for the webpage script to finish loading the variables.
-        alert(department);
-		
 
         // Fetch a list of requisition orders
 		$.getJSON("http://" + hostname + "/Services/Service.svc/RequisitionOrder/List/" + department, {},
@@ -150,7 +147,7 @@ $(document).ready(function () {
      * Generates a bar chart stationary purchased grouped by categories.
      */
     if ($("#purchaseQuantityByItemCategoryBarChart").length == 1) {
-        
+
         // Prepare data
         var dataPoints = [];
 
@@ -165,6 +162,7 @@ $(document).ready(function () {
         // Fetch current month data
         $.getJSON("http://" + hostname + "/Services/Service.svc/Chart/PurchaseQuantityByItemCategory/" + startDate + "/" + endDate, {},
             function (data) {
+
                 // Place data on the chart
                 $.each(data, function (key, value) {
                     dataPoints.push({ y: value.quantity, label: value.category });
@@ -201,6 +199,8 @@ $(document).ready(function () {
     // A chart that displays items requested by each department based on a given time.
     if ($("#requisitionQuantityByDepartmentChart").length == 1) {
 
+
+
         // Prepare data
         var dataPoints = [];
 
@@ -211,6 +211,8 @@ $(document).ready(function () {
             startDate = "01-01-1965";
             endDate = "12-31-3000";
         }
+
+        alert("http://" + hostname + "/Services/Service.svc/Chart/getRequisitionQuantityByDepartmentWithinTime/" + startDate + "/" + endDate);
 
         $.getJSON("http://" + hostname + "/Services/Service.svc/Chart/getRequisitionQuantityByDepartmentWithinTime/" + startDate + "/" + endDate, {},
             function (data) {

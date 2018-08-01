@@ -33,7 +33,6 @@
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
-                <%--<asp:ScriptReference Name="jquery" /> --%>
                 <asp:ScriptReference Name="bootstrap" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
                 <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
@@ -54,7 +53,7 @@
 
 
         <%-- Custom Javascript here --%>
-        <script src="<%=ResolveUrl("~/Scripts/jquery.canvasjs.min.js")%>"></script>
+        <script src="<%=ResolveUrl("~/Scripts/canvasjs.min.js")%>"></script>
         <script src="<%=ResolveUrl("~/Scripts/Custom/Charts.js")%>"></script>
 
         <%-- Setup session variables for javascript use --%>

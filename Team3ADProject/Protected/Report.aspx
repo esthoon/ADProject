@@ -57,5 +57,6 @@
             {%>
         <div id="<%=ChartList_DeptHead.SelectedValue%>" class="chart-container" />
         <%}%>
+
     </div>
 </asp:Content>
