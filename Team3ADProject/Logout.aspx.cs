@@ -15,6 +15,7 @@ namespace Team3ADProject
         {
             FormsAuthentication.SignOut();
             Session.Abandon();
+            Session["RequestCart"] = null;
             Response.Redirect(ResolveUrl("~"));
         }
     }
