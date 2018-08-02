@@ -14,7 +14,7 @@ namespace Team3ADProject
         protected void Page_Load(object sender, EventArgs e)
         {
             FormsAuthentication.SignOut();
-            Session.Clear();
+            Session.Abandon();
             Response.Redirect(ResolveUrl("~"));
         }
     }
