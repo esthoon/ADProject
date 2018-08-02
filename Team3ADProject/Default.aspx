@@ -30,7 +30,7 @@
 
                         <asp:Literal ID="FailureText" runat="server" EnableViewState="False"></asp:Literal>
 
-                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="Login1" />
+                        <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="Log In" ValidationGroup="Login1" CssClass="btn btn-primary" />
                     </div>
                 </LayoutTemplate>
             </asp:Login>

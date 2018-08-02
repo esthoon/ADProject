@@ -4,9 +4,10 @@
 
     <link rel="stylesheet" href="<%=ResolveUrl("~/Content/Sites/Dashboard.css")%>" />
     <%@ Import Namespace="Team3ADProject.Code" %>
-
+        <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
+{ %>
     <h1>Dashboard</h1>
-
+        <%} %>
 
     <!-- If user is a store clerk, display dashboard information -->
     <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK) || Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
