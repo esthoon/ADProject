@@ -19,7 +19,7 @@
                 {%>
             <asp:DropDownList ID="ChartList_DeptHead" runat="server" OnSelectedIndexChanged="ChartList_SelectedIndexChanged">
                 <asp:ListItem Value="placeholder">Select an item..</asp:ListItem>
-                <asp:ListItem Value="requisitionOrderStatusChart">Requisition Order Status Percentage</asp:ListItem>
+                <asp:ListItem Value="requisitionOrderStatusChart">Requisition Order Status Count</asp:ListItem>
             </asp:DropDownList>
             <%}%>
         </div>
