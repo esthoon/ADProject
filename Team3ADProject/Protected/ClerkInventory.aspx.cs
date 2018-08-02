@@ -343,17 +343,30 @@ namespace Team3ADProject.Protected
         protected void gvInventoryList_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvInventoryList.PageIndex = e.NewPageIndex;
+            List<cInventory> list = new List<cInventory>();
             if (RadioButtonList1.SelectedItem.Value.Equals("2"))
             {
-                loadGrid(lowinstock);
+                list=ReturnLowInStockFilteredList();
             }
             else
             {
-                loadGrid(cList);
+                list = filterCat();
+                string search = TextBox1.Text.ToLower().Trim();
+                if (search != null)
+                {
+                    list = SearchResult(search);
+                }
             }
+            loadGrid(list);
         }
 
         protected void CheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            loadGrid(ReturnLowInStockFilteredList());
+        }
+
+        protected List<cInventory> ReturnLowInStockFilteredList()
         {
             List<cInventory> list = new List<cInventory>();
             if (RadioButtonList1.SelectedItem.Value.Equals("2"))
@@ -370,7 +383,7 @@ namespace Team3ADProject.Protected
                     }
                 }
             }
-            loadGrid(list);
+            return list;
         }
     }
 }
