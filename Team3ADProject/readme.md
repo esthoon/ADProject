@@ -1,9 +1,9 @@
-Instructions:
+# Run Instructions:
 	- Clone or download the project, and launch it in Visual Studio
 	- Restore aspnet.db and LogicUniversity.bak to your MSSQL server database.
 	- Publish the project onto IIS, the publish URL should be (Server Address)/LogicUniversity to function correctly.
 	
-Logging in:
+# Logging in:
 	- New user accounts can be added manually through IIS, roles should also be added to them in IIS.
 	- Some account usernames were provided for debugging, they share the common password "testing_123"
 	
