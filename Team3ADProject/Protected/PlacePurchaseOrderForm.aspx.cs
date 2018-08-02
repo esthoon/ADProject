@@ -91,7 +91,7 @@ namespace Team3ADProject.Protected
         {
             if (qty > 0 && qty <= 1000000)
             {
-                unitCost.Text = BusinessLogic.getUnitPrice(DropDownListSupplier.SelectedValue, itemid).ToString();
+                unitCost.Text = (BusinessLogic.getUnitPrice(DropDownListSupplier.SelectedValue, itemid)).ToString();
                 totalCost.Text = (qty * Convert.ToDouble(unitCost.Text)).ToString("C");
                 ErrorText.Text = "";
                 Submit.Enabled = true;
