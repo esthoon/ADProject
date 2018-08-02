@@ -81,7 +81,7 @@ $(document).ready(function () {
                     animationEnabled: true,
                     theme: "theme2",
                     title: {
-                        text: "Chart of percentage of Approved, Pending, and Rejected requisition orders in department"
+                        text: "Count of requisition orders by status"
                     },
                     data: [
                         {
@@ -172,7 +172,7 @@ $(document).ready(function () {
                 var chart = new CanvasJS.Chart("purchaseQuantityByItemCategoryBarChart",
                     {
                         title: {
-                            text: "Stationary categories purchased from " + startDate + " to " + endDate
+							text: "Stationery purchased from " + startDate + " to " + endDate + "by item categories"
                         },
                         theme: "theme2",
                         animationEnabled: true,
@@ -223,7 +223,7 @@ $(document).ready(function () {
                 var chart = new CanvasJS.Chart("requisitionQuantityByDepartmentChart",
                     {
                         title: {
-                            text: "Total stationeries requested by each department from " + startDate + " to " + endDate
+							text: "Stationery requested from " + startDate + " to " + endDate + "by department"
                         },
                         theme: "theme2",
                         animationEnabled: true,

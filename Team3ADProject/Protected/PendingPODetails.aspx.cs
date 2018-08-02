@@ -76,27 +76,31 @@ namespace Team3ADProject.Protected
 
         protected void AcceptItem_Click(object sender, EventArgs e)
         {
-            int po_id = (int)Session["po"];
-            System.Web.UI.WebControls.Button b = (System.Web.UI.WebControls.Button)sender;
-            System.Web.UI.WebControls.TextBox t1 = (System.Web.UI.WebControls.TextBox)b.FindControl("TextBox1");
-            System.Web.UI.WebControls.TextBox t2 = (System.Web.UI.WebControls.TextBox)b.FindControl("TextBox2");
-            HiddenField hd1 = (HiddenField)b.FindControl("HiddenField1");
-            HiddenField hd2 = (HiddenField)b.FindControl("HiddenField3");
-            int order_quantity = Convert.ToInt32(hd2.Value);
-            string item = hd1.Value;
-            int accept_quantity = Convert.ToInt32(t1.Text);
-            string remark = t2.Text;
-            if (accept_quantity == 0)
-            {
-                Label14.Visible = true;
-                Label14.Text = "Received quantity should be greater than 0";
-            }
-            else
-            {
-                Label14.Visible = false;
-                BusinessLogic.acceptitemfromsupplier(po_id, item, accept_quantity, remark);
-                GenerateGrid();
-            }
+
+            //if(!(Page.IsValid))
+            //{        
+                int po_id = (int)Session["po"];
+                System.Web.UI.WebControls.Button b = (System.Web.UI.WebControls.Button)sender;
+                System.Web.UI.WebControls.TextBox t1 = (System.Web.UI.WebControls.TextBox)b.FindControl("TextBox1");
+                System.Web.UI.WebControls.TextBox t2 = (System.Web.UI.WebControls.TextBox)b.FindControl("TextBox2");
+                HiddenField hd1 = (HiddenField)b.FindControl("HiddenField1");
+                HiddenField hd2 = (HiddenField)b.FindControl("HiddenField3");
+                int order_quantity = Convert.ToInt32(hd2.Value);
+                string item = hd1.Value;
+                int accept_quantity = Convert.ToInt32(t1.Text);
+                string remark = t2.Text;
+                if (accept_quantity == 0)
+                {
+                    Label14.Visible = true;
+                    Label14.Text = "Received quantity should be greater than 0";
+                }
+                else
+                {
+                    Label14.Visible = false;
+                    BusinessLogic.acceptitemfromsupplier(po_id, item, accept_quantity, remark);
+                    GenerateGrid();
+                }
+            //}
         }
 
         protected void Button1_Click(object sender, EventArgs e)

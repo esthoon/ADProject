@@ -7,7 +7,7 @@
                 Department Name : 
             </th>
             <td>
-                <asp:Label ID="DepartmentNameLabel" Text="Department Name" runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="DepartmentNameLabel" Text="Department Name" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -15,7 +15,7 @@
                 Department Representative :
             </th>
             <td>
-                <asp:Label ID="DepartmentRepresentativeLabel" Text="Department Representative" runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="DepartmentRepresentativeLabel" Text="Department Representative" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -23,7 +23,7 @@
                 Date : 
             </th>
             <td>
-                <asp:Label ID="DateLabel" Text="Date " runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="DateLabel" Text="Date " runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -31,7 +31,7 @@
                 Time :
             </th>
             <td>
-                <asp:Label ID="TimeLabel" Text="Time" runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="TimeLabel" Text="Time" runat="server"></asp:Label>
             </td>
         </tr>
         <tr>
@@ -39,12 +39,12 @@
                 Location :
             </th>
             <td>
-                <asp:Label ID="LocationLabel" Text="Location" runat="server"></asp:Label>
+                &nbsp;&nbsp;<asp:Label ID="LocationLabel" Text="Location" runat="server"></asp:Label>
             </td>
         </tr>
          
     </table>
-        <br /><br /><br />
+        <br /><br />
     Enter Department Pin :
     <asp:TextBox ID="PinTextBox" runat="server" MaxLength="10"></asp:TextBox>
     <asp:Button ID="VerifyPasswordButton" runat="server" Text="Verify Pin" OnClick="VerifyPasswordButtonClick" CssClass="btn btn-default"/>
@@ -54,9 +54,9 @@
                 <Columns>
                     <asp:BoundField DataField="item_number" ReadOnly="true" HeaderText="Item Number" SortExpression="item_number"/>
                     <asp:BoundField DataField="description" ReadOnly="true" HeaderText="Description" SortExpression="description"/>
-                    <asp:BoundField DataField="ordered_quantity" ReadOnly="true" HeaderText="Ordered Quantity" SortExpression="item_requisition_quantity"/>
+                    <asp:BoundField DataField="ordered_quantity" ReadOnly="true" HeaderText="Ordered Qty" SortExpression="item_requisition_quantity"/>
                    
-                    <asp:TemplateField HeaderText="Supply Quantity">
+                    <asp:TemplateField HeaderText="Collected Qty">
                         <ItemTemplate>
                             <asp:TextBox ID="TextBox1" runat="server" AutoPostBack="false" Text='<%#Eval("supply_quantity") %>'></asp:TextBox>
                         </ItemTemplate>
