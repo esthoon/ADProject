@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -13,6 +14,7 @@ namespace Team3ADProject
         protected void Page_Load(object sender, EventArgs e)
         {
             FormsAuthentication.SignOut();
+            Session.Clear();
             Response.Redirect(ResolveUrl("~"));
         }
     }
