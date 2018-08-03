@@ -4,10 +4,10 @@
 
     <link rel="stylesheet" href="<%=ResolveUrl("~/Content/Sites/Dashboard.css")%>" />
     <%@ Import Namespace="Team3ADProject.Code" %>
-        <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
-{ %>
+    <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
+        { %>
     <h1>Dashboard</h1>
-        <%} %>
+    <%} %>
 
     <!-- If user is a store clerk, display dashboard information -->
     <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK) || Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
@@ -25,15 +25,20 @@
                 </Columns>
             </asp:GridView>
 
+            <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK))
+                { %>
             <asp:LinkButton ID="RequisitionOrder_Link" runat="server" CssClass="btn btn-success" OnClick="RequisitionOrder_Link_Click">Go to Inventory Listing</asp:LinkButton>
+            <%} %>
         </div>
 
         <!--Flex item 2: Chart -->
         <div class="dashboard-flexbox-item">
             <h3>Pending purchase orders by suppliers:</h3>
             <div id="pendingPurchaseOrderCountBySupplierChart" style="height: 60vh; width: 30vw; margin-bottom: 2.5vh"></div>
+            <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK))
+                { %>
             <asp:LinkButton ID="PurchaseOrder_Link" runat="server" CssClass="btn btn-success" OnClick="PurchaseOrder_Link_Click">Go to Purchase Order Listing</asp:LinkButton>
-
+            <%} %>
         </div>
 
     </div>
