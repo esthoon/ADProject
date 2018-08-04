@@ -62,6 +62,29 @@ namespace Team3ADProject.Protected
             }
         }
 
+        protected void Yes_Click(object sender, EventArgs e)
+        {
+            ReallocateItems();
+            int totalEnterQty = 0;
+            foreach (GridViewRow gvr in gridview_Reallocate.Rows)
+            {
+                System.Web.UI.WebControls.TextBox textbox = (System.Web.UI.WebControls.TextBox)gvr.FindControl("txt_distribution_qty");
+                int distriQty = Convert.ToInt32(textbox.Text);
+                totalEnterQty += distriQty;
+            }
+            int collectedQty = Convert.ToInt32(Label_collectedAmount.Text);
+            int returnBalance = collectedQty - totalEnterQty;
+            BusinessLogic.ReturnToInventory(returnBalance, itemNum);
+            Response.Redirect("~/Protected/DisbursementSorting.aspx");
+
+        }
+
+        protected void No_Click(object sender, EventArgs e)
+        {
+            PanelMsg.Visible = false;
+            Button_Reallocate.Visible = true;
+        }
+
         protected void Button_Reallocate_Click(object sender, EventArgs e)
         {
             Label_warning.Visible = false;
@@ -94,20 +117,23 @@ namespace Team3ADProject.Protected
             // if what is inserted < total, show message that the extra will be returned to inventory
             if (totalEnterQty < collectedQty)
             {
-                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("You entered less items than collected. Do you want to return items to warehouse / inventory?", "Return to warehouse?", MessageBoxButtons.YesNo);
+                PanelMsg.Visible = true;
+                Button_Reallocate.Visible = false;
+                WarningMsg.Text = "You entered less items than collected. Do you want to return items to warehouse / inventory?";
+                //System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show("You entered less items than collected. Do you want to return items to warehouse / inventory?", "Return to warehouse?", MessageBoxButtons.YesNo);
                 //if no, return.
-                if (result == DialogResult.No)
-                {
-                    return;
-                }
+                //if (result == DialogResult.No)
+                //{
+                //    return;
+                //}
 
-                if (result == DialogResult.Yes)
-                {
-                    ReallocateItems();
-                    int returnBalance = collectedQty - totalEnterQty;
-                    BusinessLogic.ReturnToInventory(returnBalance, itemNum);
-                    Response.Redirect("~/Protected/DisbursementSorting.aspx");
-                }
+                //if (result == DialogResult.Yes)
+                //{
+                //    ReallocateItems();
+                //    int returnBalance = collectedQty - totalEnterQty;
+                //    BusinessLogic.ReturnToInventory(returnBalance, itemNum);
+                //    Response.Redirect("~/Protected/DisbursementSorting.aspx");
+                //}
             }
 
             else
