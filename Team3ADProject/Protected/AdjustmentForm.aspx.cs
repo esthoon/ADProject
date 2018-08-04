@@ -26,23 +26,24 @@ namespace Team3ADProject.Protected
                 {
                     int employeeid = (int)Session["Employee"];
                     user = BusinessLogic.GetEmployeeById(employeeid);
+                    //retrieve headid
+                    headid = BusinessLogic.DepartmentHeadID(user);
+                    //retrieve supid
+                    if (user.supervisor_id != null)
+                    {
+                        supid = (int)user.supervisor_id;
+                    }
+                    else
+                    {
+                        supid = headid;
+                    }
                 }
                 else
                 {
                     Response.Redirect(ResolveUrl("~"));
                 }
-                //retrieve headid
-                headid = BusinessLogic.DepartmentHeadID(user);
 
-                //retrieve supid
-                if (user.supervisor_id != null)
-                {
-                    supid = (int)user.supervisor_id;
-                }
-                else
-                {
-                    supid = headid;
-                }
+                
                 LabelDate.Text = DateTime.Now.ToString("dd-MM-yyyy");
                 LabelName.Text = user.employee_name;
                 UpdatePage();
@@ -217,7 +218,7 @@ namespace Team3ADProject.Protected
                     {
                         BusinessLogic.CreateAdjustment(a);
                         tx.Complete();
-                        Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
+                        //Response.Write(BusinessLogic.MsgBox("Success: The adjustment request has been sent for approval"));
                         BusinessLogic.sendMail(email, "New Adjustment Request awaiting for approval", user.employee_name + " has submitted a new Adjustment Request for approval.");
                     }
                     Response.Redirect("ClerkInventory.aspx");

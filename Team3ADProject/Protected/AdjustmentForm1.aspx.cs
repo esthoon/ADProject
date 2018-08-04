@@ -26,23 +26,23 @@ namespace Team3ADProject.Protected
                 {
                     int employeeid = (int)Session["Employee"];
                     user = BusinessLogic.GetEmployeeById(employeeid);
+                    //retrieve headid
+                    headid = BusinessLogic.DepartmentHeadID(user);
+                    //retrieve supid
+                    if (user.supervisor_id != null)
+                    {
+                        supid = (int)user.supervisor_id;
+                    }
+                    else
+                    {
+                        supid = headid;
+                    }
                 }
                 else
                 {
                     Response.Redirect(ResolveUrl("~"));
                 }
-                //retrieve headid
-                headid = BusinessLogic.DepartmentHeadID(user);
 
-                //retrieve supid
-                if (user.supervisor_id != null)
-                {
-                    supid = (int)user.supervisor_id;
-                }
-                else
-                {
-                    supid = headid;
-                }
                 LabelDate.Text = DateTime.Now.ToString("dd-MM-yyyy");
                 LabelName.Text = user.employee_name;
                 UpdatePage();
