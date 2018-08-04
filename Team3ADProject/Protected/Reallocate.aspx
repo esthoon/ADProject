@@ -44,7 +44,13 @@
 
     <asp:Button ID="Button_Reallocate" runat="server" Text="Reallocate" CssClass="btn btn-primary" OnClick="Button_Reallocate_Click" ValidationGroup='valGroup1'/>
     <asp:Label ID="Label_warning" runat="server" Font-Size="20px" ForeColor="Red"></asp:Label>
+	<asp:Panel ID="PanelMsg" runat="server" Visible ="false">
+		<asp:Label ID="WarningMsg" runat="server" Text="Label" ForeColor="red"></asp:Label> 
+		<br /> 
+		<asp:Button ID="Yes" runat="server" Text="Yes" CssClass="btn btn-success" OnClick ="Yes_Click" />
 
+		<asp:Button ID="No" runat="server" Text="No" CssClass="btn btn-danger" OnClick="No_Click" />
+	 </asp:Panel>
 
     <%-- <asp:Button ID="Button1" runat="server" Text="Test Modal" data-toggle="modal" data-target="#login_modal" />
 

@@ -19,10 +19,14 @@
                 {%>
             <asp:DropDownList ID="ChartList_DeptHead" runat="server" OnSelectedIndexChanged="ChartList_SelectedIndexChanged">
                 <asp:ListItem Value="placeholder">Select an item..</asp:ListItem>
-                <asp:ListItem Value="requisitionOrderStatusChart">Requisition Order Status Percentage</asp:ListItem>
+                <asp:ListItem Value="requisitionOrderStatusChart">Requisition Order Status Count</asp:ListItem>
             </asp:DropDownList>
             <%}%>
         </div>
+
+        
+        <% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER))
+            {%>
         <div>Start Date</div>
         <input type="text" id="startDate" runat="server" clientidmode="static" class="datePicker" disabled value="-" /><asp:RequiredFieldValidator ID="StartDateRequiredValidator" runat="server" ControlToValidate="startDate" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="StartDateValidator" runat="server" ControlToValidate="startDate" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="false"></asp:RegularExpressionValidator>
@@ -44,8 +48,11 @@
         <asp:RequiredFieldValidator ID="EndDateRequiredValidator" runat="server" ControlToValidate="endDate" ErrorMessage="This field is required!"></asp:RequiredFieldValidator>
         <asp:RegularExpressionValidator ID="EndDateValidator" runat="server" ControlToValidate="endDate" ErrorMessage="Date must be in the format dd-mm-yyyy" ValidationExpression="[0123][0-9]-[01][0-9]-[0-9]{4}" Enabled="false"></asp:RegularExpressionValidator>
         <br />
+        <%}%>
         <asp:Button ID="submitButton" runat="server" Text="Submit" CssClass="btn btn-primary" />
 
+        
+        
         <div id="message" runat="server"></div>
 
         <% if (Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER))

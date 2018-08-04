@@ -216,7 +216,7 @@ namespace Team3ADProject.Code
         {
             var q = from e in context.employees
                     join d in context.departments on e.department_id equals d.department_id
-                    where e.employee_name.Contains(name) && e.department_id.Equals(dept)
+                    where e.employee_name.Contains(name) && e.department_id.Equals(dept) && e.supervisor_id!=null
                     select e;
             return q.ToList();
 
