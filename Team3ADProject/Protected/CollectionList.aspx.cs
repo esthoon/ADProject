@@ -115,7 +115,7 @@ namespace Team3ADProject.Protected
             string itemcode = hd.Value;
             Session["itemcode"] = itemcode;
             string url = "AdjustmentForm1.aspx?itemcode=" + itemcode;
-            Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
+            //Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
         }
     }
 }

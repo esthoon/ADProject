@@ -34,7 +34,7 @@
 
             <asp:TemplateField HeaderText="Adjustment">
                 <ItemTemplate>
-                    <asp:Button ID="btn_Adjustment" runat="server" Text="ADJ" UseSubmitBehavior="false" OnClick="btn_Adjustment_Click" CssClass="btn btn-info" />
+                    <asp:Button ID="btn_Adjustment" runat="server" Text="ADJ" UseSubmitBehavior="false" OnClientClick='<%# String.Format("javascript:return openAdjForm(\"{0}\")", Eval("item_number").ToString()) %>' CssClass="btn btn-info" />
                     <asp:HiddenField ID="HiddenField1" runat="server" Value='<%# Eval("item_number") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
@@ -43,5 +43,7 @@
 
     <asp:Button ID="btn_submitCollectionList" runat="server" Text="Submit" OnClick="btn_submitCollectionList_Click" CssClass="btn btn-success" ValidationGroup='valGroup1' />
 
+    <script type='text/javascript'> function openAdjForm(url){window.open('AdjustmentForm1.aspx?itemcode='+url);}
+    </script>
 </asp:Content>
 
