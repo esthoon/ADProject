@@ -42,38 +42,49 @@ namespace Team3ADProject.Protected
 
         protected void loadGrid()
         {
-            DateTime startdate;
-            DateTime enddate;
-            string dept = DropDownList1.SelectedItem.Value;
-            startdate = DateTime.ParseExact(TextBox1.Text, "yyyy-MM-dd", null);
-            enddate = DateTime.ParseExact(TextBox2.Text, "yyyy-MM-dd", null);
-            list = BusinessLogic.UsageChargeBack(startdate, enddate, dept.Trim());
-            GridView1.DataSource = list;
-            GridView1.DataBind();
-            if (list.Count > 0)
+           try
             {
-                double price = list.Sum(x => x.price).Value;
-                Label4.Text = String.Format("{0:c2}", price) ;
-                Label3.Text = "Total price";
-                Label4.Visible = true;
-                Label3.Visible = true;
-                Button2.Enabled = true;
-                Button2.Visible = true;
+
+                DateTime startdate;
+                DateTime enddate;
+                string dept = DropDownList1.SelectedItem.Value;
+                startdate = DateTime.ParseExact(TextBox1.Text, "yyyy-MM-dd", null);
+                enddate = DateTime.ParseExact(TextBox2.Text, "yyyy-MM-dd", null);
+                list = BusinessLogic.UsageChargeBack(startdate, enddate, dept.Trim());
+                GridView1.DataSource = list;
+                GridView1.DataBind();
+                if (list.Count > 0)
+                {
+                    double price = list.Sum(x => x.price).Value;
+                    Label4.Text = String.Format("{0:c2}", price);
+                    Label3.Text = "Total price";
+                    Label4.Visible = true;
+                    Label3.Visible = true;
+                    Button2.Enabled = true;
+                    Button2.Visible = true;
+                }
+                else
+                {
+                    Button2.Enabled = false;
+                    Label3.Visible = true;
+                    Label3.Text = "Selected criteria have no result";
+                    Label4.Visible = false;
+                    Button2.Visible = false;
+                }
             }
-            else
+
+            catch(Exception ex)
             {
-                Button2.Enabled = false;
+                Label3.Text = "Please enter a valid date.";
                 Label3.Visible = true;
-                Label3.Text = "Selected criteria have no result";
-                Label4.Visible = false;
-                Button2.Visible = false;
             }
             
+
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            loadGrid();
+            loadGrid();   
         }
 
         protected void Button2_Click(object sender, EventArgs e)
