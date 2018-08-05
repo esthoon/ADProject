@@ -19,7 +19,7 @@
                     <asp:TextBox ID="TextBox2" runat="server" TextMode="Date"></asp:TextBox>
                 </td>
                 <td>
-                    <asp:Button ID="Button1" runat="server" Text="Search" UseSubmitBehavior="false" OnClick="Button1_Click"/>
+                    <asp:Button ID="Button1" runat="server" Text="Search" UseSubmitBehavior="false" OnClick="Button1_Click" CssClass="btn btn-success"/>
                 </td>
             </tr>
             <tr>
