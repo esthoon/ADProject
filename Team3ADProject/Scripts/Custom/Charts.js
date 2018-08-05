@@ -267,7 +267,7 @@ $(document).ready(function () {
                         theme: "theme2",
                         animationEnabled: true,
                         axisX: {
-                            title: "Department",
+                            title: "Suppliers",
                             gridThickness: 2
                         },
                         axisY: {
