@@ -663,5 +663,22 @@ namespace Team3ADProject.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getcollectiondetailsbydepartment_Result>("getcollectiondetailsbydepartment", departmentidParameter);
         }
+    
+        public virtual ObjectResult<deptusagechargeback_Result> deptusagechargeback(Nullable<System.DateTime> fromdate, Nullable<System.DateTime> todate, string deptid)
+        {
+            var fromdateParameter = fromdate.HasValue ?
+                new ObjectParameter("fromdate", fromdate) :
+                new ObjectParameter("fromdate", typeof(System.DateTime));
+    
+            var todateParameter = todate.HasValue ?
+                new ObjectParameter("todate", todate) :
+                new ObjectParameter("todate", typeof(System.DateTime));
+    
+            var deptidParameter = deptid != null ?
+                new ObjectParameter("deptid", deptid) :
+                new ObjectParameter("deptid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<deptusagechargeback_Result>("deptusagechargeback", fromdateParameter, todateParameter, deptidParameter);
+        }
     }
 }

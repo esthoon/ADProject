@@ -480,6 +480,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="deptusagechargeback" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fromdate" Type="date" Mode="In" />
+          <Parameter Name="todate" Type="date" Mode="In" />
+          <Parameter Name="deptid" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="getAllViewPOHistorypendingcount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getAllViewPOHistorypendingcountbyPO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="varpo" Type="int" Mode="In" />
@@ -1518,6 +1523,11 @@
           <FunctionImport Name="getcollectiondetailsbydepartment" ReturnType="Collection(LogicUniversityModel.getcollectiondetailsbydepartment_Result)">
           <Parameter Name="departmentid" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="deptusagechargeback" ReturnType="Collection(LogicUniversityModel.deptusagechargeback_Result)">
+            <Parameter Name="fromdate" Mode="In" Type="DateTime" />
+            <Parameter Name="todate" Mode="In" Type="DateTime" />
+            <Parameter Name="deptid" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="getAllViewPOHistorypendingcount_Result">
           <Property Type="String" Name="supplier_name" Nullable="false" MaxLength="50" />
@@ -1906,6 +1916,12 @@
           <Property Type="DateTime" Name="collection_date" Nullable="false" />
           <Property Type="String" Name="collection_place" Nullable="false" MaxLength="30" />
           <Property Type="String" Name="collection_status" Nullable="false" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="deptusagechargeback_Result">
+          <Property Type="String" Name="item_number" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="received_quantity" Nullable="true" />
+          <Property Type="Double" Name="price" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2689,6 +2705,16 @@
                 <ScalarProperty Name="collection_date" ColumnName="collection_date" />
                 <ScalarProperty Name="collection_place" ColumnName="collection_place" />
                 <ScalarProperty Name="collection_status" ColumnName="collection_status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="deptusagechargeback" FunctionName="LogicUniversityModel.Store.deptusagechargeback">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LogicUniversityModel.deptusagechargeback_Result">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="received_quantity" ColumnName="received_quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

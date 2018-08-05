@@ -1046,6 +1046,11 @@ namespace Team3ADProject.Code
             }
             return email;
         }
+        //get all department object
+        public static List<department> ReturnDep()
+        {
+            return context.departments.ToList();
+        }
         //Esther end
 
         //Rohit - start
@@ -1613,6 +1618,15 @@ namespace Team3ADProject.Code
             return query.unit_price;
         }
 
+        public static List<deptusagechargeback_Result> UsageChargeBack(DateTime startdate, DateTime enddate, string deptid)
+        {
+            return context.deptusagechargeback(startdate, enddate, deptid).ToList();
+        }
 
+        public static int departmentheadidbydeptid(string deptid)
+        {
+            department d=  context.departments.Where(x => x.department_id.Trim() == deptid.Trim()).FirstOrDefault();
+            return d.head_id;
+        }
     }
 }

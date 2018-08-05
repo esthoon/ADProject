@@ -252,6 +252,7 @@
     <Content Include="Protected\AdjustmentForm1.aspx" />
     <Content Include="Protected\budget.aspx" />
     <Content Include="Protected\Change Collection Point.aspx" />
+    <Content Include="Protected\ChargeBack.aspx" />
     <Content Include="Protected\CollectionList.aspx" />
     <Content Include="Protected\Dashboard.aspx" />
     <Content Include="Protected\DepartmentPinChange.aspx" />
@@ -387,6 +388,9 @@
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\department_rep.cs">
+      <DependentUpon>LogicUniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\deptusagechargeback_Result.cs">
       <DependentUpon>LogicUniversityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\employee.cs">
@@ -620,6 +624,13 @@
     </Compile>
     <Compile Include="Protected\budget.aspx.designer.cs">
       <DependentUpon>budget.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Protected\ChargeBack.aspx.cs">
+      <DependentUpon>ChargeBack.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Protected\ChargeBack.aspx.designer.cs">
+      <DependentUpon>ChargeBack.aspx</DependentUpon>
     </Compile>
     <Compile Include="Protected\ClerkInventory.aspx.cs">
       <DependentUpon>ClerkInventory.aspx</DependentUpon>
