@@ -135,14 +135,15 @@ namespace Team3ADProject.Protected
 
         }
 
+        //Esther: removed.
         protected void btn_Adjustment_Click(object sender, EventArgs e)
         {
             Button lb = (Button)sender;
             HiddenField hd = (HiddenField)lb.FindControl("HiddenField1");
             string itemcode = hd.Value;
-            Session["itemcode"] = itemcode;
+            //Session["itemcode"] = itemcode;
             string url = "AdjustmentForm1.aspx?itemcode=" + itemcode;
-            Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
+            //Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
         }
 
         protected int ValidatePreparedQty()
