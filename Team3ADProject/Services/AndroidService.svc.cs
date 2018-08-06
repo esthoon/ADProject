@@ -15,7 +15,9 @@ namespace Team3ADProject.Services
     // NOTE: In order to launch WCF Test Client for testing this service, please select AndroidService.svc or AndroidService.svc.cs at the Solution Explorer and start debugging.
     public class AndroidService : IAndroidService
     {
-        // Template for working with Android services
+        // CHUA KHIONG YANG START
+
+        // Template for working with Android services and tokens.
         public string Hello(string token)
         {
             // If token is valid, do stuff
@@ -32,7 +34,6 @@ namespace Team3ADProject.Services
         }
 
         /* Token methods ===========================*/
-
 
         // Authenticates a token
         // Returns true if token exists in employee table
@@ -54,7 +55,6 @@ namespace Team3ADProject.Services
 
         // Generates a token.
         // This token is unique, and contains the time created in the token itself.
-        // To get the time created of the token, use the GetTokenCreation time method.
         protected string GenerateToken()
         {
             string key = Guid.NewGuid().ToString();
@@ -93,8 +93,15 @@ namespace Team3ADProject.Services
             return null;
         }
 
-        // Takes username and password in
-        // Returns a token and employee data if there is one for the user, null if there is none.
+
+        /*
+         * Logs the user into the system.
+         * 
+         * Takes username and password in
+         * If the username and password is valid, this generates a token for the employee
+         * This token is stored into the database for validation when using in other methods.
+        */
+
         public WCF_Employee Login(string username, string password)
         {
             WCF_Employee wcfEmployee = null;
@@ -127,7 +134,10 @@ namespace Team3ADProject.Services
             return wcfEmployee;
         }
 
-        // Query with the token, and set it to null
+        // Logs the user out
+        /*
+         * Doing this will clear the token in the database for the employee, if it exists.
+         */
         public string Logout(string token)
         {
             var context = new LogicUniversityEntities();
@@ -141,6 +151,7 @@ namespace Team3ADProject.Services
             return "done";
         }
 
+        // CHUA KHIONG YANG END
 
 
         //JOEL START
@@ -660,6 +671,8 @@ namespace Team3ADProject.Services
 
         //Sruthi start
 
+			//to find the pending ros for the android
+
         public List<WCF_approvero> Findpendingros(string token)
         {
             if (AuthenticateToken(token))
@@ -681,6 +694,7 @@ namespace Team3ADProject.Services
             }
         }
 
+		//to find the ro details based on ro id for the android
         public WCF_rodetails Findro(string token, string id)
         {
             //WCF_Employee emp = GetEmployeeByToken(token);
@@ -699,16 +713,19 @@ namespace Team3ADProject.Services
 
         }
 
+		//to approve ro android
         public void Approvero(WCF_approvero ro)
         {
             Double i = Convert.ToDouble(ro.sum);
             int i1 = (int)Math.Round(i);
             BusinessLogic.approvestatus(ro.requisition_id, ro.status, ro.requisition_id.Substring(0, 4), i1);
         }
+		//to reject ro android
         public void rejectro(WCF_approvero ro)
         {
             BusinessLogic.rejectstatus(ro.requisition_id, ro.status);
         }
+		// to get collection list- android
         public List<WCF_collectionpoint> getcollection(string token)
         {
             if (AuthenticateToken(token))
@@ -727,6 +744,7 @@ namespace Team3ADProject.Services
                 return null;
             }
         }
+		// to update the collection location - android
         public void updatelocation(string token, WCF_collectionpoint cp)
         {
             if (AuthenticateToken(token))
@@ -740,6 +758,7 @@ namespace Team3ADProject.Services
 
             }
         }
+		// to get the history of collection of the department -android
 
         public List<WCF_collectionhistory> gethistory(string token)
         {
@@ -761,6 +780,8 @@ namespace Team3ADProject.Services
             }
 
         }
+
+		// to get the item details of the particular ro- android
         public List<WCF_itemdetails> getitemdetails(string token, string id)
         {
             if (AuthenticateToken(token))
@@ -780,6 +801,8 @@ namespace Team3ADProject.Services
             }
 
         }
+
+		// to get the budget of the current month- both allocated and spent for a particular department - Android
         public WCF_Budget getbudget(string token)
         {
             if (AuthenticateToken(token))

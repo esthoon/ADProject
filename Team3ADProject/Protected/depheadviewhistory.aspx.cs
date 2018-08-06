@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Team3ADProject.Code;
 using Team3ADProject.Model;
-
+// Sruthi
 namespace Team3ADProject.Protected
 {
 	public partial class depheadviewhistory : System.Web.UI.Page
@@ -14,10 +14,10 @@ namespace Team3ADProject.Protected
         protected void Page_Load(object sender, EventArgs e)
         {
             string dept = getmethoddepartment();//to get the department
-            var q = BusinessLogic.gethistory(dept);
+            var q = BusinessLogic.gethistory(dept); // to get the department history of the ros
             Label3.Visible = false;
             GridView1.Visible = true;
-            GridView1.DataSource = q.ToList();
+            GridView1.DataSource = q.ToList();// loading the grid
             GridView1.DataBind();
 
         }
@@ -29,7 +29,7 @@ namespace Team3ADProject.Protected
             string dept = BusinessLogic.getdepartment(user);//to get the department
             return dept;
         }
-
+		// Event handler for searching employee by name
         protected void Button1_Click(object sender, EventArgs e)
         {
             string dept = getmethoddepartment();//to get the department
@@ -37,7 +37,7 @@ namespace Team3ADProject.Protected
             string name = TextBox2.Text;
             if (name != null && status == "All")
             {
-                var q = BusinessLogic.gethistorybyname(name, dept);
+                var q = BusinessLogic.gethistorybyname(name, dept); // to get the history by name
                 if (q.Count() > 0)
                 {
                     Label3.Visible = false;
@@ -53,7 +53,7 @@ namespace Team3ADProject.Protected
             }
             else if (name != null && status != "All")
             {
-                var q = BusinessLogic.gethistorybynameandstatus(name, dept, status);
+                var q = BusinessLogic.gethistorybynameandstatus(name, dept, status); // to get the history by name and status
                 if (q.Count() > 0)
                 {
                     Label3.Visible = false;
@@ -69,7 +69,7 @@ namespace Team3ADProject.Protected
             }
             else if (status == "All")
             {
-                var q = BusinessLogic.gethistory(dept);
+                var q = BusinessLogic.gethistory(dept); // to get all ros of the department
                 if (q.Count() > 0)
                 {
                     Label3.Visible = false;
@@ -87,7 +87,7 @@ namespace Team3ADProject.Protected
             else
             {
 
-                var q = BusinessLogic.gethistorybystatus(dept, status);
+                var q = BusinessLogic.gethistorybystatus(dept, status); // to get the history of the ros by status
                 if (q.Count() > 0)
                 {
                     Label3.Visible = false;
@@ -105,6 +105,7 @@ namespace Team3ADProject.Protected
 
 
         }
+		//to redirect to details page
         public void button_click(object sender, EventArgs e)
         {
             Button b = (Button)sender;

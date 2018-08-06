@@ -36,6 +36,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //loadgrid method
         protected void loadGrid()
         {
             list = new List<POStaging>();
@@ -55,11 +56,13 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //return supplier list
         protected List<supplier> GetSupplierList()
         {
             return list.Select(x => x.Supplier).Distinct().ToList();
         }
 
+        //view details 
         protected void Button2_Click(object sender, EventArgs e)
         {
             Button lb = (Button)sender;
@@ -71,6 +74,7 @@ namespace Team3ADProject.Protected
 
         }
 
+        //submit all for approval
         protected void Button3_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -89,6 +93,7 @@ namespace Team3ADProject.Protected
             loadGrid();
         }
 
+        //return index of item based on supplier name
         protected List<int> ReturnIndexSupplierMatch(string supname)
         {
             List<int> indexes = new List<int>();
@@ -102,11 +107,13 @@ namespace Team3ADProject.Protected
             return indexes;
         }
 
+        //return back to inventory list
         protected void Button4_Click(object sender, EventArgs e)
         {
             Response.Redirect("ClerkInventory.aspx");
         }
 
+        //submit all for approval
         protected void ButtonPOApproval_Click(object sender, EventArgs e)
         {
             ButtonPOApproval.Enabled = false;
@@ -172,6 +179,7 @@ namespace Team3ADProject.Protected
 
         }
 
+        //bind index to datagrid
         protected void GridViewPOStagingSummary_DataBound(object sender, EventArgs e)
         {
             int i = 1;
@@ -183,6 +191,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //button to clear the list
         protected void ButtonClear_Click(object sender, EventArgs e)
         {
             list.Clear();

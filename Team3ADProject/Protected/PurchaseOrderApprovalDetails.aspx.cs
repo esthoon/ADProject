@@ -10,8 +10,11 @@ using System.Globalization;
 
 namespace Team3ADProject.Protected
 {
+
+    //alan-start
     public partial class PurchaseOrderApprovalDetails : System.Web.UI.Page
     {
+        //load po detail
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -34,6 +37,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //approve po
         protected void Button1_Click(object sender, EventArgs e)
         {
 
@@ -48,6 +52,8 @@ namespace Team3ADProject.Protected
 
         }
 
+
+        //reject po
         protected void Button2_Click(object sender, EventArgs e)
         {
 

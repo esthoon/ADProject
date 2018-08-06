@@ -1,5 +1,13 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="Team3ADProject.MasterPage" %>
 
+<%-- Written by: Chua Khiong Yang
+    
+    The master page is used to add script includes into page, and also adds a nav bar and footer.
+    
+    Pre-condition: The navbar requires user to login to function correctly.
+    
+    --%>
+
 <!DOCTYPE html>
 
 
@@ -13,7 +21,7 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 
-    <%-- Master CSS File --%>
+    <%-- Master CSS Files --%>
     <link rel="stylesheet" href="Content/Master.css" />
     <link rel="stylesheet" href="Content/utilities.css" />
 
