@@ -17,6 +17,7 @@ namespace Team3ADProject.Protected
         
         }
 
+        // Determines whether the calendar option should be shown or not, based on the chart.
         protected void ChartList_SelectedIndexChanged(object sender, EventArgs e)
         {
             // message.InnerText = ChartList.SelectedValue;

@@ -8,6 +8,18 @@ using System.Text;
 
 namespace Team3ADProject.Services
 {
+
+    /* Written by: Chua Khiong Yang
+     * 
+     * The iService class is used to provide an API for programmers to use
+     * It is primarily used for Charts.js
+     *
+     * Additional methods here can be added for general use, for Android app features, add them to 
+     * IAndroidService.cs
+     * 
+     * */
+
+
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService" in both code and config file together.
     [ServiceContract]
     public interface IService

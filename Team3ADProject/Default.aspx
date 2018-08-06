@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Guest.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Team3ADProject.Default" %>
 
+<%-- Written by: Chua Khiong Yang --%>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <link rel="stylesheet" href="<%=ResolveUrl("~/Content/Sites/Default.css")%>" />

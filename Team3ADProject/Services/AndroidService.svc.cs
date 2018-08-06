@@ -15,7 +15,9 @@ namespace Team3ADProject.Services
     // NOTE: In order to launch WCF Test Client for testing this service, please select AndroidService.svc or AndroidService.svc.cs at the Solution Explorer and start debugging.
     public class AndroidService : IAndroidService
     {
-        // Template for working with Android services
+        // CHUA KHIONG YANG START
+
+        // Template for working with Android services and tokens.
         public string Hello(string token)
         {
             // If token is valid, do stuff
@@ -32,7 +34,6 @@ namespace Team3ADProject.Services
         }
 
         /* Token methods ===========================*/
-
 
         // Authenticates a token
         // Returns true if token exists in employee table
@@ -54,7 +55,6 @@ namespace Team3ADProject.Services
 
         // Generates a token.
         // This token is unique, and contains the time created in the token itself.
-        // To get the time created of the token, use the GetTokenCreation time method.
         protected string GenerateToken()
         {
             string key = Guid.NewGuid().ToString();
@@ -93,8 +93,15 @@ namespace Team3ADProject.Services
             return null;
         }
 
-        // Takes username and password in
-        // Returns a token and employee data if there is one for the user, null if there is none.
+
+        /*
+         * Logs the user into the system.
+         * 
+         * Takes username and password in
+         * If the username and password is valid, this generates a token for the employee
+         * This token is stored into the database for validation when using in other methods.
+        */
+
         public WCF_Employee Login(string username, string password)
         {
             WCF_Employee wcfEmployee = null;
@@ -127,7 +134,10 @@ namespace Team3ADProject.Services
             return wcfEmployee;
         }
 
-        // Query with the token, and set it to null
+        // Logs the user out
+        /*
+         * Doing this will clear the token in the database for the employee, if it exists.
+         */
         public string Logout(string token)
         {
             var context = new LogicUniversityEntities();
@@ -141,6 +151,7 @@ namespace Team3ADProject.Services
             return "done";
         }
 
+        // CHUA KHIONG YANG END
 
 
         //JOEL START
