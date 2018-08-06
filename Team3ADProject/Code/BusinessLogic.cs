@@ -14,12 +14,14 @@ namespace Team3ADProject.Code
     {
         public static LogicUniversityEntities context = new LogicUniversityEntities();
 
+		// Sruthi- to get the pending ros of the particular department
         public static List<getpendingrequestsbydepartment_Result> ViewPendingRequests(string deptid)
         {
             List<getpendingrequestsbydepartment_Result> list = new List<getpendingrequestsbydepartment_Result>();
             return list = context.getpendingrequestsbydepartment(deptid).ToList();
         }
 
+		//Sruthi- to get the department based on the userid
         public static string getdepartment(string userid)
         {
             employee k = (from employee in context.employees where employee.user_id == userid select employee).FirstOrDefault();
@@ -27,17 +29,20 @@ namespace Team3ADProject.Code
             return dept;
         }
 
+		//Sruthi-to get the details of the ro based on the roid
         public static getpendingrequestdetails_Result getdetails(string id)
         {
             return context.getpendingrequestdetails(id).ToList().Single();
         }
 
+		//Sruthi-to get the item details in the particular ro
         public static List<getitemdetails_Result> pendinggetitemdetails(string reqid)
         {
             List<getitemdetails_Result> list = new List<getitemdetails_Result>();
             return list = context.getitemdetails(reqid).ToList();
         }
 
+		//Sruthi -to approve the ro
         public static void approvestatus(string id, string status, string dept, int sum)
         {
             using (TransactionScope ts = new TransactionScope())
@@ -65,6 +70,7 @@ namespace Team3ADProject.Code
 
 
         }
+		//Sruthi- to reject the ro
         public static void rejectstatus(string id, string status)
         {
             var k = from requisition_order in context.requisition_order where requisition_order.requisition_id == id select requisition_order;
@@ -72,11 +78,15 @@ namespace Team3ADProject.Code
             k.FirstOrDefault().head_comment = status;
             context.SaveChanges();
         }
+
+		//Sruthi- to get the history of the ros of the department
         public static List<getrequesthistory_Result> gethistory(string dept)
         {
             List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
             return list = context.getrequesthistory(dept).ToList();
         }
+
+		//Sruthi- to get the history of the ros based on the name
         public static List<getrequesthistory_Result> gethistorybyname(string name, string dept)
         {
             List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
@@ -103,6 +113,7 @@ namespace Team3ADProject.Code
                           }).ToList();
             return list;
         }
+		// Sruthi-to get the history of the requisition orders by name and status
         public static List<getrequesthistory_Result> gethistorybynameandstatus(string name, string dept, string status)
         {
             List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
@@ -129,7 +140,7 @@ namespace Team3ADProject.Code
                           }).ToList();
             return list;
         }
-
+		//Sruthi- to get the history of the requisition orders by status
         public static List<getrequesthistory_Result> gethistorybystatus(string dept, string status)
         {
             List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
@@ -157,6 +168,7 @@ namespace Team3ADProject.Code
             return list;
         }
 
+		//Sruthi- to get the list of the employees of the department
         public static List<employee> getemployeenames(string dept)
         {
             //var q=from employee in context.employees where employee.department_id.Equals(dept) select employee.employee_name;
@@ -164,12 +176,14 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to get the employee id based on name
         public static int getemployeeid(string name)
         {
             var q = from employee in context.employees where employee.employee_name == name select employee.employee_id;
             return q.FirstOrDefault();
         }
 
+		//Sruthi-to update the temporary head
         public static void updatetemporaryhead(int id, string dept)
         {
             var q = from department in context.departments where department.department_id == dept select department;
@@ -190,6 +204,7 @@ namespace Team3ADProject.Code
             BusinessLogic.sendMail(y.email_id, "Temporary head", messagebody1);
         }
 
+		//Sruthi- to get the temporary head of the department
         public static string gettemporaryheadname(string dept)
         {
             var q = from department in context.departments
@@ -201,6 +216,7 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to revoke the temporary head
         public static void revoketemporaryhead(string dept)
         {
             var q = from department in context.departments where department.department_id == dept select department;
@@ -212,6 +228,7 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to get employee name by search
         public static List<employee> getemployeenamebysearch(string dept, string name)
         {
             var q = from e in context.employees
@@ -222,6 +239,7 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to get previous representative details
         public static List<getrepdetails_Result> getpreviousrepdetails(string dept)
         {
             List<getrepdetails_Result> list = new List<getrepdetails_Result>();
@@ -230,6 +248,7 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to save the representative details of a department
         public static void saverepdetails(string dept, int id)
         {
             using (TransactionScope ts = new TransactionScope())
@@ -259,6 +278,8 @@ namespace Team3ADProject.Code
 
 
         }
+
+		// Sruthi- to update the department pin
         public static void updatepassword(string dept, int password)
         {
             var q = from department in context.departments
@@ -269,6 +290,7 @@ namespace Team3ADProject.Code
             context.SaveChanges();
         }
 
+		//Sruthi- to get the list of collections
         public static List<collection> GetCollection()
         {
             var q = from collection c in context.collections select c;
@@ -1176,6 +1198,8 @@ namespace Team3ADProject.Code
 
 
         //Sruthi - start
+
+			//sruthi- to update the collection location for a department
         public static void updatecollectionlocation(string dept, int id)
         {
             context.updatecollectiondepartment(dept, id);
@@ -1193,6 +1217,7 @@ namespace Team3ADProject.Code
             BusinessLogic.sendMail(emailList, "Location Change", messagebody);
         }
 
+		//sruthi- to get the budget for the particular department in the year
         public static List<budget> getbudget(string dept)
         {
             var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) && b.department_id.Equals(dept) select b;
@@ -1201,6 +1226,7 @@ namespace Team3ADProject.Code
             return list;
         }
 
+		//sruthi- to update the budget for the department in a particular month
         public static void updatebudget(string dept, string month, int budget)
         {
             int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
@@ -1210,6 +1236,7 @@ namespace Team3ADProject.Code
             context.SaveChanges();
 
         }
+		//sruthi-to get the budget allocated for the department in the current month
         public static int getbudgetbydept(string dept)
         {
             int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
@@ -1223,7 +1250,8 @@ namespace Team3ADProject.Code
             return b1;
         }
 
-        public static int getspentbudgetbydept(string dept)
+		//Sruthi- to get the spent budget allocated for the department in the current month
+		public static int getspentbudgetbydept(string dept)
         {
             int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
             string month = DateTime.Now.ToString("MMM");
@@ -1236,12 +1264,13 @@ namespace Team3ADProject.Code
             return b1;
         }
 
-
+		//Sruthi- To get the user email id based on employee id
         public static string GetUserID(int employee_id)
         {
             return context.employees.Where(x => x.employee_id == employee_id).Select(x => x.user_id).FirstOrDefault();
         }
 
+		//Sruthi- To get the email of the employees of the particular department
         public static List<string> getEmployeesEmailFromDept(string dept)
         {
             var query = context.employees.Where(x => x.department_id == dept).ToList<employee>();
@@ -1263,6 +1292,7 @@ namespace Team3ADProject.Code
             return listOfEmail;
         }
 
+		//Sruthi- to get the collection details of the department
         public static List<getcollectiondetailsbydepartment_Result> getdepartmentcollection(string dept)
         {
             return context.getcollectiondetailsbydepartment(dept).ToList();

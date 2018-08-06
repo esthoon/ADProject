@@ -234,38 +234,47 @@ namespace Team3ADProject.Services
 
         //Sruthi start
 
+		//to get the pending ros
         [OperationContract]
         [WebGet(UriTemplate = "/pending/{token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_approvero> Findpendingros(String token);
 
+		//to get the ro details based on the ro id
         [OperationContract]
         [WebGet(UriTemplate = "/pending/{token}?id={id}", ResponseFormat = WebMessageFormat.Json)]
         WCF_rodetails Findro(String token, String id);
 
+		// to approve the pending ro
         [OperationContract]
         [WebInvoke(UriTemplate = "/pending/", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         void Approvero(WCF_approvero ro);
 
+		// to reject the pending ro
         [OperationContract]
         [WebInvoke(UriTemplate = "/pending", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         void rejectro(WCF_approvero ro);
 
+		//to get the collection list
         [OperationContract]
         [WebGet(UriTemplate = "/changecollectionlocation/{token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_collectionpoint> getcollection(string token);
 
+		//to change the collection location
         [OperationContract]
         [WebInvoke(UriTemplate = "/changecollectionlocation/{token}", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         void updatelocation(string token, WCF_collectionpoint cp);
 
+		//to get the collection history of the department
         [OperationContract]
         [WebGet(UriTemplate = "/viewcollectionhistory/{token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_collectionhistory> gethistory(string token);
 
+		//to get the item details of the particular ro
         [OperationContract]
         [WebGet(UriTemplate = "/getitemdetails/{token}?id={id}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_itemdetails> getitemdetails(string token, string id);
 
+		//to get the budget (both allocated and spent) for the department in the current month
         [OperationContract]
         [WebGet(UriTemplate = "/getbudget/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Budget getbudget(string token);

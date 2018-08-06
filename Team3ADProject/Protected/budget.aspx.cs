@@ -5,13 +5,14 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Team3ADProject.Code;
-
+//Sruthi
 namespace Team3ADProject.Protected
 {
     public partial class budget : System.Web.UI.Page
     {
         static string[] months = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
         List<string> monthlist = new List<string>(months);
+	
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -27,6 +28,7 @@ namespace Team3ADProject.Protected
 
         }
 
+		//loading the grid with the budget of the department
         public void refreshgrid()
         {
             string dept = Session["Department"].ToString();
@@ -34,6 +36,7 @@ namespace Team3ADProject.Protected
             GridView1.DataBind();
         }
 
+		//for disabling the previous months in the dropdown
         public void disablemonths()
         {
             for (int i = 0; i < monthlist.Count; i++)
@@ -52,7 +55,7 @@ namespace Team3ADProject.Protected
         }
 
 
-
+		//for updating the budget on button click
         protected void Button1_Click(object sender, EventArgs e)
         {
             try
@@ -62,6 +65,7 @@ namespace Team3ADProject.Protected
                 string user = BusinessLogic.GetUserID(employeeid);
                 string dept = Session["Department"].ToString();
                 string month = DropDownList1.SelectedValue.ToString();
+				//method to update the budget
                 BusinessLogic.updatebudget(dept, month, budget);
                 refreshgrid();
                 DropDownList1.DataSource = months;
@@ -79,6 +83,7 @@ namespace Team3ADProject.Protected
 
         protected void TextBox1_TextChanged(object sender, EventArgs e)
         {
+			//for enabling or disabling the submit button 
             int qty;
 
             if(Int32.TryParse(TextBox1.Text,out qty))
