@@ -14,6 +14,7 @@ namespace Team3ADProject.Protected
         static string itemid;
         static employee user;
 
+        //Shijun
         protected void Page_Load(object sender, EventArgs e)
         {   //Get the item code
             if (Request.QueryString["itemid"] != null)
@@ -32,7 +33,7 @@ namespace Team3ADProject.Protected
 
             if (!IsPostBack)
             {
-
+                
                 //Binding the supplier to a dropdownlist to the item selected
                 DropDownListSupplier.DataSource = BusinessLogic.GetSupplier(itemid);
                 DropDownListSupplier.DataTextField = "supplier_name";
@@ -63,6 +64,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //Shijun
         protected int validationOnTextBoxOrderQuantity()
         {
             int qty;
@@ -82,11 +84,13 @@ namespace Team3ADProject.Protected
 
         }
 
+        //shijun
         protected void DropDownListSupplier_SelectedIndexChanged(object sender, EventArgs e)
         {
             CalculationForUnitCostAndTotalCost(validationOnTextBoxOrderQuantity());
         }
 
+        //shijun
         public void CalculationForUnitCostAndTotalCost(int qty)
         {
             if (qty > 0 && qty <= 1000000)
@@ -137,7 +141,7 @@ namespace Team3ADProject.Protected
             }
 
         }
-
+        //shijun
         protected void Cancel_Click(object sender, EventArgs e)
         {
             Response.Redirect("ClerkInventory.aspx");

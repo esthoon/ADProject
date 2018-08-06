@@ -189,7 +189,7 @@ namespace Team3ADProject.Code
             BusinessLogic.sendMail(allemails, "Temporary head", messagebody);
             BusinessLogic.sendMail(y.email_id, "Temporary head", messagebody1);
         }
-
+        //Shijun
         public static string gettemporaryheadname(string dept)
         {
             var q = from department in context.departments
@@ -201,6 +201,7 @@ namespace Team3ADProject.Code
 
         }
 
+        //Shijun
         public static void revoketemporaryhead(string dept)
         {
             var q = from department in context.departments where department.department_id == dept select department;
@@ -229,7 +230,7 @@ namespace Team3ADProject.Code
             return list;
 
         }
-
+        //Shijun
         public static void saverepdetails(string dept, int id)
         {
             using (TransactionScope ts = new TransactionScope())
@@ -325,7 +326,7 @@ namespace Team3ADProject.Code
         {
             return (int)context.spGetDepartmentPin(departmentname).ToList().Single();
         }
-
+        //Shijun
         public static System.Collections.IEnumerable GetSupplier(string id)
         {
             var nestedQuery = from s in context.suppliers
