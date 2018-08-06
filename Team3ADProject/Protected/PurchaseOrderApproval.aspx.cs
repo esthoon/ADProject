@@ -8,6 +8,7 @@ using Team3ADProject.Code;
 
 namespace Team3ADProject.Protected
 {
+    //alan-start
     public partial class PurchaseOrderApproval : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -26,7 +27,7 @@ namespace Team3ADProject.Protected
             }
         }
 
-
+        //bind grid
         private void BindGrid()
         {
             GridView1.DataSource = BusinessLogic.GetPurchaseOrders();
@@ -35,6 +36,7 @@ namespace Team3ADProject.Protected
 
         }
 
+        //grid updating
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = GridView1.Rows[e.RowIndex];
