@@ -17,20 +17,25 @@ namespace Team3ADProject
 
         }
 
+        /*
+         * Sets up session variable based on the user that logged in.
+         * 
+         * Note: The method only runs if the user is successfully logged in
+         */
         protected void Login1_LoggedIn(object sender, EventArgs e)
         {
             // Setup the session variables
             Session["username"] = Login1.UserName.ToString();
             employee emp = BusinessLogic.GetEmployeeByUserID((string)Session["username"]);
-                Session["Name"] = emp.employee_name;
-                Session["Employee"] = emp.employee_id;
-                Session["Department"] = emp.department_id.Trim();
-                Session["role"] = Roles.GetRolesForUser((string)Session["username"]).FirstOrDefault();
+            Session["Name"] = emp.employee_name;
+            Session["Employee"] = emp.employee_id;
+            Session["Department"] = emp.department_id.Trim();
+            Session["role"] = Roles.GetRolesForUser((string)Session["username"]).FirstOrDefault();
 
 
             department dep = BusinessLogic.GetDepartmenthead((string)Session["Department"]);
-                Session["Head_id"] = dep.head_id;
-                Session["supervisor_id"] = emp.supervisor_id;
+            Session["Head_id"] = dep.head_id;
+            Session["supervisor_id"] = emp.supervisor_id;
 
 
             // Redirect users to their dashboard

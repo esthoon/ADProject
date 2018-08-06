@@ -14,12 +14,14 @@ namespace Team3ADProject.Code
     {
         public static LogicUniversityEntities context = new LogicUniversityEntities();
 
+		// Sruthi- to get the pending ros of the particular department
         public static List<getpendingrequestsbydepartment_Result> ViewPendingRequests(string deptid)
         {
             List<getpendingrequestsbydepartment_Result> list = new List<getpendingrequestsbydepartment_Result>();
             return list = context.getpendingrequestsbydepartment(deptid).ToList();
         }
 
+		//Sruthi- to get the department based on the userid
         public static string getdepartment(string userid)
         {
             employee k = (from employee in context.employees where employee.user_id == userid select employee).FirstOrDefault();
@@ -27,17 +29,20 @@ namespace Team3ADProject.Code
             return dept;
         }
 
+		//Sruthi-to get the details of the ro based on the roid
         public static getpendingrequestdetails_Result getdetails(string id)
         {
             return context.getpendingrequestdetails(id).ToList().Single();
         }
 
+		//Sruthi-to get the item details in the particular ro
         public static List<getitemdetails_Result> pendinggetitemdetails(string reqid)
         {
             List<getitemdetails_Result> list = new List<getitemdetails_Result>();
             return list = context.getitemdetails(reqid).ToList();
         }
 
+		//Sruthi -to approve the ro
         public static void approvestatus(string id, string status, string dept, int sum)
         {
             using (TransactionScope ts = new TransactionScope())
@@ -65,6 +70,7 @@ namespace Team3ADProject.Code
 
 
         }
+		//Sruthi- to reject the ro
         public static void rejectstatus(string id, string status)
         {
             var k = from requisition_order in context.requisition_order where requisition_order.requisition_id == id select requisition_order;
@@ -72,11 +78,15 @@ namespace Team3ADProject.Code
             k.FirstOrDefault().head_comment = status;
             context.SaveChanges();
         }
+
+		//Sruthi- to get the history of the ros of the department
         public static List<getrequesthistory_Result> gethistory(string dept)
         {
             List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
             return list = context.getrequesthistory(dept).ToList();
         }
+
+		//Sruthi- to get the history of the ros based on the name
         public static List<getrequesthistory_Result> gethistorybyname(string name, string dept)
         {
             List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
@@ -103,6 +113,7 @@ namespace Team3ADProject.Code
                           }).ToList();
             return list;
         }
+		// Sruthi-to get the history of the requisition orders by name and status
         public static List<getrequesthistory_Result> gethistorybynameandstatus(string name, string dept, string status)
         {
             List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
@@ -129,7 +140,7 @@ namespace Team3ADProject.Code
                           }).ToList();
             return list;
         }
-
+		//Sruthi- to get the history of the requisition orders by status
         public static List<getrequesthistory_Result> gethistorybystatus(string dept, string status)
         {
             List<getrequesthistory_Result> list = new List<getrequesthistory_Result>();
@@ -157,6 +168,7 @@ namespace Team3ADProject.Code
             return list;
         }
 
+		//Sruthi- to get the list of the employees of the department
         public static List<employee> getemployeenames(string dept)
         {
             //var q=from employee in context.employees where employee.department_id.Equals(dept) select employee.employee_name;
@@ -164,12 +176,14 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to get the employee id based on name
         public static int getemployeeid(string name)
         {
             var q = from employee in context.employees where employee.employee_name == name select employee.employee_id;
             return q.FirstOrDefault();
         }
 
+		//Sruthi-to update the temporary head
         public static void updatetemporaryhead(int id, string dept)
         {
             var q = from department in context.departments where department.department_id == dept select department;
@@ -190,6 +204,7 @@ namespace Team3ADProject.Code
             BusinessLogic.sendMail(y.email_id, "Temporary head", messagebody1);
         }
 
+		//Sruthi- to get the temporary head of the department
         public static string gettemporaryheadname(string dept)
         {
             var q = from department in context.departments
@@ -201,6 +216,7 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to revoke the temporary head
         public static void revoketemporaryhead(string dept)
         {
             var q = from department in context.departments where department.department_id == dept select department;
@@ -212,6 +228,7 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to get employee name by search
         public static List<employee> getemployeenamebysearch(string dept, string name)
         {
             var q = from e in context.employees
@@ -222,6 +239,7 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to get previous representative details
         public static List<getrepdetails_Result> getpreviousrepdetails(string dept)
         {
             List<getrepdetails_Result> list = new List<getrepdetails_Result>();
@@ -230,6 +248,7 @@ namespace Team3ADProject.Code
 
         }
 
+		//Sruthi- to save the representative details of a department
         public static void saverepdetails(string dept, int id)
         {
             using (TransactionScope ts = new TransactionScope())
@@ -259,6 +278,8 @@ namespace Team3ADProject.Code
 
 
         }
+
+		// Sruthi- to update the department pin
         public static void updatepassword(string dept, int password)
         {
             var q = from department in context.departments
@@ -269,6 +290,7 @@ namespace Team3ADProject.Code
             context.SaveChanges();
         }
 
+		//Sruthi- to get the list of collections
         public static List<collection> GetCollection()
         {
             var q = from collection c in context.collections select c;
@@ -496,6 +518,7 @@ namespace Team3ADProject.Code
 
         }
 
+        //send email function
         public static void sendMail(List<string> to, string sub, string body)
         {
             foreach(string email in to)
@@ -1181,6 +1204,8 @@ namespace Team3ADProject.Code
 
 
         //Sruthi - start
+
+			//sruthi- to update the collection location for a department
         public static void updatecollectionlocation(string dept, int id)
         {
             context.updatecollectiondepartment(dept, id);
@@ -1198,6 +1223,7 @@ namespace Team3ADProject.Code
             BusinessLogic.sendMail(emailList, "Location Change", messagebody);
         }
 
+		//sruthi- to get the budget for the particular department in the year
         public static List<budget> getbudget(string dept)
         {
             var q = from b in context.budgets where b.year.Equals(DateTime.Now.Year) && b.department_id.Equals(dept) select b;
@@ -1206,6 +1232,7 @@ namespace Team3ADProject.Code
             return list;
         }
 
+		//sruthi- to update the budget for the department in a particular month
         public static void updatebudget(string dept, string month, int budget)
         {
             int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
@@ -1215,6 +1242,7 @@ namespace Team3ADProject.Code
             context.SaveChanges();
 
         }
+		//sruthi-to get the budget allocated for the department in the current month
         public static int getbudgetbydept(string dept)
         {
             int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
@@ -1228,7 +1256,8 @@ namespace Team3ADProject.Code
             return b1;
         }
 
-        public static int getspentbudgetbydept(string dept)
+		//Sruthi- to get the spent budget allocated for the department in the current month
+		public static int getspentbudgetbydept(string dept)
         {
             int year = Convert.ToInt32(DateTime.Now.ToString("yyyy"));
             string month = DateTime.Now.ToString("MMM");
@@ -1241,12 +1270,13 @@ namespace Team3ADProject.Code
             return b1;
         }
 
-
+		//Sruthi- To get the user email id based on employee id
         public static string GetUserID(int employee_id)
         {
             return context.employees.Where(x => x.employee_id == employee_id).Select(x => x.user_id).FirstOrDefault();
         }
 
+		//Sruthi- To get the email of the employees of the particular department
         public static List<string> getEmployeesEmailFromDept(string dept)
         {
             var query = context.employees.Where(x => x.department_id == dept).ToList<employee>();
@@ -1268,6 +1298,7 @@ namespace Team3ADProject.Code
             return listOfEmail;
         }
 
+		//Sruthi- to get the collection details of the department
         public static List<getcollectiondetailsbydepartment_Result> getdepartmentcollection(string dept)
         {
             return context.getcollectiondetailsbydepartment(dept).ToList();
@@ -1280,14 +1311,14 @@ namespace Team3ADProject.Code
 
         //JOEL - START
 
-        //CollectionList
+        //CollectionList - Gets CollectionList, list of items to collect from warehouse.
         public static List<spGetCollectionList_Result> GetCollectionList()
         {
             List<spGetCollectionList_Result> list = new List<spGetCollectionList_Result>();
             return list = context.spGetCollectionList().ToList();
         }
 
-        //CollectionList
+        //CollectionList - for each item num, gets the total qty ordered by all dpts. 
         public static int GetAllDptRequiredQtyByItem(string itemNum)
         {
             spFindAllDptRequiredQtyByItem_Result demand = new spFindAllDptRequiredQtyByItem_Result();
@@ -1296,21 +1327,21 @@ namespace Team3ADProject.Code
             return Convert.ToInt32(demand.total_required_qty);
         }
 
-        //CollectionList
+        //CollectionList - finds the dpt id and the required qty by item number
         public static List<spFindDptIdAndRequiredQtyByItem_Result> spFindDptIdAndRequiredQtyByItem(string itemNum)
         {
             List<spFindDptIdAndRequiredQtyByItem_Result> list = new List<spFindDptIdAndRequiredQtyByItem_Result>();
             return list = context.spFindDptIdAndRequiredQtyByItem(itemNum).ToList();
         }
 
-        //CollectionList
+        //CollectionList - gets the full list of ROIDs that have been approved but haven't been collected
         public static List<spGetFullCollectionROIDList_Result> GetFullCollectionROIDList()
         {
             List<spGetFullCollectionROIDList_Result> list = new List<spGetFullCollectionROIDList_Result>();
             return list = context.spGetFullCollectionROIDList().ToList();
         }
 
-        //CollectionList
+        //CollectionList - allocates goods to departments, prioritising by date of requisition. dates with earlier RO dates will be filled first.
         public static void SortCollectedGoods(List<CollectionListItem> allDptCollectionList)
         {
             List<spGetFullCollectionROIDList_Result> list = BusinessLogic.GetFullCollectionROIDList();
@@ -1357,7 +1388,7 @@ namespace Team3ADProject.Code
             }
         }
 
-        //CollectionList 
+        //CollectionList - After collection is done, this method deducts qty from inventory
         public static void DeductFromInventory(List<CollectionListItem> list)
         {
             foreach (var item in list)
@@ -1368,14 +1399,14 @@ namespace Team3ADProject.Code
             }
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - gets the list of ROIDs for sorting based on the dptID and item num
         public static List<spGetRODListForSorting_Result> GetRODListForSorting(string dptId, string itemNum)
         {
             List<spGetRODListForSorting_Result> result = new List<spGetRODListForSorting_Result>();
             return result = context.spGetRODListForSorting(dptId, itemNum).ToList();
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - gets the list of items to be sorted / allocated for the selected department
         public static List<spGetSortingTableByDpt_Result> GetSortingListByDepartment(string selectedDptName)
         {
             string dpt_Id = context.departments.Where(x => x.department_name == selectedDptName).FirstOrDefault().department_id;
@@ -1383,21 +1414,21 @@ namespace Team3ADProject.Code
             return list = context.spGetSortingTableByDpt(dpt_Id).ToList();
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - gets dpt id from the dpt name
         public static string GetDptIdFromDptName(string dptName)
         {
             string s = context.departments.Where(x => x.department_name == dptName).FirstOrDefault().department_id;
             return s.Trim();
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - inserts a row into collection details table to generate a new collection id
         public static void InsertCollectionDetailsRow(int placeId, DateTime collectionDate, string dpt_Id)
         {
             string collectionStatus = "Pending";
             context.spInsertCollectionDetail(placeId, collectionDate, collectionStatus, dpt_Id);
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - gets the latest collection id that was generated after writing to the Collection Details table. To be used to write into the Requisition Disbursement Detail table. 
         public static int GetLatestCollectionId()
         {
             spGetLatestCollectionDetailId_Result latest = new spGetLatestCollectionDetailId_Result();
@@ -1405,7 +1436,7 @@ namespace Team3ADProject.Code
             return Convert.ToInt32(latest.collection_id);
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - gets a department's list of ROIDs that need to be disbursed. 
         public static List<string> GetListOfROIDForDisbursement(string dpt_Id)
         {
             List<spGetListOfROIDForDisbursement_Result> list = context.spGetListOfROIDForDisbursement(dpt_Id).ToList();
@@ -1418,7 +1449,7 @@ namespace Team3ADProject.Code
             return sList;
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - displays the list of departments which have items for collection
         public static List<string> DisplayListofDepartmentsForCollection()
         {
             List<spGetFullCollectionROIDList_Result> roidList = new List<spGetFullCollectionROIDList_Result>();
@@ -1437,7 +1468,7 @@ namespace Team3ADProject.Code
             return dptList;
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - used to check if department name is already in list of departments for disbursement. 
         public static int isExisting(string department_name, List<string> dptList)
         {
             foreach (string dptName in dptList)
@@ -1450,7 +1481,7 @@ namespace Team3ADProject.Code
             return 1;
         }
 
-        //DisbursementSorting
+        //DisbursementSorting - after a new collection id is created for the department, this method adds all the associated ROIDs to the disbursement table. Also sends email to dpt rep for collection
         public static void InsertDisbursementListROId(string dpt_Id)
         {
             int latestCollectionId = GetLatestCollectionId();
@@ -1481,14 +1512,14 @@ namespace Team3ADProject.Code
             return mu.Email;
         }
 
-        //ViewROSpecialRequest
+        //ViewROSpecialRequest - gets collection place ID from the dpt ID
         public static int GetPlaceIdFromDptId(string dptId)
         {
             spGetPlaceIdFromDptId_Result result = context.spGetPlaceIdFromDptId(dptId).FirstOrDefault();
             return (int)result.place_id;
         }
 
-        //ViewROSpecialRequest
+        //ViewROSpecialRequest - when special request is collected, method updates Collection Details & Requisition Disbursement Details tables. sends email to inform dpt rep for collection
         public static void SpecialRequestReadyUpdatesCDRDD(int placeId, DateTime collectionDate, string ro_id, string dpt_id)
         {
             string collectionStatus = "Pending";
@@ -1499,7 +1530,7 @@ namespace Team3ADProject.Code
             context.spSpecialRequestReady(placeId, collectionDate, collectionStatus, ro_id, dpt_id);
         }
 
-        //ViewROSpecialRequest
+        //ViewROSpecialRequest - when special request is collected, method updates the Requisition Order Details table.
         public static void ViewROSpecialRequestUpdateRODTable(List<CollectionListItem> clList, string ro_id)
         {
             foreach (var item in clList)
@@ -1515,14 +1546,14 @@ namespace Team3ADProject.Code
             }
         }
 
-        //Reallocate
+        //Reallocate - gets list of departments that ordered this item and the qtys they ordered. 
         public static List<spReallocateQty_Result> GetReallocateList(string itemNum)
         {
             List<spReallocateQty_Result> list = new List<spReallocateQty_Result>();
             return list = context.spReallocateQty(itemNum).ToList();
         }
 
-        //Reallocate
+        //Reallocate - to get the total collected qty for this item
         public static int GetTotalCollectedVolumeForChosenItem(string itemNum)
         {
             List<spReallocateQty_Result> list = BusinessLogic.GetReallocateList(itemNum);
@@ -1534,7 +1565,7 @@ namespace Team3ADProject.Code
             return itemCount;
         }
 
-        //Reallocate
+        //Reallocate - when rewriting to ROD table, need to reset the qtys to 0 first, to ensure no ROIDs are left unwritten after the reallocation
         public static void ResetRODTable(string dpt_id, string itemNum)
         {
             List<spGetFullCollectionROIDList_Result> roidList = BusinessLogic.GetFullCollectionROIDList();
@@ -1556,7 +1587,7 @@ namespace Team3ADProject.Code
             }
         }
 
-        //Reallocate
+        //Reallocate - updates ROD tables with reallocated amounts.
         public static void UpdateRODTableOnReallocate(string dpt_id, string itemNum, int distriQty)
         {
             List<spGetFullCollectionROIDList_Result> roidList = BusinessLogic.GetFullCollectionROIDList();
@@ -1595,7 +1626,7 @@ namespace Team3ADProject.Code
             }
         }
 
-        //Reallocate
+        //Reallocate - calculates how much to return to inventory
         public static void ReturnToInventory(int returnBalance, string itemNum)
         {
             CollectionListItem item = new CollectionListItem();
@@ -1605,7 +1636,7 @@ namespace Team3ADProject.Code
             BusinessLogic.AddtoInventory(item);
         }
 
-        //Reallocate
+        //Reallocate - if reallocated amounts are less than what was collected, means some items need to be returned to inventory, since they won't be disbursed.
         public static void AddtoInventory(CollectionListItem item)
         {
             inventory i = context.inventories.Where(x => x.item_number == item.itemNum).FirstOrDefault();

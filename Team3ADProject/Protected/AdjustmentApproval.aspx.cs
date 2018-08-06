@@ -11,6 +11,7 @@ using Team3ADProject.Model;
 
 namespace Team3ADProject.Protected
 {
+    //alan-start
     public partial class AdjustmentApproval : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -26,7 +27,7 @@ namespace Team3ADProject.Protected
 
         }
 
-
+        //row binding
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
 
@@ -46,7 +47,7 @@ namespace Team3ADProject.Protected
 
 
 
-
+        // binding grid and check session
         private void BindGrid()
         {
             // need to modify base on session in user role
@@ -85,6 +86,7 @@ namespace Team3ADProject.Protected
 
         //}
 
+            //when no details
         private void NoRowDetail()
         {
             if (GridView1.Rows.Count <= 0)
@@ -114,6 +116,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //reject function
         protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             GridViewRow row = GridView1.Rows[e.RowIndex];
@@ -125,6 +128,7 @@ namespace Team3ADProject.Protected
             BindGrid();
         }
 
+        //update single entry
         protected void LinkButton4_Click(object sender, EventArgs e)
         {
             foreach (GridViewRow row in GridView1.Rows)
@@ -152,6 +156,7 @@ namespace Team3ADProject.Protected
             BindGrid();
         }
 
+        //reject single entry
         protected void LinkButton3_Click(object sender, EventArgs e)
         {
             foreach (GridViewRow row in GridView1.Rows)
@@ -180,6 +185,7 @@ namespace Team3ADProject.Protected
             this.BindGrid();
         }
 
+        //search date
         protected void Button1_Click(object sender, EventArgs e)
         {
            
@@ -215,6 +221,7 @@ namespace Team3ADProject.Protected
             BindGrid();
         }
 //new code
+//disapprove disable
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             List<inventory> ilist = BusinessLogic.GetActiveInventory().ToList();

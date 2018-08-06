@@ -8,6 +8,7 @@ using Team3ADProject.Code;
 using System.Web.Security;
 using Team3ADProject.Model;
 
+//Sruthi
 namespace Team3ADProject.Protected
 {
 	public partial class WebForm4 : System.Web.UI.Page
@@ -16,14 +17,15 @@ namespace Team3ADProject.Protected
         {
             if (!IsPostBack)
             {
-                string dept = getmethoddepartment();//to get the department
-                var q = BusinessLogic.getemployeenames(dept);
-                GridView1.DataSource = q;
+                string dept = getmethoddepartment();//to get the department			
+                var q = BusinessLogic.getemployeenames(dept);   //to get the employee names of the department
+				GridView1.DataSource = q;
                 GridView1.DataBind();
                 updategrid();
             }
         }
 
+		//to get the department for the logged in employee
         public string getmethoddepartment()
         {
             int employeeid = Convert.ToInt32(Session["Employee"]);
@@ -35,11 +37,13 @@ namespace Team3ADProject.Protected
         public void updategrid()
         {
             string dept = getmethoddepartment();
+			//to get the representative history of the department
             var k = BusinessLogic.getpreviousrepdetails(dept);
             GridView2.DataSource = k;
             GridView2.DataBind();
         }
 
+		//to display the employee by select
         protected void button_click(object sender, EventArgs e)
         {
             Button b = (Button)sender;
@@ -47,6 +51,7 @@ namespace Team3ADProject.Protected
             TextBox2.Text = hd.Value;
         }
 
+		// event on appointing representative
         protected void Button2_Click(object sender, EventArgs e)
         {
             string name = TextBox2.Text;
@@ -55,6 +60,7 @@ namespace Team3ADProject.Protected
                 Label4.Visible = false;
                 int id = BusinessLogic.getemployeeid(name);
                 string dept = getmethoddepartment();
+				//saving the representative details
                 BusinessLogic.saverepdetails(dept, id);
                 //sending the email to the department employees,store clerk on the Representative change.             
 
@@ -82,10 +88,12 @@ namespace Team3ADProject.Protected
 
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+		// event for getting employee name
+		protected void Button1_Click(object sender, EventArgs e)
         {
             string dept = getmethoddepartment();
             string name = TextBox1.Text.TrimEnd();
+			//to get the employee name by search 
             var q = BusinessLogic.getemployeenamebysearch(dept, name);
             if (q.Count() > 0)
             {

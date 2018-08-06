@@ -15,6 +15,8 @@ namespace Team3ADProject.Protected
 {
     public partial class DisbursementSorting : System.Web.UI.Page
     {
+        //JOEL START
+        //This page allows users to know how to allocate collected items according to department. To be used in sorting centre.
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,15 +32,14 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //Gets list of departments with items to collect.
         protected void BindRadioButtonList()
         {
-            //DISPLAY ONLY DEPARTMENTS WITH ITEMS TO COLLECT
             List<string> dptList = new List<string>();
             dptList = BusinessLogic.DisplayListofDepartmentsForCollection();
 
             DataTable dt = new DataTable();
             dt.Columns.Add("DepartmentName", typeof(string));
-            //DataRow dr;
 
             for (int i = 0; i < dptList.Count; i++)
             {
@@ -62,22 +63,17 @@ namespace Team3ADProject.Protected
             }
         }
 
-
+        //The search button takes the selected value in the radiobutton list and retrieves the list of items that have been collected for the dpt. 
         protected void btn_SortingSearch_Click(object sender, EventArgs e)
         {
             DisplayDepartmentSortingTable();
             NoRowDetail();
         }
 
+        //When 'Ready for Collection' button is clicked
         protected void btn_ReadyForCollection_Click(object sender, EventArgs e)
         {
-            //(1) recommended distribution qty must be smaller than required qty or collected qty available(from session), whichever is smaller (validator - front end)
-            //if (ValidatePreparedQty() < 0)
-            //{
-            //    return;
-            //}
-
-            //(2) create new collection_detail table row. 
+            //(1) create new collection_detail table row. 
             string dpt_Id = GetDepartmentId();
 
             int placeId = BusinessLogic.GetPlaceIdFromDptId(dpt_Id);
@@ -88,26 +84,20 @@ namespace Team3ADProject.Protected
 
             BusinessLogic.InsertCollectionDetailsRow(placeId, collectionDate, dpt_Id);
 
-            //(3) add RO IDs to requisition_disbursement_detail table w/ newest collection list id
+            //(2) add RO IDs to requisition_disbursement_detail table w/ newest collection list id. sends email to dpt rep for collection
             BusinessLogic.InsertDisbursementListROId(dpt_Id);
-
-
-            ////(4) send email to dpt rep
-            //string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dpt_Id);
-            //string subj = "Your ordered stationery is ready for collection";
-            //string body = "Your order is ready for collection. Please procede to your usual collection point at the correct time.";
-
-            //BusinessLogic.sendMail(emailAdd, subj, body);
-
+                                  
             Response.Redirect(Request.RawUrl);
         }
 
+        //Get dpt id from selected dpt name. 
         protected string GetDepartmentId()
         {
             string selectedDptName = RadioButtonList_Dpt.SelectedItem.Value;
             return BusinessLogic.GetDptIdFromDptName(selectedDptName);
         }
 
+        //displays list of items to allocate to the particular dpt.
         protected void DisplayDepartmentSortingTable()
         {
             //string dpt_Id = GetDepartmentId();
@@ -116,6 +106,7 @@ namespace Team3ADProject.Protected
             gridview_DptSort.DataBind();
         }
 
+        //populates column in gridview which shows how much has been collected. 
         protected void gridview_DptSort_DataBound(object sender, EventArgs e)
         {
             foreach (GridViewRow gvr in gridview_DptSort.Rows)
@@ -134,7 +125,7 @@ namespace Team3ADProject.Protected
             }
         }
 
-
+        //disables dates on datepicker before today
         protected void Calendar_Collect_Date_DayRender(object sender, DayRenderEventArgs e)
         {
             if (e.Day.Date <= DateTime.Now)
@@ -144,11 +135,13 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //when user chooses a diff date on the datepicker, this will be reflected in textbox
         protected void Calendar_Collect_Date_SelectionChanged(object sender, EventArgs e)
         {
             TextBox_Collect_Date.Text = Calendar_Collect_Date.SelectedDate.ToString("dd-MM-yyyy");
         }
 
+        //for when user wants to reallocate items (items are sorted / allocated by system during the collection process). this provides a manual override for reallocation
         protected void btn_reallocate_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -159,6 +152,7 @@ namespace Team3ADProject.Protected
 
         }
 
+        //if there are no departments that need to collect items, this hides some of the controls. 
         protected void NoRowDetail()
         {
             if (gridview_DptSort.Rows.Count <= 0)
@@ -177,43 +171,7 @@ namespace Team3ADProject.Protected
             }
         }
 
-        //protected int ValidatePreparedQty()
-        //{
-        //    bool flag = false;
-        //    foreach (GridViewRow gvr in gridview_DptSort.Rows)
-        //    {
-        //        Label lb = (Label)gvr.FindControl("Label1");
-
-        //        int qtyOrder = Convert.ToInt32(gvr.Cells[2].Text);
-        //        int qtyAvail = Convert.ToInt32(lb.Text);
-
-        //        TextBox tb = (TextBox)gvr.FindControl("txt_QtyToSupply");
-        //        int qtyToPrep = Convert.ToInt32(tb.Text);
-
-        //        Label validator = (Label)gvr.FindControl("Label2");
-        //        validator.Visible = false;
-
-        //        if (qtyToPrep > qtyOrder)
-        //        {
-        //            validator.Visible = true;
-        //            validator.Text = "Amount is more than Ordered Qty";
-        //            flag = true;
-        //            break;
-        //        }
-        //        if (qtyToPrep > qtyAvail)
-        //        {
-        //            validator.Visible = true;
-        //            validator.Text = "Insufficient inventory";
-        //            flag = true;
-        //            break;
-        //        }
-        //    }
-        //    if (flag == true)
-        //        return -1;
-
-        //    else
-        //        return 1;
-        //}
+       
 
     }
 }
@@ -256,4 +214,43 @@ namespace Team3ADProject.Protected
 //if (Session["allDptCollectionList"] != null)
 //{
 //    allDptCollectionList = (List<CollectionListItem>)Session["allDptCollectionList"];
+//}
+
+//OLD METHOD FOR VALIDATION OF FIELDS IN GRIDVIEW
+//protected int ValidatePreparedQty()
+//{
+//    bool flag = false;
+//    foreach (GridViewRow gvr in gridview_DptSort.Rows)
+//    {
+//        Label lb = (Label)gvr.FindControl("Label1");
+
+//        int qtyOrder = Convert.ToInt32(gvr.Cells[2].Text);
+//        int qtyAvail = Convert.ToInt32(lb.Text);
+
+//        TextBox tb = (TextBox)gvr.FindControl("txt_QtyToSupply");
+//        int qtyToPrep = Convert.ToInt32(tb.Text);
+
+//        Label validator = (Label)gvr.FindControl("Label2");
+//        validator.Visible = false;
+
+//        if (qtyToPrep > qtyOrder)
+//        {
+//            validator.Visible = true;
+//            validator.Text = "Amount is more than Ordered Qty";
+//            flag = true;
+//            break;
+//        }
+//        if (qtyToPrep > qtyAvail)
+//        {
+//            validator.Visible = true;
+//            validator.Text = "Insufficient inventory";
+//            flag = true;
+//            break;
+//        }
+//    }
+//    if (flag == true)
+//        return -1;
+
+//    else
+//        return 1;
 //}

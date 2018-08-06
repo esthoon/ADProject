@@ -1,5 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="Team3ADProject.Protected.Report1" %>
 
+<%-- Chua Khiong Yang 
+    
+    The report page is used to display trends 
+    
+    --%>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <%@ Import Namespace="Team3ADProject.Code" %>
     <h1>Generate Report</h1>
@@ -33,6 +38,7 @@
         &nbsp;<div>End Date</div>
         <input type="text" id="endDate" runat="server" clientidmode="static" class="datePicker" disabled value="-" />
 
+        <%-- The calendar is  --%>
         <script>
             $(document).ready(function () {
                 $(".datePicker").datepicker({

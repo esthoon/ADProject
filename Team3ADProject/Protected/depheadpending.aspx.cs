@@ -8,6 +8,7 @@ using Team3ADProject.Code;
 using System.Web.UI.DataVisualization.Charting;
 using System.Web.Security;
 
+//Sruthi
 namespace Team3ADProject.Protected
 {
     public partial class depheadpendingm : System.Web.UI.Page
@@ -21,14 +22,14 @@ namespace Team3ADProject.Protected
                 var q = BusinessLogic.ViewPendingRequests(dept); // to get the pending the requests for that department
                 GridView1.DataSource = q.ToList();
                 GridView1.DataBind();
-                int b3 = BusinessLogic.getbudgetbydept(dept);
+                int b3 = BusinessLogic.getbudgetbydept(dept); //to get the budget for the department for that particular month
                 Label5.Text = String.Format($"{b3:c2}");
                 Session["budgetallocated"] = b3;
-                int b4 = BusinessLogic.getspentbudgetbydept(dept);
+                int b4 = BusinessLogic.getspentbudgetbydept(dept); // to get the budget spent for the department for that particular month
                 Label6.Text = String.Format($"{b4:c2}");
                 Session["budgetspent"] = b4;
                 Label3.Text = (Convert.ToDouble(b4) / Convert.ToDouble(b3) * 100).ToString() + "%";
-                generatechartdata(b3, b4);
+                generatechartdata(b3, b4); // to generate the pie chart
             }
             catch (Exception x)
             {
@@ -56,7 +57,8 @@ namespace Team3ADProject.Protected
 
         }
 
-        public void generatechartdata(int budget, int spent)
+		// generating the chart data based on budget spent and allocated
+		public void generatechartdata(int budget, int spent)
         {
             if(spent == 0)
             {

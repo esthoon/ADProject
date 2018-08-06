@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Team3ADProject.Code;
-
+//Sruthi
 namespace Team3ADProject.Protected
 {
 	public partial class DepartmentPinChange : System.Web.UI.Page
@@ -17,7 +17,7 @@ namespace Team3ADProject.Protected
 		}
 
 
-		public string getmethoddepartment()
+		public string getmethoddepartment() //to get the department
 		{
 			int employeeid = Convert.ToInt32(Session["Employee"]);
 			string user = BusinessLogic.GetUserID(employeeid);
@@ -26,8 +26,8 @@ namespace Team3ADProject.Protected
 		}
 
 
-
-		protected void Button1_Click(object sender, EventArgs e)
+		//Event handler for changing the pin
+		protected void Button1_Click(object sender, EventArgs e) 
 		{
 			string dept = getmethoddepartment();
 			string password1 = TextBox1.Text;
@@ -37,7 +37,7 @@ namespace Team3ADProject.Protected
 				try
 				{
 					int password = Convert.ToInt32(password1);
-					BusinessLogic.updatepassword(dept, password);
+					BusinessLogic.updatepassword(dept, password); //to update the password
 					ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Pin updated successfully')", true);
 				}
 				catch (Exception x)
