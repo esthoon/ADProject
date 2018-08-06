@@ -8,30 +8,35 @@ using System.Text;
 
 namespace Team3ADProject.Services
 {
-
-
+    /* The IAndroidService provides a way for the Logic University Android Application
+     * 
+     * The IAndroidService methods should require a token as a parameter for using it, if necessary, for security.
+     * 
+     * The token parameter can be generated and fetched by using the Login Service.
+    */
 
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IAndroidService" in both code and config file together.
     [ServiceContract]
     public interface IAndroidService
     {
+
+        // CHUA KHIONG YANG - START
         // Helloworld Tester token template
         [OperationContract]
         [WebGet(UriTemplate = "/Hello/{token}", ResponseFormat = WebMessageFormat.Json)]
         string Hello(String token);
-
+        
         // Logs user in using username and password
         // Returns a token if successful, null if not
         [OperationContract]
         [WebGet(UriTemplate = "/Login/{username}/{password}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee Login(string username, string password);
-
+        
         // Logs user with specified token out
         [OperationContract]
         [WebGet(UriTemplate = "/Logout/{token}", ResponseFormat = WebMessageFormat.Json)]
         string Logout(string token);
-
-
+        
         // Returns an employee based on given token
         [OperationContract]
         [WebGet(UriTemplate = "/Employee/{token}", ResponseFormat = WebMessageFormat.Json)]

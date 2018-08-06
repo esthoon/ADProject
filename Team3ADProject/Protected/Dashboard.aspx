@@ -1,5 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="Team3ADProject.Protected.Dashboard1" %>
 
+<%-- Written by: Chua Khiong Yang 
+    
+    The dashboard is the first page the user lands on after logging in.
+    It provides useful information and shortcuts to the user.
+
+    --%>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <link rel="stylesheet" href="<%=ResolveUrl("~/Content/Sites/Dashboard.css")%>" />
@@ -9,7 +16,7 @@
     <h1>Dashboard</h1>
     <%} %>
 
-    <!-- If user is a store clerk, display dashboard information -->
+    <!-- If user is a store type employee, display dashboard information -->
     <%if (Roles.IsUserInRole(Constants.ROLES_STORE_CLERK) || Roles.IsUserInRole(Constants.ROLES_STORE_MANAGER) || Roles.IsUserInRole(Constants.ROLES_STORE_SUPERVISOR))
         { %>
     <div class="dashboard-flexbox-container-outer">
@@ -46,7 +53,7 @@
 
     <%else
         { %>
-    <!-- If user is an employee, show them pointers-->
+    <!-- If user is an employee, show them instructions -->
     <div class="flexbox-column dashboard-flexbox-user">
         <h1>Welcome!</h1>
         <div>Please start through the navigation bar above</div>

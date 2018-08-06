@@ -1,10 +1,15 @@
 ﻿/* 
+ * Written by: Chua Khiong Yang
+ * Dependency: Canvas.js (canvasjs.min.js)
+ * 
+ * Including Chart.js allows programmers to add charts into any page, using the WCF web service from 
+ * the LogicUniversity Requisition System.
+ * 
  * Chart.js usage:
  * Just add in <div id="testChart" customAttribute="value"></div> in the html file
- * Create <div id="chartMessage" to output chart messages
+ * Replace "testChart" with other values to display different charts
  * 
- * 
- * 
+ * Parameter:
  * testChart: A simple chart to test whether canvas.js is running
  * requisitionOrderStatusChart: A doughnut chart that shows portion of RO Status
  * requisitionOrderDateChart: A column chart that shows dates of requisition orders made
