@@ -53,6 +53,7 @@ namespace Team3ADProject.Protected
                 list = BusinessLogic.UsageChargeBack(startdate, enddate, dept.Trim());
                 GridView1.DataSource = list;
                 GridView1.DataBind();
+
                 if (list.Count > 0)
                 {
                     double price = list.Sum(x => x.price).Value;

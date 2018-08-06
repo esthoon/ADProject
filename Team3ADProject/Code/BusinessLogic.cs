@@ -1056,23 +1056,28 @@ namespace Team3ADProject.Code
         //Rohit - start
         public static List<spAcknowledgeDistributionList_Result> ViewAcknowledgementList(int collection_id)
         {
+            //get ItemNumber,Description,Ordered Quantity, Supplied Quantity for a particular collectionID
             List<spAcknowledgeDistributionList_Result> list = new List<spAcknowledgeDistributionList_Result>();
             return list = context.spAcknowledgeDistributionList(collection_id).ToList();
         }
 
         public static int getActualSupplyQuantityValue(int collectionID, String ItemCode)
         {
+            //get the supplied quantity of a particular item in a collection to compare with user's input(value entered by Dept rep during collection)
             return (int)context.spCheckSupplyQuantity(ItemCode, collectionID).ToList().Single();
         }
 
         public static List<spGetRequisitionIDAndItemQuantity_Result> getRequisitionIDandItemQuantity(int collectionID, string itemCode)
         {
+            //Each collection can contain one or more requistionIDs.
+            //Theis procedure gets all the Requisition IDs and ItemDistributedQuantity for a particular item.
             List<spGetRequisitionIDAndItemQuantity_Result> list = new List<spGetRequisitionIDAndItemQuantity_Result>();
             return list = context.spGetRequisitionIDAndItemQuantity(collectionID, itemCode).ToList();
         }
 
         public static void UpdateItemDistributedQuantity(string ItemCode, string requisitionID, int itemDistributedQuantity)
         {
+            //if user(dept rep) collects less than what was supplied.
             context.spUpdateItemDistributedQuantity(ItemCode, requisitionID, itemDistributedQuantity);
         }
 
@@ -1086,11 +1091,13 @@ namespace Team3ADProject.Code
 
         public static void updateCollectionStatus(int collectionID)
         {
+            //update that the collection has been completed
             context.spUpdateCollectionStatusCollected(collectionID);
         }
 
         public static List<spViewCollectionList_Result> ViewCollectionListNew()
         {
+            //View Collection of items that are to be collected by the dept rep. (CollectionID of all departments)
             List<spViewCollectionList_Result> list = new List<spViewCollectionList_Result>();
             return list = context.spViewCollectionList().ToList();
         }
@@ -1118,7 +1125,6 @@ namespace Team3ADProject.Code
                     myRequsitionIDList.Add(mylist[j].requisition_id.ToString());
                 }
 
-                //Actual logic 23/07/2018 Monday
                 int counter = UserInput;
                 int myIntegerListSize = myIntegerList.Count;
                 int minimum = counter / myIntegerListSize;

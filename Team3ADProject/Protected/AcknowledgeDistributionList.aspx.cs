@@ -17,6 +17,7 @@ namespace Team3ADProject.Protected
             {
                 try
                 {
+                    //these sessions are read from the previous page (ViewCollectionInformation)
                     DepartmentNameLabel.Text = Session["DepartmentName"].ToString();
                     DepartmentRepresentativeLabel.Text = Session["EmployeeName"].ToString();
                     DateLabel.Text = Session["CollectionDate"].ToString();
@@ -47,7 +48,20 @@ namespace Team3ADProject.Protected
 
 
         protected void AcknowledgeButton_Click(object sender, EventArgs e)
-        {
+        { 
+
+            //When the department rep is collecting items, he :
+            // 1) Cannot collect if he enters more than what he requested for. (In Collected_Qty textbox)
+            // 2) Can collect same amount that he requested for.
+            // 3) Can collect lesser than what he requested. (Maybe some items are damaged or he just doesn't need so many anymore)
+            // 4) Not allow any other invalid input.(Like Negative numbers or strings)
+            
+            //Solution:
+            // 1) Prompt user to enter lesser.
+            // 2) Update the collection as completed. No changes to inventory.
+            // 3) Update the collection as completed. The difference has to be updated back to the inventory.
+            // 4) Have appropriate mechanisms to encounter exceptions.
+
 
             try
             {
@@ -55,11 +69,12 @@ namespace Team3ADProject.Protected
                 bool GreaterThan = false;
 
                 for (int i = 0; i < gridview1.Rows.Count; i++)
-                {
+                {   
                     int UserInput = Convert.ToInt32(((TextBox)gridview1.Rows[i].FindControl("TextBox1")).Text);
                     string ItemCode = gridview1.Rows[i].Cells[0].Text;
                     int ActualSupplyQuantityValue = BusinessLogic.getActualSupplyQuantityValue(collection_id, ItemCode);
-
+                    
+                    //Logic for 1
                     if (UserInput > ActualSupplyQuantityValue)
                     {
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('You cannot enter more than the requested supply quantity')", true);
@@ -67,6 +82,7 @@ namespace Team3ADProject.Protected
                         break;
                     }
 
+                    //Logic for 4(the try-catch takes care of other invalid inputs)
                     if (UserInput < 0)
                     {
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('No negative values allowed. Please try again')", true);
@@ -78,6 +94,7 @@ namespace Team3ADProject.Protected
 
                 if (GreaterThan == false)
                 {
+                    //Th number of items Dept head has collected is <= Supplied
                     for (int i = 0; i < gridview1.Rows.Count; i++)
                     {
                         int UserInput = Convert.ToInt32(((TextBox)gridview1.Rows[i].FindControl("TextBox1")).Text);
@@ -87,7 +104,7 @@ namespace Team3ADProject.Protected
                         //logic lesser userInput < supply qty 
                         BusinessLogic.AcknowledgeDL(collection_id, ItemCode, ActualSupplyQuantityValue, UserInput);
                     }
-                    //update status as collected
+                    //update status as collected(for collected <= Supplied)
                     BusinessLogic.updateCollectionStatus(collection_id);
                     Response.Redirect("ViewCollectionInformation.aspx");
                 }
