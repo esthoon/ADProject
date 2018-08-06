@@ -13,6 +13,7 @@ namespace Team3ADProject.Protected
 {
     public partial class ViewROSpecialRequest : System.Web.UI.Page
     {
+        //JOEL START
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,6 +28,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //search button. searches for the details of the ROID when the ROID is keyed in
         protected void btn_SortingSearch_Click(object sender, EventArgs e)
         {
             gv_ViewRO.DataSource = BusinessLogic.GetRODetailsByROId(txt_searchByRO.Text.Trim());
@@ -35,9 +37,10 @@ namespace Team3ADProject.Protected
             NoRowDetail();
         }
 
+        //when ready for collection is clicked
         protected void btn_readyForCollect_Click(object sender, EventArgs e)
         {
-
+            //checks if qty collected is more than either what is in inventory or order qty
             if (ValidatePreparedQty() < 0)
             {
                 return;
@@ -71,28 +74,21 @@ namespace Team3ADProject.Protected
             DateTime collectionDate = Convert.ToDateTime(x);
             //DateTime collectionDate = DateTime.Parse(TextBox_Collect_Date.Text); //joel
             string ro_id = Label_ViewRO.Text.ToUpper();
+            //updates tables & sends email
             BusinessLogic.SpecialRequestReadyUpdatesCDRDD(placeId, collectionDate, ro_id, dptId);
 
             // (3) change amounts in requisition_order_detail table
-
             BusinessLogic.ViewROSpecialRequestUpdateRODTable(clList, ro_id);
-           
+
 
             // (4) deduct from inventory
             BusinessLogic.DeductFromInventory(clList);
-
-            // (5) send email
-
-            //string emailAdd = BusinessLogic.GetDptRepEmailAddFromDptID(dptId);
-            //string subj = "Your ordered stationery is ready for collection";
-            //string body = "Dear Department Rep, your stationery order is ready for collection. Please procede to your usual collection point at the correct time.";
-
-            //BusinessLogic.sendMail(emailAdd, subj, body);
 
             Response.Redirect("~/Protected/ViewROSpecialRequest.aspx");
 
         }
 
+        //if there are no collection details for the ROID, or it can't be found. hides the controls necessary for collection.
         protected void NoRowDetail()
         {
             if (gv_ViewRO.Rows.Count <= 0)
@@ -118,6 +114,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //disables selection of dates before today.
         protected void Calendar_Collect_Date_DayRender(object sender, DayRenderEventArgs e)
         {
             if (e.Day.Date <= DateTime.Now)
@@ -129,13 +126,14 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //when selected date changes, changes text on textbox
         protected void Calendar_Collect_Date_SelectionChanged(object sender, EventArgs e)
         {
             TextBox_Collect_Date.Text = Calendar_Collect_Date.SelectedDate.ToString("dd-MM-yyyy");
 
         }
 
-        //Esther: removed.
+        //Esther: removed. adj page is opened on front end.
         protected void btn_Adjustment_Click(object sender, EventArgs e)
         {
             Button lb = (Button)sender;
@@ -146,6 +144,7 @@ namespace Team3ADProject.Protected
             //Response.Write("<script type='text/javascript'>window.open('" + url + "');</script>");
         }
 
+        // validates qty collected
         protected int ValidatePreparedQty()
         {
             bool flag = false;

@@ -145,7 +145,7 @@ namespace Team3ADProject.Services
 
         //JOEL START
 
-        //CollectionList
+        //CollectionList - Outputs weekly collection list - Web Clerk
         public List<WCF_CollectionItem> getCollectionList(string token)
         {
             if (AuthenticateToken(token))
@@ -165,7 +165,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //CollectionList
+        //CollectionList - Takes collectionItem obj to sort & update ROD table - Web Clerk
         public void SortCollectedGoods(WCF_CollectionItem ci)
         {
             string token = ci.Token.Trim();
@@ -179,7 +179,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //CollectionList
+        //CollectionList - Takes collectionItem obj with qty to reduce from inventory - Web Clerk
         public void DeductFromInventory(WCF_CollectionItem ci)
         {
             string token = ci.Token.Trim();
@@ -194,7 +194,7 @@ namespace Team3ADProject.Services
 
 
 
-        //Disbursement Sorting
+        //Disbursement Sorting - displays list of departments that need collection - Web Clerk
         public List<WCF_DepartmentList> DisplayListofDepartmentsForCollection(string token)
         {
             if (AuthenticateToken(token))
@@ -211,7 +211,7 @@ namespace Team3ADProject.Services
             return null;
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - input DptName, get DptId, to be used with GetSortingListByDepartment(dpt_Id);  - Web Clerk
         public string GetDptIdFromDptName(string dptName, string token)
         {
             if (AuthenticateToken(token))
@@ -223,7 +223,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - input DptId, get disbursement list; - Web Clerk 
         public List<WCF_SortingItem> GetSortingListByDepartment(string dptName, string token)
         {
             if (AuthenticateToken(token))
@@ -243,7 +243,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - input DptId, get place id, to use in updating collection_detail table - Web Clerk
         public int GetPlaceIdFromDptId(string dptId, string token)
         {
             if (AuthenticateToken(token))
@@ -255,7 +255,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - after ready for collection, input place id + collectionDate + dptID, insert row to collection_detail table - Web Clerk
         public void InsertCollectionDetailsRow(WCF_CollectionDetail cd)
         {
             string token = cd.Token.Trim();
@@ -265,7 +265,7 @@ namespace Team3ADProject.Services
             }
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - after ready for collection, input dptId insert to disbursementlist table  - Web Clerk
         public void InsertDisbursementListROId(string dptId, string token)
         {
             if (AuthenticateToken(token))
@@ -274,7 +274,7 @@ namespace Team3ADProject.Services
             }
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - after ready for collection, system need to send email. Method gets dpt rep email - Web Clerk
         public String GetDptRepEmailAddFromDptID(string dptId, string token)
         {
             if (AuthenticateToken(token))
@@ -285,7 +285,7 @@ namespace Team3ADProject.Services
         }
 
 
-        //ViewRO
+        //ViewRO - input ROID, Get RO Details - Web Clerk
         public List<WCF_CollectionItem> GetRODetailsByROId(string roId)
         {
             List<WCF_CollectionItem> wcfList = new List<WCF_CollectionItem>();
@@ -299,13 +299,13 @@ namespace Team3ADProject.Services
         }
 
 
-        //ViewRO
+        //ViewRO - after ready for collection, input placeId + collectionDate + dptID + ROID, insert row to collection_detail table - Web Clerk
         public void SpecialRequestReadyUpdatesCDRDD(WCF_CollectionDetail cd)
         {
             BusinessLogic.SpecialRequestReadyUpdatesCDRDD(cd.PlaceId, DateTime.Parse(cd.CollectionDate), cd.RoId.Trim(), cd.DepartmentId.Trim());
         }
 
-        //ViewRO
+        //ViewRO - input dptID, get place id - Web Clerk - USE ABOVE METHOD.
         public void ViewROSpecialRequestUpdateRODTable(WCF_CollectionItem ci)
         {
             List<CollectionListItem> clList = new List<CollectionListItem>();
@@ -316,7 +316,7 @@ namespace Team3ADProject.Services
 
         }
 
-        // Reallocate
+        // Reallocate - get list of dpts tt ordered the item, for reallocation - Web Clerk
         public List<WCF_SortingItem> GetReallocateList(string itemNum, string token)
         {
             if (AuthenticateToken(token))
@@ -333,7 +333,7 @@ namespace Team3ADProject.Services
             return null;
         }
 
-        //Reallocate
+        //Reallocate - upon reallocate, reset ROD table - Web Clerk
         public void ResetRODTable(WCF_SortingItem ci)
         {
             string token = ci.Token.Trim();
@@ -344,7 +344,7 @@ namespace Team3ADProject.Services
         }
 
 
-        //Reallocate
+        //Reallocate - upon reallocate, update ROD table w/ new figures - Web Clerk
         public void UpdateRODTable(WCF_SortingItem ci)
         {
             string token = ci.Token.Trim();
@@ -354,7 +354,7 @@ namespace Team3ADProject.Services
             }
         }
 
-        //Reallocate
+        //Reallocate - if excess, return to inventory - Web Clerk
         public void ReturnToInventory(string balance, string itemNum, string token)
         {
             if (AuthenticateToken(token))

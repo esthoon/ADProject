@@ -5,6 +5,8 @@ using System.Web;
 
 namespace Team3ADProject.Code
 {
+    //JOEL START 
+    // class used to keep track of items on the collectionlist.
     public class CollectionListItem
     {
         public string itemNum { get; set; }
