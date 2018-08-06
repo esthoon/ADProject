@@ -18,6 +18,8 @@ namespace Team3ADProject.Protected
         private static List<cInventory> lowinstock = new List<cInventory>();
         private static List<cInventory> lisPOAll = new List<cInventory>();
         private static employee user;
+
+        //loadgrid
         protected void loadGrid(List<cInventory> list)
         {
             gvInventoryList.DataSource = list;
@@ -366,6 +368,7 @@ namespace Team3ADProject.Protected
             loadGrid(ReturnLowInStockFilteredList());
         }
 
+        //return low-in-stock list to display
         protected List<cInventory> ReturnLowInStockFilteredList()
         {
             List<cInventory> list = new List<cInventory>();
