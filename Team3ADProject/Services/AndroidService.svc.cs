@@ -419,6 +419,7 @@ namespace Team3ADProject.Services
             }
         }
 
+        //return selected inventory
         public WCF_Inventory GetSelectedInventory(string token, string id)
         {
             if (AuthenticateToken(token))
@@ -474,6 +475,7 @@ namespace Team3ADProject.Services
             }
         }
 
+        //return request order detail based on request id
         public WCF_Requisition_Order GetRequestOrder(string token, string id)
         {
             if (AuthenticateToken(token))
@@ -489,6 +491,7 @@ namespace Team3ADProject.Services
                 return null;
         }
 
+        //return request order item detail based on request id
         public List<Employee_Request_order_Detail> GetRequestDetail(string token, string id)
         {
             if (AuthenticateToken(token))
@@ -506,6 +509,7 @@ namespace Team3ADProject.Services
             { return null; }
         }
 
+        //return list of collection points pending
         public List<WCF_Disbursement_List> GetDisbursement_Lists(string token)
         {
             if (AuthenticateToken(token))
@@ -523,6 +527,7 @@ namespace Team3ADProject.Services
             else { return null; }
         }
 
+        //return item detail for selected collection point
         public List<WCF_Disbursement_Detail> GetDisbursement_Detail(string id, string token)
         {
             if (AuthenticateToken(token))
@@ -543,6 +548,7 @@ namespace Team3ADProject.Services
             }
         }
 
+        //update item disbursement quantity for all requisition id inside collection id
         public void AcknowledgeDisbursement_Detail(WCF_Disbursement_Detail DL)
         {
             string token = DL.Token;
@@ -556,6 +562,7 @@ namespace Team3ADProject.Services
             }
         }
 
+        //update collection status from pending to complete
         public void Changecollectionstatus(WCF_Disbursement_Detail DL)
         {
             string token = DL.Token;
@@ -566,16 +573,12 @@ namespace Team3ADProject.Services
             }
         }
 
-        //Tharrani End
-
+        //return invenotry details for selected inventory
         public WCF_Inventory GetInventoryByItemNumber(string ItemNumber)
         {
-
             inventory inv = BusinessLogic.GetInventoryById(ItemNumber);
             return new WCF_Inventory(inv.item_number, inv.description, inv.category, inv.unit_of_measurement, inv.current_quantity.ToString(), inv.reorder_level.ToString(), inv.requisition_order_detail.ToString(), inv.item_bin, inv.item_status);
-
         }
-
         //Tharrani – End
 
         //Esther

@@ -796,6 +796,8 @@ namespace Team3ADProject.Code
 
         }
 
+
+        //update PO status to complete if no pending item
         public static void updatePOstatus(int po)
         {
             List<getAllViewPOHistorypendingcountbyPO_Result> pending_count = context.getAllViewPOHistorypendingcountbyPO(po).ToList();
@@ -822,16 +824,20 @@ namespace Team3ADProject.Code
             return context.employees.Where(x => x.user_id.Trim() == userid.Trim()).FirstOrDefault();
         }
 
+        //return department based on department id
         public static department GetDepartmenthead(string dept)
         {
             return context.departments.Where(x => x.department_id.Trim() == dept.Trim()).FirstOrDefault();
         }
+
+        //get last placed request id by department
 
         public static unique_id getlastrequestid(string Depid)
         {
             return context.unique_id.Where(x => x.department_id.Trim() == Depid).FirstOrDefault();
         }
 
+        //update latest request id for department
         public static void updatelastrequestid(string Depid, int i)
         {
             unique_id u = context.unique_id.Where(x => x.department_id.Trim() == Depid).FirstOrDefault();

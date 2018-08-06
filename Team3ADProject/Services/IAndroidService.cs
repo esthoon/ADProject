@@ -156,7 +156,6 @@ namespace Team3ADProject.Services
 
 
         //Tharrani - Start
-
         //Return active inventory
         [OperationContract]
         [WebGet(UriTemplate = "/NewRequest/AllItems/{*token}", ResponseFormat = WebMessageFormat.Json)]
@@ -206,8 +205,6 @@ namespace Team3ADProject.Services
         //ChangeCollectionStatus after Disbursement
         [WebInvoke(UriTemplate = "/Disbursement/ChangeStatus", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         void Changecollectionstatus(WCF_Disbursement_Detail DL);
-
-
         //Tharrani -End
 
         //Esther
