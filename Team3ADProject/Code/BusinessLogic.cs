@@ -497,6 +497,7 @@ namespace Team3ADProject.Code
 
         }
 
+        //send email function
         public static void sendMail(List<string> to, string sub, string body)
         {
             foreach(string email in to)
