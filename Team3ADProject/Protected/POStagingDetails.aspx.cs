@@ -36,6 +36,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //load POStaging List
         protected void loadGrid()
         {
             param_supname = Request.QueryString["PODetailsSup"];
@@ -58,6 +59,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //event handler for change in qty
         protected void TextBox1_TextChanged(object sender, EventArgs e)
         {
             TextBox tb = (TextBox)sender;
@@ -72,6 +74,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //event handler: databound
         protected void GridViewPODetails_DataBound(object sender, EventArgs e)
         {
             UpdateTotalCostGrid();
@@ -82,6 +85,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //update grid total cost
         protected void UpdateTotalCostGrid()
         {
             int i = 1;
@@ -99,6 +103,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //return index of item in the list
         protected static int ReturnIndex(List<POStaging> StagingList, string itemcode, string suppliercode)
         {
             int value = -1;
@@ -117,6 +122,7 @@ namespace Team3ADProject.Protected
             return value;
         }
 
+        //update button
         //protected void Button1_Click(object sender, EventArgs e)
         //{
         //    if (Page.IsValid)
@@ -132,6 +138,7 @@ namespace Team3ADProject.Protected
         //    }
         //}
 
+        //remove item
         protected void Button2_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -142,6 +149,7 @@ namespace Team3ADProject.Protected
             loadGrid();
         }
 
+        //submit PO
         protected void Button3_Click(object sender, EventArgs e)
         {
             Button3.Enabled = false;
@@ -238,11 +246,13 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //cancel button
         protected void Button4_Click(object sender, EventArgs e)
         {
             Response.Redirect("POStagingSummary.aspx");
         }
 
+        //gridview databound eventhandler load daterequired
         protected void GridViewPODetails_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -254,6 +264,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //event handler for change in required date. 
         protected void txtSelectDate_TextChanged(object sender, EventArgs e)
         {
             TextBox tb = (TextBox)sender;

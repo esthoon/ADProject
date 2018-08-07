@@ -20,7 +20,8 @@ namespace Team3ADProject.Protected
             gridview1.DataSource = BusinessLogic.ViewCollectionListNew();
             gridview1.DataBind();
         }
-
+        
+        //store details in session to display in detail on the next page(AcknowledgeDistributionList)
         protected void gridview1_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
         {
             Session["EmployeeName"] = gridview1.Rows[e.NewSelectedIndex].Cells[1].Text;

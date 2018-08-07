@@ -8,30 +8,35 @@ using System.Text;
 
 namespace Team3ADProject.Services
 {
-
-
+    /* The IAndroidService provides a way for the Logic University Android Application
+     * 
+     * The IAndroidService methods should require a token as a parameter for using it, if necessary, for security.
+     * 
+     * The token parameter can be generated and fetched by using the Login Service.
+    */
 
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IAndroidService" in both code and config file together.
     [ServiceContract]
     public interface IAndroidService
     {
+
+        // CHUA KHIONG YANG - START
         // Helloworld Tester token template
         [OperationContract]
         [WebGet(UriTemplate = "/Hello/{token}", ResponseFormat = WebMessageFormat.Json)]
         string Hello(String token);
-
+        
         // Logs user in using username and password
         // Returns a token if successful, null if not
         [OperationContract]
         [WebGet(UriTemplate = "/Login/{username}/{password}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Employee Login(string username, string password);
-
+        
         // Logs user with specified token out
         [OperationContract]
         [WebGet(UriTemplate = "/Logout/{token}", ResponseFormat = WebMessageFormat.Json)]
         string Logout(string token);
-
-
+        
         // Returns an employee based on given token
         [OperationContract]
         [WebGet(UriTemplate = "/Employee/{token}", ResponseFormat = WebMessageFormat.Json)]
@@ -41,19 +46,19 @@ namespace Team3ADProject.Services
 
         //JOEL - START
 
-        // Collection List - Outputs weekly collection list - Web Clerk [Joel] - token
+        // Collection List - Outputs weekly collection list - Web Clerk
         [OperationContract]
         [WebGet(UriTemplate = "/WarehouseCollection/List/{*token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_CollectionItem> getCollectionList(string token);
 
-        // Collection List - Takes collectionItem obj to sort & update ROD table - Web Clerk [Joel] - token
+        // Collection List - Takes collectionItem obj to sort & update ROD table - Web Clerk
         [OperationContract]
         [WebInvoke(UriTemplate = "/WarehouseCollection/Sort", Method = "POST",
        RequestFormat = WebMessageFormat.Json,
        ResponseFormat = WebMessageFormat.Json)]
         void SortCollectedGoods(WCF_CollectionItem ci);
 
-        //CollectionList - Takes collectionItem obj with qty to reduce from inventory - Web Clerk [Joel] - token
+        //CollectionList - Takes collectionItem obj with qty to reduce from inventory - Web Clerk
         [OperationContract]
         [WebInvoke(UriTemplate = "/WarehouseCollection/DeductInventory", Method = "POST",
        RequestFormat = WebMessageFormat.Json,
@@ -61,60 +66,59 @@ namespace Team3ADProject.Services
         void DeductFromInventory(WCF_CollectionItem ci);
 
 
-        // Disbursement Sorting - displays list of departments that need collection - Web Clerk [Joel] - token 
+        // Disbursement Sorting - displays list of departments that need collection - Web Clerk
         [OperationContract]
         [WebGet(UriTemplate = "/Department/Sorting/DptList/{*token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_DepartmentList> DisplayListofDepartmentsForCollection(string token);
 
-        // Disbursement Sorting - input DptName, get DptId, to be used with GetSortingListByDepartment(dpt_Id);  - Web Clerk [Joel] - token
+        // Disbursement Sorting - input DptName, get DptId, to be used with GetSortingListByDepartment(dpt_Id);  - Web Clerk
         [OperationContract]
         [WebGet(UriTemplate = "/Department/Sorting/{dptName}/{*token}", ResponseFormat = WebMessageFormat.Json)]
         string GetDptIdFromDptName(string dptName, string token);
 
-        // Disbursement Sorting - input DptId, get disbursement list; - Web Clerk [Joel] - token
+        // Disbursement Sorting - input DptId, get disbursement list; - Web Clerk 
         [OperationContract]
         [WebGet(UriTemplate = "/Department/Sorting/List/{dptName}/{*token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_SortingItem> GetSortingListByDepartment(string dptName, string token);
 
-        // Disbursement Sorting - input DptId, get place id, to use in updating collection_detail table - Web Clerk [Joel] - token 
+        // Disbursement Sorting - input DptId, get place id, to use in updating collection_detail table - Web Clerk 
         [OperationContract]
         [WebGet(UriTemplate = "/Department/Sorting/PlaceId/{dptId}/{*token}", ResponseFormat = WebMessageFormat.Json)]
         int GetPlaceIdFromDptId(string dptId, string token);
 
-        // Disbursement Sorting - after ready for collection, input place id + collectionDate + dptID, insert row to collection_detail table - Web Clerk [Joel] 
-        //- token
+        // Disbursement Sorting - after ready for collection, input place id + collectionDate + dptID, insert row to collection_detail table - Web Clerk
         [OperationContract]
         [WebInvoke(UriTemplate = "/Department/Sorting/InsertCollectionDetail", Method = "POST",
        RequestFormat = WebMessageFormat.Json,
        ResponseFormat = WebMessageFormat.Json)]
         void InsertCollectionDetailsRow(WCF_CollectionDetail cd);
 
-        //Disbursement Sorting - after ready for collection, input dptId insert to disbursementlist table  - Web Clerk [Joel] - token
+        //Disbursement Sorting - after ready for collection, input dptId insert to disbursementlist table  - Web Clerk
         [OperationContract]
         [WebGet(UriTemplate = "/Department/Sorting/InsertDisbursementDetail/{dptId}/{*token}", ResponseFormat = WebMessageFormat.Json)]
         void InsertDisbursementListROId(string dptId, string token);
 
-        //Disbursement Sorting - after ready for collection, system need to send email. Method gets dpt rep email - Web Clerk [Joel] - token
+        //Disbursement Sorting - after ready for collection, system need to send email. Method gets dpt rep email - Web Clerk
         [OperationContract]
         [WebGet(UriTemplate = "/Department/Sorting/DptRepEmail/{dptId}/{*token}", ResponseFormat = WebMessageFormat.Json)]
         string GetDptRepEmailAddFromDptID(string dptId, string token);
 
 
-        // ViewRO SpecialRequest - input ROID, Get RO Details - Web Clerk [Joel]
+        // ViewRO SpecialRequest - input ROID, Get RO Details - Web Clerk
         [OperationContract]
         [WebGet(UriTemplate = "/SpecialRequest/?roid={roId}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_CollectionItem> GetRODetailsByROId(string roId);
 
-        // ViewRO SpecialRequest - input dptID, get place id - Web Clerk [Joel] - USE ABOVE METHOD.
+        // ViewRO SpecialRequest - input dptID, get place id - Web Clerk USE ABOVE METHOD.
 
-        // ViewRO SpecialRequest - after ready for collection, input placeId + collectionDate + dptID + ROID, insert row to collection_detail table - Web Clerk [Joel]
+        // ViewRO SpecialRequest - after ready for collection, input placeId + collectionDate + dptID + ROID, insert row to collection_detail table - Web Clerk
         [OperationContract]
         [WebInvoke(UriTemplate = "/SpecialRequest/Sorting/UpdateCDRDD", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json)]
         void SpecialRequestReadyUpdatesCDRDD(WCF_CollectionDetail cd);
 
-        // ViewRO SpecialRequest - input dptID, get place id - Web Clerk [Joel] - USE ABOVE METHOD.
+        // ViewRO SpecialRequest - input dptID, get place id - Web Clerk - USE ABOVE METHOD.
         [OperationContract]
         [WebInvoke(UriTemplate = "/SpecialRequest/Sorting/UpdateROD", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
@@ -123,26 +127,26 @@ namespace Team3ADProject.Services
 
         // ViewRO SpecialRequest - Deduct from Inventory - USE ABOVE METHOD
 
-        // Reallocate - get list of dpts tt ordered the item, for reallocation - Web Clerk [Joel] - token
+        // Reallocate - get list of dpts tt ordered the item, for reallocation - Web Clerk
         [OperationContract]
         [WebGet(UriTemplate = "/Department/Sorting/Reallocate/{itemNum}/{*token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_SortingItem> GetReallocateList(string itemNum, string token);
 
-        // Reallocate - upon reallocate, reset ROD table - Web Clerk [Joel] - token
+        // Reallocate - upon reallocate, reset ROD table - Web Clerk
         [OperationContract]
         [WebInvoke(UriTemplate = "/Department/Sorting/Reallocate/ResetROD", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json)]
         void ResetRODTable(WCF_SortingItem ci);
 
-        // Reallocate - upon reallocate, update ROD table w/ new figures - Web Clerk [Joel] - token
+        // Reallocate - upon reallocate, update ROD table w/ new figures - Web Clerk
         [OperationContract]
         [WebInvoke(UriTemplate = "/Department/Sorting/Reallocate/UpdateROD", Method = "POST",
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json)]
         void UpdateRODTable(WCF_SortingItem ci);
 
-        // Reallocate - if excess, return to inventory
+        // Reallocate - if excess, return to inventory - Web Clerk
         [OperationContract]
         [WebGet(UriTemplate = "/Department/Sorting/Reallocate/ReturnInventory/{balance}/{itemNum}/{*token}", ResponseFormat = WebMessageFormat.Json)]
         void ReturnToInventory(string balance, string itemNum, string token);
@@ -152,7 +156,6 @@ namespace Team3ADProject.Services
 
 
         //Tharrani - Start
-
         //Return active inventory
         [OperationContract]
         [WebGet(UriTemplate = "/NewRequest/AllItems/{*token}", ResponseFormat = WebMessageFormat.Json)]
@@ -202,8 +205,6 @@ namespace Team3ADProject.Services
         //ChangeCollectionStatus after Disbursement
         [WebInvoke(UriTemplate = "/Disbursement/ChangeStatus", Method = "POST", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         void Changecollectionstatus(WCF_Disbursement_Detail DL);
-
-
         //Tharrani -End
 
         //Esther
@@ -234,38 +235,47 @@ namespace Team3ADProject.Services
 
         //Sruthi start
 
+		//to get the pending ros
         [OperationContract]
         [WebGet(UriTemplate = "/pending/{token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_approvero> Findpendingros(String token);
 
+		//to get the ro details based on the ro id
         [OperationContract]
         [WebGet(UriTemplate = "/pending/{token}?id={id}", ResponseFormat = WebMessageFormat.Json)]
         WCF_rodetails Findro(String token, String id);
 
+		// to approve the pending ro
         [OperationContract]
         [WebInvoke(UriTemplate = "/pending/", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         void Approvero(WCF_approvero ro);
 
+		// to reject the pending ro
         [OperationContract]
         [WebInvoke(UriTemplate = "/pending", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         void rejectro(WCF_approvero ro);
 
+		//to get the collection list
         [OperationContract]
         [WebGet(UriTemplate = "/changecollectionlocation/{token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_collectionpoint> getcollection(string token);
 
+		//to change the collection location
         [OperationContract]
         [WebInvoke(UriTemplate = "/changecollectionlocation/{token}", Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         void updatelocation(string token, WCF_collectionpoint cp);
 
+		//to get the collection history of the department
         [OperationContract]
         [WebGet(UriTemplate = "/viewcollectionhistory/{token}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_collectionhistory> gethistory(string token);
 
+		//to get the item details of the particular ro
         [OperationContract]
         [WebGet(UriTemplate = "/getitemdetails/{token}?id={id}", ResponseFormat = WebMessageFormat.Json)]
         List<WCF_itemdetails> getitemdetails(string token, string id);
 
+		//to get the budget (both allocated and spent) for the department in the current month
         [OperationContract]
         [WebGet(UriTemplate = "/getbudget/{token}", ResponseFormat = WebMessageFormat.Json)]
         WCF_Budget getbudget(string token);

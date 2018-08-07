@@ -15,7 +15,9 @@ namespace Team3ADProject.Services
     // NOTE: In order to launch WCF Test Client for testing this service, please select AndroidService.svc or AndroidService.svc.cs at the Solution Explorer and start debugging.
     public class AndroidService : IAndroidService
     {
-        // Template for working with Android services
+        // CHUA KHIONG YANG START
+
+        // Template for working with Android services and tokens.
         public string Hello(string token)
         {
             // If token is valid, do stuff
@@ -32,7 +34,6 @@ namespace Team3ADProject.Services
         }
 
         /* Token methods ===========================*/
-
 
         // Authenticates a token
         // Returns true if token exists in employee table
@@ -54,7 +55,6 @@ namespace Team3ADProject.Services
 
         // Generates a token.
         // This token is unique, and contains the time created in the token itself.
-        // To get the time created of the token, use the GetTokenCreation time method.
         protected string GenerateToken()
         {
             string key = Guid.NewGuid().ToString();
@@ -93,8 +93,15 @@ namespace Team3ADProject.Services
             return null;
         }
 
-        // Takes username and password in
-        // Returns a token and employee data if there is one for the user, null if there is none.
+
+        /*
+         * Logs the user into the system.
+         * 
+         * Takes username and password in
+         * If the username and password is valid, this generates a token for the employee
+         * This token is stored into the database for validation when using in other methods.
+        */
+
         public WCF_Employee Login(string username, string password)
         {
             WCF_Employee wcfEmployee = null;
@@ -127,7 +134,10 @@ namespace Team3ADProject.Services
             return wcfEmployee;
         }
 
-        // Query with the token, and set it to null
+        // Logs the user out
+        /*
+         * Doing this will clear the token in the database for the employee, if it exists.
+         */
         public string Logout(string token)
         {
             var context = new LogicUniversityEntities();
@@ -141,11 +151,12 @@ namespace Team3ADProject.Services
             return "done";
         }
 
+        // CHUA KHIONG YANG END
 
 
         //JOEL START
 
-        //CollectionList
+        //CollectionList - Outputs weekly collection list - Web Clerk
         public List<WCF_CollectionItem> getCollectionList(string token)
         {
             if (AuthenticateToken(token))
@@ -165,7 +176,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //CollectionList
+        //CollectionList - Takes collectionItem obj to sort & update ROD table - Web Clerk
         public void SortCollectedGoods(WCF_CollectionItem ci)
         {
             string token = ci.Token.Trim();
@@ -179,7 +190,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //CollectionList
+        //CollectionList - Takes collectionItem obj with qty to reduce from inventory - Web Clerk
         public void DeductFromInventory(WCF_CollectionItem ci)
         {
             string token = ci.Token.Trim();
@@ -194,7 +205,7 @@ namespace Team3ADProject.Services
 
 
 
-        //Disbursement Sorting
+        //Disbursement Sorting - displays list of departments that need collection - Web Clerk
         public List<WCF_DepartmentList> DisplayListofDepartmentsForCollection(string token)
         {
             if (AuthenticateToken(token))
@@ -211,7 +222,7 @@ namespace Team3ADProject.Services
             return null;
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - input DptName, get DptId, to be used with GetSortingListByDepartment(dpt_Id);  - Web Clerk
         public string GetDptIdFromDptName(string dptName, string token)
         {
             if (AuthenticateToken(token))
@@ -223,7 +234,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - input DptId, get disbursement list; - Web Clerk 
         public List<WCF_SortingItem> GetSortingListByDepartment(string dptName, string token)
         {
             if (AuthenticateToken(token))
@@ -243,7 +254,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - input DptId, get place id, to use in updating collection_detail table - Web Clerk
         public int GetPlaceIdFromDptId(string dptId, string token)
         {
             if (AuthenticateToken(token))
@@ -255,7 +266,7 @@ namespace Team3ADProject.Services
 
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - after ready for collection, input place id + collectionDate + dptID, insert row to collection_detail table - Web Clerk
         public void InsertCollectionDetailsRow(WCF_CollectionDetail cd)
         {
             string token = cd.Token.Trim();
@@ -265,7 +276,7 @@ namespace Team3ADProject.Services
             }
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - after ready for collection, input dptId insert to disbursementlist table  - Web Clerk
         public void InsertDisbursementListROId(string dptId, string token)
         {
             if (AuthenticateToken(token))
@@ -274,7 +285,7 @@ namespace Team3ADProject.Services
             }
         }
 
-        //Disbursement Sorting
+        //Disbursement Sorting - after ready for collection, system need to send email. Method gets dpt rep email - Web Clerk
         public String GetDptRepEmailAddFromDptID(string dptId, string token)
         {
             if (AuthenticateToken(token))
@@ -285,7 +296,7 @@ namespace Team3ADProject.Services
         }
 
 
-        //ViewRO
+        //ViewRO - input ROID, Get RO Details - Web Clerk
         public List<WCF_CollectionItem> GetRODetailsByROId(string roId)
         {
             List<WCF_CollectionItem> wcfList = new List<WCF_CollectionItem>();
@@ -299,13 +310,13 @@ namespace Team3ADProject.Services
         }
 
 
-        //ViewRO
+        //ViewRO - after ready for collection, input placeId + collectionDate + dptID + ROID, insert row to collection_detail table - Web Clerk
         public void SpecialRequestReadyUpdatesCDRDD(WCF_CollectionDetail cd)
         {
             BusinessLogic.SpecialRequestReadyUpdatesCDRDD(cd.PlaceId, DateTime.Parse(cd.CollectionDate), cd.RoId.Trim(), cd.DepartmentId.Trim());
         }
 
-        //ViewRO
+        //ViewRO - input dptID, get place id - Web Clerk - USE ABOVE METHOD.
         public void ViewROSpecialRequestUpdateRODTable(WCF_CollectionItem ci)
         {
             List<CollectionListItem> clList = new List<CollectionListItem>();
@@ -316,7 +327,7 @@ namespace Team3ADProject.Services
 
         }
 
-        // Reallocate
+        // Reallocate - get list of dpts tt ordered the item, for reallocation - Web Clerk
         public List<WCF_SortingItem> GetReallocateList(string itemNum, string token)
         {
             if (AuthenticateToken(token))
@@ -333,7 +344,7 @@ namespace Team3ADProject.Services
             return null;
         }
 
-        //Reallocate
+        //Reallocate - upon reallocate, reset ROD table - Web Clerk
         public void ResetRODTable(WCF_SortingItem ci)
         {
             string token = ci.Token.Trim();
@@ -344,7 +355,7 @@ namespace Team3ADProject.Services
         }
 
 
-        //Reallocate
+        //Reallocate - upon reallocate, update ROD table w/ new figures - Web Clerk
         public void UpdateRODTable(WCF_SortingItem ci)
         {
             string token = ci.Token.Trim();
@@ -354,7 +365,7 @@ namespace Team3ADProject.Services
             }
         }
 
-        //Reallocate
+        //Reallocate - if excess, return to inventory - Web Clerk
         public void ReturnToInventory(string balance, string itemNum, string token)
         {
             if (AuthenticateToken(token))
@@ -408,6 +419,7 @@ namespace Team3ADProject.Services
             }
         }
 
+        //return selected inventory
         public WCF_Inventory GetSelectedInventory(string token, string id)
         {
             if (AuthenticateToken(token))
@@ -463,6 +475,7 @@ namespace Team3ADProject.Services
             }
         }
 
+        //return request order detail based on request id
         public WCF_Requisition_Order GetRequestOrder(string token, string id)
         {
             if (AuthenticateToken(token))
@@ -478,6 +491,7 @@ namespace Team3ADProject.Services
                 return null;
         }
 
+        //return request order item detail based on request id
         public List<Employee_Request_order_Detail> GetRequestDetail(string token, string id)
         {
             if (AuthenticateToken(token))
@@ -495,6 +509,7 @@ namespace Team3ADProject.Services
             { return null; }
         }
 
+        //return list of collection points pending
         public List<WCF_Disbursement_List> GetDisbursement_Lists(string token)
         {
             if (AuthenticateToken(token))
@@ -512,6 +527,7 @@ namespace Team3ADProject.Services
             else { return null; }
         }
 
+        //return item detail for selected collection point
         public List<WCF_Disbursement_Detail> GetDisbursement_Detail(string id, string token)
         {
             if (AuthenticateToken(token))
@@ -532,6 +548,7 @@ namespace Team3ADProject.Services
             }
         }
 
+        //update item disbursement quantity for all requisition id inside collection id
         public void AcknowledgeDisbursement_Detail(WCF_Disbursement_Detail DL)
         {
             string token = DL.Token;
@@ -545,6 +562,7 @@ namespace Team3ADProject.Services
             }
         }
 
+        //update collection status from pending to complete
         public void Changecollectionstatus(WCF_Disbursement_Detail DL)
         {
             string token = DL.Token;
@@ -555,16 +573,12 @@ namespace Team3ADProject.Services
             }
         }
 
-        //Tharrani End
-
+        //return invenotry details for selected inventory
         public WCF_Inventory GetInventoryByItemNumber(string ItemNumber)
         {
-
             inventory inv = BusinessLogic.GetInventoryById(ItemNumber);
             return new WCF_Inventory(inv.item_number, inv.description, inv.category, inv.unit_of_measurement, inv.current_quantity.ToString(), inv.reorder_level.ToString(), inv.requisition_order_detail.ToString(), inv.item_bin, inv.item_status);
-
         }
-
         //Tharrani – End
 
         //Esther
@@ -660,6 +674,8 @@ namespace Team3ADProject.Services
 
         //Sruthi start
 
+			//to find the pending ros for the android
+
         public List<WCF_approvero> Findpendingros(string token)
         {
             if (AuthenticateToken(token))
@@ -681,6 +697,7 @@ namespace Team3ADProject.Services
             }
         }
 
+		//to find the ro details based on ro id for the android
         public WCF_rodetails Findro(string token, string id)
         {
             //WCF_Employee emp = GetEmployeeByToken(token);
@@ -699,16 +716,19 @@ namespace Team3ADProject.Services
 
         }
 
+		//to approve ro android
         public void Approvero(WCF_approvero ro)
         {
             Double i = Convert.ToDouble(ro.sum);
             int i1 = (int)Math.Round(i);
             BusinessLogic.approvestatus(ro.requisition_id, ro.status, ro.requisition_id.Substring(0, 4), i1);
         }
+		//to reject ro android
         public void rejectro(WCF_approvero ro)
         {
             BusinessLogic.rejectstatus(ro.requisition_id, ro.status);
         }
+		// to get collection list- android
         public List<WCF_collectionpoint> getcollection(string token)
         {
             if (AuthenticateToken(token))
@@ -727,6 +747,7 @@ namespace Team3ADProject.Services
                 return null;
             }
         }
+		// to update the collection location - android
         public void updatelocation(string token, WCF_collectionpoint cp)
         {
             if (AuthenticateToken(token))
@@ -740,6 +761,7 @@ namespace Team3ADProject.Services
 
             }
         }
+		// to get the history of collection of the department -android
 
         public List<WCF_collectionhistory> gethistory(string token)
         {
@@ -761,6 +783,8 @@ namespace Team3ADProject.Services
             }
 
         }
+
+		// to get the item details of the particular ro- android
         public List<WCF_itemdetails> getitemdetails(string token, string id)
         {
             if (AuthenticateToken(token))
@@ -780,6 +804,8 @@ namespace Team3ADProject.Services
             }
 
         }
+
+		// to get the budget of the current month- both allocated and spent for a particular department - Android
         public WCF_Budget getbudget(string token)
         {
             if (AuthenticateToken(token))

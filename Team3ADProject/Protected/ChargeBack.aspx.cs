@@ -8,6 +8,7 @@ using Team3ADProject.Code;
 using Team3ADProject.Model;
 using System.Globalization;
 
+//Esther, Tharrani
 namespace Team3ADProject.Protected
 {
     public partial class ChargeBack : System.Web.UI.Page
@@ -40,6 +41,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //bind data to grid
         protected void loadGrid()
         {
            try
@@ -53,6 +55,7 @@ namespace Team3ADProject.Protected
                 list = BusinessLogic.UsageChargeBack(startdate, enddate, dept.Trim());
                 GridView1.DataSource = list;
                 GridView1.DataBind();
+
                 if (list.Count > 0)
                 {
                     double price = list.Sum(x => x.price).Value;
@@ -82,11 +85,13 @@ namespace Team3ADProject.Protected
 
         }
 
+        //search function
         protected void Button1_Click(object sender, EventArgs e)
         {
             loadGrid();   
         }
 
+        //send email
         protected void Button2_Click(object sender, EventArgs e)
         {
             DateTime startdate, enddate;

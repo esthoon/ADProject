@@ -33,7 +33,7 @@
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table table-hover">
         <Columns>
             <asp:BoundField DataField="description" HeaderText="Item" />
-            <asp:BoundField DataField="received_quantity" HeaderText="Qty Received" />
+            <asp:BoundField DataField="received_quantity" HeaderText="Qty Received"/>
             <asp:BoundField DataField="price" HeaderText="Cost" DataFormatString="{0:c2}" />
         </Columns>
     </asp:GridView>

@@ -8,6 +8,8 @@ using Team3ADProject.Code;
 using Team3ADProject.Model;
 using System.Transactions;
 
+
+//Esther-for collectionlist page
 namespace Team3ADProject.Protected
 {
     public partial class AdjustmentForm1 : System.Web.UI.Page
@@ -100,12 +102,14 @@ namespace Team3ADProject.Protected
 
         }
 
+        //on cancel, close window
         protected void ButtonCancel_Click(object sender, EventArgs e)
         {
             //Response.Redirect(ResolveUrl("~/Protected/ClerkInventory"));
             Response.Write("<script language='javascript'> { window.close();}</script>");
         }
 
+        //generate total price
         protected double TotalPrice()
         {
             int qty = 0;
@@ -129,6 +133,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //return positive or negative qty
         protected int ReturnQuantity()
         {
             int qty = 0;
@@ -143,6 +148,7 @@ namespace Team3ADProject.Protected
             return qty;
         }
 
+        //submit adj req
         protected void ButtonSubmit_Click(object sender, EventArgs e)
         {
             int qty = Int32.Parse(TextBoxAdjustment.Text);
@@ -168,6 +174,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //change in qty changes total price
         protected void TextBoxAdjustment_TextChanged(object sender, EventArgs e)
         {
             if (TextBoxAdjustment.Text.Trim() != null)
@@ -177,6 +184,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //retrieve email
         protected string RetrieveEmail(double price)
         {
             if (price > 250)
@@ -189,6 +197,7 @@ namespace Team3ADProject.Protected
             }
         }
 
+        //create adj
         protected void CreateAdjustment()
         {
             string email = RetrieveEmail(TotalPrice());
