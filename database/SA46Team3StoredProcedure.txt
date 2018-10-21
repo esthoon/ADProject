@@ -1,0 +1,790 @@
+USE [LogicUniversity]
+
+
+CREATE Proc [dbo].[deptusagechargeback] (@fromdate date, @todate date,@deptid varchar(10))
+As
+Begin
+select i.item_number, i.description, sum(item_distributed_quantity) as received_quantity, sum(rod.item_requisition_price) as price
+from requisition_order_detail rod, inventory i where rod.item_number=i.item_number and rod.requisition_id 
+in (select requisition_id from requisition_disbursement_detail where collection_id in 
+(select collection_id from collection_detail c where c.collection_date between @fromdate and @todate 
+and c.collection_status='Collected' and c.department_id=@deptid) )
+group by i.item_number,i.description 
+having sum (item_distributed_quantity) > 0 
+end
+GO
+
+CREATE PROCEDURE [dbo].[getAllViewPOHistorypendingcount]
+As
+BEGIN
+select a.supplier_name, a.purchase_order_number, a.purchase_order_date,  a.employee_name, a.purchase_order_status,
+ b.po_pending_item_count as outstanding_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_pending_item_count 
+	from purchase_order_detail pod where pod.item_purchase_order_status = 'Pending' 
+		group by pod.purchase_order_number) b
+	where a.purchase_order_number=b.purchase_order_number
+	END
+GO
+
+	CREATE PROCEDURE [dbo].[getAllViewPOHistorypendingcountbyPO](@varpo int)
+As
+BEGIN
+	select a.supplier_name, a.purchase_order_number, a.purchase_order_date,  a.employee_name, a.purchase_order_status,
+ b.po_pending_item_count as outstanding_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.purchase_order_number = @varpo ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_pending_item_count 
+	from purchase_order_detail pod where pod.item_purchase_order_status = 'Pending' 
+		group by pod.purchase_order_number) b
+	where a.purchase_order_number=b.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getAllViewPOHistorypendingcountbyPOandStatus](@varpo int, @varstat varchar(100))
+As
+BEGIN
+	select a.supplier_name, a.purchase_order_number, a.purchase_order_date,  a.employee_name, a.purchase_order_status,
+ b.po_pending_item_count as outstanding_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.purchase_order_status = @varstat and 
+  po.purchase_order_status= @varstat ) a,(select pod.purchase_order_number, count(pod.item_number)
+   as po_pending_item_count from purchase_order_detail pod where 
+   pod.item_purchase_order_status = 'Pending' group by pod.purchase_order_number) b
+	where a.purchase_order_number=b.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getAllViewPOHistorypendingcountbyStatus](@varstat varchar(100))
+As
+BEGIN
+	select a.supplier_name, a.purchase_order_number, a.purchase_order_date,  a.employee_name, a.purchase_order_status,
+ b.po_pending_item_count as outstanding_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.purchase_order_status = @varstat ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_pending_item_count 
+	from purchase_order_detail pod where pod.item_purchase_order_status = 'Pending' 
+		group by pod.purchase_order_number) b
+	where a.purchase_order_number=b.purchase_order_number
+	END
+GO
+
+	CREATE PROCEDURE [dbo].[getAllViewPOHistorypendingcountbySupandPo](@varpo int, @varsup varchar(100))
+As
+BEGIN
+	select a.supplier_name, a.purchase_order_number, a.purchase_order_date,  a.employee_name, a.purchase_order_status,
+ b.po_pending_item_count as outstanding_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.suppler_id = @varsup and po.purchase_order_number=@varpo ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_pending_item_count 
+	from purchase_order_detail pod where pod.item_purchase_order_status = 'Pending' 
+		group by pod.purchase_order_number) b
+	where a.purchase_order_number=b.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getAllViewPOHistorypendingcountbySupandPoandStatus](@varpo int, @varsup varchar(100),@varstat varchar(100))
+As
+BEGIN
+	select a.supplier_name, a.purchase_order_number, a.purchase_order_date,  a.employee_name, a.purchase_order_status,
+ b.po_pending_item_count as outstanding_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.purchase_order_status = @varstat and po.suppler_id=@varsup and Po.purchase_order_number = @varpo ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_pending_item_count 
+	from purchase_order_detail pod where pod.item_purchase_order_status = 'Pending' 
+		group by pod.purchase_order_number) b
+	where a.purchase_order_number=b.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getAllViewPOHistorypendingcountbySupandStatus](@varsup varchar(100),@varstat varchar(100))
+As
+BEGIN
+	select a.supplier_name, a.purchase_order_number, a.purchase_order_date,  a.employee_name, a.purchase_order_status,
+ b.po_pending_item_count as outstanding_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.purchase_order_status = @varstat and po.suppler_id=@varsup) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_pending_item_count 
+	from purchase_order_detail pod where pod.item_purchase_order_status = 'Pending' 
+		group by pod.purchase_order_number) b
+	where a.purchase_order_number=b.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getAllViewPOHistorypendingcountbySupplier](@varsup varchar(100))
+As
+BEGIN
+	select a.supplier_name, a.purchase_order_number, a.purchase_order_date,  a.employee_name, a.purchase_order_status,
+ b.po_pending_item_count as outstanding_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.suppler_id = @varsup ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_pending_item_count 
+	from purchase_order_detail pod where pod.item_purchase_order_status = 'Pending' 
+		group by pod.purchase_order_number) b
+	where a.purchase_order_number=b.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getAllViewPOHistorytotalcount]
+As
+BEGIN
+ select a.supplier_name, a.purchase_order_number, a.purchase_order_date, a.employee_name,
+ a.purchase_order_status, c.po_total_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_total_item_count 
+	from purchase_order_detail pod group by pod.purchase_order_number) c 
+	where a.purchase_order_number=c.purchase_order_number
+END
+GO
+
+CREATE PROCEDURE [dbo].[getApprovedRequisitionsWithNoDisbursementIdByDepartment]
+AS
+	SELECT requisition_order.requisition_id as RequisitionId, requisition_date as RequisitionDate from requisition_order
+	FULL OUTER JOIN requisition_disbursement_detail ON requisition_order.requisition_id = requisition_disbursement_detail.requisition_id
+	WHERE (requisition_disbursement_detail.requisition_id IS NULL OR requisition_order.requisition_id IS NULL)
+	AND RTRIM(requisition_order.requisition_status) = 'Approved';
+GO
+
+CREATE procedure [dbo].[getcollectiondetailsbydepartment]
+(@departmentid varchar(10))
+as
+Begin
+Select c.collection_date,co.collection_place,c.collection_status from collection_detail c, collection co where c.place_id=co.place_id  and  c.department_id=@departmentid order by c.collection_date desc
+End
+GO
+
+Create procedure [dbo].[getitemdetails] 
+(@requisitionnumber varchar(20))
+as
+Begin
+select i.category,i.description,rd.item_requisition_quantity from inventory i, requisition_order_detail rd where rd.item_number=i.item_number 
+and rd.requisition_id=@requisitionnumber
+end
+GO
+
+CREATE PROCEDURE [dbo].[getLowStockItemsByCategory]
+AS
+	SELECT TOP 5 item_number, description, current_quantity, reorder_level from inventory
+	WHERE inventory.current_quantity < inventory.reorder_level
+	AND item_status != 'Obsolete';
+GO
+
+CREATE PROCEDURE [dbo].[getPendingPurchaseOrderCountBySupplier]
+AS
+	SELECT suppler_id as SupplierId, COUNT(purchase_order_number) as PendingPurchaseOrderQuantity from purchase_order
+	WHERE RTRIM(purchase_order_status) = 'Pending'
+	GROUP BY suppler_id;
+GO
+
+Create procedure [dbo].[getpendingrequestdetails] 
+(@requisitionnumber varchar(20))
+as
+Begin
+Select rd.requisition_id as id,ro.requisition_date as Date,e.employee_name as Name,
+ro.requisition_status as status,Sum(rd.item_requisition_price) as Sum
+from requisition_order ro,requisition_order_detail rd, employee e where 
+ro.requisition_id=rd.requisition_id and ro.employee_id=e.employee_id  and ro.requisition_id=@requisitionnumber 
+group by rd.requisition_id,ro.requisition_date,e.employee_name,ro.requisition_status
+end
+GO
+
+
+CREATE procedure [dbo].[getpendingrequestsbydepartment] 
+(@departmentname varchar(10))
+as
+Begin
+Select rd.requisition_id as id,ro.requisition_date as Date,e.employee_name as Name,
+ro.requisition_status as status,Sum(rd.item_requisition_price) as Sum
+from requisition_order ro,requisition_order_detail rd, employee e where 
+ro.requisition_id=rd.requisition_id and ro.employee_id=e.employee_id and
+ro.requisition_status='Pending' and e.department_id=@departmentname 
+group by rd.requisition_id,ro.requisition_date,e.employee_name,ro.requisition_status
+end
+GO
+
+
+CREATE PROCEDURE [dbo].[getPurchaseQuantityByItemCategory] @MonthsBack int = 0
+AS
+	SELECT Category, sum(item_purchase_order_quantity) as 'PurchaseQuantity' from purchase_order
+	INNER JOIN purchase_order_detail on purchase_order.purchase_order_number = purchase_order_detail.purchase_order_number 
+	INNER JOIN inventory on inventory.item_number = purchase_order_detail.item_number
+	WHERE (purchase_order_status = 'Completed' OR purchase_order_status = 'Pending')
+	AND MONTH(purchase_order.purchase_order_date) = MONTH(DATEADD(MONTH, -@MonthsBack, GETDATE()))
+	GROUP BY category;
+GO
+
+CREATE PROCEDURE [dbo].[getRecentRequisitionOrders]
+AS
+	SELECT TOP 5 * from requisition_order
+	WHERE requisition_status = 'Approved'
+	ORDER BY requisition_date DESC
+GO
+
+Create Procedure [dbo].[getrepdetails]
+(@depid varchar(10))
+as
+Begin
+Select e.employee_name,dr.representative_status,dr.appointed_date from employee e join department_rep dr 
+on e.employee_id=dr.representative_id where dr.department_id=@depid
+end
+GO
+
+CREATE PROCEDURE [dbo].[getRequestedItemQuantityLastYear] @ItemCode nvarchar(4)
+AS
+	SELECT inventory.item_number, SUM(item_requisition_quantity) as quantity_requested from requisition_order_detail
+	INNER JOIN inventory on inventory.item_number = requisition_order_detail.item_number
+	INNER JOIN requisition_order on requisition_order.requisition_id = requisition_order_detail.requisition_id
+	WHERE TRIM(inventory.item_number) = @ItemCode
+	AND YEAR(requisition_order.requisition_date) = YEAR(DATEADD(year, -1, GETDATE()))
+	GROUP BY inventory.item_number;
+GO
+
+CREATE Procedure [dbo].[getrequesthistory]
+(@departmentid varchar(10))
+As 
+Begin
+Select rd.requisition_id as id,ro.requisition_date as Date,e.employee_name as Name,
+ro.requisition_status as status,Sum(rd.item_requisition_price) as Sum
+from requisition_order ro,requisition_order_detail rd, employee e where 
+ro.requisition_id=rd.requisition_id and ro.employee_id=e.employee_id and
+ro.requisition_status!='Cancel' and e.department_id=@departmentid
+group by rd.requisition_id,ro.requisition_date,e.employee_name,ro.requisition_status
+end
+GO
+
+CREATE PROCEDURE [dbo].[getRequisitionOrderDetails](@var varchar(100))
+  As
+  BEGIN
+  select I.item_number, I.category, I.description, I.unit_of_measurement, r.item_requisition_quantity, r.item_requisition_price, si.unit_price from inventory I, requisition_order_detail r, supplier_itemdetail si where r.requisition_id = @var  and r.item_number = I.item_number and si.item_number = r.item_number and si.priority = 1
+  END
+GO
+
+  CREATE PROCEDURE [dbo].[getRequisitionOrderDetailsforEdit](@var varchar(100))
+  As
+  BEGIN
+  select I.item_number, I.category, I.description, r.item_requisition_quantity, r.item_requisition_price, si.unit_price from inventory I, requisition_order_detail r, supplier_itemdetail si where r.requisition_id = @var  and r.item_number = I.item_number and si.item_number = r.item_number and si.priority = 1
+  END
+GO
+
+CREATE PROCEDURE [dbo].[getRequisitionQuantityByDepartment]
+AS
+	SELECT department_id, SUM(item_requisition_quantity) AS item_request_quantity from requisition_order
+	INNER JOIN requisition_order_detail ON requisition_order_detail.requisition_id = requisition_order.requisition_id
+	INNER JOIN inventory ON requisition_order_detail.item_number = inventory.item_number
+	INNER JOIN employee ON requisition_order.employee_id = employee.employee_id
+	WHERE requisition_order.requisition_status = 'Approved'
+	GROUP BY employee.department_id;
+GO
+
+
+CREATE PROCEDURE [dbo].[GetRequisitionStatus]
+  As
+  BEGIN
+  select distinct requisition_status from requisition_order
+  END
+GO
+
+CREATE PROCEDURE [dbo].[getStationariesOrderedLastMonthByCategory]
+AS
+	SELECT department_id, inventory.description, SUM(item_requisition_quantity) AS item_request_quantity from requisition_order
+	INNER JOIN requisition_order_detail ON requisition_order_detail.requisition_id = requisition_order.requisition_id
+	INNER JOIN inventory ON requisition_order_detail.item_number = inventory.item_number
+	INNER JOIN employee ON requisition_order.employee_id = employee.employee_id
+	WHERE requisition_order.requisition_status = 'Approved'
+	AND MONTH(requisition_order.requisition_date) = MONTH(GETDATE())
+	GROUP BY employee.department_id, inventory.description;
+GO
+
+CREATE PROCEDURE [dbo].[getUserByToken] @token nvarchar(50)
+AS
+	SELECT * from employee
+	WHERE token = @token
+GO
+
+
+CREATE PROCEDURE [dbo].[getUserTokenByUsername] @username nvarchar(50)
+AS
+	SELECT user_id, token from employee
+	WHERE user_id = @username;
+GO
+
+CREATE PROCEDURE [dbo].[getViewPOHistorytotalcountbyPO](@varpo int)
+As
+BEGIN
+select a.supplier_name, a.purchase_order_number, a.purchase_order_date, a.employee_name,
+ a.purchase_order_status, c.po_total_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.purchase_order_number = @varpo ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_total_item_count 
+	from purchase_order_detail pod group by pod.purchase_order_number) c 
+	where a.purchase_order_number=c.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getViewPOHistorytotalcountbyPOandstatus](@varpo int, @varstat varchar(100))
+As
+BEGIN
+select a.supplier_name, a.purchase_order_number, a.purchase_order_date, a.employee_name,
+ a.purchase_order_status, c.po_total_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.purchase_order_number = @varpo 
+  and po.purchase_order_status = @varstat ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_total_item_count 
+	from purchase_order_detail pod group by pod.purchase_order_number) c 
+	where a.purchase_order_number=c.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getViewPOHistorytotalcountbyPOandstatusandSupplier](@varsup varchar(100), @varpo int, @varstat varchar(100))
+As
+BEGIN
+select a.supplier_name, a.purchase_order_number, a.purchase_order_date, a.employee_name,
+ a.purchase_order_status, c.po_total_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.suppler_id = @varsup and po.purchase_order_number = @varpo and po.purchase_order_status = @varstat) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_total_item_count 
+	from purchase_order_detail pod group by pod.purchase_order_number) c 
+	where a.purchase_order_number=c.purchase_order_number
+	END
+GO
+
+
+CREATE PROCEDURE [dbo].[getViewPOHistorytotalcountbyPOandSupplier](@varpo int, @varsup varchar(100))
+As
+BEGIN
+select a.supplier_name, a.purchase_order_number, a.purchase_order_date, a.employee_name,
+ a.purchase_order_status, c.po_total_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.suppler_id = @varsup and po.purchase_order_number = @varpo ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_total_item_count 
+	from purchase_order_detail pod group by pod.purchase_order_number) c 
+	where a.purchase_order_number=c.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getViewPOHistorytotalcountByStatus](@varstat varchar(100))
+As
+BEGIN
+	select a.supplier_name, a.purchase_order_number, a.purchase_order_date, a.employee_name,
+ a.purchase_order_status, c.po_total_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.purchase_order_status = @varstat ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_total_item_count 
+	from purchase_order_detail pod group by pod.purchase_order_number) c 
+	where a.purchase_order_number=c.purchase_order_number
+	END
+GO
+
+CREATE PROCEDURE [dbo].[getViewPOHistorytotalcountbysupandstatus](@varsup varchar(100), @varstat varchar(100))
+As
+BEGIN
+select a.supplier_name, a.purchase_order_number, a.purchase_order_date, a.employee_name,
+ a.purchase_order_status, c.po_total_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.suppler_id = @varsup and po.purchase_order_status = @varstat ) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_total_item_count 
+	from purchase_order_detail pod group by pod.purchase_order_number) c 
+	where a.purchase_order_number=c.purchase_order_number
+	END
+GO
+
+
+CREATE PROCEDURE [dbo].[getViewPOHistorytotalcountbySupplier](@varsup varchar(100))
+As
+BEGIN
+select a.supplier_name, a.purchase_order_number, a.purchase_order_date, a.employee_name,
+ a.purchase_order_status, c.po_total_item_count from
+(select s.supplier_name, po.purchase_order_number, po.purchase_order_date, po.purchase_order_status,
+  e.employee_name from purchase_order po, supplier s, employee e where  po.employee_id=e.employee_id 
+  and po.suppler_id=s.supplier_id and po.suppler_id = @varsup) a,
+(select pod.purchase_order_number, count(pod.item_number) as po_total_item_count 
+	from purchase_order_detail pod group by pod.purchase_order_number) c 
+	where a.purchase_order_number=c.purchase_order_number
+	END
+GO
+
+create procedure [dbo].[sp_geteachPendingPOList] (@var4 int)
+as begin
+select p.purchase_order_number,s.supplier_name,p.purchase_order_date,e.employee_name, sum(pd.item_purchase_order_price) as total_price
+from purchase_order p,purchase_order_detail pd, inventory i, employee e, supplier s
+where p.purchase_order_number=pd.purchase_order_number
+and p.purchase_order_status='awaiting approval'
+and i.item_number=pd.item_number
+and p.employee_id=e.employee_id
+and s.supplier_id= p.suppler_id
+and p.purchase_order_number= @var4
+group by p.purchase_order_number, s.supplier_name,p.purchase_order_date,e.employee_name
+end
+GO
+
+
+create procedure [dbo].[sp_getPendingPODetails] (@var5 int)
+as begin
+select p.purchase_order_number,i.description,p.purchase_order_date, pd.item_required_date, pd.item_purchase_order_price, pd.item_purchase_order_quantity,i.current_quantity,i.reorder_level,s.supplier_email,p.manager_remark
+from purchase_order p,purchase_order_detail pd, inventory i, employee e, supplier s
+where p.purchase_order_number=pd.purchase_order_number
+and p.purchase_order_status='awaiting approval'
+and i.item_number=pd.item_number
+and p.employee_id=e.employee_id
+and s.supplier_id= p.suppler_id
+and p.purchase_order_number = @var5
+group by  p.purchase_order_date, i.description,pd.item_purchase_order_price, pd.item_purchase_order_quantity,i.current_quantity,i.reorder_level,pd.item_required_date, s.supplier_email,p.purchase_order_number, p.manager_remark
+end
+GO
+
+create procedure [dbo].[sp_getPendingPOList]
+as begin
+select p.purchase_order_number,s.supplier_name,p.purchase_order_date,e.employee_name, sum(pd.item_purchase_order_price) as total_price
+from purchase_order p,purchase_order_detail pd, inventory i, employee e, supplier s
+where p.purchase_order_number=pd.purchase_order_number
+and p.purchase_order_status='awaiting approval'
+and i.item_number=pd.item_number
+and p.employee_id=e.employee_id
+and s.supplier_id= p.suppler_id
+group by p.purchase_order_number, s.supplier_name,p.purchase_order_date,e.employee_name
+end
+GO
+
+
+CREATE PROCEDURE [dbo].[spAcknowledgeDistributionList]
+(
+ @collection_id int
+)
+AS 
+BEGIN
+  select rod.item_number, I.description, sum(rod.item_requisition_quantity) as ordered_quantity,
+  sum(rod.item_distributed_quantity) as supply_quantity
+  from requisition_order_detail rod, inventory I where rod.requisition_id IN ( 
+  select requisition_id from requisition_disbursement_detail where collection_id = @collection_id) and rod.item_number = I.item_number
+  group by rod.item_number, I.description
+END
+GO
+
+CREATE PROCEDURE [dbo].[spCheckSupplyQuantity]
+(
+ @itemNumber varchar(10),
+ @collectionID int
+)
+as
+BEGIN
+select  sum(rod.item_distributed_quantity) as supply_quantity
+  from requisition_order_detail rod, inventory I where rod.requisition_id IN ( 
+  select requisition_id from requisition_disbursement_detail where collection_id = @collectionID) 
+  and rod.item_number = I.item_number
+  and rod.item_number=@itemNumber
+  group by rod.item_number, I.description
+END
+GO
+
+CREATE PROCEDURE [dbo].[spFindAllDptRequiredQtyByItem]
+@itemnum varchar(10)
+
+AS
+BEGIN
+select sum(rod.item_requisition_quantity) as total_required_qty
+ from requisition_order_detail rod
+
+where rod.item_number = @itemnum
+and (rod.requisition_id in (select ro.requisition_id from requisition_order ro where ro.requisition_status='Approved' 
+and ro.requisition_id not in (select requisition_id from requisition_disbursement_detail)
+))
+group by rod.item_number
+END
+GO
+
+CREATE PROCEDURE [dbo].[spFindDptIdAndRequiredQtyByItem]
+@itemnum varchar(10)
+AS
+BEGIN
+select SUBSTRING(requisition_id, 0, 5) as department_id, sum(rod.item_requisition_quantity) as total_required_qty
+ from requisition_order_detail rod
+
+where rod.item_number = @itemnum 
+and (rod.requisition_id in (select ro.requisition_id from requisition_order ro where ro.requisition_status='Approved' 
+and ro.requisition_id not in (select requisition_id from requisition_disbursement_detail)
+))
+group by SUBSTRING(requisition_id, 0, 5) 
+END
+GO
+
+CREATE procedure [dbo].[spGetCollectionList]
+AS
+BEGIN
+select rod.item_number,sum(rod.item_pending_quantity) as quantity_ordered,i.description,i.current_quantity,i.unit_of_measurement from requisition_order_detail rod
+right join inventory i on rod.item_number = i.item_number
+right join requisition_order ro on rod.requisition_id = ro.requisition_id
+where (rod.requisition_id in (select ro.requisition_id from requisition_order ro where ro.requisition_status='Approved' and ro.requisition_id not in (select requisition_id from requisition_disbursement_detail) and ro.requisition_date < convert(date, getdate()))
+)
+group by rod.item_number, i.description, i.current_quantity,i.unit_of_measurement
+having sum(rod.item_pending_quantity) > 0 and i.current_quantity > 0 
+END
+GO
+
+CREATE PROCEDURE [dbo].[spGetDepartmentList]
+AS
+BEGIN
+select department_name from department
+END
+GO
+
+CREATE PROCEDURE [dbo].[spGetDepartmentPin]
+(
+ @departmentname varchar(20)
+)
+AS
+BEGIN
+ select department_pin 
+ from department
+ where department_name = @departmentname
+END
+GO
+
+CREATE PROCEDURE [dbo].[spGetFullCollectionROIDList]
+
+AS
+BEGIN
+select rod.requisition_id, rod.item_number, rod.item_requisition_quantity, rod.item_distributed_quantity, rod.item_pending_quantity, ro.employee_id, ro.requisition_status, ro.requisition_date, rdd.collection_id, i.description, i.unit_of_measurement, i.current_quantity, dpt.department_name from requisition_order_detail rod
+left join inventory i on rod.item_number = i.item_number
+left join requisition_order ro on rod.requisition_id = ro.requisition_id
+left join requisition_disbursement_detail rdd on rod.requisition_id = rdd.requisition_id
+left join employee em on em.employee_id = ro.employee_id
+left join department dpt on em.department_id = dpt.department_id
+where ro.requisition_status = 'Approved' and rdd.collection_id is null and ro.requisition_date < convert(date, getdate())
+order by ro.requisition_date
+END
+GO
+
+CREATE PROCEDURE [dbo].[spGetLatestCollectionDetailId]
+AS
+BEGIN
+select top 1 collection_id from collection_detail
+order by collection_id desc
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[spGetListOfROIDForDisbursement]
+@dpt_Id varchar(10)
+
+AS
+BEGIN
+select ro.requisition_id from requisition_order ro 
+where ro.employee_id in (select em.employee_id from employee em where department_id = @dpt_Id)
+and ro.requisition_id not in (select requisition_id from requisition_disbursement_detail)
+and ro.requisition_status='Approved'
+and ro.requisition_date < convert(date, getdate())
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[spGetPlaceIdFromDptId]
+@dptId varchar(10)
+AS
+BEGIN
+declare @place_id as int
+set @place_id = (select place_id from collection_dep where department_id = @dptId)
+select @place_id as place_id
+END
+GO
+
+CREATE PROCEDURE [dbo].[spGetRequisitionIDAndItemQuantity]
+(
+ @collectionID int,
+ @ItemNumber varchar(10)
+)
+AS
+BEGIN
+select  requisition_id,item_distributed_quantity from requisition_order_detail where requisition_id in
+(select requisition_id from requisition_disbursement_detail where collection_id = @collectionID) 
+and item_number=@ItemNumber
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[spGetRODetailsByROId]
+@roId varchar(20)
+AS
+BEGIN
+SELECT rod.requisition_id, rod.item_number, i.description, i.unit_of_measurement, rod.item_requisition_quantity, i.current_quantity, rod.item_pending_quantity 
+FROM requisition_order_detail rod
+right join inventory i on rod.item_number = i.item_number
+WHERE rod.requisition_id = @roId
+and @roId not in (select requisition_id from requisition_disbursement_detail)
+and @roId in (select requisition_id from requisition_order where requisition_status='Approved')
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[spGetRODListForSorting]
+@dpt_id varchar(4),
+@item_num varchar(10)
+AS
+BEGIN
+select * from requisition_order_detail rod
+where rod.requisition_id like '%'+@dpt_id+'%'
+and rod.item_number = @item_num
+and (rod.requisition_id in (select ro.requisition_id from requisition_order ro where ro.requisition_status='Approved' 
+and ro.requisition_id not in (select requisition_id from requisition_disbursement_detail)))
+END
+GO
+
+CREATE PROCEDURE [dbo].[spGetSortingTableByDpt]
+@dpt_Id varchar(10)
+
+AS
+BEGIN
+
+select rod.item_number, i.description, sum(rod.item_requisition_quantity) as required_qty, sum(rod.item_distributed_quantity) as supply_qty, sum(rod.item_pending_quantity) as item_pending_quantity from requisition_order_detail rod
+right join inventory i on rod.item_number = i.item_number
+where (requisition_id in
+(select ro.requisition_id from requisition_order ro 
+where ro.employee_id in (select em.employee_id from employee em where department_id = @dpt_Id)
+and ro.requisition_id not in (select requisition_id from requisition_disbursement_detail)
+and ro.requisition_status='Approved'
+and ro.requisition_date < convert(date, getdate())))
+group by rod.item_number, i.description
+
+END
+GO
+
+
+CREATE procedure [dbo].[spGetUndisbursedROList]
+AS
+BEGIN
+select ro.requisition_id from requisition_order ro where ro.requisition_status='Approved' and ro.requisition_id not in (select requisition_id from requisition_disbursement_detail)
+END
+GO
+
+
+CREATE PROCEDURE [dbo].[spInsertCollectionDetail]
+(@placeId int,@collectionDate date,@collectionStatus varchar(10),@departmentId varchar(10))
+AS
+BEGIN
+INSERT INTO collection_detail(place_id, collection_date, collection_status, department_id)  
+VALUES (@placeId, @collectionDate, @collectionStatus, @departmentId);
+END
+
+
+CREATE PROCEDURE [dbo].[spInsertDisbursementListROId]
+(@ro_id varchar(20),
+@collection_id int)
+AS
+BEGIN
+
+insert into requisition_disbursement_detail
+values(@ro_id,@collection_id)
+END
+
+
+CREATE PROCEDURE [dbo].[spReallocateQty]
+@itemNum varchar(10)
+
+AS
+BEGIN
+select SUBSTRING(rod.requisition_id, 0, 5) as department_id, rod.item_number, i.description, sum(rod.item_requisition_quantity) as item_requisition_quantity, sum(rod.item_distributed_quantity) as item_distributed_quantity, ro.requisition_status, rdd.collection_id from requisition_order_detail rod
+left join inventory i on i.item_number = rod.item_number
+left join requisition_order ro on ro.requisition_id = rod.requisition_id
+left join requisition_disbursement_detail rdd on rdd.requisition_id = rod.requisition_id
+where rod.item_number = @itemNum
+and ro.requisition_status = 'Approved' and rdd.collection_id is null and ro.requisition_date < convert(date, getdate())
+group by SUBSTRING(rod.requisition_id, 0, 5), rod.item_number, i.description, rdd.collection_id, ro.requisition_status
+END
+
+
+CREATE PROCEDURE [dbo].[spSpecialRequestReady]
+(@placeId int,
+@collectionDate date,
+@collectionStatus varchar(10),
+@ro_id varchar(20), @departmentid varchar(10))
+AS
+BEGIN
+declare @id as int
+INSERT INTO collection_detail(place_id, collection_date, collection_status, department_id)  
+VALUES (@placeId, @collectionDate, @collectionStatus, @departmentid);
+set @id = SCOPE_IDENTITY()
+insert into requisition_disbursement_detail
+values(@ro_id,@id)
+END
+
+
+CREATE PROCEDURE [dbo].[spUpdateCollectionStatusCollected]
+(
+ @collection_id int
+)
+AS
+BEGIN
+update collection_detail
+set collection_status='Collected'
+where collection_id in (select collection_id from collection_detail where collection_id=@collection_id)
+END
+
+
+CREATE PROCEDURE [dbo].[spUpdateInventory]
+(
+ @ItemNumber varchar(10),
+ @difference int
+)
+AS
+BEGIN
+update inventory
+set current_quantity = current_quantity + @difference
+where item_number=@ItemNumber
+END
+
+
+CREATE PROCEDURE [dbo].[spUpdateItemDistributedQuantity]
+(
+ @ItemNumber varchar(10),
+ @RequisitionID varchar(20),
+ @ItemDistributedQuantity int
+)
+AS
+BEGIN
+update requisition_order_detail
+set item_distributed_quantity = @ItemDistributedQuantity
+where item_number=@ItemNumber and requisition_id=@RequisitionID
+;
+update requisition_order_detail
+set item_pending_quantity = item_requisition_quantity - item_distributed_quantity
+END
+
+
+CREATE PROCEDURE [dbo].[spViewCollectionList]
+AS
+BEGIN
+select e.employee_name, d.department_name,  cdetail.collection_date, c.collection_place,c.collection_time,cdetail.collection_id
+from collection_detail cdetail,collection c, department_rep drep, employee e, department d
+where cdetail.place_id = c.place_id
+and cdetail.department_id = d.department_id
+and drep.representative_id = e.employee_id
+and drep.department_id=d.department_id
+and drep.representative_status='Active'
+and cdetail.collection_status='Pending'
+order by cdetail.collection_date
+END
+
+
+CREATE procedure [dbo].[updatecollectiondepartment] 
+(@departmentid varchar(10), @placeid int)  
+As   
+Begin 
+Update collection_dep set place_id=@placeid where department_id=@departmentid 
+END
+
